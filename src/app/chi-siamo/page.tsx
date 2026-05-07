@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import { ArrowRight } from "lucide-react";
@@ -21,12 +22,14 @@ const team = [
     name: "Raffaele Russo",
     role: "Co-founder — Sviluppo & Vendite",
     bio: "Costruisce e vende. Si occupa dello sviluppo del prodotto e delle demo con i potenziali clienti. La sua ossessione è che ogni funzione abbia senso per chi lavora in cantiere.",
+    photo: "/images/raffaele.jpg",
     initials: "RR",
   },
   {
     name: "Dante",
     role: "Co-founder — Operazioni & Sales",
     bio: "Gestisce il team commerciale, il processo di onboarding e le relazioni con l'agenzia. Si assicura che ogni cliente riceva il supporto che merita dopo la firma.",
+    photo: "/images/dante.jpg",
     initials: "D",
   },
 ];
@@ -122,13 +125,18 @@ export default function ChiSiamoPage() {
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {team.map((member, i) => (
               <Reveal key={member.name} delay={i * 0.1}>
-                <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6 flex gap-4">
-                  <div className="shrink-0 w-14 h-14 rounded-full bg-navy flex items-center justify-center text-white font-display font-bold text-lg">
-                    {member.initials}
+                <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
+                  <div className="relative w-full h-64">
+                    <Image
+                      src={member.photo}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-top"
+                    />
                   </div>
-                  <div>
-                    <p className="font-display font-bold text-navy">{member.name}</p>
-                    <p className="text-xs text-orange-500 font-semibold mb-2">{member.role}</p>
+                  <div className="p-6">
+                    <p className="font-display font-bold text-navy text-lg">{member.name}</p>
+                    <p className="text-xs text-orange-500 font-semibold mb-3">{member.role}</p>
                     <p className="text-sm text-gray-500 leading-relaxed">{member.bio}</p>
                   </div>
                 </div>
