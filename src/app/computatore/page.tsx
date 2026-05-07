@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Badge from "@/components/ui/Badge";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
-import { ArrowRight, Camera, MessageSquare, Map, FileSearch } from "lucide-react";
+import { ArrowRight, Camera, MessageSquare, Map } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
@@ -128,33 +127,95 @@ export default function ComputatorePage() {
         </div>
       </section>
 
-      {/* I 3 WOW moment */}
-      <section className="section-padding bg-base">
+      {/* I 3 WOW moment — layout 2 colonne zigzag */}
+      <section style={{ background: "#f8fafc", padding: "clamp(64px, 9vw, 120px) 0" }}>
         <div className="container-main">
           <Reveal>
-            <div className="text-center mb-14">
-              <span className="eyebrow text-orange-500">Le 3 funzioni chiave</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl md:text-5xl">
+            <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 56px" }}>
+              <span className="eyebrow" style={{ color: "#f97316" }}>Le 3 funzioni chiave</span>
+              <h2
+                className="font-display font-extrabold"
+                style={{ fontSize: "clamp(30px, 3.6vw, 48px)", color: "#0f172a", marginTop: 12, letterSpacing: "-0.02em" }}
+              >
                 Cose che nessun altro software edile fa.
               </h2>
             </div>
           </Reveal>
-          <div className="space-y-6">
+
+          <div style={{ display: "grid", gap: 24 }}>
             {wowMoments.map((w, i) => {
               const Icon = w.icon;
+              const isReverse = i % 2 === 1;
               return (
-                <Reveal key={w.number} delay={i * 0.1}>
-                  <div className={`flex flex-col md:flex-row gap-6 p-8 rounded-2xl border ${i === 0 ? "bg-orange-50 border-orange-200" : "bg-white border-gray-200"}`}>
-                    <div className="shrink-0 w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center">
-                      <Icon size={26} className="text-orange-500" />
-                    </div>
-                    <div>
-                      <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <span className="font-display font-extrabold text-3xl text-orange-200">{w.number}</span>
-                        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-600">{w.tag}</span>
+                <Reveal key={w.number} delay={i * 0.08}>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: 56,
+                      alignItems: "center",
+                      padding: "48px",
+                      background: "#fff",
+                      border: "1px solid #e2e8f0",
+                      borderRadius: 16,
+                    }}
+                    className="flex-col md:grid"
+                  >
+                    {/* Testo */}
+                    <div style={{ order: isReverse ? 2 : 1 }}>
+                      <span
+                        style={{
+                          display: "block",
+                          fontFamily: "'JetBrains Mono', monospace",
+                          fontSize: 13, fontWeight: 600,
+                          color: "#f97316", letterSpacing: "0.06em",
+                          marginBottom: 12,
+                        }}
+                      >
+                        {w.number}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                        <h3
+                          className="font-display font-extrabold"
+                          style={{ fontSize: "clamp(22px, 2.5vw, 34px)", color: "#0f172a", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.15 }}
+                        >
+                          {w.title}
+                        </h3>
                       </div>
-                      <h3 className="font-display font-bold text-xl text-navy mb-2">{w.title}</h3>
-                      <p className="text-gray-500 leading-relaxed">{w.description}</p>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          padding: "3px 10px", borderRadius: 9999,
+                          background: "#fff7ed", color: "#c2410c",
+                          fontSize: 12, fontWeight: 600, marginBottom: 14,
+                        }}
+                      >
+                        {w.tag}
+                      </span>
+                      <p style={{ fontSize: "clamp(15px, 1.2vw, 17px)", lineHeight: 1.65, color: "#64748b", margin: 0 }}>
+                        {w.description}
+                      </p>
+                    </div>
+
+                    {/* Visual placeholder */}
+                    <div
+                      style={{
+                        order: isReverse ? 1 : 2,
+                        aspectRatio: "4/3",
+                        borderRadius: 14,
+                        background: "linear-gradient(135deg, #f1f5f9 0%, #fff7ed 100%)",
+                        border: "1px solid #e2e8f0",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div style={{ textAlign: "center" }}>
+                        <div style={{ width: 56, height: 56, borderRadius: 14, background: "#fff7ed", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
+                          <Icon size={28} color="#f97316" />
+                        </div>
+                        <p style={{ fontSize: 13, color: "#94a3b8", margin: 0 }}>{w.tag}</p>
+                      </div>
                     </div>
                   </div>
                 </Reveal>

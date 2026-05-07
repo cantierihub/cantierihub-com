@@ -5,55 +5,55 @@ const problems = [
   {
     icon: Clock,
     title: "Ore perse ogni settimana",
-    description: "Ridigitare voci da PDF cartacei, cercare codici sui prezzari, riformattare documenti. Ore di lavoro tecnico che non produce nulla.",
+    description: "Tre ore per preventivo, dieci a settimana. Tempo che togli a famiglia, cantieri, sopralluoghi.",
   },
   {
     icon: AlertTriangle,
     title: "Errori di trascrizione",
-    description: "Copiare centinaia di voci a mano significa inevitabilmente sbagliare. Un errore in un preventivo può costare margine o clienti.",
+    description: "Una virgola spostata, un prezzo vecchio, e il margine svanisce. Sempre.",
   },
   {
     icon: TrendingDown,
     title: "Margini che si assottigliano",
-    description: "Chi non stima bene le voci fuori prezzario lascia soldi sul tavolo. Ogni preventivo impreciso è un'opportunità mancata.",
+    description: "Senza analisi prezzi seria, lavori per costare. Non per guadagnare.",
   },
   {
     icon: FileX,
     title: "Documenti non professionali",
-    description: "Excel con formattazioni diverse, PDF copiati da modelli vecchi. Il documento che arriva al cliente non rappresenta la qualità del tuo lavoro.",
+    description: "Excel storto, logo sbiadito, voci confuse. Il committente sceglie il preventivo che capisce.",
   },
 ];
 
 export default function Problem() {
   return (
-    <section className="section-padding bg-navy">
+    <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0", marginTop: "clamp(64px, 9vw, 120px)" }}>
       <div className="container-main">
         <Reveal>
-          <div className="text-center mb-14">
-            <span className="eyebrow text-orange-400">Il problema</span>
-            <h2 className="mt-3 font-display font-extrabold text-white text-4xl md:text-5xl">
-              Ogni preventivo ti costa{" "}
-              <span className="text-orange-400">ore.</span>
+          <div style={{ textAlign: "center", marginBottom: 56, maxWidth: 700, margin: "0 auto 56px" }}>
+            <span className="eyebrow" style={{ color: "#fb923c" }}>Il problema</span>
+            <h2
+              className="font-display font-extrabold"
+              style={{ fontSize: "clamp(32px, 3.8vw, 50px)", color: "#fff", marginTop: 12, letterSpacing: "-0.02em" }}
+            >
+              Ogni preventivo ti costa ore.
             </h2>
-            <p className="mt-4 text-gray-400 text-lg max-w-2xl mx-auto">
-              E ogni ora persa è margine che sparisce. Non è un problema di capacità — è che gli strumenti che usi non sono pensati per l&apos;edilizia italiana di oggi.
+            <p style={{ fontSize: "clamp(16px, 1.3vw, 19px)", color: "#94a3b8", marginTop: 14, lineHeight: 1.6 }}>
+              E quelle ore non te le ridà nessuno. Le perdi la sera, il sabato, in pause che non sono pause.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid md:grid-cols-4 gap-4">
           {problems.map((item, i) => {
             const Icon = item.icon;
             return (
               <Reveal key={item.title} delay={i * 0.09}>
-                <div className="flex gap-4 p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-orange-500/30 transition-colors">
-                  <div className="shrink-0 w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                    <Icon size={20} className="text-orange-400" />
+                <div className="problem-card" style={{ borderRadius: 14, padding: 28 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(249,115,22,.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+                    <Icon size={20} color="#fb923c" />
                   </div>
-                  <div>
-                    <h3 className="font-display font-semibold text-white mb-1">{item.title}</h3>
-                    <p className="text-sm text-gray-400 leading-relaxed">{item.description}</p>
-                  </div>
+                  <h3 className="font-display font-bold" style={{ fontSize: 18, color: "#fff", margin: "0 0 8px" }}>{item.title}</h3>
+                  <p style={{ fontSize: 14, color: "#94a3b8", margin: 0, lineHeight: 1.6 }}>{item.description}</p>
                 </div>
               </Reveal>
             );
@@ -61,12 +61,10 @@ export default function Problem() {
         </div>
 
         <Reveal delay={0.4}>
-          <div className="mt-10 text-center">
-            <p className="text-gray-300 text-lg">
-              Cantieri Hub risolve tutto questo.{" "}
-              <span className="text-orange-400 font-semibold">In 3 minuti per preventivo.</span>
-            </p>
-          </div>
+          <p style={{ textAlign: "center", marginTop: 56, fontSize: "clamp(18px, 2vw, 26px)", fontWeight: 600, color: "#fff" }}>
+            Cantieri Hub risolve tutto questo.{" "}
+            <em style={{ fontStyle: "normal", color: "#fb923c" }}>In 3 minuti per preventivo.</em>
+          </p>
         </Reveal>
       </div>
     </section>

@@ -4,7 +4,7 @@ import Badge from "@/components/ui/Badge";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
-import { ArrowRight, FileText, Zap, Database, Palette, Users, Archive } from "lucide-react";
+import { ArrowRight, Zap, Database, Palette, Users, Archive } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Preventivatore AI — Dal computo metrico al preventivo in 3 minuti",
@@ -173,24 +173,65 @@ export default function PreventivatorePage() {
         </div>
       </section>
 
-      {/* Differenziatore */}
-      <section className="section-padding bg-navy">
+      {/* Compare table */}
+      <section style={{ padding: "clamp(64px, 9vw, 120px) 0", background: "#fff" }}>
         <div className="container-main">
-          <div className="max-w-3xl mx-auto">
+          <Reveal>
+            <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 48px" }}>
+              <span className="eyebrow" style={{ color: "#f97316" }}>Confronto</span>
+              <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(28px, 3.2vw, 42px)", color: "#0f172a", marginTop: 12, letterSpacing: "-0.02em" }}>
+                Cantieri Hub vs altri software
+              </h2>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div style={{ background: "#fff", borderRadius: 16, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 4px 8px rgba(15,23,42,.06)" }}>
+              {/* Header */}
+              <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
+                <div style={{ padding: "18px 24px", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b" }}>Funzionalità</div>
+                <div style={{ padding: "18px 24px", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#c2410c", background: "#fff7ed", borderLeft: "1px solid #fed7aa", borderRight: "1px solid #fed7aa" }}>Cantieri Hub</div>
+                <div style={{ padding: "18px 24px", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b" }}>Altri software</div>
+              </div>
+              {[
+                ["Estrazione AI da PDF e Excel", "✓", "—"],
+                ["Prezzari regionali italiani inclusi", "✓", "Parziale"],
+                ["Analisi Prezzi AI (scomposizione costi)", "✓", "—"],
+                ["PDF brandizzato col tuo logo", "✓", "✓"],
+                ["Archivio storico ricercabile", "✓", "Limitato"],
+                ["Supporto diretto su WhatsApp", "✓", "—"],
+                ["Onboarding guidato con i tuoi file", "✓", "—"],
+              ].map(([feat, ch, other], i) => (
+                <div key={feat} style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", borderBottom: i < 6 ? "1px solid #e2e8f0" : "none" }}>
+                  <div style={{ padding: "18px 24px", fontSize: 14, fontWeight: 600, color: "#0f172a", display: "flex", alignItems: "center" }}>{feat}</div>
+                  <div style={{ padding: "18px 24px", fontSize: 14, fontWeight: 600, color: "#c2410c", background: "#fff7ed", borderLeft: "1px solid #fed7aa", borderRight: "1px solid #fed7aa", display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ color: "#10b981", fontWeight: 700 }}>{ch === "✓" ? "✓" : ""}</span>
+                    {ch !== "✓" ? ch : "Sì"}
+                  </div>
+                  <div style={{ padding: "18px 24px", fontSize: 14, color: other === "✓" ? "#334155" : "#94a3b8", display: "flex", alignItems: "center" }}>
+                    {other === "—" ? <span style={{ color: "#cbd5e1", fontWeight: 700 }}>—</span> : other === "✓" ? "Sì" : other}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Differenziatore */}
+      <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0" }}>
+        <div className="container-main">
+          <div style={{ maxWidth: 740, margin: "0 auto" }}>
             <Reveal>
-              <span className="eyebrow text-orange-400">Perché Cantieri Hub</span>
-              <h2 className="mt-3 font-display font-extrabold text-white text-4xl leading-tight">
+              <span className="eyebrow" style={{ color: "#fb923c" }}>Perché Cantieri Hub</span>
+              <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(28px, 3.5vw, 46px)", color: "#fff", marginTop: 12, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
                 I competitor non hanno un&apos;Analisi Prezzi AI di questo livello.
               </h2>
-              <p className="mt-5 text-gray-300 leading-relaxed">
+              <p style={{ fontSize: "clamp(16px, 1.2vw, 18px)", color: "#94a3b8", marginTop: 20, lineHeight: 1.7 }}>
                 PriMus e gli altri software di settore lavorano sui prezzari standard. Ma il tuo cantiere ha sempre voci fuori prezzario: materiali speciali, lavorazioni non codificate, situazioni particolari. Prima le stimavi a occhio — o le lasciavi indietro perdendo margine. Adesso l&apos;AI scompone ogni voce in materiali, manodopera, noli, utile e spese generali, con parametri reali del tuo cantiere.
               </p>
-              <div className="mt-6">
-                <Link
-                  href="/contatti"
-                  className="cta-shimmer inline-flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 transition-colors"
-                >
-                  Vedi come funziona in demo <ArrowRight size={16} />
+              <div style={{ marginTop: 24 }}>
+                <Link href="/contatti" className="btn-primary cta-shimmer">
+                  Vedi come funziona in demo <span className="arrow">→</span>
                 </Link>
               </div>
             </Reveal>

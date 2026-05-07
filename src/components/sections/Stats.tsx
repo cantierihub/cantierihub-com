@@ -3,29 +3,44 @@
 import Reveal from "@/components/ui/Reveal";
 
 const stats = [
-  { value: "50+", label: "Imprese Attive" },
-  { value: "3 Min", label: "per Preventivo" },
-  { value: "€500K+", label: "Risparmiati in Tempi" },
-  { value: "60%", label: "Uso Quotidiano" },
+  { value: "30+", label: "Imprese attive" },
+  { value: "~3 min", label: "Per ogni preventivo", accent: true },
+  { value: "+15%", label: "Margine medio per cantiere", accent: true },
+  { value: "60%", label: "Uso quotidiano" },
 ];
 
 export default function Stats() {
   return (
-    <section className="bg-navy py-14">
-      <div className="container-main">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, i) => (
-            <Reveal key={stat.label} delay={i * 0.08}>
-              <div className="text-center">
-                <p className="font-display font-extrabold text-white text-4xl md:text-5xl">
-                  {stat.value}
+    <div className="container-main" style={{ marginTop: -64, position: "relative", zIndex: 10 }}>
+      <Reveal>
+        <div
+          className="grid grid-cols-2 md:grid-cols-4"
+          style={{
+            gap: 24, padding: "36px 44px", borderRadius: 20,
+            background: "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)",
+            border: "1px solid rgba(255,255,255,.06)",
+            boxShadow: "0 24px 48px rgba(15,23,42,.18), 0 8px 16px rgba(15,23,42,.10)",
+          }}
+        >
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.08}>
+              <div style={{ textAlign: "center" }}>
+                <p
+                  className="font-display font-extrabold"
+                  style={{
+                    fontSize: "clamp(28px, 3.5vw, 44px)", lineHeight: 1,
+                    letterSpacing: "-0.02em", margin: "0 0 6px",
+                    color: s.accent ? "#fb923c" : "#fff",
+                  }}
+                >
+                  {s.value}
                 </p>
-                <p className="mt-2 eyebrow text-gray-400">{stat.label}</p>
+                <p style={{ fontSize: 13, color: "#94a3b8", margin: 0 }}>{s.label}</p>
               </div>
             </Reveal>
           ))}
         </div>
-      </div>
-    </section>
+      </Reveal>
+    </div>
   );
 }

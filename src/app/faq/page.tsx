@@ -67,7 +67,7 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {categories.map((cat, ci) => (
+      {categories.map((cat) => (
         <FAQSection
           key={cat.title}
           items={cat.faqs}
@@ -81,7 +81,6 @@ export default function FAQPage() {
         title="Non hai trovato risposta?"
         subtitle="Scrivici direttamente. Risponderemo entro poche ore."
         primaryLabel="Prenota una Demo"
-        secondaryLabel="Scrivici"
         dark={false}
       />
     </>

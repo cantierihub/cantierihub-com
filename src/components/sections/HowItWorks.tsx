@@ -2,60 +2,75 @@ import Reveal from "@/components/ui/Reveal";
 
 const steps = [
   {
-    number: "01",
+    num: "01",
+    tag: "UPLOAD",
     title: "Carica il documento",
-    description:
-      "Carica il computo metrico che ti ha mandato il committente: PDF, Excel o XML. Il Computatore AI parte da zero se non hai nessun documento.",
+    description: "Trascina computo metrico, capitolato o anche solo le foto del sopralluogo. PDF, Excel, Word: come arrivano.",
   },
   {
-    number: "02",
-    title: "L'AI elabora tutto",
-    description:
-      "Estrae le voci, le abbina ai prezzari regionali, calcola le quantità dalle piantine. La chat integrata controlla che non manchi nulla.",
+    num: "02",
+    tag: "AI",
+    title: "L’AI elabora tutto",
+    description: "Estrae le voci, le abbina al prezzario regionale, calcola l’analisi prezzi. Ti chiede solo quello che serve.",
   },
   {
-    number: "03",
+    num: "03",
+    tag: "INVIA",
     title: "Scarica il preventivo",
-    description:
-      "Genera il PDF professionale con il tuo logo e i tuoi colori aziendali. Pronto da inviare al cliente. In meno di 3 minuti.",
+    description: "PDF brandizzato col tuo logo, voci ordinate, totali corretti. Lo invii al committente in un click.",
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section className="section-padding bg-white">
+    <section style={{ background: "#f8fafc", padding: "clamp(64px, 9vw, 120px) 0" }}>
       <div className="container-main">
         <Reveal>
-          <div className="text-center mb-14">
-            <span className="eyebrow text-orange-500">Come funziona</span>
-            <h2 className="mt-3 font-display font-extrabold text-navy text-4xl md:text-5xl">
+          <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 56px" }}>
+            <span className="eyebrow" style={{ color: "#f97316" }}>Come funziona</span>
+            <h2
+              className="font-display font-extrabold"
+              style={{ fontSize: "clamp(30px, 3.6vw, 48px)", color: "#0f172a", marginTop: 12, letterSpacing: "-0.02em" }}
+            >
               3 passi. Niente di più.
             </h2>
-            <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
-              Nessuna formazione tecnica richiesta. Funziona per qualsiasi impresa edile, dalla piccola ditta al gruppo strutturato.
+            <p style={{ fontSize: "clamp(16px, 1.3vw, 19px)", color: "#64748b", marginTop: 14, lineHeight: 1.6 }}>
+              Nessun corso, nessun manuale di 200 pagine. Funziona come ti aspetti.
             </p>
           </div>
         </Reveal>
 
-        <div className="relative">
-          {/* Linea connettore desktop */}
-          <div className="hidden md:block absolute top-12 left-1/6 right-1/6 h-px bg-gradient-to-r from-transparent via-orange-200 to-transparent" />
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((step, i) => (
-              <Reveal key={step.number} delay={i * 0.12}>
-                <div className="relative text-center p-6">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-orange-50 border border-orange-100 mb-5">
-                    <span className="font-display font-extrabold text-3xl text-orange-500">
-                      {step.number}
-                    </span>
-                  </div>
-                  <h3 className="font-display font-bold text-xl text-navy mb-3">{step.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{step.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {steps.map((step, i) => (
+            <Reveal key={step.num} delay={i * 0.1}>
+              <div
+                style={{
+                  background: "#fff", border: "1px solid #e2e8f0",
+                  borderRadius: 14, padding: 28,
+                  transition: "border-color 120ms, transform 120ms",
+                }}
+              >
+                <span
+                  style={{
+                    display: "block", fontFamily: "'JetBrains Mono', monospace",
+                    fontWeight: 600, fontSize: 13, color: "#f97316",
+                    letterSpacing: "0.04em", marginBottom: 16,
+                  }}
+                >
+                  {step.num} — {step.tag}
+                </span>
+                <h3
+                  className="font-display font-bold"
+                  style={{ fontSize: 20, color: "#0f172a", margin: "0 0 8px", letterSpacing: "-0.01em" }}
+                >
+                  {step.title}
+                </h3>
+                <p style={{ fontSize: 14, color: "#64748b", margin: 0, lineHeight: 1.6 }}>
+                  {step.description}
+                </p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
