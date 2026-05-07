@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,12 +11,21 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["600", "700", "800", "900"],
   variable: "--font-poppins",
+  display: "swap",
+  preload: true,
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -53,20 +62,15 @@ export const metadata: Metadata = {
     title: "Cantieri Hub — Software AI per Preventivi Edili",
     description: "Dal computo metrico al preventivo in 3 minuti.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${inter.variable} ${poppins.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-base text-navy font-sans">
+    <html lang="it" className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-white text-navy-800 font-sans">
         <ScrollProgress />
         <Navbar />
         <main className="flex-1">{children}</main>
