@@ -53,17 +53,17 @@ export default function Products() {
       <div className="container-main">
         <Reveal>
           <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 64px" }}>
-            <span className="eyebrow" style={{ color: "#f97316" }}>I prodotti</span>
+            <span className="eyebrow" style={{ color: "#f97316" }}>Gli strumenti AI</span>
             <h2
               className="font-display font-extrabold"
               style={{ fontSize: "clamp(32px, 3.8vw, 52px)", color: "#0f172a", marginTop: 12 }}
             >
               Due strumenti.{" "}
-              <span className="text-gradient-orange">Un ecosistema.</span>
+              <span className="text-gradient-orange">Il cuore del network.</span>
             </h2>
             <p style={{ fontSize: "clamp(16px, 1.3vw, 18px)", color: "#64748b", marginTop: 16, lineHeight: 1.65 }}>
               Il Computatore genera il computo. Il Preventivatore lo trasforma in offerta commerciale.
-              Usali insieme o separatamente.
+              Sono il primo asset di Cantieri Hub — disponibili oggi per tutte le imprese del network.
             </p>
           </div>
         </Reveal>

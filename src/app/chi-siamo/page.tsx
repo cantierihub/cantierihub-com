@@ -35,11 +35,11 @@ const team = [
 ];
 
 const roadmap = [
-  { step: "1", label: "Preventivatore AI", sublabel: "Live — vendita attiva", active: true },
-  { step: "2", label: "Computatore AI", sublabel: "Appena lanciato", active: true },
-  { step: "3", label: "Chatbot AI cantieri", sublabel: "In roadmap", active: false },
-  { step: "4", label: "Contabilità AI", sublabel: "In valutazione", active: false },
-  { step: "5", label: "Ecosistema completo", sublabel: "Vision 2027", active: false },
+  { step: "1", label: "Strumenti AI", sublabel: "Preventivatore + Computatore — Live", active: true },
+  { step: "2", label: "Marketing Edilizia", sublabel: "Agenzia specializzata — Prossimamente", active: false, soon: true },
+  { step: "3", label: "Formazione", sublabel: "Masterclass pratiche — In costruzione", active: false, soon: true },
+  { step: "4", label: "Rete di Imprenditori", sublabel: "Community nazionale — Vision", active: false },
+  { step: "5", label: "Network Completo", sublabel: "Piattaforma unificata — 2027", active: false },
 ];
 
 export default function ChiSiamoPage() {
@@ -168,29 +168,42 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      {/* Roadmap */}
+      {/* Roadmap / Visione */}
       <section className="section-padding bg-base">
         <div className="container-main">
           <Reveal>
-            <div className="text-center mb-12">
+            <div className="text-center mb-6">
               <span className="eyebrow text-orange-500">La visione</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">Un ecosistema per l&apos;edilizia italiana.</h2>
-              <p className="mt-4 text-gray-500 max-w-xl mx-auto">
-                Stiamo costruendo la piattaforma di riferimento per le imprese edili italiane — un prodotto alla volta.
-              </p>
+              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">
+                Non stiamo costruendo un software.
+              </h2>
             </div>
           </Reveal>
-          <div className="flex flex-col md:flex-row items-start gap-0 max-w-3xl mx-auto">
+          <Reveal delay={0.1}>
+            <p className="text-gray-500 leading-relaxed text-center max-w-2xl mx-auto mb-4">
+              Stiamo costruendo l&apos;infrastruttura che mancava all&apos;edilizia italiana: strumenti operativi che fanno risparmiare ore, visibilità commerciale per trovare i clienti giusti, competenze imprenditoriali per crescere davvero, e una rete di professionisti con cui fare squadra.
+            </p>
+            <p className="text-gray-500 leading-relaxed text-center max-w-2xl mx-auto mb-16">
+              Asset per asset, stiamo rendendo le PMI edili italiane competitive come non lo sono mai state. Il punto di partenza sono gli Strumenti AI. Il traguardo è il primo network completo per chi costruisce l&apos;Italia.
+            </p>
+          </Reveal>
+
+          <div className="flex flex-col md:flex-row items-start gap-0 max-w-4xl mx-auto">
             {roadmap.map((item, i) => (
-              <Reveal key={item.step} delay={i * 0.08} className="flex-1 flex flex-col items-center text-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 ${item.active ? "bg-orange-500 border-orange-500 text-white" : "bg-white border-gray-300 text-gray-400"}`}>
+              <Reveal key={item.step} delay={i * 0.08} className="flex-1 flex flex-col items-center text-center px-2">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 ${
+                  item.active
+                    ? "bg-orange-500 border-orange-500 text-white"
+                    : (item as { soon?: boolean }).soon
+                      ? "bg-orange-50 border-orange-300 text-orange-500"
+                      : "bg-white border-gray-200 text-gray-400"
+                }`}>
                   {item.step}
                 </div>
-                {i < roadmap.length - 1 && (
-                  <div className={`hidden md:block absolute h-0.5 w-full top-5 left-1/2 ${item.active ? "bg-orange-200" : "bg-gray-200"}`} />
-                )}
-                <p className={`mt-3 font-semibold text-sm ${item.active ? "text-navy" : "text-gray-400"}`}>{item.label}</p>
-                <p className="text-xs text-gray-400 mt-0.5">{item.sublabel}</p>
+                <p className={`mt-3 font-semibold text-sm ${item.active ? "text-navy" : (item as { soon?: boolean }).soon ? "text-orange-600" : "text-gray-400"}`}>
+                  {item.label}
+                </p>
+                <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{item.sublabel}</p>
               </Reveal>
             ))}
           </div>

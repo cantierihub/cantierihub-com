@@ -61,7 +61,7 @@ export default function Hero() {
             <motion.div {...fade(0)}>
               <span className="pill">
                 <span className="pill__dot" />
-                Software AI per l&apos;edilizia italiana
+                Il network dell&apos;edilizia italiana
               </span>
             </motion.div>
 
@@ -70,9 +70,9 @@ export default function Hero() {
               className="mt-5 font-display font-extrabold"
               style={{ fontSize: "clamp(38px, 5.2vw, 66px)", lineHeight: 1.05, letterSpacing: "-0.025em", color: "#0f172a" }}
             >
-              Più margine su ogni cantiere.{" "}
+              Il network di riferimento{" "}
               <em className="not-italic" style={{ color: "#f97316" }}>
-                Senza rinunciare alla domenica.
+                per chi costruisce l&apos;Italia.
               </em>
             </motion.h1>
 
@@ -80,10 +80,8 @@ export default function Hero() {
               {...fade(0.2)}
               style={{ fontSize: "clamp(17px, 1.4vw, 19px)", lineHeight: 1.6, color: "#475569", marginTop: 20, maxWidth: 560 }}
             >
-              Cantieri Hub è il software AI per imprese edili italiane. Carica il
-              computo metrico, l&apos;AI estrae le voci, abbina i prezzari regionali e
-              genera il preventivo PDF.{" "}
-              <strong style={{ color: "#0f172a" }}>In 3 minuti, non in 3 ore.</strong>
+              Strumenti AI che azzerano il tempo sui preventivi. Marketing specializzato per trovare i clienti giusti. Formazione che fa crescere l&apos;impresa.{" "}
+              <strong style={{ color: "#0f172a" }}>Tutto in un posto.</strong>
             </motion.p>
 
             <motion.div {...fade(0.3)} className="mt-7 flex flex-wrap gap-3">

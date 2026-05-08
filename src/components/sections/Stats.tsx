@@ -3,7 +3,7 @@
 import Reveal from "@/components/ui/Reveal";
 
 const stats = [
-  { value: "30+", label: "Imprese attive" },
+  { value: "50+", label: "Imprese nel network" },
   { value: "~3 min", label: "Per ogni preventivo", accent: true },
   { value: "+15%", label: "Margine medio per cantiere", accent: true },
   { value: "2025", label: "Anno di fondazione" },
