@@ -23,7 +23,7 @@ export default function CTASection({
       className="final-cta-glow"
       style={{
         background: dark ? "#0f172a" : "#fff7ed",
-        padding: "clamp(64px, 8vw, 120px) 24px",
+        padding: "clamp(64px, 8vw, 120px) clamp(16px, 4vw, 24px)",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",

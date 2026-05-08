@@ -51,7 +51,7 @@ export default function Testimonials() {
                   background: "#fff",
                   border: "1px solid #e2e8f0",
                   borderRadius: 16,
-                  padding: "28px 28px 24px",
+                  padding: "clamp(16px, 4vw, 28px)",
                   display: "flex",
                   flexDirection: "column",
                   gap: 0,

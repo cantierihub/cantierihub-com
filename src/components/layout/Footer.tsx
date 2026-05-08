@@ -55,7 +55,7 @@ export default function Footer() {
           {/* Brand col */}
           <div>
             <div style={{ marginBottom: 16 }}>
-              <div style={{ position: "relative", width: 150, height: 38 }}>
+              <div style={{ position: "relative", width: "clamp(120px, 22vw, 150px)", height: 38 }}>
                 <Image
                   src="/images/logo.png"
                   alt="Cantieri Hub"

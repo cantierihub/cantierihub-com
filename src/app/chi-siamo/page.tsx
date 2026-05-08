@@ -97,7 +97,7 @@ export default function ChiSiamoPage() {
             </Reveal>
             <Reveal delay={0.15}>
               <div>
-                <div className="rounded-2xl overflow-hidden mb-4" style={{ position: "relative", height: 260 }}>
+                <div className="rounded-2xl overflow-hidden mb-4" style={{ position: "relative", height: "clamp(200px, 50vw, 260px)" }}>
                   <Image
                     src="/images/chisiamo-team.png"
                     alt="Il team di Cantieri Hub al lavoro"
@@ -136,7 +136,7 @@ export default function ChiSiamoPage() {
             {team.map((member, i) => (
               <Reveal key={member.name} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
-                  <div className="relative w-full h-64">
+                  <div className="relative w-full" style={{ height: "clamp(180px, 50vw, 256px)" }}>
                     <Image
                       src={member.photo}
                       alt={member.name}

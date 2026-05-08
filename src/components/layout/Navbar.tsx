@@ -46,7 +46,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0, textDecoration: "none" }}>
-          <div style={{ position: "relative", width: 160, height: 40 }}>
+          <div style={{ position: "relative", width: "clamp(120px, 22vw, 160px)", height: 40 }}>
             <Image
               src="/images/logo-color.png"
               alt="Cantieri Hub"
@@ -112,7 +112,7 @@ export default function Navbar() {
             transition={{ duration: 0.22, ease: "easeOut" }}
             style={{ background: "#fff", borderBottom: "1px solid #e2e8f0", overflow: "hidden" }}
           >
-            <div className="container-main" style={{ paddingTop: 16, paddingBottom: 24, display: "flex", flexDirection: "column", gap: 4 }}>
+            <div className="container-main" style={{ paddingTop: 16, paddingBottom: 24, display: "flex", flexDirection: "column", gap: 4, maxHeight: "calc(100vh - 72px)", overflowY: "auto" }}>
               {navLinks.map((link) => (
                 <Link
                   key={link.href}

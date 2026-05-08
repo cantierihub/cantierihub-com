@@ -153,16 +153,15 @@ export default function ComputatorePage() {
                 <Reveal key={w.number} delay={i * 0.08}>
                   <div
                     style={{
-                      display: "grid",
                       gridTemplateColumns: "1fr 1fr",
-                      gap: 56,
+                      gap: "clamp(24px, 4vw, 56px)",
                       alignItems: "center",
-                      padding: "48px",
+                      padding: "clamp(20px, 5vw, 48px)",
                       background: "#fff",
                       border: "1px solid #e2e8f0",
                       borderRadius: 16,
                     }}
-                    className="flex-col md:grid"
+                    className="flex flex-col md:grid"
                   >
                     {/* Testo */}
                     <div style={{ order: isReverse ? 2 : 1 }}>

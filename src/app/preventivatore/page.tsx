@@ -200,7 +200,8 @@ export default function PreventivatorePage() {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <div style={{ background: "#fff", borderRadius: 16, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 4px 8px rgba(15,23,42,.06)" }}>
+            <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" as const, borderRadius: 16 }}>
+            <div style={{ background: "#fff", borderRadius: 16, border: "1px solid #e2e8f0", overflow: "hidden", boxShadow: "0 4px 8px rgba(15,23,42,.06)", minWidth: 560 }}>
               {/* Header */}
               <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
                 <div style={{ padding: "18px 24px", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b" }}>Funzionalità</div>
@@ -227,6 +228,7 @@ export default function PreventivatorePage() {
                   </div>
                 </div>
               ))}
+            </div>
             </div>
           </Reveal>
         </div>

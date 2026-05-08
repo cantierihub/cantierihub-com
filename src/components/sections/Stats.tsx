@@ -16,7 +16,7 @@ export default function Stats() {
         <div
           className="grid grid-cols-2 md:grid-cols-4"
           style={{
-            gap: 24, padding: "36px 44px", borderRadius: 20,
+            gap: "clamp(16px, 3vw, 24px)", padding: "clamp(20px, 4vw, 36px) clamp(20px, 4vw, 44px)", borderRadius: 20,
             background: "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)",
             border: "1px solid rgba(255,255,255,.06)",
             boxShadow: "0 24px 48px rgba(15,23,42,.18), 0 8px 16px rgba(15,23,42,.10)",

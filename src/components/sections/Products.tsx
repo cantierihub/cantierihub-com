@@ -79,10 +79,9 @@ export default function Products() {
                   className={isOrange ? "product-card-orange has-noise" : "product-card-navy has-noise"}
                   style={{
                     borderRadius: 20,
-                    padding: "40px",
+                    padding: "clamp(24px, 5vw, 40px)",
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: 560,
                     position: "relative",
                     overflow: "hidden",
                     ...(isOrange

@@ -107,7 +107,7 @@ export default function Problem() {
             const Icon = item.icon;
             return (
               <Reveal key={item.title} delay={i * 0.09}>
-                <div className="problem-card" style={{ borderRadius: 14, padding: 28 }}>
+                <div className="problem-card" style={{ borderRadius: 14, padding: "clamp(18px, 4vw, 28px)" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(249,115,22,.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
                     <Icon size={20} color="#fb923c" />
                   </div>

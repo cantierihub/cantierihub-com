@@ -100,7 +100,7 @@ export default function Network() {
                 <div
                   style={{
                     borderRadius: 16,
-                    padding: "28px 24px",
+                    padding: "clamp(18px, 3vw, 28px) clamp(16px, 3vw, 24px)",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
