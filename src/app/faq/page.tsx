@@ -51,15 +51,20 @@ const categories = [
 export default function FAQPage() {
   return (
     <>
-      <section className="pt-28 pb-16 bg-white">
-        <div className="container-main">
+      <section className="relative pt-12 pb-8 md:pt-24 md:pb-12 bg-white overflow-hidden">
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.065) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        <div aria-hidden="true" style={{ position: "absolute", top: -80, right: -60, width: 480, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 65%)", filter: "blur(48px)", pointerEvents: "none" }} />
+        <div className="container-main relative z-10">
           <Reveal>
             <div className="max-w-2xl">
-              <span className="eyebrow text-orange-500">FAQ</span>
-              <h1 className="mt-3 font-display font-extrabold text-navy text-3xl md:text-5xl leading-tight">
+              <span className="pill">
+                <span className="pill__dot" />
+                Hai una domanda?
+              </span>
+              <h1 className="mt-5 font-display font-extrabold text-navy text-3xl md:text-5xl leading-tight">
                 Domande frequenti.
               </h1>
-              <p className="mt-4 text-lg text-gray-500">
+              <p className="mt-4 text-lg text-gray-500 leading-relaxed">
                 Tutto quello che vuoi sapere prima di prenotare una demo.
               </p>
             </div>

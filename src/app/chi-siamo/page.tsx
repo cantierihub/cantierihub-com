@@ -47,22 +47,46 @@ export default function ChiSiamoPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-28 pb-20 bg-white">
-        <div className="container-main">
-          <div className="max-w-3xl">
-            <Reveal>
-              <span className="eyebrow text-orange-500">Chi siamo</span>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h1 className="mt-3 font-display font-extrabold text-navy leading-tight" style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)" }}>
-                Nati per eliminare il tempo perso{" "}
-                <span className="text-orange-500">nell&apos;edilizia italiana.</span>
-              </h1>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="mt-5 text-lg text-gray-500 leading-relaxed">
-                Cantieri Hub nasce da una domanda semplice: perché chi fa preventivi edili perde ancora ore su un lavoro che l&apos;AI può fare in minuti? Abbiamo costruito la risposta.
-              </p>
+      <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-white overflow-hidden">
+        {/* Dot grid */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.065) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        {/* Orange glow top-right */}
+        <div aria-hidden="true" style={{ position: "absolute", top: -80, right: -60, width: 500, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.09) 0%, transparent 65%)", filter: "blur(48px)", pointerEvents: "none" }} />
+        <div className="container-main relative z-10">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div className="max-w-xl">
+              <Reveal>
+                <span className="pill">
+                  <span className="pill__dot" />
+                  Chi siamo
+                </span>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <h1 className="mt-5 font-display font-extrabold text-navy leading-tight" style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)" }}>
+                  Nati per eliminare il tempo perso{" "}
+                  <em className="not-italic text-orange-500">nell&apos;edilizia italiana.</em>
+                </h1>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <p className="mt-5 text-lg text-gray-500 leading-relaxed">
+                  Cantieri Hub nasce da una domanda semplice: perché chi fa preventivi edili perde ancora ore su un lavoro che l&apos;AI può fare in minuti? Abbiamo costruito la risposta.
+                </p>
+              </Reveal>
+            </div>
+            <Reveal delay={0.25} className="hidden md:block">
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                {[
+                  { v: "50+", l: "Imprese nel network" },
+                  { v: "3 min", l: "Per ogni preventivo" },
+                  { v: "+15%", l: "Margine medio" },
+                  { v: "2025", l: "Anno di fondazione" },
+                ].map((s) => (
+                  <div key={s.l} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "20px 16px", textAlign: "center", boxShadow: "0 2px 8px rgba(15,23,42,0.06)" }}>
+                    <p className="font-display font-extrabold" style={{ fontSize: "clamp(24px, 2.5vw, 32px)", color: "#f97316", margin: 0, lineHeight: 1 }}>{s.v}</p>
+                    <p style={{ fontSize: 12, color: "#94a3b8", margin: "6px 0 0", fontWeight: 500 }}>{s.l}</p>
+                  </div>
+                ))}
+              </div>
             </Reveal>
           </div>
         </div>

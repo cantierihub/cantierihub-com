@@ -81,8 +81,11 @@ export default function PreventivatorePage() {
   return (
     <>
       {/* Hero prodotto */}
-      <section className="relative pt-28 pb-20 bg-white overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-orange-50 blur-[100px] opacity-50 pointer-events-none" />
+      <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-white overflow-hidden">
+        {/* Dot grid */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.065) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        {/* Orange glow */}
+        <div aria-hidden="true" style={{ position: "absolute", top: -100, right: -60, width: 560, height: 460, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.10) 0%, transparent 65%)", filter: "blur(48px)", pointerEvents: "none" }} />
         <div className="container-main relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <Reveal>

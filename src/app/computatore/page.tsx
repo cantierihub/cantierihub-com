@@ -61,7 +61,7 @@ export default function ComputatorePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-28 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-navy overflow-hidden">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-orange-500/5 blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-[80px] pointer-events-none" />
         <div className="container-main relative z-10">

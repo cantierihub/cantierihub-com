@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CookiePage() {
   return (
-    <section className="pt-28 pb-20 bg-white">
+    <section className="pt-12 pb-8 md:pt-24 md:pb-16 bg-white">
       <div className="container-main">
         <Reveal>
           <div className="max-w-2xl mx-auto">
