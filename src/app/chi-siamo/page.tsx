@@ -160,14 +160,14 @@ export default function ChiSiamoPage() {
             {team.map((member, i) => (
               <Reveal key={member.name} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
-                  <div className="relative w-full" style={{ height: "clamp(180px, 50vw, 256px)" }}>
+                  <div className="relative w-full" style={{ aspectRatio: "3/4" }}>
                     <Image
                       src={member.photo}
                       alt={member.name}
                       fill
                       style={{
                         objectFit: "cover",
-                        objectPosition: member.name === "Raffaele Russo" ? "center 18%" : "center 15%",
+                        objectPosition: member.name === "Raffaele Russo" ? "center 12%" : "center 10%",
                       }}
                     />
                   </div>
