@@ -1,0 +1,28 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="7" fill="#0f172a"/>
+
+  <!-- Spine verticale sinistra -->
+  <rect x="6.5" y="9" width="2.8" height="14" rx="1.4" fill="#f97316"/>
+
+  <!-- Trace superiore — curva verso l'alto -->
+  <path d="M9.3 10.5 C12 10.5 13.5 8 16.5 8 L21.5 8"
+        stroke="#f97316" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+
+  <!-- Trace upper-mid — leggermente inclinata -->
+  <path d="M9.3 13.5 L21.5 13.5"
+        stroke="#f97316" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+
+  <!-- Trace lower-mid — leggermente inclinata -->
+  <path d="M9.3 18.5 L21.5 18.5"
+        stroke="#f97316" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+
+  <!-- Trace inferiore — curva verso il basso -->
+  <path d="M9.3 21.5 C12 21.5 13.5 24 16.5 24 L21.5 24"
+        stroke="#f97316" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+
+  <!-- Cerchi endpoint (open pads) -->
+  <circle cx="23.2" cy="8"    r="1.7" stroke="#f97316" stroke-width="1.5" fill="none"/>
+  <circle cx="23.2" cy="13.5" r="1.7" stroke="#f97316" stroke-width="1.5" fill="none"/>
+  <circle cx="23.2" cy="18.5" r="1.7" stroke="#f97316" stroke-width="1.5" fill="none"/>
+  <circle cx="23.2" cy="24"   r="1.7" stroke="#f97316" stroke-width="1.5" fill="none"/>
+</svg>
