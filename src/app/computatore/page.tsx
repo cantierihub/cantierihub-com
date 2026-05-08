@@ -17,7 +17,7 @@ const wowMoments = [
     number: "01",
     title: "Da zero a computo: descrizione + foto di sopralluogo",
     description:
-      "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero — senza nessun documento preesistente. Nessun competitor lo fa.",
+      "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero — senza nessun documento preesistente. Una funzione che non trovi da nessun'altra parte.",
     tag: "Il salto più grande",
   },
   {

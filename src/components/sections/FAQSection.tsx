@@ -24,7 +24,7 @@ const defaultFAQs: FAQItem[] = [
   },
   {
     q: "Quali formati di file posso caricare?",
-    a: "PDF, Excel (.xlsx, .xls) e XML (formato PriMus). Il sistema gestisce anche documenti scansionati con qualità sufficiente.",
+    a: "PDF, Excel (.xlsx, .xls) e XML (formato standard del settore). Il sistema gestisce anche documenti scansionati con qualità sufficiente.",
   },
   {
     q: "I prezzari regionali sono inclusi?",

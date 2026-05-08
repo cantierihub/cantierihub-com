@@ -14,7 +14,7 @@ const categories = [
     title: "Il prodotto",
     faqs: [
       { q: "Devo installare qualcosa sul mio computer?", a: "No. Cantieri Hub è un software cloud. Basta un browser aggiornato e una connessione internet. Funziona su PC, Mac e tablet." },
-      { q: "Che formati di file posso caricare?", a: "PDF, Excel (.xlsx, .xls) e XML (formato PriMus). Per il Computatore AI puoi anche caricare immagini (JPG, PNG) delle piantine e foto di cantiere." },
+      { q: "Che formati di file posso caricare?", a: "PDF, Excel (.xlsx, .xls) e XML (formato standard del settore). Per il Computatore AI puoi anche caricare immagini (JPG, PNG) delle piantine e foto di cantiere." },
       { q: "I prezzari regionali sono inclusi?", a: "Sì. Sono inclusi DEI, Regione Lombardia, Sicilia e altri prezzari regionali italiani. Puoi anche importare e mantenere il tuo prezzario aziendale personalizzato." },
       { q: "Quanti utenti posso avere?", a: "Ogni licenza include 3 utenti: il titolare e 2 collaboratori. Tutti accedono agli stessi dati aziendali in tempo reale, con ruoli differenziati." },
       { q: "Qual è la differenza tra Preventivatore e Computatore?", a: "Il Computatore genera il computo metrico (la lista di voci di lavorazione con quantità). Il Preventivatore lo trasforma in un'offerta commerciale con prezzi, ribassi e PDF brandizzato. Possono essere usati insieme o separatamente." },

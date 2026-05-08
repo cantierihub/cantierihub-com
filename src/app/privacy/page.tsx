@@ -17,7 +17,7 @@ export default function PrivacyPage() {
             <div className="prose prose-sm text-gray-600 space-y-6">
               <p>Ultimo aggiornamento: maggio 2026</p>
               <p>
-                Cantieri Hub (Adact Studio International LLC, 13057 Park Blvd, Seminole FL 33776, USA) è il titolare del trattamento dei dati personali raccolti tramite il sito cantierihub.com e la piattaforma SaaS.
+                Cantieri Hub è il titolare del trattamento dei dati personali raccolti tramite il sito cantierihub.com e la piattaforma SaaS.
               </p>
               <h2 className="font-display font-bold text-navy text-xl mt-8">Dati raccolti</h2>
               <p>Raccogliamo i dati che fornisci volontariamente (nome, email, azienda, telefono) tramite i form di contatto, e dati tecnici di navigazione (indirizzo IP, browser, pagine visitate) tramite cookie e strumenti di analytics.</p>

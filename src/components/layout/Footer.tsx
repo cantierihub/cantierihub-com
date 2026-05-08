@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const prodotti = [
   { label: "Preventivatore AI", href: "/preventivatore" },
@@ -53,26 +54,18 @@ export default function Footer() {
         >
           {/* Brand col */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-                <rect width="32" height="32" rx="8" fill="#1e293b" />
-                <path d="M6 16h4M22 16h4M16 6v4M16 22v4" stroke="#f97316" strokeWidth="2" strokeLinecap="round" />
-                <circle cx="16" cy="16" r="4" fill="#f97316" />
-                <path d="M10 10l3 3M19 19l3 3M10 22l3-3M19 13l3-3" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <span
-                className="font-display font-bold"
-                style={{ fontSize: 18, color: "#fff" }}
-              >
-                Cantieri<span style={{ color: "#f97316" }}>Hub</span>
-              </span>
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ position: "relative", width: 150, height: 38 }}>
+                <Image
+                  src="/images/logo.png"
+                  alt="Cantieri Hub"
+                  fill
+                  style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
+                />
+              </div>
             </div>
             <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.7, maxWidth: 260 }}>
               Software AI per imprese edili italiane. Dal computo metrico al preventivo professionale, in pochi minuti.
-            </p>
-            <p style={{ marginTop: 20, fontSize: 12, color: "#334155", lineHeight: 1.6 }}>
-              Adact Studio International LLC<br />
-              13057 Park Blvd, Seminole FL 33776, USA
             </p>
           </div>
 
@@ -170,7 +163,7 @@ export default function Footer() {
           }}
         >
           <p style={{ fontSize: 12, color: "#334155" }}>
-            © {new Date().getFullYear()} Cantieri Hub — Adact Studio International LLC.
+            © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
           </p>
           <p style={{ fontSize: 12, color: "#334155" }}>
             Fatto con cura in Italia 🇮🇹

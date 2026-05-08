@@ -16,7 +16,7 @@ const features = [
   {
     icon: Zap,
     title: "Estrazione AI da qualsiasi file",
-    description: "PDF, Excel, XML (PriMus). L'AI legge il computo metrico del committente e ne estrae tutte le voci con precisione. Anche dai documenti scansionati.",
+    description: "PDF, Excel, XML standard del settore. L'AI legge il computo metrico del committente e ne estrae tutte le voci con precisione. Anche dai documenti scansionati.",
   },
   {
     icon: Database,
@@ -69,7 +69,7 @@ const steps = [
 ];
 
 const faqItems = [
-  { q: "Funziona con i computi metrici in XML di PriMus?", a: "Sì. Il Preventivatore supporta nativamente il formato XML di PriMus (ACCA Software), oltre a PDF ed Excel." },
+  { q: "Funziona con i file XML standard del settore?", a: "Sì. Il Preventivatore supporta il formato XML standard utilizzato dai principali software di computo metrico, oltre a PDF ed Excel." },
   { q: "Posso usare il mio prezzario aziendale?", a: "Sì. Puoi importare il tuo prezzario interno da Excel, CSV o PDF. Viene aggiornato automaticamente con ogni preventivo salvato." },
   { q: "Cosa fa l'Analisi Prezzi AI?", a: "Per le voci non trovate nei prezzari, genera la scomposizione dettagliata dei costi: materiali, manodopera, noli, utile e spese generali. Con parametri reali (tipo lavorazione, dimensione cantiere, urgenza)." },
   { q: "Quanti utenti sono inclusi?", a: "Ogni licenza include 3 utenti: il titolare e 2 collaboratori. Tutti accedono agli stessi dati aziendali in tempo reale." },
@@ -224,10 +224,10 @@ export default function PreventivatorePage() {
             <Reveal>
               <span className="eyebrow" style={{ color: "#fb923c" }}>Perché Cantieri Hub</span>
               <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(28px, 3.5vw, 46px)", color: "#fff", marginTop: 12, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                I competitor non hanno un&apos;Analisi Prezzi AI di questo livello.
+                L&apos;Analisi Prezzi AI che nessun altro software edile ha.
               </h2>
               <p style={{ fontSize: "clamp(16px, 1.2vw, 18px)", color: "#94a3b8", marginTop: 20, lineHeight: 1.7 }}>
-                PriMus e gli altri software di settore lavorano sui prezzari standard. Ma il tuo cantiere ha sempre voci fuori prezzario: materiali speciali, lavorazioni non codificate, situazioni particolari. Prima le stimavi a occhio — o le lasciavi indietro perdendo margine. Adesso l&apos;AI scompone ogni voce in materiali, manodopera, noli, utile e spese generali, con parametri reali del tuo cantiere.
+                I software tradizionali lavorano sui prezzari standard. Ma il tuo cantiere ha sempre voci fuori prezzario: materiali speciali, lavorazioni non codificate, situazioni particolari. Prima le stimavi a occhio — o le lasciavi indietro perdendo margine. Adesso l&apos;AI scompone ogni voce in materiali, manodopera, noli, utile e spese generali, con parametri reali del tuo cantiere.
               </p>
               <div style={{ marginTop: 24 }}>
                 <Link href="/contatti" className="btn-primary cta-shimmer">

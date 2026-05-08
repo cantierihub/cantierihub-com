@@ -20,15 +20,15 @@ const values = [
 const team = [
   {
     name: "Raffaele Russo",
-    role: "Co-founder — Sviluppo & Vendite",
-    bio: "Costruisce e vende. Si occupa dello sviluppo del prodotto e delle demo con i potenziali clienti. La sua ossessione è che ogni funzione abbia senso per chi lavora in cantiere.",
+    role: "Co-founder — Prodotto & Vendite",
+    bio: "Si occupa dello sviluppo del prodotto e delle demo con i clienti. La sua ossessione è che ogni funzione abbia senso concreto per chi lavora in cantiere ogni giorno.",
     photo: "/images/raffaele.jpg",
     initials: "RR",
   },
   {
     name: "Dante",
-    role: "Co-founder — Operazioni & Sales",
-    bio: "Gestisce il team commerciale, il processo di onboarding e le relazioni con l'agenzia. Si assicura che ogni cliente riceva il supporto che merita dopo la firma.",
+    role: "Co-founder — Commerciale & Clienti",
+    bio: "Gestisce il processo commerciale, l'onboarding e il supporto diretto. Si assicura che ogni impresa che sceglie Cantieri Hub ottenga risultati reali da subito.",
     photo: "/images/dante.jpg",
     initials: "D",
   },
@@ -99,8 +99,8 @@ export default function ChiSiamoPage() {
                 {[
                   { v: "50+", l: "Imprese Attive" },
                   { v: "3 Min", l: "per Preventivo" },
-                  { v: "60%", l: "Uso Quotidiano" },
-                  { v: "2026", l: "Anno di fondazione" },
+                  { v: "+15%", l: "Margine medio" },
+                  { v: "2025", l: "Anno di fondazione" },
                 ].map((s) => (
                   <div key={s.l} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
                     <p className="font-display font-extrabold text-4xl text-orange-500">{s.v}</p>
@@ -143,11 +143,6 @@ export default function ChiSiamoPage() {
               </Reveal>
             ))}
           </div>
-          <Reveal delay={0.25}>
-            <p className="mt-6 text-center text-sm text-gray-400">
-              Base operativa: Lisbona + Italia. Entità legale: Adact Studio International LLC, Florida USA.
-            </p>
-          </Reveal>
         </div>
       </section>
 

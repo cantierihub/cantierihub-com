@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -44,16 +45,16 @@ export default function Navbar() {
       <div className="container-main" style={{ display: "flex", alignItems: "center", gap: 32, height: 72 }}>
 
         {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0, textDecoration: "none" }}>
-          <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="#0f172a" />
-            <path d="M6 16h4M22 16h4M16 6v4M16 22v4" stroke="#f97316" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="16" cy="16" r="4" fill="#f97316" />
-            <path d="M10 10l3 3M19 19l3 3M10 22l3-3M19 13l3-3" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          <span className="font-display font-bold" style={{ fontSize: 18, color: "#0f172a" }}>
-            Cantieri<span style={{ color: "#f97316" }}>Hub</span>
-          </span>
+        <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0, textDecoration: "none" }}>
+          <div style={{ position: "relative", width: 160, height: 40 }}>
+            <Image
+              src="/images/logo.png"
+              alt="Cantieri Hub"
+              fill
+              style={{ objectFit: "contain", objectPosition: "left" }}
+              priority
+            />
+          </div>
         </Link>
 
         {/* Desktop nav */}

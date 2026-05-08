@@ -6,7 +6,7 @@ const stats = [
   { value: "30+", label: "Imprese attive" },
   { value: "~3 min", label: "Per ogni preventivo", accent: true },
   { value: "+15%", label: "Margine medio per cantiere", accent: true },
-  { value: "60%", label: "Uso quotidiano" },
+  { value: "2025", label: "Anno di fondazione" },
 ];
 
 export default function Stats() {
