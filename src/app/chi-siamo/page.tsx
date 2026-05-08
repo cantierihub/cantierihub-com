@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
+
 import CTASection from "@/components/sections/CTASection";
 import { ArrowRight } from "lucide-react";
 
@@ -95,18 +96,27 @@ export default function ChiSiamoPage() {
               </div>
             </Reveal>
             <Reveal delay={0.15}>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { v: "50+", l: "Imprese Attive" },
-                  { v: "3 Min", l: "per Preventivo" },
-                  { v: "+15%", l: "Margine medio" },
-                  { v: "2025", l: "Anno di fondazione" },
-                ].map((s) => (
-                  <div key={s.l} className="bg-white rounded-2xl border border-gray-200 p-6 text-center">
-                    <p className="font-display font-extrabold text-4xl text-orange-500">{s.v}</p>
-                    <p className="mt-1 eyebrow text-gray-500">{s.l}</p>
-                  </div>
-                ))}
+              <div>
+                <div className="rounded-2xl overflow-hidden mb-4" style={{ position: "relative", height: 260 }}>
+                  <Image
+                    src="/images/construction-workers.jpg"
+                    alt="Imprenditori edili al lavoro"
+                    fill
+                    style={{ objectFit: "cover", objectPosition: "center 30%" }}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { v: "50+", l: "Imprese nel network" },
+                    { v: "2025", l: "Anno di fondazione" },
+                  ].map((s) => (
+                    <div key={s.l} className="bg-white rounded-xl border border-gray-200 p-5 text-center">
+                      <p className="font-display font-extrabold text-3xl text-orange-500">{s.v}</p>
+                      <p className="mt-1 eyebrow text-gray-500">{s.l}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Reveal>
           </div>

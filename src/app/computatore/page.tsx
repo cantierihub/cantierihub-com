@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
-import { ArrowRight, Camera, MessageSquare, Map } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
@@ -13,28 +14,31 @@ export const metadata: Metadata = {
 
 const wowMoments = [
   {
-    icon: Camera,
     number: "01",
     title: "Da zero a computo: descrizione + foto di sopralluogo",
     description:
       "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero — senza nessun documento preesistente. Una funzione che non trovi da nessun'altra parte.",
     tag: "Il salto più grande",
+    image: "/images/workers-tablet.jpg",
+    imageAlt: "Imprenditori edili con tablet in cantiere",
   },
   {
-    icon: MessageSquare,
     number: "02",
     title: "Chat AI autocorrettiva",
     description:
       "Parla con la chat integrata come se parlassi con un collega tecnico esperto: \"Sei sicuro di aver inserito tutte le voci per massetti e demolizioni?\" L'AI analizza il computo, trova le voci mancanti e le aggiunge. Tu approvi.",
     tag: "Elimina gli errori per stanchezza",
+    image: "/images/architect-laptop.jpg",
+    imageAlt: "Architetto al laptop con documenti di progetto",
   },
   {
-    icon: Map,
     number: "03",
     title: "Misure dalle piantine",
     description:
       "Carica la piantina (PDF o immagine). L'AI restituisce per ogni voce una quantità stimata con ragionamento esplicito: \"Stanza 4×5m + corridoio 1.2×6m = 27.2 m²\". Vedi il calcolo, accetti o modifichi voce per voce.",
     tag: "Ore di misurazioni in minuti",
+    image: "/images/blueprint-desk.jpg",
+    imageAlt: "Piantine architettoniche e laptop su scrivania",
   },
 ];
 
@@ -144,7 +148,6 @@ export default function ComputatorePage() {
 
           <div style={{ display: "grid", gap: 24 }}>
             {wowMoments.map((w, i) => {
-              const Icon = w.icon;
               const isReverse = i % 2 === 1;
               return (
                 <Reveal key={w.number} delay={i * 0.08}>
@@ -197,25 +200,25 @@ export default function ComputatorePage() {
                       </p>
                     </div>
 
-                    {/* Visual placeholder */}
+                    {/* Photo */}
                     <div
                       style={{
                         order: isReverse ? 1 : 2,
                         aspectRatio: "4/3",
                         borderRadius: 14,
-                        background: "linear-gradient(135deg, #f1f5f9 0%, #fff7ed 100%)",
+                        overflow: "hidden",
+                        position: "relative",
                         border: "1px solid #e2e8f0",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        boxShadow: "0 8px 24px rgba(15,23,42,0.08)",
                       }}
                     >
-                      <div style={{ textAlign: "center" }}>
-                        <div style={{ width: 56, height: 56, borderRadius: 14, background: "#fff7ed", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
-                          <Icon size={28} color="#f97316" />
-                        </div>
-                        <p style={{ fontSize: 13, color: "#94a3b8", margin: 0 }}>{w.tag}</p>
-                      </div>
+                      <Image
+                        src={w.image}
+                        alt={w.imageAlt}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
                     </div>
                   </div>
                 </Reveal>
