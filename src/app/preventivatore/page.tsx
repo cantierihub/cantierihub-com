@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Badge from "@/components/ui/Badge";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
@@ -113,6 +114,20 @@ export default function PreventivatorePage() {
                 >
                   Vedi anche il Computatore AI
                 </Link>
+              </div>
+            </Reveal>
+
+            {/* Product shot */}
+            <Reveal delay={0.45}>
+              <div className="mt-12 mx-auto" style={{ maxWidth: 860, position: "relative", borderRadius: 16, overflow: "hidden", boxShadow: "0 24px 64px rgba(15,23,42,0.12)", aspectRatio: "16/9" }}>
+                <Image
+                  src="/images/preventivatore-laptop.png"
+                  alt="Preventivatore AI — laptop con preventivo e caschetto Cantieri Hub"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center 40%" }}
+                  sizes="(max-width: 768px) 100vw, 860px"
+                  priority
+                />
               </div>
             </Reveal>
           </div>

@@ -99,10 +99,10 @@ export default function ChiSiamoPage() {
               <div>
                 <div className="rounded-2xl overflow-hidden mb-4" style={{ position: "relative", height: 260 }}>
                   <Image
-                    src="/images/construction-workers.jpg"
-                    alt="Imprenditori edili al lavoro"
+                    src="/images/chisiamo-team.png"
+                    alt="Il team di Cantieri Hub al lavoro"
                     fill
-                    style={{ objectFit: "cover", objectPosition: "center 30%" }}
+                    style={{ objectFit: "cover", objectPosition: "center 20%" }}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>

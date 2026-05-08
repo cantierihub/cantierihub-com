@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 const fade = (delay = 0) => ({
@@ -107,87 +108,42 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* ── Right: browser mockup ── */}
+          {/* ── Right: foto ── */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
             className="relative hidden lg:block"
-            style={{ aspectRatio: "5/4", perspective: "1600px" }}
+            style={{ aspectRatio: "5/4" }}
           >
-            {/* Browser angolato */}
+            {/* Foto principale */}
             <div
               className="absolute inset-0 rounded-2xl overflow-hidden"
-              style={{
-                background: "#fff",
-                transform: "rotateY(-6deg) rotateX(2deg) translateZ(0)",
-                boxShadow: "0 24px 48px rgba(15,23,42,.14), 0 8px 16px rgba(15,23,42,.06)",
-                border: "1px solid #e2e8f0",
-              }}
+              style={{ boxShadow: "0 24px 48px rgba(15,23,42,.14), 0 8px 16px rgba(15,23,42,.06)" }}
             >
-              {/* Barra browser */}
-              <div className="flex items-center gap-2 px-4" style={{ height: 40, background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
-                <span style={{ width: 10, height: 10, borderRadius: 999, background: "#FF5F57" }} />
-                <span style={{ width: 10, height: 10, borderRadius: 999, background: "#FEBC2E" }} />
-                <span style={{ width: 10, height: 10, borderRadius: 999, background: "#28C840" }} />
-                <span className="ml-3 px-3 rounded-full border text-xs" style={{ color: "#94a3b8", background: "#fff", borderColor: "#e2e8f0", paddingTop: 3, paddingBottom: 3 }}>
-                  app.cantierihub.it/preventivi
-                </span>
-              </div>
-
-              {/* App content */}
-              <div className="flex" style={{ height: "calc(100% - 40px)" }}>
-                <div style={{ width: 172, background: "#0f172a", padding: 14, flexShrink: 0 }}>
-                  <div className="flex items-center gap-2 mb-5">
-                    <div style={{ width: 22, height: 22, borderRadius: 6, background: "#f97316" }} />
-                    <div style={{ height: 9, width: 65, borderRadius: 4, background: "rgba(255,255,255,.2)" }} />
-                  </div>
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <div key={i} className="flex items-center gap-2 mb-1 rounded-lg px-2 py-2" style={i === 1 ? { background: "rgba(255,255,255,.10)", borderLeft: "2px solid #f97316" } : {}}>
-                      <div style={{ width: 11, height: 11, borderRadius: 3, background: "rgba(255,255,255,.25)", flexShrink: 0 }} />
-                      <div style={{ height: 7, borderRadius: 3, background: "rgba(255,255,255,.18)", width: 40 + i * 8 }} />
-                    </div>
-                  ))}
-                </div>
-                <div style={{ flex: 1, padding: 18, background: "#f8fafc", overflow: "hidden" }}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <div style={{ height: 13, width: 95, background: "#0f172a", borderRadius: 4, opacity: .7, marginBottom: 5 }} />
-                      <div style={{ height: 8, width: 150, background: "#cbd5e1", borderRadius: 4 }} />
-                    </div>
-                    <div style={{ height: 28, width: 100, background: "#f97316", borderRadius: 7 }} />
-                  </div>
-                  <div className="grid grid-cols-4 gap-2 mb-4">
-                    {[0, 1, 2, 3].map((i) => (
-                      <div key={i} style={{ background: i === 0 ? "#fff7ed" : "#fff", border: `1px solid ${i === 0 ? "#fed7aa" : "#e2e8f0"}`, borderRadius: 9, padding: "9px 7px" }}>
-                        <div style={{ height: 13, width: 24, background: i === 0 ? "#f97316" : "#94a3b8", borderRadius: 3, marginBottom: 5, opacity: .8 }} />
-                        <div style={{ height: 6, width: 32, background: "#e2e8f0", borderRadius: 3 }} />
-                      </div>
-                    ))}
-                  </div>
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="flex items-center gap-3" style={{ background: "#fff", borderRadius: 8, padding: "9px 11px", marginBottom: 5, border: "1px solid #e2e8f0" }}>
-                      <div style={{ width: 26, height: 26, borderRadius: 999, background: "#e2e8f0", flexShrink: 0 }} />
-                      <div style={{ flex: 1, height: 7, background: "#e2e8f0", borderRadius: 3 }} />
-                      <div style={{ height: 7, width: 55, background: "#f97316", borderRadius: 3, opacity: .45 }} />
-                      <div style={{ height: 16, width: 44, background: "#f1f5f9", borderRadius: 9999 }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <Image
+                src="/images/hero-imprenditore.png"
+                alt="Imprenditore edile che usa Cantieri Hub"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center 20%" }}
+                sizes="(max-width: 1024px) 0vw, 50vw"
+                priority
+              />
+              {/* Gradient overlay bottom per i tag */}
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
+                background: "linear-gradient(to top, rgba(15,23,42,0.5) 0%, transparent 100%)",
+              }} />
             </div>
 
-            {/* Foglio Excel sfondo */}
-            <div className="absolute" style={{ inset: "14% -8% -10% 28%", borderRadius: 8, zIndex: -1, opacity: .8, background: "repeating-linear-gradient(transparent 0 21px,rgba(15,23,42,.05) 21px 22px), repeating-linear-gradient(90deg,transparent 0 58px,rgba(15,23,42,.05) 58px 59px), #FAFAF7", boxShadow: "0 18px 40px rgba(15,23,42,.10)", transform: "rotateY(-6deg) rotateX(2deg) translateZ(-80px)" }} />
-
             {/* Tag flottante top */}
-            <div className="absolute flex items-center gap-2" style={{ top: "8%", left: "-4%", background: "#fff", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(15,23,42,.10)", borderRadius: 10, padding: "8px 14px", fontSize: 13, fontWeight: 600, color: "#0f172a" }}>
+            <div className="absolute flex items-center gap-2" style={{ top: "8%", left: "-4%", background: "#fff", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(15,23,42,.12)", borderRadius: 10, padding: "8px 14px", fontSize: 13, fontWeight: 600, color: "#0f172a", zIndex: 2 }}>
               <span style={{ width: 8, height: 8, borderRadius: 999, background: "#f97316", boxShadow: "0 0 0 4px rgba(249,115,22,.18)", flexShrink: 0 }} />
               AI estrae 47 voci
             </div>
 
             {/* Tag flottante bottom */}
-            <div className="absolute flex items-center gap-2" style={{ bottom: "6%", right: "-3%", background: "#0f172a", border: "1px solid #1e293b", boxShadow: "0 4px 12px rgba(15,23,42,.20)", borderRadius: 10, padding: "8px 14px", fontSize: 13, fontWeight: 600, color: "#fff" }}>
+            <div className="absolute flex items-center gap-2" style={{ bottom: "6%", right: "-3%", background: "#0f172a", border: "1px solid #1e293b", boxShadow: "0 4px 12px rgba(15,23,42,.20)", borderRadius: 10, padding: "8px 14px", fontSize: 13, fontWeight: 600, color: "#fff", zIndex: 2 }}>
               <span style={{ width: 8, height: 8, borderRadius: 999, background: "#fb923c", boxShadow: "0 0 0 4px rgba(249,115,22,.18)", flexShrink: 0 }} />
               Pronto in 2:48
             </div>

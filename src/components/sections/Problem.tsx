@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import { Clock, AlertTriangle, TrendingDown, FileX } from "lucide-react";
 
@@ -27,6 +28,19 @@ const problems = [
 export default function Problem() {
   return (
     <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0", marginTop: "clamp(64px, 9vw, 120px)", position: "relative", overflow: "hidden" }}>
+
+      {/* Background photo */}
+      <Image
+        src="/images/problem-stressed.png"
+        alt=""
+        fill
+        style={{ objectFit: "cover", objectPosition: "center 30%" }}
+        sizes="100vw"
+        aria-hidden="true"
+      />
+
+      {/* Dark overlay */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "rgba(15,23,42,0.88)" }} />
 
       {/* Dot grid — white on dark */}
       <div

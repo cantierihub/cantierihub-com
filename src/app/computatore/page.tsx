@@ -19,8 +19,8 @@ const wowMoments = [
     description:
       "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero — senza nessun documento preesistente. Una funzione che non trovi da nessun'altra parte.",
     tag: "Il salto più grande",
-    image: "/images/workers-tablet.jpg",
-    imageAlt: "Imprenditori edili con tablet in cantiere",
+    image: "/images/wow01-sopralluogo.png",
+    imageAlt: "Professionista con caschetto Cantieri Hub e tablet in cantiere",
   },
   {
     number: "02",
@@ -37,8 +37,8 @@ const wowMoments = [
     description:
       "Carica la piantina (PDF o immagine). L'AI restituisce per ogni voce una quantità stimata con ragionamento esplicito: \"Stanza 4×5m + corridoio 1.2×6m = 27.2 m²\". Vedi il calcolo, accetti o modifichi voce per voce.",
     tag: "Ore di misurazioni in minuti",
-    image: "/images/blueprint-desk.jpg",
-    imageAlt: "Piantine architettoniche e laptop su scrivania",
+    image: "/images/wow03-piantine.png",
+    imageAlt: "Professionista con tablet e piantina architettonica in cantiere",
   },
 ];
 
