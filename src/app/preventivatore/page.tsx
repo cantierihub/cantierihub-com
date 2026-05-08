@@ -138,8 +138,10 @@ export default function PreventivatorePage() {
       </section>
 
       {/* Come funziona */}
-      <section className="section-padding bg-base">
-        <div className="container-main">
+      <section className="section-padding bg-base relative overflow-hidden">
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.055) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        <div aria-hidden="true" style={{ position: "absolute", bottom: -80, left: -60, width: 480, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div className="container-main relative z-10">
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-500">Come funziona</span>
@@ -163,8 +165,10 @@ export default function PreventivatorePage() {
       </section>
 
       {/* Feature grid */}
-      <section className="section-padding bg-white">
-        <div className="container-main">
+      <section className="section-padding bg-white relative overflow-hidden">
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.06) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        <div aria-hidden="true" style={{ position: "absolute", top: -80, right: -60, width: 520, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
+        <div className="container-main relative z-10">
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-500">Funzionalità</span>
@@ -192,8 +196,9 @@ export default function PreventivatorePage() {
       </section>
 
       {/* Compare table */}
-      <section style={{ padding: "clamp(64px, 9vw, 120px) 0", background: "#fff" }}>
-        <div className="container-main">
+      <section style={{ padding: "clamp(64px, 9vw, 120px) 0", background: "#f8fafc", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.05) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        <div className="container-main relative z-10">
           <Reveal>
             <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 48px" }}>
               <span className="eyebrow" style={{ color: "#f97316" }}>Confronto</span>
@@ -238,8 +243,11 @@ export default function PreventivatorePage() {
       </section>
 
       {/* Differenziatore */}
-      <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0" }}>
-        <div className="container-main">
+      <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <div aria-hidden="true" style={{ position: "absolute", top: -80, right: -60, width: 520, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.09) 0%, transparent 65%)", pointerEvents: "none" }} />
+        <div aria-hidden="true" style={{ position: "absolute", bottom: -60, left: -40, width: 380, height: 320, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div className="container-main relative z-10">
           <div style={{ maxWidth: 740, margin: "0 auto" }}>
             <Reveal>
               <span className="eyebrow" style={{ color: "#fb923c" }}>Perché Cantieri Hub</span>
