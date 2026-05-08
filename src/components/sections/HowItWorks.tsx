@@ -3,8 +3,13 @@ import { UploadCloud, Download } from "lucide-react";
 
 export default function HowItWorks() {
   return (
-    <section style={{ background: "#f8fafc", padding: "clamp(64px, 9vw, 120px) 0" }}>
-      <div className="container-main">
+    <section style={{ background: "#fff", padding: "clamp(64px, 9vw, 120px) 0", position: "relative", overflow: "hidden" }}>
+      {/* Dot grid */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.065) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+      {/* Top-right glow */}
+      <div aria-hidden="true" style={{ position: "absolute", top: -60, right: -60, width: 420, height: 360, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      <div className="container-main" style={{ position: "relative", zIndex: 1 }}>
         <Reveal>
           <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ color: "#f97316" }}>Come funziona</span>

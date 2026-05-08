@@ -48,9 +48,18 @@ export default function Products() {
       style={{
         padding: "clamp(72px, 9vw, 128px) 0",
         background: "#f8fafc",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container-main">
+      {/* Dot grid */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.055) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+      {/* Orange glow — bottom right */}
+      <div aria-hidden="true" style={{ position: "absolute", bottom: -120, right: -80, width: 600, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
+      {/* Subtle top-left glow */}
+      <div aria-hidden="true" style={{ position: "absolute", top: -80, left: -80, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      <div className="container-main" style={{ position: "relative", zIndex: 1 }}>
         <Reveal>
           <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 64px" }}>
             <span className="eyebrow" style={{ color: "#f97316" }}>Gli strumenti AI</span>

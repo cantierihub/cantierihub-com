@@ -29,14 +29,21 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section style={{ background: "#fff", padding: "clamp(72px, 9vw, 128px) 0" }}>
-      <div className="container-main">
+    <section style={{ background: "#0f172a", padding: "clamp(72px, 9vw, 128px) 0", position: "relative", overflow: "hidden" }}>
+      {/* Dot grid */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+      {/* Orange glow center */}
+      <div aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 900, height: 600, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(249,115,22,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
+      {/* Corner glow top-right */}
+      <div aria-hidden="true" style={{ position: "absolute", top: -100, right: -80, width: 450, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      <div className="container-main" style={{ position: "relative", zIndex: 1 }}>
         <Reveal>
           <div style={{ textAlign: "center", maxWidth: 640, margin: "0 auto 56px" }}>
-            <span className="eyebrow" style={{ color: "#f97316" }}>Cosa dicono i clienti</span>
+            <span className="eyebrow" style={{ color: "#fb923c" }}>Cosa dicono i clienti</span>
             <h2
               className="font-display font-extrabold"
-              style={{ fontSize: "clamp(30px, 3.6vw, 48px)", color: "#0f172a", marginTop: 12 }}
+              style={{ fontSize: "clamp(30px, 3.6vw, 48px)", color: "#fff", marginTop: 12 }}
             >
               Chi l&apos;ha provato non torna indietro.
             </h2>
@@ -49,9 +56,10 @@ export default function Testimonials() {
               <div className="testimonial-card"
                 style={{
                   background: "#fff",
-                  border: "1px solid #e2e8f0",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: 16,
                   padding: "clamp(16px, 4vw, 28px)",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.24), 0 2px 6px rgba(0,0,0,0.12)",
                   display: "flex",
                   flexDirection: "column",
                   gap: 0,
