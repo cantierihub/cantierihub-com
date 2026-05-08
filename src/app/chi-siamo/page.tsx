@@ -23,14 +23,14 @@ const team = [
     name: "Raffaele Russo",
     role: "Co-founder — Prodotto & Vendite",
     bio: "Si occupa dello sviluppo del prodotto e delle demo con i clienti. La sua ossessione è che ogni funzione abbia senso concreto per chi lavora in cantiere ogni giorno.",
-    photo: "/images/raffaele.jpg",
+    photo: "/images/raffaele.png",
     initials: "RR",
   },
   {
     name: "Dante",
     role: "Co-founder — Commerciale & Clienti",
     bio: "Gestisce il processo commerciale, l'onboarding e il supporto diretto. Si assicura che ogni impresa che sceglie Cantieri Hub ottenga risultati reali da subito.",
-    photo: "/images/dante.jpg",
+    photo: "/images/dante.png",
     initials: "D",
   },
 ];
@@ -165,7 +165,10 @@ export default function ChiSiamoPage() {
                       src={member.photo}
                       alt={member.name}
                       fill
-                      className="object-cover object-top"
+                      style={{
+                        objectFit: "cover",
+                        objectPosition: member.name === "Raffaele Russo" ? "center 18%" : "center 15%",
+                      }}
                     />
                   </div>
                   <div className="p-6">
