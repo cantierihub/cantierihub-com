@@ -26,8 +26,53 @@ const problems = [
 
 export default function Problem() {
   return (
-    <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0", marginTop: "clamp(64px, 9vw, 120px)" }}>
-      <div className="container-main">
+    <section style={{ background: "#0f172a", padding: "clamp(64px, 9vw, 120px) 0", marginTop: "clamp(64px, 9vw, 120px)", position: "relative", overflow: "hidden" }}>
+
+      {/* Dot grid — white on dark */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", inset: 0, pointerEvents: "none",
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* Orange glow — center */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", top: "50%", left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 900, height: 700, borderRadius: "50%",
+          background: "radial-gradient(ellipse, rgba(249,115,22,0.07) 0%, transparent 65%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Corner glow — top right */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", top: -120, right: -80,
+          width: 450, height: 450, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Corner glow — bottom left */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", bottom: -100, left: -60,
+          width: 350, height: 350, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div className="container-main" style={{ position: "relative", zIndex: 1 }}>
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 56, maxWidth: 700, margin: "0 auto 56px" }}>
             <span className="eyebrow" style={{ color: "#fb923c" }}>Il problema</span>

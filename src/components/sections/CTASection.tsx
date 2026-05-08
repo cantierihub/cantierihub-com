@@ -25,8 +25,22 @@ export default function CTASection({
         background: dark ? "#0f172a" : "#fff7ed",
         padding: "clamp(64px, 8vw, 120px) 24px",
         textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      {/* Dot grid overlay */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", inset: 0, pointerEvents: "none",
+          backgroundImage: dark
+            ? "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)"
+            : "radial-gradient(circle, rgba(15,23,42,0.06) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
       <Reveal>
         <h2
           className="font-display font-extrabold"

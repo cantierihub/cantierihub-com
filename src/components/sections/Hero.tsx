@@ -13,12 +13,47 @@ export default function Hero() {
   return (
     <section
       className="relative pt-24 overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(1200px 600px at 75% -10%, rgba(249,115,22,.07), transparent 60%), radial-gradient(900px 500px at -5% 40%, rgba(15,23,42,.04), transparent 50%), #fff",
-      }}
+      style={{ background: "#fff" }}
     >
-      <div className="container-main py-16 md:py-24">
+      {/* Dot grid */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
+          backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.07) 1.5px, transparent 1.5px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* Animated blob — orange top-right */}
+      <motion.div
+        aria-hidden="true"
+        style={{
+          position: "absolute", top: "-20%", right: "-8%",
+          width: 700, height: 650, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(249,115,22,0.10) 0%, transparent 65%)",
+          filter: "blur(48px)", pointerEvents: "none", zIndex: 0,
+          willChange: "transform",
+        }}
+        animate={{ scale: [1, 1.14, 1], x: [0, 40, 0], y: [0, -28, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Animated blob — navy bottom-left */}
+      <motion.div
+        aria-hidden="true"
+        style={{
+          position: "absolute", bottom: "-15%", left: "-8%",
+          width: 600, height: 550, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(15,23,42,0.06) 0%, transparent 65%)",
+          filter: "blur(60px)", pointerEvents: "none", zIndex: 0,
+          willChange: "transform",
+        }}
+        animate={{ scale: [1, 1.20, 1], x: [0, -24, 0], y: [0, 32, 0] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      />
+
+      <div className="container-main py-16 md:py-24" style={{ position: "relative", zIndex: 1 }}>
         <div className="grid items-center gap-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
 
           {/* ── Left: copy ── */}
