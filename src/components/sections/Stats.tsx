@@ -11,7 +11,7 @@ const stats = [
 
 export default function Stats() {
   return (
-    <div className="container-main" style={{ marginTop: -64, position: "relative", zIndex: 10 }}>
+    <div className="container-main -mt-4 md:-mt-16" style={{ position: "relative", zIndex: 10 }}>
       <Reveal>
         <div
           className="grid grid-cols-2 md:grid-cols-4"

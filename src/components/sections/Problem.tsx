@@ -34,13 +34,18 @@ export default function Problem() {
         src="/images/problem-stressed.png"
         alt=""
         fill
-        style={{ objectFit: "cover", objectPosition: "center 30%" }}
+        style={{ objectFit: "cover", objectPosition: "center 20%" }}
         sizes="100vw"
         aria-hidden="true"
+        className="problem-bg-img"
       />
 
-      {/* Dark overlay */}
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "rgba(15,23,42,0.88)" }} />
+      {/* Dark overlay — più opaco su mobile */}
+      <div aria-hidden="true" className="problem-overlay" style={{ position: "absolute", inset: 0 }} />
+      <style>{`
+        .problem-overlay { background: rgba(15,23,42,0.92); }
+        @media (min-width: 768px) { .problem-overlay { background: rgba(15,23,42,0.86); } }
+      `}</style>
 
       {/* Dot grid — white on dark */}
       <div

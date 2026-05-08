@@ -46,7 +46,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0, textDecoration: "none" }}>
-          <div style={{ position: "relative", width: "clamp(120px, 22vw, 160px)", height: 40 }}>
+          <div style={{ position: "relative", width: "clamp(140px, 26vw, 190px)", height: 46 }}>
             <Image
               src="/images/logo-color.png"
               alt="Cantieri Hub"

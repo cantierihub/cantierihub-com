@@ -13,7 +13,7 @@ const fade = (delay = 0) => ({
 export default function Hero() {
   return (
     <section
-      className="relative pt-24 overflow-hidden"
+      className="relative pt-8 md:pt-20 overflow-hidden"
       style={{ background: "#fff" }}
     >
       {/* Dot grid */}
@@ -54,7 +54,7 @@ export default function Hero() {
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
       />
 
-      <div className="container-main py-16 md:py-24" style={{ position: "relative", zIndex: 1 }}>
+      <div className="container-main py-6 md:py-16" style={{ position: "relative", zIndex: 1 }}>
         <div className="grid items-center gap-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
 
           {/* ── Left: copy ── */}
