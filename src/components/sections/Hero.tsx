@@ -52,7 +52,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="container-main py-6 md:py-16" style={{ position: "relative", zIndex: 1 }}>
+      <div className="container-main pt-6 pb-14 md:pt-16 md:pb-28" style={{ position: "relative", zIndex: 1 }}>
         <div className="grid items-center gap-12" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
 
           {/* ── Left: copy ── */}
