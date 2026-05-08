@@ -56,7 +56,7 @@ export default function FAQPage() {
           <Reveal>
             <div className="max-w-2xl">
               <span className="eyebrow text-orange-500">FAQ</span>
-              <h1 className="mt-3 font-display font-extrabold text-navy text-5xl leading-tight">
+              <h1 className="mt-3 font-display font-extrabold text-navy text-3xl md:text-5xl leading-tight">
                 Domande frequenti.
               </h1>
               <p className="mt-4 text-lg text-gray-500">

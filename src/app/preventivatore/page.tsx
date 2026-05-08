@@ -140,7 +140,7 @@ export default function PreventivatorePage() {
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-500">Come funziona</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">4 passi. Nessuna formazione richiesta.</h2>
+              <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl">4 passi. Nessuna formazione richiesta.</h2>
             </div>
           </Reveal>
           <div className="grid md:grid-cols-4 gap-6">
@@ -165,7 +165,7 @@ export default function PreventivatorePage() {
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-500">Funzionalità</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">Tutto quello che ti serve per preventivare.</h2>
+              <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl">Tutto quello che ti serve per preventivare.</h2>
               <p className="mt-4 text-gray-500 max-w-xl mx-auto">Nessuna funzionalità esclusa dalla licenza base. Tutto incluso, nessuna sorpresa.</p>
             </div>
           </Reveal>

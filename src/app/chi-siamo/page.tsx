@@ -75,7 +75,7 @@ export default function ChiSiamoPage() {
             <Reveal>
               <div>
                 <span className="eyebrow text-orange-500">La missione</span>
-                <h2 className="mt-3 font-display font-extrabold text-navy text-4xl leading-tight">
+                <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl leading-tight">
                   10 preventivi nel tempo di uno.
                 </h2>
                 <p className="mt-5 text-gray-500 leading-relaxed">
@@ -129,7 +129,7 @@ export default function ChiSiamoPage() {
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-500">Il team</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">Chi c&apos;è dietro Cantieri Hub.</h2>
+              <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl">Chi c&apos;è dietro Cantieri Hub.</h2>
             </div>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -162,7 +162,7 @@ export default function ChiSiamoPage() {
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-400">I nostri valori</span>
-              <h2 className="mt-3 font-display font-extrabold text-white text-4xl">Come lavoriamo.</h2>
+              <h2 className="mt-3 font-display font-extrabold text-white text-2xl md:text-4xl">Come lavoriamo.</h2>
             </div>
           </Reveal>
           <div className="grid md:grid-cols-3 gap-6">
@@ -184,7 +184,7 @@ export default function ChiSiamoPage() {
           <Reveal>
             <div className="text-center mb-6">
               <span className="eyebrow text-orange-500">La visione</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">
+              <h2 className="mt-3 font-display font-extrabold text-navy text-xl md:text-4xl">
                 Non stiamo costruendo un software.
               </h2>
             </div>
@@ -198,10 +198,12 @@ export default function ChiSiamoPage() {
             </p>
           </Reveal>
 
-          <div className="flex flex-col md:flex-row items-start gap-0 max-w-4xl mx-auto">
+          {/* Desktop: timeline orizzontale */}
+          <div className="hidden md:flex items-start relative max-w-4xl mx-auto">
+            <div className="absolute h-px bg-gray-200" style={{ top: 20, left: "5%", right: "5%" }} />
             {roadmap.map((item, i) => (
-              <Reveal key={item.step} delay={i * 0.08} className="flex-1 flex flex-col items-center text-center px-2">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 ${
+              <Reveal key={item.step} delay={i * 0.08} className="flex-1 flex flex-col items-center text-center px-2 relative">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 relative z-10 ${
                   item.active
                     ? "bg-orange-500 border-orange-500 text-white"
                     : (item as { soon?: boolean }).soon
@@ -213,7 +215,37 @@ export default function ChiSiamoPage() {
                 <p className={`mt-3 font-semibold text-sm ${item.active ? "text-navy" : (item as { soon?: boolean }).soon ? "text-orange-600" : "text-gray-400"}`}>
                   {item.label}
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{item.sublabel}</p>
+                <p className="text-xs text-gray-400 mt-1 leading-relaxed">{item.sublabel}</p>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Mobile: timeline verticale */}
+          <div className="md:hidden max-w-sm mx-auto">
+            {roadmap.map((item, i) => (
+              <Reveal key={`m-${item.step}`} delay={i * 0.06}>
+                <div className="flex gap-4">
+                  <div className="flex flex-col items-center flex-shrink-0" style={{ width: 40 }}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 ${
+                      item.active
+                        ? "bg-orange-500 border-orange-500 text-white"
+                        : (item as { soon?: boolean }).soon
+                          ? "bg-orange-50 border-orange-300 text-orange-500"
+                          : "bg-white border-gray-200 text-gray-400"
+                    }`}>
+                      {item.step}
+                    </div>
+                    {i < roadmap.length - 1 && (
+                      <div className={`w-px flex-1 mt-1 ${item.active ? "bg-orange-200" : "bg-gray-200"}`} style={{ minHeight: 28 }} />
+                    )}
+                  </div>
+                  <div className={`pt-2 text-left ${i < roadmap.length - 1 ? "pb-6" : "pb-0"}`}>
+                    <p className={`font-semibold text-sm ${item.active ? "text-navy" : (item as { soon?: boolean }).soon ? "text-orange-600" : "text-gray-400"}`}>
+                      {item.label}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{item.sublabel}</p>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </div>

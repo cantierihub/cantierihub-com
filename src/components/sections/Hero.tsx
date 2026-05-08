@@ -69,7 +69,7 @@ export default function Hero() {
             <motion.h1
               {...fade(0.1)}
               className="mt-5 font-display font-extrabold"
-              style={{ fontSize: "clamp(38px, 5.2vw, 66px)", lineHeight: 1.05, letterSpacing: "-0.025em", color: "#0f172a" }}
+              style={{ fontSize: "clamp(30px, 5.2vw, 66px)", lineHeight: 1.05, letterSpacing: "-0.025em", color: "#0f172a" }}
             >
               Il network di riferimento{" "}
               <em className="not-italic" style={{ color: "#f97316" }}>

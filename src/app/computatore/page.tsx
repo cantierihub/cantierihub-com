@@ -233,7 +233,7 @@ export default function ComputatorePage() {
           <Reveal>
             <div className="text-center mb-12">
               <span className="eyebrow text-orange-500">Il flusso di lavoro</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-4xl">4 step dalla descrizione all&apos;export.</h2>
+              <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl">4 step dalla descrizione all&apos;export.</h2>
             </div>
           </Reveal>
           <div className="grid md:grid-cols-4 gap-6">

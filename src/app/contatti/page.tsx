@@ -48,7 +48,7 @@ export default function ContattiPage() {
           <Reveal>
             <div className="max-w-2xl mb-14">
               <span className="eyebrow text-orange-500">Contatti</span>
-              <h1 className="mt-3 font-display font-extrabold text-navy text-5xl leading-tight">
+              <h1 className="mt-3 font-display font-extrabold text-navy text-4xl md:text-5xl leading-tight">
                 Parliamoci.
               </h1>
               <p className="mt-4 text-lg text-gray-500">
