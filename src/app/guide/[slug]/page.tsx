@@ -13,6 +13,7 @@ interface GuideMeta {
   cover_image?: string;
   created_at: string;
   published: boolean;
+  html_url?: string;
 }
 
 async function fetchGuide(slug: string): Promise<GuideMeta | null> {
@@ -61,8 +62,7 @@ export default async function GuidePage(
   const guide = await fetchGuide(slug);
   if (!guide) notFound();
 
-  const baseUrl = process.env.GUIDE_HTML_BASE_URL ?? "https://cantierihub-guide.vercel.app";
-  const htmlUrl = `${baseUrl}/guide/${slug}.html`;
+  const htmlUrl = guide.html_url ?? `${process.env.GUIDE_HTML_BASE_URL ?? "https://guide.cantierihub.com"}/guide/${slug}.html`;
 
   const date = new Date(guide.created_at).toLocaleDateString("it-IT", {
     day: "numeric", month: "long", year: "numeric",
