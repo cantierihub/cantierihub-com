@@ -11,8 +11,11 @@ export async function POST(req: NextRequest) {
     const token = process.env.NOTION_TOKEN;
     const dbId = process.env.NOTION_LEADS_DB_ID;
 
+    if (!token) console.error("[guide-lead] NOTION_TOKEN mancante");
+    if (!dbId)  console.error("[guide-lead] NOTION_LEADS_DB_ID mancante");
+
     if (token && dbId) {
-      await fetch("https://api.notion.com/v1/pages", {
+      const res = await fetch("https://api.notion.com/v1/pages", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -23,23 +26,20 @@ export async function POST(req: NextRequest) {
           parent: { database_id: dbId },
           properties: {
             Email: { email },
-            Guida: {
-              title: [{ text: { content: title ?? slug } }],
-            },
-            Slug: {
-              rich_text: [{ text: { content: slug } }],
-            },
-            Data: {
-              date: { start: new Date().toISOString() },
-            },
+            Guida: { title: [{ text: { content: title ?? slug } }] },
+            Slug:  { rich_text: [{ text: { content: slug } }] },
           },
         }),
       });
+      if (!res.ok) {
+        const err = await res.json();
+        console.error("[guide-lead] Notion error:", JSON.stringify(err));
+      }
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
-    // Sempre restituisce successo — il download non deve bloccarsi per errori di storage
+  } catch (err) {
+    console.error("[guide-lead] Exception:", err);
     return NextResponse.json({ ok: true });
   }
 }
