@@ -11,6 +11,7 @@ interface GuideFormProps {
 
 export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState(""); // honeypot anti-bot (resta vuoto per gli umani)
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -22,11 +23,15 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
     setError("");
 
     try {
-      await fetch("/api/guide-lead", {
+      const res = await fetch("/api/guide-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug, title }),
+        body: JSON.stringify({ email, slug, title, company }),
       });
+      if (!res.ok) {
+        setError("Controlla l'email inserita e riprova.");
+        return;
+      }
       setDone(true);
     } catch {
       setError("Qualcosa è andato storto. Riprova.");
@@ -77,6 +82,21 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       <p style={{ fontSize: 14, color: "#64748b", marginBottom: 20, lineHeight: 1.5 }}>
         Inserisci la tua email e accedi subito alla guida completa.
       </p>
+
+      {/* Honeypot: invisibile e fuori dal tab order. I bot lo riempiono, gli umani no. */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
+        <label>
+          Non compilare questo campo
+          <input
+            type="text"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
+        </label>
+      </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <input
