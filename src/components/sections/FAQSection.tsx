@@ -4,11 +4,7 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import Link from "next/link";
-
-interface FAQItem {
-  q: string;
-  a: string;
-}
+import { homeFaqs, type FAQItem } from "@/data/faq";
 
 interface FAQSectionProps {
   items?: FAQItem[];
@@ -16,33 +12,6 @@ interface FAQSectionProps {
   subtitle?: string;
   showCTA?: boolean;
 }
-
-const defaultFAQs: FAQItem[] = [
-  {
-    q: "Devo installare qualcosa?",
-    a: "No. Cantieri Hub è un software cloud. Basta un browser e una connessione internet — funziona su PC, Mac e tablet.",
-  },
-  {
-    q: "Quali formati di file posso caricare?",
-    a: "PDF, Excel (.xlsx, .xls) e XML (formato standard del settore). Il sistema gestisce anche documenti scansionati con qualità sufficiente.",
-  },
-  {
-    q: "I prezzari regionali sono inclusi?",
-    a: "Sì. Sono inclusi i principali prezzari regionali italiani (DEI, Regione Lombardia, Sicilia e altri) e puoi importare il tuo prezzario aziendale personalizzato.",
-  },
-  {
-    q: "I miei dati aziendali sono al sicuro?",
-    a: "I dati sono isolati per azienda (nessun altro cliente può vederli) e ospitati su Supabase con crittografia. Rispettiamo il GDPR.",
-  },
-  {
-    q: "Come funziona il supporto?",
-    a: "Ogni cliente ha un referente diretto raggiungibile via WhatsApp e videochiamata. Non esistono ticket anonimi — parli con una persona.",
-  },
-  {
-    q: "Quanto costa?",
-    a: "Il prezzo non è pubblico — viene comunicato durante la demo, su misura per la tua impresa. Prenota una chiamata gratuita per scoprirlo.",
-  },
-];
 
 function FAQAccordionItem({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; onToggle: () => void }) {
   return (
@@ -68,7 +37,7 @@ function FAQAccordionItem({ item, isOpen, onToggle }: { item: FAQItem; isOpen: b
 }
 
 export default function FAQSection({
-  items = defaultFAQs,
+  items = homeFaqs,
   title = "Domande frequenti",
   subtitle = "Tutto quello che vuoi sapere prima di prenotare una demo.",
   showCTA = true,
