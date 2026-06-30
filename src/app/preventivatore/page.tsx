@@ -8,6 +8,7 @@ import FAQSection from "@/components/sections/FAQSection";
 import { ArrowRight, Zap, Database, Palette, Users, Archive } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/preventivatore" },
   title: "Preventivatore AI — Dal computo metrico al preventivo in 3 minuti",
   description:
     "Carica il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e genera il PDF professionale. Preventivi edili in 3 minuti.",
@@ -77,9 +78,24 @@ const faqItems = [
   { q: "Esiste una versione di prova gratuita?", a: "No. Ogni onboarding ha un costo operativo, quindi non offriamo trial. Offriamo invece una demo gratuita in cui vediamo insieme il tuo caso reale." },
 ];
 
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Preventivatore AI",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description:
+    "Dal computo metrico al preventivo professionale in pochi minuti: l'AI estrae le voci, abbina i prezzari regionali e genera il PDF brandizzato.",
+  publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
+};
+
 export default function PreventivatorePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Hero prodotto */}
       <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-white overflow-hidden">
         {/* Dot grid */}

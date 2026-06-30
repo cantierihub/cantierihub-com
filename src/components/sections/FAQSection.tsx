@@ -44,11 +44,14 @@ const defaultFAQs: FAQItem[] = [
   },
 ];
 
-function FAQAccordionItem({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; onToggle: () => void }) {
+function FAQAccordionItem({ item, isOpen, onToggle, id }: { item: FAQItem; isOpen: boolean; onToggle: () => void; id: string }) {
   return (
     <div className="border-b border-gray-200 last:border-0">
       <button
+        id={`${id}-btn`}
         onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={`${id}-panel`}
         className="w-full flex items-start justify-between py-5 text-left gap-4 group"
       >
         <span className={`font-display font-semibold text-base transition-colors ${isOpen ? "text-orange-500" : "text-navy group-hover:text-orange-500"}`}>
@@ -59,8 +62,8 @@ function FAQAccordionItem({ item, isOpen, onToggle }: { item: FAQItem; isOpen: b
         </span>
       </button>
       {isOpen && (
-        <div className="pb-5">
-          <p className="text-gray-500 text-sm leading-relaxed">{item.a}</p>
+        <div id={`${id}-panel`} role="region" aria-labelledby={`${id}-btn`} className="pb-5">
+          <p className="text-navy-500 text-sm leading-relaxed">{item.a}</p>
         </div>
       )}
     </div>
@@ -93,6 +96,7 @@ export default function FAQSection({
             {items.map((item, i) => (
               <FAQAccordionItem
                 key={i}
+                id={`faq-${i}`}
                 item={item}
                 isOpen={openIndex === i}
                 onToggle={() => setOpenIndex(openIndex === i ? null : i)}

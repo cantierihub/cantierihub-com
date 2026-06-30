@@ -7,6 +7,7 @@ import FAQSection from "@/components/sections/FAQSection";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/computatore" },
   title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
   description:
     "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
@@ -57,9 +58,24 @@ const faqItems = [
   { q: "Chi ha già il Preventivatore paga di più per aggiungere il Computatore?", a: "No — il prezzo per i clienti già abbonati al Preventivatore è ridotto. Parliamone in una chiamata dedicata." },
 ];
 
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Computatore AI",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description:
+    "Genera il computo metrico da zero: descrivi il lavoro e carica le foto del sopralluogo, l'AI costruisce le voci con quantità.",
+  publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
+};
+
 export default function ComputatorePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-navy overflow-hidden">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-orange-500/5 blur-[100px] pointer-events-none" />

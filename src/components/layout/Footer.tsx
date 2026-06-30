@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { WA_DEMO } from "@/data/site";
 
 const prodotti = [
   { label: "Preventivatore AI", href: "/preventivatore" },
@@ -95,7 +96,7 @@ export default function Footer() {
 
           {/* Azienda */}
           <div>
-            <h4 className="eyebrow" style={{ color: "#475569", marginBottom: 16 }}>
+            <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
               Azienda
             </h4>
             <ul style={{ display: "grid", gap: 10, listStyle: "none", padding: 0 }}>
@@ -115,7 +116,7 @@ export default function Footer() {
 
           {/* Legale */}
           <div>
-            <h4 className="eyebrow" style={{ color: "#475569", marginBottom: 16 }}>
+            <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
               Legale
             </h4>
             <ul style={{ display: "grid", gap: 10, listStyle: "none", padding: 0 }}>
@@ -135,19 +136,21 @@ export default function Footer() {
 
           {/* CTA col */}
           <div>
-            <h4 className="eyebrow" style={{ color: "#475569", marginBottom: 16 }}>
+            <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
               Inizia adesso
             </h4>
             <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.65, marginBottom: 20 }}>
               30 minuti di demo gratuita. Vedi come funziona con i tuoi file reali.
             </p>
-            <Link
-              href="/contatti"
+            <a
+              href={WA_DEMO}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary cta-shimmer"
               style={{ width: "100%", justifyContent: "center" }}
             >
               Prenota Demo <span className="arrow">→</span>
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -163,10 +166,10 @@ export default function Footer() {
             gap: 12,
           }}
         >
-          <p style={{ fontSize: 12, color: "#334155" }}>
+          <p style={{ fontSize: 12, color: "#94a3b8" }}>
             © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
           </p>
-          <p style={{ fontSize: 12, color: "#334155" }}>
+          <p style={{ fontSize: 12, color: "#94a3b8" }}>
             Fatto con cura in Italia 🇮🇹
           </p>
         </div>

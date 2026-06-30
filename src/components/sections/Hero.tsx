@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { WA_DEMO } from "@/data/site";
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -84,9 +85,9 @@ export default function Hero() {
             </motion.p>
 
             <motion.div {...fade(0.3)} className="mt-7 flex flex-wrap gap-3">
-              <Link href="/contatti" className="btn-primary btn-lg cta-shimmer">
+              <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary btn-lg cta-shimmer">
                 Prenota una Demo <span className="arrow">→</span>
-              </Link>
+              </a>
               <Link href="#prodotti" className="btn-ghost btn-lg">
                 Scopri i Prodotti
               </Link>

@@ -4,6 +4,7 @@ import CandidaturaForm from "./CandidaturaForm";
 import { Sparkles, TrendingUp, Award, Users, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/lavora-con-noi" },
   title: "Lavora con noi — Entra nel team di Cantieri Hub",
   description:
     "Cantieri Hub assume: venditori, setter, sales manager, marketing e developer. Società giovane che porta l'AI nell'edilizia italiana. Candidati e allega il tuo CV.",

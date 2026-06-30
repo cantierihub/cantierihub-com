@@ -228,7 +228,7 @@ export default function HowItWorks() {
                   <p style={{ fontSize: 12, fontWeight: 600, color: "#fff", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     preventivo_rossi_2024.pdf
                   </p>
-                  <p style={{ fontSize: 11, color: "#475569", margin: "3px 0 0" }}>Pronto · 2.4 MB</p>
+                  <p style={{ fontSize: 11, color: "#94a3b8", margin: "3px 0 0" }}>Pronto · 2.4 MB</p>
                 </div>
                 <div style={{
                   padding: "6px 14px", borderRadius: 7,

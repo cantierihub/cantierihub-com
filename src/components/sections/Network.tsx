@@ -32,8 +32,8 @@ const pillars = [
   {
     icon: Users,
     badge: "Vision",
-    badgeColor: "#475569",
-    badgeBg: "rgba(100,116,139,0.12)",
+    badgeColor: "#94a3b8",
+    badgeBg: "rgba(148,163,184,0.16)",
     title: "Rete di Imprenditori",
     description: "Una community di PMI edili italiane. Connessioni, collaborazioni, opportunità. Crescere insieme è più veloce che crescere soli.",
     accent: false,
@@ -149,7 +149,7 @@ export default function Network() {
                     display: "flex", alignItems: "center", justifyContent: "center",
                     marginBottom: 16,
                   }}>
-                    <Icon size={20} color={p.accent ? "#fb923c" : "#475569"} strokeWidth={1.8} />
+                    <Icon size={20} color={p.accent ? "#fb923c" : "#94a3b8"} strokeWidth={1.8} />
                   </div>
 
                   <h3
@@ -164,7 +164,7 @@ export default function Network() {
                   </h3>
                   <p style={{
                     fontSize: 14, lineHeight: 1.65,
-                    color: p.accent ? "#94a3b8" : "#475569",
+                    color: "#94a3b8",
                     margin: 0, flex: 1,
                   }}>
                     {p.description}

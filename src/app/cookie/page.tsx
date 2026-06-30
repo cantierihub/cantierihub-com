@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/cookie" },
   title: "Cookie Policy — Cantieri Hub",
   description: "Informativa sull'uso dei cookie su Cantieri Hub.",
 };

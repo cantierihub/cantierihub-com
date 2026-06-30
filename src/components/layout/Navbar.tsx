@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { WA_DEMO, WA_GENERALE } from "@/data/site";
 
 const navLinks = [
   { label: "Preventivatore AI", href: "/preventivatore" },
@@ -84,12 +85,12 @@ export default function Navbar() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-2" style={{ marginLeft: 8 }}>
-          <Link href="/contatti" className="btn-ghost btn-sm">
+          <a href={WA_GENERALE} target="_blank" rel="noopener noreferrer" className="btn-ghost btn-sm">
             WhatsApp
-          </Link>
-          <Link href="/contatti" className="btn-primary btn-sm cta-shimmer">
+          </a>
+          <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm cta-shimmer">
             Prenota Demo
-          </Link>
+          </a>
         </div>
 
         {/* Mobile burger */}
@@ -97,7 +98,9 @@ export default function Navbar() {
           onClick={() => setMobileOpen((v) => !v)}
           className="md:hidden"
           style={{ marginLeft: "auto", padding: 8, color: "#475569" }}
-          aria-label="Menu"
+          aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -107,6 +110,7 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -129,8 +133,8 @@ export default function Navbar() {
                 </Link>
               ))}
               <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #f1f5f9", display: "flex", flexDirection: "column", gap: 8 }}>
-                <Link href="/contatti" className="btn-ghost" style={{ justifyContent: "center" }}>WhatsApp</Link>
-                <Link href="/contatti" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</Link>
+                <a href={WA_GENERALE} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ justifyContent: "center" }}>WhatsApp</a>
+                <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</a>
               </div>
             </div>
           </motion.div>

@@ -7,6 +7,7 @@ import CTASection from "@/components/sections/CTASection";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/chi-siamo" },
   title: "Chi Siamo — Cantieri Hub",
   description:
     "Cantieri Hub nasce da una domanda semplice: perché chi fa preventivi edili perde ancora ore su un lavoro che l'AI può fare in minuti?",

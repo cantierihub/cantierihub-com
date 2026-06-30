@@ -71,6 +71,21 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-navy-800 font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Cantieri Hub",
+              url: "https://cantierihub.com",
+              logo: "https://cantierihub.com/images/logo-color.png",
+              description:
+                "Software AI per imprese edili italiane: dal computo metrico al preventivo professionale in pochi minuti.",
+              areaServed: "IT",
+            }),
+          }}
+        />
         <ScrollProgress />
         <Navbar />
         <main className="flex-1">{children}</main>
