@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Computatore AI", href: "/computatore" },
   { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "FAQ", href: "/faq" },
+  { label: "Lavora con noi", href: "/lavora-con-noi" },
   { label: "Contatti", href: "/contatti" },
 ];
 

@@ -9,6 +9,7 @@ const prodotti = [
 const azienda = [
   { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "FAQ", href: "/faq" },
+  { label: "Lavora con noi", href: "/lavora-con-noi" },
   { label: "Contatti", href: "/contatti" },
 ];
 
