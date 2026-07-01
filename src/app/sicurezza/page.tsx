@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   description:
     "Come Cantieri Hub protegge i tuoi dati: isolamento per azienda, crittografia in transito e a riposo, hosting europeo conforme GDPR e backup automatici.",
   alternates: { canonical: "/sicurezza" },
+  openGraph: {
+    title: "Sicurezza dei dati — I tuoi prezzari e preventivi al sicuro",
+    description:
+      "Come Cantieri Hub protegge i tuoi dati: isolamento per azienda, crittografia in transito e a riposo, hosting europeo conforme GDPR e backup automatici.",
+    url: "https://cantierihub.com/sicurezza",
+    type: "website",
+  },
 };
 
 const garanzie = [
@@ -156,7 +163,7 @@ export default function SicurezzaPage() {
                 </p>
                 <div className="mt-7">
                   <a
-                    href="/note-legali"
+                    href="/privacy"
                     className="inline-flex items-center gap-2 text-orange-500 font-semibold"
                   >
                     Privacy e trattamento dei dati

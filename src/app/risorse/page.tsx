@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   title: "Risorse per imprese edili — Guide, computo metrico e gestione cantieri",
   description:
     "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
+  openGraph: {
+    title: "Risorse per imprese edili — Guide, computo metrico e gestione cantieri",
+    description:
+      "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
+    url: "https://cantierihub.com/risorse",
+    type: "website",
+  },
 };
 
 const guideTemi = [

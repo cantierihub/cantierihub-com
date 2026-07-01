@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   title: "Calcola il preventivo con l'AI — Dal computo al prezzo in pochi minuti",
   description:
     "Calcola il tuo preventivo edile con l'AI di Cantieri Hub: carichi il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e stima le voci fuori prezzario. In pochi minuti, non in mezza giornata.",
+  openGraph: {
+    title: "Calcola il preventivo con l'AI — Dal computo al prezzo in pochi minuti",
+    description:
+      "Calcola il tuo preventivo edile con l'AI di Cantieri Hub: carichi il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e stima le voci fuori prezzario. In pochi minuti, non in mezza giornata.",
+    url: "https://cantierihub.com/calcola",
+    type: "website",
+  },
 };
 
 const steps = [
@@ -152,7 +159,7 @@ export default function CalcolaPage() {
                   modificare e firmare.
                 </p>
                 <a
-                  href="/analisi-prezzi"
+                  href="/preventivatore"
                   className="mt-6 inline-flex items-center gap-2 text-orange-400 font-semibold"
                 >
                   Scopri l&apos;Analisi Prezzi AI <ArrowRight size={18} className="arrow" />

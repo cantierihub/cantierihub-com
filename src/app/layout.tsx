@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import BackToTop from "@/components/ui/BackToTop";
 import CookieBanner from "@/components/ui/CookieBanner";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -65,6 +66,10 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+export const viewport = {
+  themeColor: "#0f172a",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -92,6 +97,7 @@ export default function RootLayout({
         <Footer />
         <BackToTop />
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );

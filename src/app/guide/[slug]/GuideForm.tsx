@@ -11,6 +11,7 @@ interface GuideFormProps {
 
 export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
   const [email, setEmail] = useState("");
+  const [hp, setHp] = useState(""); // honeypot anti-spam
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -25,7 +26,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       await fetch("/api/guide-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug, title }),
+        body: JSON.stringify({ email, slug, title, company_url: hp }),
       });
       setDone(true);
     } catch {
@@ -79,6 +80,16 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       </p>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <input
+          type="text"
+          name="company_url"
+          value={hp}
+          onChange={(e) => setHp(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+        />
         <input
           type="email"
           required

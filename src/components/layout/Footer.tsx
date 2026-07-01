@@ -2,21 +2,44 @@ import Link from "next/link";
 import Image from "next/image";
 import { WA_DEMO } from "@/data/site";
 
-const prodotti = [
-  { label: "Preventivatore AI", href: "/preventivatore" },
-  { label: "Computatore AI", href: "/computatore" },
-];
-
-const azienda = [
-  { label: "Chi Siamo", href: "/chi-siamo" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Lavora con noi", href: "/lavora-con-noi" },
-  { label: "Contatti", href: "/contatti" },
-];
-
-const legale = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Cookie Policy", href: "/cookie" },
+const linkGroups = [
+  {
+    title: "Prodotti",
+    links: [
+      { label: "Preventivatore AI", href: "/preventivatore" },
+      { label: "Computatore AI", href: "/computatore" },
+      { label: "Integrazioni", href: "/integrazioni" },
+      { label: "Confronto", href: "/confronto" },
+      { label: "Prezzo", href: "/prezzo" },
+      { label: "Sicurezza", href: "/sicurezza" },
+    ],
+  },
+  {
+    title: "Risorse",
+    links: [
+      { label: "Come funziona", href: "/come-funziona" },
+      { label: "Calcola preventivo", href: "/calcola" },
+      { label: "Prenota una demo", href: "/demo" },
+      { label: "Guide gratuite", href: "/guide" },
+      { label: "Risorse", href: "/risorse" },
+    ],
+  },
+  {
+    title: "Azienda",
+    links: [
+      { label: "Chi Siamo", href: "/chi-siamo" },
+      { label: "Lavora con noi", href: "/lavora-con-noi" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Contatti", href: "/contatti" },
+    ],
+  },
+  {
+    title: "Legale",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Cookie Policy", href: "/cookie" },
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -44,11 +67,11 @@ export default function Footer() {
 
       <div className="container-main" style={{ paddingTop: 80, paddingBottom: 52, position: "relative" }}>
 
-        {/* Grid: 5 columns */}
+        {/* Grid: brand + 4 gruppi link + CTA */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.8fr 1fr 1fr 1fr 1.4fr",
+            gridTemplateColumns: "1.7fr 1fr 1fr 1fr 0.9fr 1.3fr",
             gap: "48px 32px",
             marginBottom: 56,
           }}
@@ -62,84 +85,40 @@ export default function Footer() {
                   src="/images/logo.png"
                   alt="Cantieri Hub"
                   fill
+                  sizes="150px"
                   style={{ objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }}
                 />
               </div>
             </div>
-            <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.7, maxWidth: 260 }}>
+            <p style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.7, maxWidth: 260 }}>
               Software AI per imprese edili italiane. Dal computo metrico al preventivo professionale, in pochi minuti.
             </p>
           </div>
 
-          {/* Prodotti */}
-          <div>
-            <h4
-              className="eyebrow"
-              style={{ color: "#475569", marginBottom: 16 }}
-            >
-              Prodotti
-            </h4>
-            <ul style={{ display: "grid", gap: 10, listStyle: "none", padding: 0 }}>
-              {prodotti.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    style={{ fontSize: 14, color: "#94a3b8", transition: "color 120ms" }}
-                    className="footer-link"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Azienda */}
-          <div>
-            <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
-              Azienda
-            </h4>
-            <ul style={{ display: "grid", gap: 10, listStyle: "none", padding: 0 }}>
-              {azienda.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    style={{ fontSize: 14, color: "#94a3b8", transition: "color 120ms" }}
-                    className="footer-link"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legale */}
-          <div>
-            <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
-              Legale
-            </h4>
-            <ul style={{ display: "grid", gap: 10, listStyle: "none", padding: 0 }}>
-              {legale.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    style={{ fontSize: 14, color: "#94a3b8", transition: "color 120ms" }}
-                    className="footer-link"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Gruppi link */}
+          {linkGroups.map((group) => (
+            <div key={group.title}>
+              <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
+                {group.title}
+              </h4>
+              <ul style={{ display: "grid", gap: 10, listStyle: "none", padding: 0 }}>
+                {group.links.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="footer-link">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           {/* CTA col */}
           <div>
             <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
               Inizia adesso
             </h4>
-            <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.65, marginBottom: 20 }}>
+            <p style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.65, marginBottom: 20 }}>
               30 minuti di demo gratuita. Vedi come funziona con i tuoi file reali.
             </p>
             <a
@@ -181,6 +160,9 @@ export default function Footer() {
           .grid-footer { grid-template-columns: 1fr 1fr 1fr !important; }
         }
         @media (max-width: 640px) {
+          .grid-footer { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 400px) {
           .grid-footer { grid-template-columns: 1fr !important; }
         }
       `}</style>

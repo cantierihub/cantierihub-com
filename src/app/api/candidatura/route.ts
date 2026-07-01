@@ -34,7 +34,13 @@ export async function POST(req: NextRequest) {
     const telefono = String(form.get("telefono") ?? "").trim();
     const ruolo = String(form.get("ruolo") ?? "").trim();
     const messaggio = String(form.get("messaggio") ?? "").trim();
+    const company_url = String(form.get("company_url") ?? "").trim();
     const cv = form.get("cv");
+
+    // honeypot: se compilato è un bot → scarta silenziosamente
+    if (company_url) {
+      return NextResponse.json({ ok: true });
+    }
 
     // ── Validazione ──
     if (!nome || !email || !telefono || !ruolo) {

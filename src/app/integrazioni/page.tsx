@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   description:
     "Cantieri Hub legge i tuoi file (PDF, Excel, XML di settore, piantine e foto), include i prezzari DEI e regionali, importa il tuo prezzario interno ed esporta PDF ed Excel col tuo logo. Niente da cambiare nel tuo modo di lavorare.",
   alternates: { canonical: "/integrazioni" },
+  openGraph: {
+    title: "Integrazioni — Si integra con come già lavori",
+    description:
+      "Cantieri Hub legge i tuoi file (PDF, Excel, XML di settore, piantine e foto), include i prezzari DEI e regionali, importa il tuo prezzario interno ed esporta PDF ed Excel col tuo logo. Niente da cambiare nel tuo modo di lavorare.",
+    url: "https://cantierihub.com/integrazioni",
+    type: "website",
+  },
 };
 
 const formatiIngresso = [

@@ -18,6 +18,12 @@ export async function POST(req: NextRequest) {
     const email = String(body.email ?? "").trim();
     const telefono = String(body.telefono ?? "").trim();
     const messaggio = String(body.messaggio ?? "").trim();
+    const company_url = String(body.company_url ?? "").trim();
+
+    // honeypot: se compilato è un bot → scarta silenziosamente
+    if (company_url) {
+      return NextResponse.json({ ok: true });
+    }
 
     if (!nome || !email || !messaggio) {
       return NextResponse.json({ ok: false, error: "Compila nome, email e messaggio." }, { status: 400 });

@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "FAQ — Domande frequenti su Cantieri Hub",
   description:
     "Tutto quello che vuoi sapere su Cantieri Hub, il Preventivatore AI e il Computatore AI, prima di prenotare una demo.",
+  openGraph: {
+    title: "FAQ — Domande frequenti su Cantieri Hub",
+    description:
+      "Tutto quello che vuoi sapere su Cantieri Hub, il Preventivatore AI e il Computatore AI, prima di prenotare una demo.",
+    url: "https://cantierihub.com/faq",
+    type: "website",
+  },
 };
 
 const categories = [

@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   description:
     "30 minuti, dal vivo, sui tuoi file reali. Ti mostriamo come Cantieri Hub lavora il tuo computo metrico, scompone i prezzi con l'AI e ti restituisce un PDF pronto. Nessun impegno.",
   alternates: { canonical: "/demo" },
+  openGraph: {
+    title: "Prenota la tua demo gratuita — Cantieri Hub",
+    description:
+      "30 minuti, dal vivo, sui tuoi file reali. Ti mostriamo come Cantieri Hub lavora il tuo computo metrico, scompone i prezzi con l'AI e ti restituisce un PDF pronto. Nessun impegno.",
+    url: "https://cantierihub.com/demo",
+    type: "website",
+  },
 };
 
 const cosaVedi = [

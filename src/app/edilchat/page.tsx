@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   title: "EdilChat — L'assistente AI per chi costruisce in Italia",
   description:
     "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, bandi e operatività, con le fonti sempre citate. Knowledge base aggiornata ogni giorno.",
+  openGraph: {
+    title: "EdilChat — L'assistente AI per chi costruisce in Italia",
+    description:
+      "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, bandi e operatività, con le fonti sempre citate. Knowledge base aggiornata ogni giorno.",
+    url: "https://cantierihub.com/edilchat",
+    type: "website",
+  },
   // Pagina riservata: niente menu, niente indicizzazione.
   robots: { index: false, follow: false },
 };

@@ -24,14 +24,14 @@ const team = [
     name: "Raffaele Russo",
     role: "Co-founder — Prodotto & Vendite",
     bio: "Si occupa dello sviluppo del prodotto e delle demo con i clienti. La sua ossessione è che ogni funzione abbia senso concreto per chi lavora in cantiere ogni giorno.",
-    photo: "/images/raffaele.png",
+    photo: "/images/raffaele.jpg",
     initials: "RR",
   },
   {
     name: "Dante",
     role: "Co-founder — Commerciale & Clienti",
     bio: "Gestisce il processo commerciale, l'onboarding e il supporto diretto. Si assicura che ogni impresa che sceglie Cantieri Hub ottenga risultati reali da subito.",
-    photo: "/images/dante.png",
+    photo: "/images/dante.jpg",
     initials: "D",
   },
 ];
@@ -124,7 +124,7 @@ export default function ChiSiamoPage() {
               <div>
                 <div className="rounded-2xl overflow-hidden mb-4" style={{ position: "relative", height: "clamp(200px, 50vw, 260px)" }}>
                   <Image
-                    src="/images/chisiamo-team.png"
+                    src="/images/chisiamo-team.jpg"
                     alt="Il team di Cantieri Hub al lavoro"
                     fill
                     style={{ objectFit: "cover", objectPosition: "center 20%" }}
@@ -166,6 +166,7 @@ export default function ChiSiamoPage() {
                       src={member.photo}
                       alt={member.name}
                       fill
+                      sizes="(max-width: 768px) 100vw, 380px"
                       style={{
                         objectFit: "cover",
                         objectPosition: member.name === "Raffaele Russo" ? "center 12%" : "center 10%",

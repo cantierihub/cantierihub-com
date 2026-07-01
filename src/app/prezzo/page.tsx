@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   description:
     "Come funziona il prezzo di Cantieri Hub: licenza annuale, tutti i moduli inclusi, onboarding e supporto. Il prezzo te lo mostriamo in demo, su misura per la tua impresa.",
   alternates: { canonical: "/prezzo" },
+  openGraph: {
+    title: "Prezzo Cantieri Hub — Come funziona e cosa è incluso",
+    description:
+      "Come funziona il prezzo di Cantieri Hub: licenza annuale, tutti i moduli inclusi, onboarding e supporto. Il prezzo te lo mostriamo in demo, su misura per la tua impresa.",
+    url: "https://cantierihub.com/prezzo",
+    type: "website",
+  },
 };
 
 const inclusi = [
@@ -213,9 +220,8 @@ export default function PrezzoPage() {
                   Possibilità di rateizzare.
                 </h3>
                 <p className="mt-4 text-navy-500 text-sm leading-relaxed">
-                  La formula standard è annuale. In casi eccezionali possiamo dividere la licenza in
-                  tre o quattro rate, così l&apos;avvio è più leggero. Ne parliamo direttamente
-                  insieme, in base alla tua situazione.
+                  La formula standard è annuale. In casi particolari possiamo rendere l&apos;avvio più
+                  leggero: ne parliamo direttamente insieme, in base alla tua situazione.
                 </p>
               </div>
             </Reveal>

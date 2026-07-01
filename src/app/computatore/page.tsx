@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
   description:
     "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
+  openGraph: {
+    title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
+    description:
+      "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
+    url: "https://cantierihub.com/computatore",
+    type: "website",
+  },
 };
 
 const wowMoments = [
@@ -20,7 +27,7 @@ const wowMoments = [
     description:
       "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero — senza nessun documento preesistente. Una funzione che non trovi da nessun'altra parte.",
     tag: "Il salto più grande",
-    image: "/images/wow01-sopralluogo.png",
+    image: "/images/wow01-sopralluogo.jpg",
     imageAlt: "Professionista con caschetto Cantieri Hub e tablet in cantiere",
   },
   {
@@ -38,7 +45,7 @@ const wowMoments = [
     description:
       "Carica la piantina (PDF o immagine). L'AI restituisce per ogni voce una quantità stimata con ragionamento esplicito: \"Stanza 4×5m + corridoio 1.2×6m = 27.2 m²\". Vedi il calcolo, accetti o modifichi voce per voce.",
     tag: "Ore di misurazioni in minuti",
-    image: "/images/wow03-piantine.png",
+    image: "/images/wow03-piantine.jpg",
     imageAlt: "Professionista con tablet e piantina architettonica in cantiere",
   },
 ];

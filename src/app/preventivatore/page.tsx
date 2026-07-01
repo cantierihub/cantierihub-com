@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: "Preventivatore AI — Dal computo metrico al preventivo in 3 minuti",
   description:
     "Carica il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e genera il PDF professionale. Preventivi edili in 3 minuti.",
+  openGraph: {
+    title: "Preventivatore AI — Dal computo metrico al preventivo in 3 minuti",
+    description:
+      "Carica il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e genera il PDF professionale. Preventivi edili in 3 minuti.",
+    url: "https://cantierihub.com/preventivatore",
+    type: "website",
+  },
 };
 
 const features = [
@@ -140,7 +147,7 @@ export default function PreventivatorePage() {
             <Reveal delay={0.45}>
               <div className="mt-12 mx-auto" style={{ maxWidth: 860, position: "relative", borderRadius: 16, overflow: "hidden", boxShadow: "0 24px 64px rgba(15,23,42,0.12)", aspectRatio: "16/9" }}>
                 <Image
-                  src="/images/preventivatore-laptop.png"
+                  src="/images/preventivatore-laptop.jpg"
                   alt="Preventivatore AI — laptop con preventivo e caschetto Cantieri Hub"
                   fill
                   style={{ objectFit: "cover", objectPosition: "center 40%" }}

@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 const inputClass =
   "w-full px-4 py-3 rounded-lg border border-gray-200 text-sm text-navy placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-colors bg-white";
 
 export default function ContattiForm() {
+  const router = useRouter();
   const [form, setForm] = useState({ nome: "", azienda: "", email: "", telefono: "", messaggio: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [hp, setHp] = useState(""); // honeypot anti-spam
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState("");
   const [fallback, setFallback] = useState(false);
 
@@ -21,11 +24,11 @@ export default function ContattiForm() {
       const res = await fetch("/api/contatti", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, company_url: hp }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
-        setStatus("success");
+        router.push("/grazie");
       } else {
         setStatus("error");
         setFallback(Boolean(json.fallback));
@@ -38,20 +41,20 @@ export default function ContattiForm() {
     }
   }
 
-  if (status === "success") {
-    return (
-      <div className="text-center py-12 px-6 bg-orange-50 rounded-2xl border border-orange-200">
-        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mx-auto mb-4 shadow-sm">
-          <CheckCircle size={26} className="text-orange-500" />
-        </div>
-        <h3 className="font-display font-bold text-navy text-xl mb-2">Messaggio ricevuto!</h3>
-        <p className="text-navy-500 text-sm">Ti ricontattiamo entro 24 ore.</p>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {/* honeypot: invisibile agli umani, compilato dai bot */}
+      <input
+        type="text"
+        name="company_url"
+        value={hp}
+        onChange={(e) => setHp(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+      />
+
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="nome" className="block text-sm font-medium text-navy mb-1.5">

@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   title: "Analisi Prezzi AI — La scomposizione costi di qualsiasi voce",
   description:
     "Genera la scomposizione di costo di qualsiasi voce d'opera: materiali, manodopera, noli, spese generali e sicurezza. Editabile, ricalcolata live, esportabile.",
+  openGraph: {
+    title: "Analisi Prezzi AI — La scomposizione costi di qualsiasi voce",
+    description:
+      "Genera la scomposizione di costo di qualsiasi voce d'opera: materiali, manodopera, noli, spese generali e sicurezza. Editabile, ricalcolata live, esportabile.",
+    url: "https://cantierihub.com/analisi-prezzi",
+    type: "website",
+  },
   // Pagina riservata: niente menu, niente indicizzazione.
   robots: { index: false, follow: false },
 };

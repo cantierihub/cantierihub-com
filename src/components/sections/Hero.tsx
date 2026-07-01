@@ -121,7 +121,7 @@ export default function Hero() {
               style={{ boxShadow: "0 24px 48px rgba(15,23,42,.14), 0 8px 16px rgba(15,23,42,.06)" }}
             >
               <Image
-                src="/images/hero-imprenditore.png"
+                src="/images/hero-imprenditore.jpg"
                 alt="Imprenditore edile che usa Cantieri Hub"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center 20%" }}

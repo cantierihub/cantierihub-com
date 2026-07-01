@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   description:
     "Cantieri Hub a confronto con i software di preventivazione tradizionali: Analisi Prezzi AI, estrazione automatica, cloud senza installazione, supporto umano diretto.",
   alternates: { canonical: "/confronto" },
+  openGraph: {
+    title: "Perché scegliere Cantieri Hub — Il confronto",
+    description:
+      "Cantieri Hub a confronto con i software di preventivazione tradizionali: Analisi Prezzi AI, estrazione automatica, cloud senza installazione, supporto umano diretto.",
+    url: "https://cantierihub.com/confronto",
+    type: "website",
+  },
 };
 
 const righe = [
@@ -199,7 +206,7 @@ export default function ConfrontoPage() {
                   non torna indietro.
                 </p>
                 <a
-                  href="/analisi-prezzi"
+                  href="/preventivatore"
                   className="mt-7 inline-flex items-center gap-2 text-orange-500 font-semibold"
                 >
                   Scopri come funziona l&apos;Analisi Prezzi AI

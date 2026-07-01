@@ -31,7 +31,7 @@ export default function Problem() {
 
       {/* Background photo */}
       <Image
-        src="/images/problem-stressed.png"
+        src="/images/problem-stressed.jpg"
         alt=""
         fill
         style={{ objectFit: "cover", objectPosition: "center 20%" }}

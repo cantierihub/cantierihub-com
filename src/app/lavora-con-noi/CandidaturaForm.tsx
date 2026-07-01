@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowRight, CheckCircle, UploadCloud, FileText, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, UploadCloud, FileText, X } from "lucide-react";
 
 const RUOLI = [
   "Venditore / Closer",
@@ -22,10 +23,12 @@ function formatSize(bytes: number) {
 }
 
 export default function CandidaturaForm() {
+  const router = useRouter();
   const [form, setForm] = useState({ nome: "", email: "", telefono: "", ruolo: "", messaggio: "" });
+  const [hp, setHp] = useState(""); // honeypot anti-spam
   const [file, setFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState("");
   const [fallback, setFallback] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -56,13 +59,14 @@ export default function CandidaturaForm() {
     data.append("telefono", form.telefono);
     data.append("ruolo", form.ruolo);
     data.append("messaggio", form.messaggio);
+    data.append("company_url", hp);
     data.append("cv", file);
 
     try {
       const res = await fetch("/api/candidatura", { method: "POST", body: data });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
-        setStatus("success");
+        router.push("/grazie");
       } else {
         setStatus("error");
         setFallback(Boolean(json.fallback));
@@ -75,65 +79,41 @@ export default function CandidaturaForm() {
     }
   }
 
-  if (status === "success") {
-    return (
-      <div className="text-center py-12 px-6 bg-orange-50 rounded-2xl border border-orange-200">
-        <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center mx-auto mb-4 shadow-sm">
-          <CheckCircle size={28} className="text-orange-500" />
-        </div>
-        <h3 className="font-display font-bold text-navy text-xl mb-2">Candidatura inviata!</h3>
-        <p className="text-gray-500 text-sm max-w-sm mx-auto">
-          Grazie {form.nome.split(" ")[0] || ""}. Abbiamo ricevuto il tuo CV. Se il profilo è in linea ti
-          ricontattiamo per i prossimi passi.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {/* honeypot: invisibile agli umani, compilato dai bot */}
+      <input
+        type="text"
+        name="company_url"
+        value={hp}
+        onChange={(e) => setHp(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+      />
+
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="nome" className="block text-sm font-medium text-navy mb-1.5">
             Nome e Cognome <span className="text-orange-500">*</span>
           </label>
-          <input
-            id="nome"
-            type="text"
-            required
-            placeholder="Mario Rossi"
-            value={form.nome}
-            onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))}
-            className={inputClass}
-          />
+          <input id="nome" type="text" required placeholder="Mario Rossi" value={form.nome}
+            onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-navy mb-1.5">
             Email <span className="text-orange-500">*</span>
           </label>
-          <input
-            id="email"
-            type="email"
-            required
-            placeholder="tua@email.com"
-            value={form.email}
-            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-            className={inputClass}
-          />
+          <input id="email" type="email" required placeholder="tua@email.com" value={form.email}
+            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="telefono" className="block text-sm font-medium text-navy mb-1.5">
             Telefono <span className="text-orange-500">*</span>
           </label>
-          <input
-            id="telefono"
-            type="tel"
-            required
-            placeholder="+39 333 000 0000"
-            value={form.telefono}
-            onChange={(e) => setForm((f) => ({ ...f, telefono: e.target.value }))}
-            className={inputClass}
-          />
+          <input id="telefono" type="tel" required placeholder="+39 333 000 0000" value={form.telefono}
+            onChange={(e) => setForm((f) => ({ ...f, telefono: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="ruolo" className="block text-sm font-medium text-navy mb-1.5">

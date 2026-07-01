@@ -2,7 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, slug, title } = await req.json();
+    const { email, slug, title, company_url } = await req.json();
+
+    // honeypot: se compilato è un bot → scarta silenziosamente
+    if (typeof company_url === "string" && company_url.trim()) {
+      return NextResponse.json({ ok: true });
+    }
 
     if (!email || !slug) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
