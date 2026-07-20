@@ -11,6 +11,7 @@ import { WA_DEMO, WA_GENERALE } from "@/data/site";
 const navLinks = [
   { label: "Preventivatore AI", href: "/preventivatore" },
   { label: "Computatore AI", href: "/computatore" },
+  { label: "Prezzo", href: "/prezzo" },
   { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "FAQ", href: "/faq" },
   { label: "Lavora con noi", href: "/lavora-con-noi" },
