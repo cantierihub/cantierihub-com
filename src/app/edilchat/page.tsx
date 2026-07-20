@@ -26,8 +26,7 @@ export const metadata: Metadata = {
     url: "https://cantierihub.com/edilchat",
     type: "website",
   },
-  // Pagina riservata: niente menu, niente indicizzazione.
-  robots: { index: false, follow: false },
+  alternates: { canonical: "/edilchat" },
 };
 
 const funzionalita = [
@@ -76,9 +75,25 @@ const differenziatori = [
   },
 ];
 
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "EdilChat",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  url: EDILCHAT_URL,
+  description:
+    "Assistente AI verticale sull'edilizia italiana: normative, prezzari, bandi e gare, con le fonti sempre citate.",
+  publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
+};
+
 export default function EdilChatPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative pt-12 pb-10 md:pt-24 md:pb-20 bg-navy overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-orange-500/8 blur-[110px] pointer-events-none" />
