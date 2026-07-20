@@ -13,12 +13,6 @@ export const metadata: Metadata = {
     "Cantieri Hub nasce da una domanda semplice: perché chi fa preventivi edili perde ancora ore su un lavoro che l'AI può fare in minuti?",
 };
 
-const values = [
-  { title: "Concreti", description: "Nessun gergo tech. Strumenti che funzionano per chi lavora in cantiere ogni giorno, non per chi scrive slide in PowerPoint." },
-  { title: "Diretti", description: "Supporto diretto su WhatsApp e videochiamata. Niente ticket anonimi, niente help center da navigare." },
-  { title: "Orientati al risultato", description: "Il nostro successo si misura sul tempo che ti facciamo risparmiare e sui margini che ti aiutiamo a difendere." },
-];
-
 const team = [
   {
     name: "Raffaele Russo",
@@ -26,13 +20,6 @@ const team = [
     bio: "Si occupa dello sviluppo del prodotto e delle demo con i clienti. La sua ossessione è che ogni funzione abbia senso concreto per chi lavora in cantiere ogni giorno.",
     photo: "/images/raffaele.jpg",
     initials: "RR",
-  },
-  {
-    name: "Dante",
-    role: "Co-founder — Commerciale & Clienti",
-    bio: "Gestisce il processo commerciale, l'onboarding e il supporto diretto. Si assicura che ogni impresa che sceglie Cantieri Hub ottenga risultati reali da subito.",
-    photo: "/images/dante.jpg",
-    initials: "D",
   },
 ];
 
@@ -157,7 +144,11 @@ export default function ChiSiamoPage() {
               <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl">Chi c&apos;è dietro Cantieri Hub.</h2>
             </div>
           </Reveal>
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div
+            className={`grid gap-6 mx-auto ${
+              team.length > 1 ? "md:grid-cols-2 max-w-3xl" : "max-w-sm"
+            }`}
+          >
             {team.map((member, i) => (
               <Reveal key={member.name} delay={i * 0.1}>
                 <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
@@ -178,28 +169,6 @@ export default function ChiSiamoPage() {
                     <p className="text-xs text-orange-500 font-semibold mb-3">{member.role}</p>
                     <p className="text-sm text-gray-500 leading-relaxed">{member.bio}</p>
                   </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Valori */}
-      <section className="section-padding bg-navy">
-        <div className="container-main">
-          <Reveal>
-            <div className="text-center mb-12">
-              <span className="eyebrow text-orange-400">I nostri valori</span>
-              <h2 className="mt-3 font-display font-extrabold text-white text-2xl md:text-4xl">Come lavoriamo.</h2>
-            </div>
-          </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
-            {values.map((v, i) => (
-              <Reveal key={v.title} delay={i * 0.1}>
-                <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
-                  <h3 className="font-display font-bold text-white text-xl mb-3">{v.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{v.description}</p>
                 </div>
               </Reveal>
             ))}

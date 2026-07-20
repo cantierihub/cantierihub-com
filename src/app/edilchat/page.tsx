@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
+import { waLink } from "@/data/site";
 import {
   BookOpen,
   ListChecks,
@@ -14,6 +15,9 @@ import {
 } from "lucide-react";
 
 const EDILCHAT_URL = "https://edilchat.com";
+// La prova di EdilChat passa sempre da un consulente, che rilascia le credenziali:
+// non esiste accesso libero. Il contatto e il WhatsApp del setter, come nel resto del sito.
+const WA_EDILCHAT = waLink("Ciao! Vorrei provare EdilChat: come ottengo le credenziali?");
 
 export const metadata: Metadata = {
   title: "EdilChat — L'assistente AI per chi costruisce in Italia",
@@ -52,8 +56,8 @@ const funzionalita = [
   },
   {
     icon: MessageSquare,
-    nome: "Demo libera",
-    desc: "Provabile subito dalla home, senza nemmeno registrarti.",
+    nome: "Demo guidata",
+    desc: "Te la mostra un consulente, con credenziali dedicate alla tua impresa.",
   },
 ];
 
@@ -125,17 +129,28 @@ export default function EdilChatPage() {
             <Reveal delay={0.3}>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a
-                  href={EDILCHAT_URL}
+                  href={WA_EDILCHAT}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary btn-lg cta-shimmer"
                 >
-                  Provalo gratis <ExternalLink size={17} />
+                  Richiedi una demo <ArrowRight size={17} className="arrow" />
                 </a>
                 <a href="#funzioni" className="btn-ghost-white btn-lg">
                   Scopri cosa sa fare
                 </a>
               </div>
+              <p style={{ marginTop: 16, fontSize: 14, color: "#94a3b8" }}>
+                Hai gi&agrave; le credenziali?{" "}
+                <a
+                  href={EDILCHAT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#fb923c", textDecoration: "underline", whiteSpace: "nowrap" }}
+                >
+                  Accedi a EdilChat <ExternalLink size={13} style={{ display: "inline", verticalAlign: -2 }} />
+                </a>
+              </p>
             </Reveal>
           </div>
         </div>
@@ -249,19 +264,19 @@ export default function EdilChatPage() {
               maxWidth: "20ch", color: "#fff", position: "relative",
             }}
           >
-            Provalo adesso. È gratis.
+            Vuoi vederlo sul tuo lavoro?
           </h2>
           <p style={{ fontSize: "clamp(16px, 1.3vw, 19px)", color: "#94a3b8", marginBottom: 32, position: "relative" }}>
-            Nessuna registrazione per iniziare. Apri EdilChat e fai la tua prima domanda.
+            Ti diamo credenziali dedicate e un consulente ti accompagna nella prima prova.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3" style={{ position: "relative" }}>
             <a
-              href={EDILCHAT_URL}
+              href={WA_EDILCHAT}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary btn-lg cta-shimmer"
             >
-              Vai su edilchat.com <ArrowRight size={18} className="arrow" />
+              Scrivici su WhatsApp <ArrowRight size={18} className="arrow" />
             </a>
           </div>
         </Reveal>
