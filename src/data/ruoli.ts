@@ -12,7 +12,7 @@
 //  - "Full Stack Marketer": si sovrappone a "Marketing & Contenuti".
 export const RUOLI = [
   "Venditore / Closer",
-  "Setter / Appuntamentista",
+  "Setter",
   "Sales Manager",
   "Marketing & Contenuti",
   "Social Media Manager",

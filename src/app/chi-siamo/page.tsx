@@ -4,7 +4,6 @@ import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 
 import CTASection from "@/components/sections/CTASection";
-import { WA_CANDIDATURA } from "@/data/site";
 import RoadmapVisione, { type FaseRoadmap } from "@/components/sections/RoadmapVisione";
 import { ArrowRight } from "lucide-react";
 
@@ -259,10 +258,10 @@ export default function ChiSiamoPage() {
 
       <CTASection
         title="Vuoi lavorare con noi?"
-        subtitle="Cerchiamo persone che vogliano far crescere l'edilizia italiana. Mandaci la tua candidatura: bastano nome, ruolo e due righe su di te."
+        subtitle="Cerchiamo persone che vogliano far crescere l'edilizia italiana. Compila il form o scrivici a info@cantierihub.com."
         primaryLabel="Mandaci la tua candidatura"
         primaryHref="/lavora-con-noi#candidatura"
-        whatsappHref={WA_CANDIDATURA}
+        whatsapp={false}
         dark={false}
       />
     </>
