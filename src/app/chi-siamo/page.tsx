@@ -4,6 +4,7 @@ import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 
 import CTASection from "@/components/sections/CTASection";
+import RoadmapVisione, { type FaseRoadmap } from "@/components/sections/RoadmapVisione";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -26,10 +27,10 @@ const team = [
 // Roadmap PUBBLICA. Volutamente piu stretta di quella interna: restano fuori
 // Contabilita AI, E-commerce, Prezziario proprietario e Hiring Agency per non
 // anticiparli ai concorrenti. Decisione di Chiara del 21/07/2026.
-const roadmap = [
+const roadmap: FaseRoadmap[] = [
   {
     fase: "Live oggi",
-    stato: "live" as const,
+    stato: "live",
     prodotti: [
       {
         nome: "Preventivatore AI",
@@ -50,7 +51,7 @@ const roadmap = [
   },
   {
     fase: "In arrivo",
-    stato: "prossimo" as const,
+    stato: "prossimo",
     prodotti: [
       {
         nome: "Gestione Cantieri AI",
@@ -66,7 +67,7 @@ const roadmap = [
   },
   {
     fase: "La visione",
-    stato: "visione" as const,
+    stato: "visione",
     prodotti: [
       {
         nome: "Community",
@@ -251,49 +252,7 @@ export default function ChiSiamoPage() {
             </p>
           </Reveal>
 
-          {/* Roadmap a gruppi. La mini-descrizione compare in hover su desktop;
-              su touch (dove l'hover non esiste) resta sempre visibile. */}
-          <div className="max-w-5xl mx-auto flex flex-col gap-10">
-            {roadmap.map((fase, fi) => (
-              <div key={fase.fase}>
-                <Reveal delay={fi * 0.05}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span
-                      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
-                        fase.stato === "live"
-                          ? "bg-orange-50 text-orange-600 border border-orange-200"
-                          : fase.stato === "prossimo"
-                            ? "bg-blue-50 text-blue-600 border border-blue-200"
-                            : "bg-gray-100 text-gray-500 border border-gray-200"
-                      }`}
-                    >
-                      {fase.stato === "live" && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                      )}
-                      {fase.fase}
-                    </span>
-                    <div className="h-px flex-1 bg-gray-200" />
-                  </div>
-                </Reveal>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {fase.prodotti.map((prod, pi) => (
-                    <Reveal key={prod.nome} delay={fi * 0.05 + pi * 0.06}>
-                      <div
-                        tabIndex={0}
-                        className={`roadmap-card h-full rounded-2xl border bg-white p-5 outline-none ${
-                          fase.stato === "live" ? "border-orange-200" : "border-gray-200"
-                        }`}
-                      >
-                        <p className="font-display font-bold text-navy">{prod.nome}</p>
-                        <p className="text-sm text-gray-500 mt-1 leading-relaxed">{prod.tag}</p>
-                        <p className="roadmap-desc">{prod.desc}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <RoadmapVisione roadmap={roadmap} />
         </div>
       </section>
 
