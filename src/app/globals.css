@@ -416,3 +416,45 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Roadmap della pagina Chi Siamo.
+   La mini-descrizione compare al passaggio del mouse. Su touch l'hover non
+   esiste, quindi resta sempre visibile: nessun contenuto irraggiungibile. */
+.roadmap-card {
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.roadmap-desc {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+@media (hover: hover) {
+  .roadmap-desc {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: opacity 200ms ease, max-height 220ms ease, margin-top 200ms ease;
+  }
+  .roadmap-card:hover,
+  .roadmap-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+  }
+  .roadmap-card:hover .roadmap-desc,
+  .roadmap-card:focus-visible .roadmap-desc,
+  .roadmap-card:focus-within .roadmap-desc {
+    opacity: 1;
+    max-height: 160px;
+    margin-top: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roadmap-card,
+  .roadmap-desc {
+    transition: none;
+  }
+}

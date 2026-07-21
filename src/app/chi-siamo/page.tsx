@@ -16,19 +16,75 @@ export const metadata: Metadata = {
 const team = [
   {
     name: "Raffaele Russo",
-    role: "Co-founder — Prodotto & Vendite",
-    bio: "Si occupa dello sviluppo del prodotto e delle demo con i clienti. La sua ossessione è che ogni funzione abbia senso concreto per chi lavora in cantiere ogni giorno.",
+    role: "Co-founder",
+    bio: "Figlio di un muratore, Raffaele è cresciuto con l'edilizia in casa. Cantieri Hub nasce da lì: dalla convinzione che le piccole e medie imprese edili italiane non abbiano bisogno di un altro software, ma di riprendersi il tempo che perdono in preventivi, computi e pratiche. Il lavoro che non genera valore lo fa l'intelligenza artificiale. Quello che ne genera resta in cantiere, dove è sempre stato.",
     photo: "/images/raffaele-sed.jpg",
     initials: "RR",
   },
 ];
 
+// Roadmap PUBBLICA. Volutamente piu stretta di quella interna: restano fuori
+// Contabilita AI, E-commerce, Prezziario proprietario e Hiring Agency per non
+// anticiparli ai concorrenti. Decisione di Chiara del 21/07/2026.
 const roadmap = [
-  { step: "1", label: "Strumenti AI", sublabel: "Preventivatore + Computatore — Live", active: true },
-  { step: "2", label: "Marketing Edilizia", sublabel: "Agenzia specializzata — Prossimamente", active: false, soon: true },
-  { step: "3", label: "Formazione", sublabel: "Masterclass pratiche — In costruzione", active: false, soon: true },
-  { step: "4", label: "Rete di Imprenditori", sublabel: "Community nazionale — Vision", active: false },
-  { step: "5", label: "Network Completo", sublabel: "Piattaforma unificata — 2027", active: false },
+  {
+    fase: "Live oggi",
+    stato: "live" as const,
+    prodotti: [
+      {
+        nome: "Preventivatore AI",
+        tag: "Dal computo al preventivo in pochi minuti.",
+        desc: "Carichi il computo metrico, l'AI abbina ogni voce al prezzario e genera il preventivo in PDF con il tuo logo.",
+      },
+      {
+        nome: "Computatore AI",
+        tag: "Il computo metrico partendo da zero.",
+        desc: "Descrivi i lavori o carica le foto del sopralluogo: l'AI costruisce le voci con le quantità.",
+      },
+      {
+        nome: "EdilChat",
+        tag: "Le risposte dell'edilizia italiana.",
+        desc: "Normative, prezzari, bandi e gare. Risposte in linguaggio naturale, con le fonti sempre citate.",
+      },
+    ],
+  },
+  {
+    fase: "In arrivo",
+    stato: "prossimo" as const,
+    prodotti: [
+      {
+        nome: "Gestione Cantieri AI",
+        tag: "Il gestionale che tiene insieme tutto.",
+        desc: "Il prodotto che raccoglie gli altri: pianificazione, avanzamento lavori e costi del cantiere in un posto solo.",
+      },
+      {
+        nome: "Marketing Edilizia",
+        tag: "Farsi trovare dalle imprese giuste.",
+        desc: "Il servizio trasversale del network: visibilità e contatti qualificati per chi lavora nell'edilizia.",
+      },
+    ],
+  },
+  {
+    fase: "La visione",
+    stato: "visione" as const,
+    prodotti: [
+      {
+        nome: "Community",
+        tag: "Una rete di imprenditori edili.",
+        desc: "Chi guida un'impresa smette di procedere per tentativi: si confronta con chi ha gia risolto lo stesso problema.",
+      },
+      {
+        nome: "Eventi",
+        tag: "Ritrovarsi dal vivo.",
+        desc: "Incontri e formazione in presenza per imprenditori, geometri e tecnici del settore.",
+      },
+      {
+        nome: "Sede fisica",
+        tag: "Un posto vero, in Italia.",
+        desc: "Un hub dove clienti e team si incontrano di persona, non solo in videochiamata.",
+      },
+    ],
+  },
 ];
 
 export default function ChiSiamoPage() {
@@ -140,8 +196,7 @@ export default function ChiSiamoPage() {
         <div className="container-main">
           <Reveal>
             <div className="text-center mb-12">
-              <span className="eyebrow text-orange-500">Il team</span>
-              <h2 className="mt-3 font-display font-extrabold text-navy text-2xl md:text-4xl">Chi c&apos;è dietro Cantieri Hub.</h2>
+              <h2 className="font-display font-extrabold text-navy text-2xl md:text-4xl">Da dove nasce Cantieri Hub.</h2>
             </div>
           </Reveal>
           <div
@@ -189,62 +244,54 @@ export default function ChiSiamoPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-gray-500 leading-relaxed text-center max-w-2xl mx-auto mb-4">
-              Stiamo costruendo l&apos;infrastruttura che mancava all&apos;edilizia italiana: strumenti operativi che fanno risparmiare ore, visibilità commerciale per trovare i clienti giusti, competenze imprenditoriali per crescere davvero, e una rete di professionisti con cui fare squadra.
+              Stiamo costruendo l&apos;infrastruttura che mancava all&apos;edilizia italiana: strumenti operativi che fanno risparmiare ore, visibilità commerciale per trovare i clienti giusti e una rete di professionisti con cui fare squadra.
             </p>
             <p className="text-gray-500 leading-relaxed text-center max-w-2xl mx-auto mb-16">
               Asset per asset, stiamo rendendo le PMI edili italiane competitive come non lo sono mai state. Il punto di partenza sono gli Strumenti AI. Il traguardo è il primo network completo per chi costruisce l&apos;Italia.
             </p>
           </Reveal>
 
-          {/* Desktop: timeline orizzontale */}
-          <div className="hidden md:flex items-start relative max-w-4xl mx-auto">
-            <div className="absolute h-px bg-gray-200" style={{ top: 20, left: "5%", right: "5%" }} />
-            {roadmap.map((item, i) => (
-              <Reveal key={item.step} delay={i * 0.08} className="flex-1 flex flex-col items-center text-center px-2 relative">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 relative z-10 ${
-                  item.active
-                    ? "bg-orange-500 border-orange-500 text-white"
-                    : (item as { soon?: boolean }).soon
-                      ? "bg-orange-50 border-orange-300 text-orange-500"
-                      : "bg-white border-gray-200 text-gray-400"
-                }`}>
-                  {item.step}
-                </div>
-                <p className={`mt-3 font-semibold text-sm ${item.active ? "text-navy" : (item as { soon?: boolean }).soon ? "text-orange-600" : "text-gray-400"}`}>
-                  {item.label}
-                </p>
-                <p className="text-xs text-gray-400 mt-1 leading-relaxed">{item.sublabel}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Mobile: timeline verticale */}
-          <div className="md:hidden max-w-sm mx-auto">
-            {roadmap.map((item, i) => (
-              <Reveal key={`m-${item.step}`} delay={i * 0.06}>
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center flex-shrink-0" style={{ width: 40 }}>
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm border-2 ${
-                      item.active
-                        ? "bg-orange-500 border-orange-500 text-white"
-                        : (item as { soon?: boolean }).soon
-                          ? "bg-orange-50 border-orange-300 text-orange-500"
-                          : "bg-white border-gray-200 text-gray-400"
-                    }`}>
-                      {item.step}
-                    </div>
-                    {i < roadmap.length - 1 && (
-                      <div className={`w-px flex-1 mt-1 ${item.active ? "bg-orange-200" : "bg-gray-200"}`} style={{ minHeight: 28 }} />
-                    )}
+          {/* Roadmap a gruppi. La mini-descrizione compare in hover su desktop;
+              su touch (dove l'hover non esiste) resta sempre visibile. */}
+          <div className="max-w-5xl mx-auto flex flex-col gap-10">
+            {roadmap.map((fase, fi) => (
+              <div key={fase.fase}>
+                <Reveal delay={fi * 0.05}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span
+                      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
+                        fase.stato === "live"
+                          ? "bg-orange-50 text-orange-600 border border-orange-200"
+                          : fase.stato === "prossimo"
+                            ? "bg-blue-50 text-blue-600 border border-blue-200"
+                            : "bg-gray-100 text-gray-500 border border-gray-200"
+                      }`}
+                    >
+                      {fase.stato === "live" && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                      )}
+                      {fase.fase}
+                    </span>
+                    <div className="h-px flex-1 bg-gray-200" />
                   </div>
-                  <div className={`pt-2 text-left ${i < roadmap.length - 1 ? "pb-6" : "pb-0"}`}>
-                    <p className={`font-semibold text-sm ${item.active ? "text-navy" : (item as { soon?: boolean }).soon ? "text-orange-600" : "text-gray-400"}`}>
-                      {item.label}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{item.sublabel}</p>
-                  </div>
+                </Reveal>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {fase.prodotti.map((prod, pi) => (
+                    <Reveal key={prod.nome} delay={fi * 0.05 + pi * 0.06}>
+                      <div
+                        tabIndex={0}
+                        className={`roadmap-card h-full rounded-2xl border bg-white p-5 outline-none ${
+                          fase.stato === "live" ? "border-orange-200" : "border-gray-200"
+                        }`}
+                      >
+                        <p className="font-display font-bold text-navy">{prod.nome}</p>
+                        <p className="text-sm text-gray-500 mt-1 leading-relaxed">{prod.tag}</p>
+                        <p className="roadmap-desc">{prod.desc}</p>
+                      </div>
+                    </Reveal>
+                  ))}
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
