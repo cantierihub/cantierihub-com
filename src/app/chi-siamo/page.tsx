@@ -257,8 +257,11 @@ export default function ChiSiamoPage() {
       </section>
 
       <CTASection
-        title="Lavora con noi."
-        subtitle="Prenota una demo e scopri perché 50+ imprese edili italiane hanno scelto Cantieri Hub."
+        title="Vuoi lavorare con noi?"
+        subtitle="Cerchiamo persone che vogliano far crescere l'edilizia italiana. Mandaci la tua candidatura: bastano nome, ruolo e due righe su di te."
+        primaryLabel="Mandaci la tua candidatura"
+        primaryHref="/lavora-con-noi#candidatura"
+        whatsappSecondaryText="Ciao! Vi scrivo per una candidatura: ho visto la pagina Lavora con noi di Cantieri Hub."
         dark={false}
       />
     </>
