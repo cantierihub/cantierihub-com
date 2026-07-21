@@ -11,6 +11,8 @@ interface CTASectionProps {
   primaryHref?: string;
   /** Prefill del pulsante WhatsApp secondario; se assente usa quello generico. */
   whatsappSecondaryText?: string;
+  /** Link WhatsApp gia pronto: serve quando il destinatario non e il setter. */
+  whatsappHref?: string;
   whatsapp?: boolean;
   dark?: boolean;
 }
@@ -22,12 +24,14 @@ export default function CTASection({
   whatsappText,
   primaryHref,
   whatsappSecondaryText,
+  whatsappHref,
   whatsapp = true,
   dark = true,
 }: CTASectionProps) {
   const hrefPrimario = primaryHref ?? (whatsappText ? waLink(whatsappText) : WA_DEMO);
   const primarioEsterno = hrefPrimario.startsWith("http");
-  const hrefWhatsapp = whatsappSecondaryText ? waLink(whatsappSecondaryText) : WA_GENERALE;
+  const hrefWhatsapp =
+    whatsappHref ?? (whatsappSecondaryText ? waLink(whatsappSecondaryText) : WA_GENERALE);
 
   return (
     <section

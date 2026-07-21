@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { RUOLI } from "@/data/ruoli";
 
 // Resend e Buffer richiedono il runtime Node, non Edge.
 export const runtime = "nodejs";
@@ -8,13 +9,7 @@ const MAX_BYTES = 4 * 1024 * 1024; // 4 MB — sotto il limite body di Vercel (~
 const DEST = "info@cantierihub.com";
 const FROM = "Candidature Cantieri Hub <candidature@app-cantierihub.com>";
 
-const RUOLI = new Set([
-  "Venditore / Closer",
-  "Setter / Appuntamentista",
-  "Sales Manager",
-  "Marketing & Contenuti",
-  "Developer",
-]);
+const RUOLI_VALIDI = new Set<string>(RUOLI);
 
 const ALLOWED_TYPES = new Set([
   "application/pdf",
@@ -49,7 +44,7 @@ export async function POST(req: NextRequest) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ ok: false, error: "L'indirizzo email non sembra valido." }, { status: 400 });
     }
-    if (!RUOLI.has(ruolo)) {
+    if (!RUOLI_VALIDI.has(ruolo)) {
       return NextResponse.json({ ok: false, error: "Seleziona un ruolo valido." }, { status: 400 });
     }
     if (!(cv instanceof File) || cv.size === 0) {

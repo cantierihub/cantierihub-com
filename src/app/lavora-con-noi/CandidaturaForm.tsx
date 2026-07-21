@@ -3,14 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, UploadCloud, FileText, X } from "lucide-react";
-
-const RUOLI = [
-  "Venditore / Closer",
-  "Setter / Appuntamentista",
-  "Sales Manager",
-  "Marketing & Contenuti",
-  "Developer",
-];
+import { RUOLI } from "@/data/ruoli";
 
 const MAX_BYTES = 4 * 1024 * 1024; // 4 MB
 const ACCEPT = ".pdf,.doc,.docx";

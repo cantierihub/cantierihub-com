@@ -4,6 +4,7 @@ import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 
 import CTASection from "@/components/sections/CTASection";
+import { WA_CANDIDATURA } from "@/data/site";
 import RoadmapVisione, { type FaseRoadmap } from "@/components/sections/RoadmapVisione";
 import { ArrowRight } from "lucide-react";
 
@@ -261,7 +262,7 @@ export default function ChiSiamoPage() {
         subtitle="Cerchiamo persone che vogliano far crescere l'edilizia italiana. Mandaci la tua candidatura: bastano nome, ruolo e due righe su di te."
         primaryLabel="Mandaci la tua candidatura"
         primaryHref="/lavora-con-noi#candidatura"
-        whatsappSecondaryText="Ciao! Vi scrivo per una candidatura: ho visto la pagina Lavora con noi di Cantieri Hub."
+        whatsappHref={WA_CANDIDATURA}
         dark={false}
       />
     </>
