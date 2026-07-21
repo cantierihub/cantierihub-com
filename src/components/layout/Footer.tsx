@@ -149,9 +149,6 @@ export default function Footer() {
           <p style={{ fontSize: 12, color: "#94a3b8" }}>
             © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
           </p>
-          <p style={{ fontSize: 12, color: "#94a3b8" }}>
-            Fatto con cura in Italia 🇮🇹
-          </p>
         </div>
       </div>
 

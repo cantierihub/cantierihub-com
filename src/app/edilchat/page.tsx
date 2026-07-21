@@ -11,12 +11,11 @@ import {
   RefreshCw,
   Quote,
   ArrowRight,
-  ExternalLink,
 } from "lucide-react";
 
-const EDILCHAT_URL = "https://edilchat.com";
 // La prova di EdilChat passa sempre da un consulente, che rilascia le credenziali:
 // non esiste accesso libero. Il contatto e il WhatsApp del setter, come nel resto del sito.
+// Il sito non linka mai edilchat.com: si passa sempre da noi.
 const WA_EDILCHAT = waLink("Ciao! Vorrei provare EdilChat: come ottengo le credenziali?");
 
 export const metadata: Metadata = {
@@ -85,7 +84,7 @@ const productJsonLd = {
   name: "EdilChat",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
-  url: EDILCHAT_URL,
+  url: "https://cantierihub.com/edilchat",
   description:
     "Assistente AI verticale sull'edilizia italiana: normative, prezzari, bandi e gare, con le fonti sempre citate.",
   publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
@@ -140,17 +139,6 @@ export default function EdilChatPage() {
                   Scopri cosa sa fare
                 </a>
               </div>
-              <p style={{ marginTop: 16, fontSize: 14, color: "#94a3b8" }}>
-                Hai gi&agrave; le credenziali?{" "}
-                <a
-                  href={EDILCHAT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#fb923c", textDecoration: "underline", whiteSpace: "nowrap" }}
-                >
-                  Accedi a EdilChat <ExternalLink size={13} style={{ display: "inline", verticalAlign: -2 }} />
-                </a>
-              </p>
             </Reveal>
           </div>
         </div>
