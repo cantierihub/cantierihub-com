@@ -416,3 +416,130 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Roadmap della pagina Chi Siamo.
+
+   Ogni fase ha la sua tinta (scelta di Dante, 21/07/2026): arancio per i
+   prodotti gia' attivi, blu navy per quelli in arrivo, nero per la visione.
+
+   Desktop: la tinta e la mini-descrizione compaiono al passaggio del mouse.
+   Mobile: l'hover non esiste, quindi la stessa cosa avviene al tocco, che
+   apre la scheda (classe .is-open gestita da RoadmapVisione.tsx).
+--------------------------------------------------------------------------- */
+
+.roadmap-etichetta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid;
+}
+.roadmap-etichetta--live { background: #fff7ed; color: #ea580c; border-color: #fed7aa; }
+.roadmap-etichetta--prossimo { background: #eff6ff; color: #1e3a5f; border-color: #bfdbfe; }
+.roadmap-etichetta--visione { background: #f1f5f9; color: #334155; border-color: #e2e8f0; }
+
+.roadmap-pallino {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #f97316;
+  animation: roadmap-pulse 2s ease-in-out infinite;
+}
+@keyframes roadmap-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.roadmap-card {
+  --tinta: #0a0f1e;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease,
+              transform 180ms ease, box-shadow 180ms ease;
+}
+.roadmap-card--live { --tinta: #f97316; border-color: #fed7aa; }
+.roadmap-card--prossimo { --tinta: #1e3a5f; }
+.roadmap-card--visione { --tinta: #0a0f1e; }
+
+.roadmap-nome {
+  font-weight: 700;
+  color: #0f172a;
+  transition: color 200ms ease;
+}
+.roadmap-tag {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #64748b;
+  transition: color 200ms ease;
+}
+.roadmap-desc {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #64748b;
+  transition: color 200ms ease;
+}
+
+/* Stato acceso: vale sia per l'hover su desktop sia per il tocco su mobile */
+.roadmap-card.is-open,
+.roadmap-card:focus-visible {
+  background: var(--tinta);
+  border-color: var(--tinta);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+}
+.roadmap-card.is-open .roadmap-nome,
+.roadmap-card:focus-visible .roadmap-nome { color: #fff; }
+.roadmap-card.is-open .roadmap-tag,
+.roadmap-card.is-open .roadmap-desc,
+.roadmap-card:focus-visible .roadmap-tag,
+.roadmap-card:focus-visible .roadmap-desc { color: rgba(255, 255, 255, 0.8); }
+
+/* Su touch la descrizione e' sempre leggibile: senza hover, tenerla nascosta
+   la renderebbe raggiungibile solo dopo un tocco. */
+@media (hover: hover) {
+  .roadmap-desc {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: opacity 200ms ease, max-height 220ms ease,
+                margin-top 200ms ease, color 200ms ease;
+  }
+  .roadmap-card:hover {
+    background: var(--tinta);
+    border-color: var(--tinta);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+  }
+  .roadmap-card:hover .roadmap-nome { color: #fff; }
+  .roadmap-card:hover .roadmap-tag { color: rgba(255, 255, 255, 0.8); }
+  .roadmap-card:hover .roadmap-desc,
+  .roadmap-card.is-open .roadmap-desc,
+  .roadmap-card:focus-visible .roadmap-desc {
+    opacity: 1;
+    max-height: 180px;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roadmap-card,
+  .roadmap-nome,
+  .roadmap-tag,
+  .roadmap-desc { transition: none; }
+  .roadmap-card:hover,
+  .roadmap-card.is-open { transform: none; }
+  .roadmap-pallino { animation: none; }
+}

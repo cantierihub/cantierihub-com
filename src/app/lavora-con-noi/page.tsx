@@ -47,7 +47,7 @@ const posizioni = [
     desc: "Chiudi trattative in videochiamata con imprenditori edili. Demo, metodo, formazione continua e un prodotto che si vende.",
   },
   {
-    ruolo: "Setter / Appuntamentista",
+    ruolo: "Setter",
     area: "Vendite",
     desc: "Sei la prima linea: qualifichi i lead e fissi gli appuntamenti per i closer. Telefono, messaggi, ritmo.",
   },
@@ -60,6 +60,11 @@ const posizioni = [
     ruolo: "Marketing & Contenuti",
     area: "Marketing",
     desc: "Crei contenuti, gestisci ads e social, porti il brand Cantieri Hub davanti al mercato edile italiano.",
+  },
+  {
+    ruolo: "Project Manager",
+    area: "Operations",
+    desc: "Tieni insieme progetti, scadenze e persone: fai in modo che quello che decidiamo arrivi davvero in produzione.",
   },
   {
     ruolo: "Developer",

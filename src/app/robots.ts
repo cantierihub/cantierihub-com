@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         // Pagine riservate / tecniche: fuori dall'indice.
-        disallow: ["/api/", "/analisi-prezzi", "/edilchat", "/grazie"],
+        disallow: ["/api/", "/analisi-prezzi", "/grazie"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

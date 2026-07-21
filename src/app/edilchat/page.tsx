@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
+import { waLink } from "@/data/site";
 import {
   BookOpen,
   ListChecks,
@@ -10,10 +11,12 @@ import {
   RefreshCw,
   Quote,
   ArrowRight,
-  ExternalLink,
 } from "lucide-react";
 
-const EDILCHAT_URL = "https://edilchat.com";
+// La prova di EdilChat passa sempre da un consulente, che rilascia le credenziali:
+// non esiste accesso libero. Il contatto e il WhatsApp del setter, come nel resto del sito.
+// Il sito non linka mai edilchat.com: si passa sempre da noi.
+const WA_EDILCHAT = waLink("Ciao! Vorrei provare EdilChat: come ottengo le credenziali?");
 
 export const metadata: Metadata = {
   title: "EdilChat — L'assistente AI per chi costruisce in Italia",
@@ -26,8 +29,7 @@ export const metadata: Metadata = {
     url: "https://cantierihub.com/edilchat",
     type: "website",
   },
-  // Pagina riservata: niente menu, niente indicizzazione.
-  robots: { index: false, follow: false },
+  alternates: { canonical: "/edilchat" },
 };
 
 const funzionalita = [
@@ -53,8 +55,8 @@ const funzionalita = [
   },
   {
     icon: MessageSquare,
-    nome: "Demo libera",
-    desc: "Provabile subito dalla home, senza nemmeno registrarti.",
+    nome: "Demo guidata",
+    desc: "Te la mostra un consulente, con credenziali dedicate alla tua impresa.",
   },
 ];
 
@@ -76,9 +78,25 @@ const differenziatori = [
   },
 ];
 
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "EdilChat",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  url: "https://cantierihub.com/edilchat",
+  description:
+    "Assistente AI verticale sull'edilizia italiana: normative, prezzari, bandi e gare, con le fonti sempre citate.",
+  publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
+};
+
 export default function EdilChatPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative pt-12 pb-10 md:pt-24 md:pb-20 bg-navy overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-orange-500/8 blur-[110px] pointer-events-none" />
@@ -110,12 +128,12 @@ export default function EdilChatPage() {
             <Reveal delay={0.3}>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a
-                  href={EDILCHAT_URL}
+                  href={WA_EDILCHAT}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary btn-lg cta-shimmer"
                 >
-                  Provalo gratis <ExternalLink size={17} />
+                  Richiedi una demo <ArrowRight size={17} className="arrow" />
                 </a>
                 <a href="#funzioni" className="btn-ghost-white btn-lg">
                   Scopri cosa sa fare
@@ -234,19 +252,19 @@ export default function EdilChatPage() {
               maxWidth: "20ch", color: "#fff", position: "relative",
             }}
           >
-            Provalo adesso. È gratis.
+            Vuoi vederlo sul tuo lavoro?
           </h2>
           <p style={{ fontSize: "clamp(16px, 1.3vw, 19px)", color: "#94a3b8", marginBottom: 32, position: "relative" }}>
-            Nessuna registrazione per iniziare. Apri EdilChat e fai la tua prima domanda.
+            Ti diamo credenziali dedicate e un consulente ti accompagna nella prima prova.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3" style={{ position: "relative" }}>
             <a
-              href={EDILCHAT_URL}
+              href={WA_EDILCHAT}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary btn-lg cta-shimmer"
             >
-              Vai su edilchat.com <ArrowRight size={18} className="arrow" />
+              Scrivici su WhatsApp <ArrowRight size={18} className="arrow" />
             </a>
           </div>
         </Reveal>

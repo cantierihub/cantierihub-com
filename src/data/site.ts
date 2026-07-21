@@ -1,12 +1,15 @@
 // Costanti condivise del sito Cantieri Hub.
 // WhatsApp del setter (stesso numero usato nei flussi email CRM).
 
+// Davide, setter: e il numero di tutte le CTA commerciali del sito.
 export const WHATSAPP_NUMBER = "393534843580";
 
-/** Costruisce un link wa.me con messaggio precompilato. */
+
+/** Costruisce un link wa.me con messaggio precompilato (numero del setter). */
 export function waLink(text: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
+
 
 // Link WhatsApp pronti, con prefill tarato sul contesto del pulsante.
 export const WA_DEMO = waLink("Ciao! Vorrei prenotare una demo gratuita di Cantieri Hub.");

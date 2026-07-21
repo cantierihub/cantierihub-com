@@ -2,11 +2,12 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
 
 // Solo pagine pubbliche indicizzabili.
-// Escluse di proposito le riservate noindex: /analisi-prezzi, /edilchat, /grazie.
+// Escluse di proposito le riservate noindex: /analisi-prezzi, /grazie.
 const routes = [
   "",
   "/preventivatore",
   "/computatore",
+  "/edilchat",
   "/come-funziona",
   "/calcola",
   "/demo",

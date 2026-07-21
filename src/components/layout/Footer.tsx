@@ -8,6 +8,7 @@ const linkGroups = [
     links: [
       { label: "Preventivatore AI", href: "/preventivatore" },
       { label: "Computatore AI", href: "/computatore" },
+      { label: "EdilChat", href: "/edilchat" },
       { label: "Integrazioni", href: "/integrazioni" },
       { label: "Confronto", href: "/confronto" },
       { label: "Prezzo", href: "/prezzo" },
@@ -147,9 +148,6 @@ export default function Footer() {
         >
           <p style={{ fontSize: 12, color: "#94a3b8" }}>
             © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
-          </p>
-          <p style={{ fontSize: 12, color: "#94a3b8" }}>
-            Fatto con cura in Italia 🇮🇹
           </p>
         </div>
       </div>

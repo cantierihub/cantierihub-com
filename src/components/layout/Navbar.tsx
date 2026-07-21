@@ -8,12 +8,15 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WA_DEMO, WA_GENERALE } from "@/data/site";
 
+// Nota: le etichette restano corte per tenere la navbar su una riga sola.
+// "Lavora con noi" vive nel footer (colonna Azienda): non e un percorso di conversione.
 const navLinks = [
-  { label: "Preventivatore AI", href: "/preventivatore" },
-  { label: "Computatore AI", href: "/computatore" },
+  { label: "Preventivatore", href: "/preventivatore" },
+  { label: "Computatore", href: "/computatore" },
+  { label: "EdilChat", href: "/edilchat" },
+  { label: "Prezzo", href: "/prezzo" },
   { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "FAQ", href: "/faq" },
-  { label: "Lavora con noi", href: "/lavora-con-noi" },
   { label: "Contatti", href: "/contatti" },
 ];
 
@@ -60,7 +63,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1" style={{ marginLeft: "auto" }}>
+        <nav className="hidden lg:flex items-center gap-1" style={{ marginLeft: "auto" }}>
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
@@ -68,7 +71,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 style={{
-                  position: "relative", padding: "8px 14px", fontSize: 14,
+                  position: "relative", padding: "8px 11px", fontSize: 14, whiteSpace: "nowrap",
                   fontWeight: 500, borderRadius: 8, textDecoration: "none",
                   color: active ? "#f97316" : "#475569",
                   transition: "color 120ms, background 120ms",
@@ -76,7 +79,7 @@ export default function Navbar() {
               >
                 {link.label}
                 {active && (
-                  <span style={{ position: "absolute", bottom: 4, left: 14, right: 14, height: 2, borderRadius: 9999, background: "#f97316" }} />
+                  <span style={{ position: "absolute", bottom: 4, left: 11, right: 11, height: 2, borderRadius: 9999, background: "#f97316" }} />
                 )}
               </Link>
             );
@@ -84,7 +87,7 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-2" style={{ marginLeft: 8 }}>
+        <div className="hidden lg:flex items-center gap-2" style={{ marginLeft: 8 }}>
           <a href={WA_GENERALE} target="_blank" rel="noopener noreferrer" className="btn-ghost btn-sm">
             WhatsApp
           </a>
@@ -96,7 +99,7 @@ export default function Navbar() {
         {/* Mobile burger */}
         <button
           onClick={() => setMobileOpen((v) => !v)}
-          className="md:hidden"
+          className="lg:hidden"
           style={{ marginLeft: "auto", padding: 8, color: "#475569" }}
           aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
           aria-expanded={mobileOpen}
