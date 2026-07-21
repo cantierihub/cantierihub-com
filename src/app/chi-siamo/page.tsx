@@ -18,7 +18,7 @@ const team = [
     name: "Raffaele Russo",
     role: "Co-founder — Prodotto & Vendite",
     bio: "Si occupa dello sviluppo del prodotto e delle demo con i clienti. La sua ossessione è che ogni funzione abbia senso concreto per chi lavora in cantiere ogni giorno.",
-    photo: "/images/raffaele.jpg",
+    photo: "/images/raffaele-sed.jpg",
     initials: "RR",
   },
 ];
