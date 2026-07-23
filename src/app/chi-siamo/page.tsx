@@ -18,7 +18,7 @@ const team = [
   {
     name: "Raffaele Russo",
     role: "Co-founder",
-    bio: "Figlio di un muratore, Raffaele è cresciuto con l'edilizia in casa. Cantieri Hub nasce da lì: dalla convinzione che le piccole e medie imprese edili italiane non abbiano bisogno di un altro software, ma di riprendersi il tempo che perdono in preventivi, computi e pratiche. Il lavoro che non genera valore lo fa l'intelligenza artificiale. Quello che ne genera resta in cantiere, dove è sempre stato.",
+    bio: "Con un background in ambito di costruzioni edili, Raffaele conosce il cantiere da vicino. Cantieri Hub nasce da lì: dalla convinzione che le piccole e medie imprese edili italiane non abbiano bisogno di un altro software, ma di riprendersi il tempo che perdono in preventivi, computi e pratiche. Il lavoro che non genera valore lo fa l'intelligenza artificiale. Quello che ne genera resta in cantiere, dove è sempre stato.",
     photo: "/images/raffaele-sed.jpg",
     initials: "RR",
   },
