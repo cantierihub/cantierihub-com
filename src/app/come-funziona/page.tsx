@@ -174,7 +174,7 @@ export default function ComeFunzionaPage() {
             <Reveal direction="left">
               <div className="h-full p-7 md:p-9 rounded-2xl bg-navy text-white">
                 <p className="eyebrow text-orange-400">L&apos;onboarding</p>
-                <h3 className="mt-3 font-display font-bold text-2xl">Non sei mai solo davanti al software.</h3>
+                <h3 className="mt-3 font-display font-bold text-white text-2xl">Non sei mai solo davanti al software.</h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">
                   Dal primo giorno hai un <strong className="text-white">gruppo WhatsApp dedicato</strong> con
                   il tuo project manager. Niente manuali da studiare da solo: ti formiamo passo passo, sui

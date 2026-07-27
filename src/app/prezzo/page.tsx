@@ -202,7 +202,7 @@ export default function PrezzoPage() {
                   <CalendarCheck size={20} className="text-orange-400" />
                 </div>
                 <p className="mt-5 eyebrow text-orange-400">Una volta l&apos;anno</p>
-                <h3 className="mt-3 font-display font-bold text-2xl">Niente mensile.</h3>
+                <h3 className="mt-3 font-display font-bold text-white text-2xl">Niente mensile.</h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">
                   Non c&apos;è un abbonamento mensile che ti pesa addosso ogni trenta giorni. Una
                   licenza annuale, chiara, che copre un anno intero di lavoro.{" "}

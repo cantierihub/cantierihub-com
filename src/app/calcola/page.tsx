@@ -146,7 +146,7 @@ export default function CalcolaPage() {
             <Reveal direction="left">
               <div className="h-full p-7 md:p-9 rounded-2xl bg-navy text-white">
                 <p className="eyebrow text-orange-400">Il caso più difficile</p>
-                <h3 className="mt-3 font-display font-bold text-2xl leading-tight">
+                <h3 className="mt-3 font-display font-bold text-white text-2xl leading-tight">
                   E le voci che sul prezzario non ci sono?
                 </h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">

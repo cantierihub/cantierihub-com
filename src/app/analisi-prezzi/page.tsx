@@ -233,7 +233,7 @@ export default function AnalisiPrezziPage() {
             <Reveal>
               <div className="h-full p-7 md:p-9 rounded-2xl bg-navy text-white">
                 <p className="eyebrow text-orange-400">Due modalità</p>
-                <h3 className="mt-3 font-display font-bold text-2xl">Una voce o cento.</h3>
+                <h3 className="mt-3 font-display font-bold text-white text-2xl">Una voce o cento.</h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">
                   <strong className="text-white">Singola</strong> — analizzi la voce critica, quella fuori
                   prezzario, in pochi secondi.
