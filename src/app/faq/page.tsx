@@ -5,11 +5,11 @@ import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
-  title: "FAQ — Domande frequenti su Cantieri Hub",
+  title: "FAQ · Domande frequenti su Cantieri Hub",
   description:
     "Tutto quello che vuoi sapere su Cantieri Hub, il Preventivatore AI e il Computatore AI, prima di prenotare una demo.",
   openGraph: {
-    title: "FAQ — Domande frequenti su Cantieri Hub",
+    title: "FAQ · Domande frequenti su Cantieri Hub",
     description:
       "Tutto quello che vuoi sapere su Cantieri Hub, il Preventivatore AI e il Computatore AI, prima di prenotare una demo.",
     url: "https://cantierihub.com/faq",

@@ -9,12 +9,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Perché scegliere Cantieri Hub — Il confronto",
+  title: "Perché scegliere Cantieri Hub · Il confronto",
   description:
     "Cantieri Hub a confronto con i software di preventivazione tradizionali: Analisi Prezzi AI, estrazione automatica, cloud senza installazione, supporto umano diretto.",
   alternates: { canonical: "/confronto" },
   openGraph: {
-    title: "Perché scegliere Cantieri Hub — Il confronto",
+    title: "Perché scegliere Cantieri Hub · Il confronto",
     description:
       "Cantieri Hub a confronto con i software di preventivazione tradizionali: Analisi Prezzi AI, estrazione automatica, cloud senza installazione, supporto umano diretto.",
     url: "https://cantierihub.com/confronto",

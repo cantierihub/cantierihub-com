@@ -14,11 +14,11 @@ import {
 
 export const metadata: Metadata = {
   alternates: { canonical: "/risorse" },
-  title: "Risorse per imprese edili — Guide, computo metrico e gestione cantieri",
+  title: "Risorse per imprese edili · Guide, computo metrico e gestione cantieri",
   description:
     "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
   openGraph: {
-    title: "Risorse per imprese edili — Guide, computo metrico e gestione cantieri",
+    title: "Risorse per imprese edili · Guide, computo metrico e gestione cantieri",
     description:
       "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
     url: "https://cantierihub.com/risorse",
