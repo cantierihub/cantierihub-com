@@ -14,9 +14,9 @@ const navLinks = [
   { label: "Preventivatore", href: "/preventivatore" },
   { label: "Computatore", href: "/computatore" },
   { label: "EdilChat", href: "/edilchat" },
+  { label: "Analisi Prezzi", href: "/analisi-prezzi" },
   { label: "Prezzo", href: "/prezzo" },
   { label: "Chi Siamo", href: "/chi-siamo" },
-  { label: "FAQ", href: "/faq" },
   { label: "Contatti", href: "/contatti" },
 ];
 

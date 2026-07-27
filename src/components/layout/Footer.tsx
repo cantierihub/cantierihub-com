@@ -9,6 +9,7 @@ const linkGroups = [
       { label: "Preventivatore AI", href: "/preventivatore" },
       { label: "Computatore AI", href: "/computatore" },
       { label: "EdilChat", href: "/edilchat" },
+      { label: "Analisi Prezzi AI", href: "/analisi-prezzi" },
       { label: "Integrazioni", href: "/integrazioni" },
       { label: "Confronto", href: "/confronto" },
       { label: "Prezzo", href: "/prezzo" },
