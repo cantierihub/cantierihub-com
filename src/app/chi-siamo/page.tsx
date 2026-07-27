@@ -45,7 +45,7 @@ const roadmap: FaseRoadmap[] = [
       {
         nome: "EdilChat",
         tag: "Le risposte dell'edilizia italiana.",
-        desc: "Normative, prezzari, bandi e gare. Risposte in linguaggio naturale, con le fonti sempre citate.",
+        desc: "Normative, prezzari e capitolati. Risposte in linguaggio naturale, con le fonti sempre citate.",
       },
     ],
   },
