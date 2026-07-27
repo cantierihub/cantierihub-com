@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
-import { ArrowRight, FileText, Calculator, Check } from "lucide-react";
+import { ArrowRight, FileText, Calculator, MessagesSquare, PieChart, Check } from "lucide-react";
 
 const products = [
   {
@@ -39,6 +39,42 @@ const products = [
     href: "/computatore",
     variant: "navy" as const,
   },
+  {
+    icon: MessagesSquare,
+    badge: "Assistente AI",
+    name: "EdilChat",
+    nameAccent: "",
+    tagline: "Normative, prezzari e capitolati: la risposta con la fonte citata.",
+    description:
+      "Chiedi in italiano quello che chiederesti a un tecnico esperto. EdilChat risponde sull'edilizia italiana e ti mostra sempre da dove arriva la risposta.",
+    features: [
+      "Risposte con le fonti sempre citate",
+      "Verticale sull'edilizia italiana, non un'AI generica",
+      "Normative, prezzari, capitolati e operatività",
+      "Domande in italiano, come le faresti a voce",
+      "Knowledge base verticale in continua espansione",
+    ],
+    href: "/edilchat",
+    variant: "navy" as const,
+  },
+  {
+    icon: PieChart,
+    badge: "Prodotto attivo",
+    name: "Analisi Prezzi",
+    nameAccent: "AI",
+    tagline: "Il prezzo delle voci che sul prezzario non esistono.",
+    description:
+      "Descrivi la lavorazione: l'AI ricostruisce il prezzo pezzo per pezzo, materiali, manodopera, noli, spese generali e sicurezza. Ogni componente resta modificabile.",
+    features: [
+      "Scomposizione in 5 componenti di costo",
+      "Calibrata su piano, distanza, urgenza e dimensione del cantiere",
+      "Modalità singola o batch su interi computi",
+      "Ogni componente editabile, totale ricalcolato live",
+      "Export PDF ed Excel col tuo logo",
+    ],
+    href: "/analisi-prezzi",
+    variant: "orange" as const,
+  },
 ];
 
 export default function Products() {
@@ -62,17 +98,18 @@ export default function Products() {
       <div className="container-main" style={{ position: "relative", zIndex: 1 }}>
         <Reveal>
           <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 64px" }}>
-            <span className="eyebrow" style={{ color: "#f97316" }}>Gli strumenti AI</span>
+            <span className="eyebrow" style={{ color: "#f97316" }}>I prodotti attivi</span>
             <h2
               className="font-display font-extrabold"
               style={{ fontSize: "clamp(32px, 3.8vw, 52px)", color: "#0f172a", marginTop: 12 }}
             >
-              Due strumenti.{" "}
-              <span className="text-gradient-orange">Il cuore del network.</span>
+              Gli strumenti{" "}
+              <span className="text-gradient-orange">del network.</span>
             </h2>
             <p style={{ fontSize: "clamp(16px, 1.3vw, 18px)", color: "#64748b", marginTop: 16, lineHeight: 1.65 }}>
-              Il Computatore genera il computo. Il Preventivatore lo trasforma in offerta commerciale.
-              Sono il primo asset di Cantieri Hub — disponibili oggi per tutte le imprese del network.
+              Il Computatore fa il computo, il Preventivatore lo trasforma in offerta, l&apos;Analisi
+              Prezzi costruisce le voci che sul prezzario non ci sono, EdilChat risponde quando ti
+              blocchi su una norma. Disponibili oggi per tutte le imprese del network.
             </p>
           </div>
         </Reveal>
@@ -164,8 +201,14 @@ export default function Products() {
                       marginBottom: 8,
                     }}
                   >
-                    {p.name}{" "}
-                    <span style={{ color: "#f97316" }}>{p.nameAccent}</span>
+                    {p.name}
+                    {/* EdilChat non ha il suffisso "AI": senza questo controllo resterebbe uno spazio appeso. */}
+                    {p.nameAccent && (
+                      <>
+                        {" "}
+                        <span style={{ color: "#f97316" }}>{p.nameAccent}</span>
+                      </>
+                    )}
                   </h3>
 
                   {/* Tagline */}
@@ -225,7 +268,7 @@ export default function Products() {
                     }}
                     className="group"
                   >
-                    Scopri {p.name} {p.nameAccent}
+                    Scopri {[p.name, p.nameAccent].filter(Boolean).join(" ")}
                     <ArrowRight size={15} className="arrow" />
                   </Link>
                 </div>
