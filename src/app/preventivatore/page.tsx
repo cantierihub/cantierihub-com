@@ -45,7 +45,7 @@ const features = [
   {
     icon: Users,
     title: "Titolare + collaboratori",
-    description: "Fino a 3 utenti per azienda sulla stessa licenza. Ogni azienda ha i propri dati isolati — nessuna condivisione involontaria.",
+    description: "Fino a 3 utenti per azienda sulla stessa licenza. Ogni azienda ha i propri dati isolati: nessuna condivisione involontaria.",
   },
   {
     icon: Archive,
@@ -148,7 +148,7 @@ export default function PreventivatorePage() {
               <div className="mt-12 mx-auto" style={{ maxWidth: 860, position: "relative", borderRadius: 16, overflow: "hidden", boxShadow: "0 24px 64px rgba(15,23,42,0.12)", aspectRatio: "16/9" }}>
                 <Image
                   src="/images/preventivatore-laptop.jpg"
-                  alt="Preventivatore AI — laptop con preventivo e caschetto Cantieri Hub"
+                  alt="Preventivatore AI · laptop con preventivo e caschetto Cantieri Hub"
                   fill
                   style={{ objectFit: "cover", objectPosition: "center 40%" }}
                   sizes="(max-width: 768px) 100vw, 860px"
@@ -240,13 +240,13 @@ export default function PreventivatorePage() {
                 <div style={{ padding: "18px 24px", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#64748b" }}>Altri software</div>
               </div>
               {[
-                ["Estrazione AI da PDF e Excel", "✓", "—"],
+                ["Estrazione AI da PDF e Excel", "✓", "no"],
                 ["Prezzari regionali italiani inclusi", "✓", "Parziale"],
-                ["Analisi Prezzi AI (scomposizione costi)", "✓", "—"],
+                ["Analisi Prezzi AI (scomposizione costi)", "✓", "no"],
                 ["PDF brandizzato col tuo logo", "✓", "✓"],
                 ["Archivio storico ricercabile", "✓", "Limitato"],
-                ["Supporto diretto su WhatsApp", "✓", "—"],
-                ["Onboarding guidato con i tuoi file", "✓", "—"],
+                ["Supporto diretto su WhatsApp", "✓", "no"],
+                ["Onboarding guidato con i tuoi file", "✓", "no"],
               ].map(([feat, ch, other], i) => (
                 <div key={feat} style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", borderBottom: i < 6 ? "1px solid #e2e8f0" : "none" }}>
                   <div style={{ padding: "18px 24px", fontSize: 14, fontWeight: 600, color: "#0f172a", display: "flex", alignItems: "center" }}>{feat}</div>
@@ -255,7 +255,7 @@ export default function PreventivatorePage() {
                     {ch !== "✓" ? ch : "Sì"}
                   </div>
                   <div style={{ padding: "18px 24px", fontSize: 14, color: other === "✓" ? "#334155" : "#94a3b8", display: "flex", alignItems: "center" }}>
-                    {other === "—" ? <span style={{ color: "#cbd5e1", fontWeight: 700 }}>—</span> : other === "✓" ? "Sì" : other}
+                    {other === "no" ? <span style={{ color: "#94a3b8", fontWeight: 600 }}>No</span> : other === "✓" ? "Sì" : other}
                   </div>
                 </div>
               ))}
@@ -278,7 +278,7 @@ export default function PreventivatorePage() {
                 L&apos;Analisi Prezzi AI che nessun altro software edile ha.
               </h2>
               <p style={{ fontSize: "clamp(16px, 1.2vw, 18px)", color: "#94a3b8", marginTop: 20, lineHeight: 1.7 }}>
-                I software tradizionali lavorano sui prezzari standard. Ma il tuo cantiere ha sempre voci fuori prezzario: materiali speciali, lavorazioni non codificate, situazioni particolari. Prima le stimavi a occhio — o le lasciavi indietro perdendo margine. Adesso l&apos;AI scompone ogni voce in materiali, manodopera, noli, utile e spese generali, con parametri reali del tuo cantiere.
+                I software tradizionali lavorano sui prezzari standard. Ma il tuo cantiere ha sempre voci fuori prezzario: materiali speciali, lavorazioni non codificate, situazioni particolari. Prima le stimavi a occhio, o le lasciavi indietro perdendo margine. Adesso l&apos;AI scompone ogni voce in materiali, manodopera, noli, utile e spese generali, con parametri reali del tuo cantiere.
               </p>
               <div style={{ marginTop: 24 }}>
                 <Link href="/contatti" className="btn-primary cta-shimmer">

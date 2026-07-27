@@ -198,8 +198,8 @@ export default function ConfrontoPage() {
                   Tutti sanno archiviare un prezzario. La differenza si vede sulla voce che il prezzario
                   non ce l&apos;ha: quella che ti costringe a telefonare ai fornitori, spulciare vecchi
                   preventivi e stimare a sensazione. Cantieri Hub la{" "}
-                  <strong className="text-navy">ricostruisce da zero</strong> — materiali, manodopera,
-                  noli, spese generali, sicurezza — con un ragionamento che leggi, modifichi e firmi.
+                  <strong className="text-navy">ricostruisce da zero</strong>: materiali, manodopera,
+                  noli, spese generali, sicurezza. Con un ragionamento che leggi, modifichi e firmi.
                 </p>
                 <p className="mt-4 text-navy-500 leading-relaxed">
                   È il motore dietro ogni preventivo, ed è la ragione per cui chi prova Cantieri Hub

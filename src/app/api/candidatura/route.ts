@@ -5,7 +5,7 @@ import { RUOLI } from "@/data/ruoli";
 // Resend e Buffer richiedono il runtime Node, non Edge.
 export const runtime = "nodejs";
 
-const MAX_BYTES = 4 * 1024 * 1024; // 4 MB — sotto il limite body di Vercel (~4.5 MB)
+const MAX_BYTES = 4 * 1024 * 1024; // 4 MB · sotto il limite body di Vercel (~4.5 MB)
 const DEST = "info@cantierihub.com";
 const FROM = "Candidature Cantieri Hub <candidature@app-cantierihub.com>";
 
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     // ── Invio email con CV in allegato ──
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
-      console.error("[candidatura] RESEND_API_KEY mancante — candidatura non inviata");
+      console.error("[candidatura] RESEND_API_KEY mancante · candidatura non inviata");
       return NextResponse.json(
         { ok: false, fallback: true, error: "Invio momentaneamente non disponibile." },
         { status: 503 },
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
       from: FROM,
       to: DEST,
       replyTo: email,
-      subject: `Nuova candidatura — ${ruolo} — ${nome}`,
+      subject: `Nuova candidatura · ${ruolo} · ${nome}`,
       text,
       html,
       attachments: [{ filename: safeFilename, content: buffer }],

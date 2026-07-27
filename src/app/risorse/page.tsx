@@ -122,7 +122,7 @@ export default function RisorsePage() {
         </div>
       </section>
 
-      {/* Guide gratuite — card grande */}
+      {/* Guide gratuite · card grande */}
       <section className="section-padding bg-white">
         <div className="container-main">
           <Reveal>
@@ -182,7 +182,7 @@ export default function RisorsePage() {
         </div>
       </section>
 
-      {/* Presto — approfondimenti in arrivo */}
+      {/* Presto · approfondimenti in arrivo */}
       <section style={{ background: "#f8fafc" }} className="section-padding">
         <div className="container-main">
           <Reveal>

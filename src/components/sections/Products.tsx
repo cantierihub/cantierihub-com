@@ -90,7 +90,7 @@ export default function Products() {
     >
       {/* Dot grid */}
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.055) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
-      {/* Orange glow — bottom right */}
+      {/* Orange glow · bottom right */}
       <div aria-hidden="true" style={{ position: "absolute", bottom: -120, right: -80, width: 600, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
       {/* Subtle top-left glow */}
       <div aria-hidden="true" style={{ position: "absolute", top: -80, left: -80, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -143,7 +143,7 @@ export default function Products() {
                         }),
                   }}
                 >
-                  {/* Background mesh — orange card */}
+                  {/* Background mesh · orange card */}
                   {isOrange && (
                     <div
                       aria-hidden="true"
@@ -155,7 +155,7 @@ export default function Products() {
                       }}
                     />
                   )}
-                  {/* Background mesh — navy card */}
+                  {/* Background mesh · navy card */}
                   {!isOrange && (
                     <div
                       aria-hidden="true"

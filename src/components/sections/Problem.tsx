@@ -40,14 +40,14 @@ export default function Problem() {
         className="problem-bg-img"
       />
 
-      {/* Dark overlay — più opaco su mobile */}
+      {/* Dark overlay · più opaco su mobile */}
       <div aria-hidden="true" className="problem-overlay" style={{ position: "absolute", inset: 0 }} />
       <style>{`
         .problem-overlay { background: rgba(15,23,42,0.92); }
         @media (min-width: 768px) { .problem-overlay { background: rgba(15,23,42,0.86); } }
       `}</style>
 
-      {/* Dot grid — white on dark */}
+      {/* Dot grid · white on dark */}
       <div
         aria-hidden="true"
         style={{
@@ -57,7 +57,7 @@ export default function Problem() {
         }}
       />
 
-      {/* Orange glow — center */}
+      {/* Orange glow · center */}
       <div
         aria-hidden="true"
         style={{
@@ -69,7 +69,7 @@ export default function Problem() {
         }}
       />
 
-      {/* Corner glow — top right */}
+      {/* Corner glow · top right */}
       <div
         aria-hidden="true"
         style={{
@@ -80,7 +80,7 @@ export default function Problem() {
         }}
       />
 
-      {/* Corner glow — bottom left */}
+      {/* Corner glow · bottom left */}
       <div
         aria-hidden="true"
         style={{

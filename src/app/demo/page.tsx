@@ -35,7 +35,7 @@ const cosaVedi = [
   {
     icon: Sparkles,
     nome: "L'Analisi Prezzi AI sulle tue voci",
-    desc: "Prendiamo le voci critiche del tuo lavoro — anche quelle fuori prezzario — e ti facciamo vedere come l'AI le scompone pezzo per pezzo.",
+    desc: "Prendiamo le voci critiche del tuo lavoro, anche quelle fuori prezzario, e ti facciamo vedere come l'AI le scompone pezzo per pezzo.",
   },
   {
     icon: FileText,
@@ -89,7 +89,7 @@ export default function DemoPage() {
             <Reveal delay={0.2}>
               <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-2xl">
                 30 minuti, dal vivo. Vedi il prodotto lavorare sui{" "}
-                <strong className="text-white">tuoi file reali</strong> — il tuo
+                <strong className="text-white">tuoi file reali</strong>: il tuo
                 computo, le tue voci, il tuo preventivo finito. Nessun impegno.
               </p>
             </Reveal>
@@ -123,7 +123,7 @@ export default function DemoPage() {
               </h2>
               <p className="mt-4 text-navy-500 leading-relaxed">
                 Niente slide. Apriamo il prodotto e ti mostriamo l&apos;intero
-                percorso, dal computo al PDF da inviare — con materiale tuo, non
+                percorso, dal computo al PDF da inviare, con materiale tuo, non
                 di esempio.
               </p>
             </div>

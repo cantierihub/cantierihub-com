@@ -26,7 +26,7 @@ const valori = [
   {
     icon: TrendingUp,
     titolo: "Crescita rapida",
-    desc: "Siamo una società giovane che corre. Le responsabilità — e le occasioni — arrivano in fretta per chi le sa prendere.",
+    desc: "Siamo una società giovane che corre. Le responsabilità, e le occasioni, arrivano in fretta per chi le sa prendere.",
   },
   {
     icon: Award,
@@ -196,7 +196,7 @@ export default function LavoraConNoiPage() {
                 Mandaci la tua candidatura.
               </h2>
               <p className="mt-4 text-gray-500 leading-relaxed max-w-lg mx-auto">
-                Compila il modulo e allega il CV. Leggiamo tutto — e se il profilo è in linea ti
+                Compila il modulo e allega il CV. Leggiamo tutto, e se il profilo è in linea ti
                 ricontattiamo noi.
               </p>
             </div>
