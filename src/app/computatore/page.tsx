@@ -8,11 +8,11 @@ import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/computatore" },
-  title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
+  title: "Computatore AI · Genera il computo metrico da zero in pochi minuti",
   description:
     "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
   openGraph: {
-    title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
+    title: "Computatore AI · Genera il computo metrico da zero in pochi minuti",
     description:
       "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
     url: "https://cantierihub.com/computatore",

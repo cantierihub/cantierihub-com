@@ -9,11 +9,11 @@ import { ArrowRight, Zap, Database, Palette, Users, Archive } from "lucide-react
 
 export const metadata: Metadata = {
   alternates: { canonical: "/preventivatore" },
-  title: "Preventivatore AI — Dal computo metrico al preventivo in 3 minuti",
+  title: "Preventivatore AI · Dal computo metrico al preventivo in 3 minuti",
   description:
     "Carica il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e genera il PDF professionale. Preventivi edili in 3 minuti.",
   openGraph: {
-    title: "Preventivatore AI — Dal computo metrico al preventivo in 3 minuti",
+    title: "Preventivatore AI · Dal computo metrico al preventivo in 3 minuti",
     description:
       "Carica il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e genera il PDF professionale. Preventivi edili in 3 minuti.",
     url: "https://cantierihub.com/preventivatore",

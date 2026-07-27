@@ -54,13 +54,13 @@ export const metadata: Metadata = {
     locale: "it_IT",
     url: "https://cantierihub.com",
     siteName: "Cantieri Hub",
-    title: "Cantieri Hub — Software AI per Preventivi Edili",
+    title: "Cantieri Hub · Software AI per Preventivi Edili",
     description:
       "Dal computo metrico al preventivo in 3 minuti. Il software AI per imprese edili italiane.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cantieri Hub — Software AI per Preventivi Edili",
+    title: "Cantieri Hub · Software AI per Preventivi Edili",
     description: "Dal computo metrico al preventivo in 3 minuti.",
   },
   robots: { index: true, follow: true },

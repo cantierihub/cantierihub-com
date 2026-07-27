@@ -6,11 +6,11 @@ import { Upload, ScanText, Database, Sparkles, ArrowRight, Check } from "lucide-
 
 export const metadata: Metadata = {
   alternates: { canonical: "/calcola" },
-  title: "Calcola il preventivo con l'AI — Dal computo al prezzo in pochi minuti",
+  title: "Calcola il preventivo con l'AI · Dal computo al prezzo in pochi minuti",
   description:
     "Calcola il tuo preventivo edile con l'AI di Cantieri Hub: carichi il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e stima le voci fuori prezzario. In pochi minuti, non in mezza giornata.",
   openGraph: {
-    title: "Calcola il preventivo con l'AI — Dal computo al prezzo in pochi minuti",
+    title: "Calcola il preventivo con l'AI · Dal computo al prezzo in pochi minuti",
     description:
       "Calcola il tuo preventivo edile con l'AI di Cantieri Hub: carichi il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e stima le voci fuori prezzario. In pochi minuti, non in mezza giornata.",
     url: "https://cantierihub.com/calcola",

@@ -5,12 +5,12 @@ import ContattiForm from "./ContattiForm";
 import { WA_DEMO, WA_GENERALE, CONTACT_EMAIL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Contatti — Prenota una demo gratuita",
+  title: "Contatti · Prenota una demo gratuita",
   description:
     "Parla con Cantieri Hub: prenota una demo gratuita di 30 minuti su WhatsApp, scrivici o mandaci una email. Ti rispondiamo entro 24 ore.",
   alternates: { canonical: "/contatti" },
   openGraph: {
-    title: "Contatti — Prenota una demo gratuita",
+    title: "Contatti · Prenota una demo gratuita",
     description:
       "Parla con Cantieri Hub: prenota una demo gratuita di 30 minuti su WhatsApp, scrivici o mandaci una email. Ti rispondiamo entro 24 ore.",
     url: "https://cantierihub.com/contatti",

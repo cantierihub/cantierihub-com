@@ -18,12 +18,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Prezzo Cantieri Hub — Come funziona e cosa è incluso",
+  title: "Prezzo Cantieri Hub · Come funziona e cosa è incluso",
   description:
     "Come funziona il prezzo di Cantieri Hub: licenza annuale, tutti i moduli inclusi, onboarding e supporto. Il prezzo te lo mostriamo in demo, su misura per la tua impresa.",
   alternates: { canonical: "/prezzo" },
   openGraph: {
-    title: "Prezzo Cantieri Hub — Come funziona e cosa è incluso",
+    title: "Prezzo Cantieri Hub · Come funziona e cosa è incluso",
     description:
       "Come funziona il prezzo di Cantieri Hub: licenza annuale, tutti i moduli inclusi, onboarding e supporto. Il prezzo te lo mostriamo in demo, su misura per la tua impresa.",
     url: "https://cantierihub.com/prezzo",

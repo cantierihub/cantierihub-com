@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_stile.css">
+<style>
+  /* Attenzione: il contenuto deve stare dentro 1000px di altezza.
+     Il titolo su due righe faceva uscire kicker e nota fuori dalla tela. */
+  .calcolo { margin-top: 34px; display: flex; flex-direction: column; gap: 10px; }
+
+  .riga {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 16px;
+    padding: 17px 30px;
+  }
+
+  .riga .segno {
+    flex: 0 0 34px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #F97316;
+    text-align: center;
+  }
+
+  .riga .nome { font-size: 28px; font-weight: 600; color: #eef3fa; flex: 0 0 340px; }
+  .riga .desc { font-size: 21px; color: #8ea3c0; font-weight: 400; }
+
+  /* totale */
+  .totale {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: rgba(249,115,22,.12);
+    border: 1px solid rgba(249,115,22,.38);
+    border-radius: 18px;
+    padding: 26px 30px;
+  }
+  .totale .segno { flex: 0 0 34px; font-size: 34px; font-weight: 800; color: #F97316; text-align: center; }
+  .totale .nome { font-size: 30px; font-weight: 800; color: #fff; flex: 0 0 340px; }
+  .totale .desc { font-size: 21px; color: #ffc79b; font-weight: 500; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="kicker">Analisi Prezzi AI</div>
+    <h1>Il prezzo <span class="orange">si costruisce.</span></h1>
+    <p class="sub">
+      Cinque componenti, come le scomporrebbe un computista esperto. Ognuna resta sotto il tuo controllo.
+    </p>
+  </div>
+
+  <div class="calcolo">
+    <div class="riga">
+      <div class="segno">&nbsp;</div>
+      <div class="nome">Materiali</div>
+      <div class="desc">Quantità e incidenza reali della lavorazione</div>
+    </div>
+    <div class="riga">
+      <div class="segno">+</div>
+      <div class="nome">Manodopera</div>
+      <div class="desc">Ore e costo orario della squadra</div>
+    </div>
+    <div class="riga">
+      <div class="segno">+</div>
+      <div class="nome">Noli e attrezzature</div>
+      <div class="desc">Mezzi, ponteggi, utile d&rsquo;impresa</div>
+    </div>
+    <div class="riga">
+      <div class="segno">+</div>
+      <div class="nome">Spese generali</div>
+      <div class="desc">La quota aziendale ribaltata sulla voce</div>
+    </div>
+    <div class="riga">
+      <div class="segno">+</div>
+      <div class="nome">Sicurezza</div>
+      <div class="desc">Oneri esposti a parte, come chiede il computo</div>
+    </div>
+
+    <div class="totale">
+      <div class="segno">=</div>
+      <div class="nome">Il prezzo della voce</div>
+      <div class="desc">Editabile componente per componente, totale ricalcolato live</div>
+    </div>
+  </div>
+
+  <div class="foot">Schema illustrativo del funzionamento. Non è una schermata del prodotto.</div>
+</body>
+</html>

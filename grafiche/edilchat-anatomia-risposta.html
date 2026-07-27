@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_stile.css">
+<style>
+  .blocchi { margin-top: 46px; display: flex; flex-direction: column; gap: 18px; }
+
+  .b {
+    display: flex;
+    align-items: flex-start;
+    gap: 26px;
+    border-radius: 20px;
+    padding: 28px 34px;
+  }
+
+  .b .tag {
+    flex: 0 0 210px;
+    text-transform: uppercase;
+    letter-spacing: 2.4px;
+    font-size: 17px;
+    font-weight: 700;
+    padding-top: 5px;
+  }
+
+  .b .txt { font-size: 27px; line-height: 1.4; font-weight: 500; }
+
+  /* 1. la domanda */
+  .b--q {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+  .b--q .tag { color: #7e93b4; }
+  .b--q .txt { color: #dbe4f2; }
+
+  /* 2. la risposta */
+  .b--a {
+    background: #f4f6fa;
+    border: 1px solid rgba(255,255,255,.14);
+  }
+  .b--a .tag { color: #64748b; }
+  .b--a .txt { color: #1b2a44; }
+
+  /* 3. la fonte */
+  .b--s {
+    background: rgba(249,115,22,.10);
+    border: 1px solid rgba(249,115,22,.34);
+  }
+  .b--s .tag { color: #F97316; }
+  .b--s .txt { color: #ffd7b8; }
+
+  .b--s .txt b { color: #F97316; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="kicker">EdilChat</div>
+    <h1>Ogni risposta ha <span class="orange">la stessa forma.</span></h1>
+    <p class="sub">
+      Non una risposta qualsiasi da cui non sai come uscire. Chiedi, leggi, e sai sempre da dove arriva.
+    </p>
+  </div>
+
+  <div class="blocchi">
+    <div class="b b--q">
+      <div class="tag">La tua domanda</div>
+      <div class="txt">In italiano, come la faresti a voce a un tecnico che si fida di te.</div>
+    </div>
+
+    <div class="b b--a">
+      <div class="tag">La risposta</div>
+      <div class="txt">Sull&rsquo;edilizia italiana e su come si lavora davvero in cantiere. Niente enciclopedia.</div>
+    </div>
+
+    <div class="b b--s">
+      <div class="tag">La fonte</div>
+      <div class="txt"><b>Sempre citata.</b> Così la verifichi tu, invece di doverti fidare.</div>
+    </div>
+  </div>
+
+  <div class="foot">Schema illustrativo del funzionamento. Non è una schermata del prodotto.</div>
+</body>
+</html>
