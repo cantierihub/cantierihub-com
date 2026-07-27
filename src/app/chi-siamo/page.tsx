@@ -151,7 +151,7 @@ export default function ChiSiamoPage() {
                   L&apos;imprenditore edile italiano lavora duro. Conosce i materiali, conosce i cantieri, conosce i clienti. Ma perde ore a ridigitare voci da PDF, a cercare codici sui prezzari regionali, a formattare documenti che sembrano fatti negli anni &apos;90.
                 </p>
                 <p className="mt-4 text-gray-500 leading-relaxed">
-                  Noi abbiamo costruito uno strumento che elimina quella parte. Non la parte creativa, non la parte relazionale — solo quella meccanica e ripetitiva che nessuno dovrebbe fare a mano nel 2026.
+                  Noi abbiamo costruito uno strumento che elimina quella parte. Non la parte creativa, non la parte relazionale, solo quella meccanica e ripetitiva che nessuno dovrebbe fare a mano nel 2026.
                 </p>
                 <div className="mt-6">
                   <Link

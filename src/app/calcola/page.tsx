@@ -154,8 +154,8 @@ export default function CalcolaPage() {
                   da spulciare, stime fatte a sensazione. Per quelle c&apos;è l&apos;Analisi Prezzi AI.
                 </p>
                 <p className="mt-3 text-gray-300 text-sm leading-relaxed">
-                  Ricostruisce il prezzo da zero — <strong className="text-white">materiali, manodopera,
-                  noli, spese generali, sicurezza</strong> — con un ragionamento che puoi leggere,
+                  Ricostruisce il prezzo da zero: <strong className="text-white">materiali, manodopera,
+                  noli, spese generali, sicurezza</strong>. Con un ragionamento che puoi leggere,
                   modificare e firmare.
                 </p>
                 <a

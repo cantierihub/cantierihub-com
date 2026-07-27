@@ -45,7 +45,7 @@ export async function generateMetadata(
   const guide = await fetchGuide(slug);
   if (!guide) return { title: "Guida non trovata · Cantieri Hub" };
   return {
-    title: `${guide.title} — Guida Gratuita | Cantieri Hub`,
+    title: `${guide.title} · Guida Gratuita | Cantieri Hub`,
     description: guide.description,
     openGraph: {
       title: guide.title,

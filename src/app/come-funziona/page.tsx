@@ -38,7 +38,7 @@ const steps = [
     num: "02",
     icon: MonitorPlay,
     title: "Demo coi tuoi file reali",
-    desc: "Non una presentazione finta su dati inventati. Porti un tuo computo, un tuo preventivo, una tua voce difficile — e vedi il valore dal vivo, sui lavori che fai davvero.",
+    desc: "Non una presentazione finta su dati inventati. Porti un tuo computo, un tuo preventivo, una tua voce difficile, e vedi il valore dal vivo, sui lavori che fai davvero.",
   },
   {
     num: "03",
@@ -244,7 +244,7 @@ export default function ComeFunzionaPage() {
             <div className="mt-10 max-w-3xl">
               <p className="text-navy-500 leading-relaxed text-lg">
                 In mezz&apos;ora di demo sui tuoi file capisci più di quanto faresti in una settimana di prova
-                a tentoni. <strong className="text-navy">Vedi il valore subito, sul tuo lavoro vero — e decidi con
+                a tentoni. <strong className="text-navy">Vedi il valore subito, sul tuo lavoro vero, e decidi con
                 tutte le informazioni in mano.</strong>
               </p>
               <div className="mt-7 inline-flex items-center gap-2 text-orange-500 font-semibold">

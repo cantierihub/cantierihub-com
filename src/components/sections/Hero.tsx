@@ -27,7 +27,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Blob orange — CSS animation (compositor thread, no JS jank) */}
+      {/* Blob orange · CSS animation (compositor thread, no JS jank) */}
       <div
         aria-hidden="true"
         style={{
@@ -40,7 +40,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Blob navy — CSS animation */}
+      {/* Blob navy · CSS animation */}
       <div
         aria-hidden="true"
         style={{

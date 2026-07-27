@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
-      console.error("[contatti] RESEND_API_KEY mancante — messaggio non inviato");
+      console.error("[contatti] RESEND_API_KEY mancante · messaggio non inviato");
       return NextResponse.json(
         { ok: false, fallback: true, error: "Invio momentaneamente non disponibile." },
         { status: 503 },
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const html = `
       <div style="font-family:Inter,Arial,sans-serif;color:#0f172a;max-width:560px">
         <h2 style="margin:0 0 4px">Nuovo messaggio dal sito</h2>
-        <p style="margin:0 0 20px;color:#64748b;font-size:14px">form Contatti — cantierihub.com</p>
+        <p style="margin:0 0 20px;color:#64748b;font-size:14px">form Contatti · cantierihub.com</p>
         <table style="border-collapse:collapse;font-size:14px;width:100%">
           <tr><td style="padding:6px 0;color:#64748b;width:110px">Nome</td><td style="padding:6px 0;font-weight:600">${esc(nome)}</td></tr>
           <tr><td style="padding:6px 0;color:#64748b">Azienda</td><td style="padding:6px 0">${esc(azienda) || "-"}</td></tr>
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       from: FROM,
       to: DEST,
       replyTo: email,
-      subject: `Nuovo contatto dal sito — ${nome}`,
+      subject: `Nuovo contatto dal sito · ${nome}`,
       text,
       html,
     });

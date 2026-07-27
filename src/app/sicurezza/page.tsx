@@ -61,7 +61,7 @@ const garanzie = [
     icon: RefreshCw,
     titolo: "Backup automatici",
     desc:
-      "I tuoi dati vengono salvati con backup regolari. Se succede qualcosa — un errore, un imprevisto — il lavoro non va perso: si recupera.",
+      "I tuoi dati vengono salvati con backup regolari. Se succede qualcosa, un errore o un imprevisto, il lavoro non va perso: si recupera.",
   },
 ];
 
@@ -145,7 +145,7 @@ export default function SicurezzaPage() {
         </div>
       </section>
 
-      {/* Isolamento per azienda — focus */}
+      {/* Isolamento per azienda · focus */}
       <section style={{ background: "#f8fafc" }} className="section-padding">
         <div className="container-main">
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">

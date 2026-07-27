@@ -80,7 +80,7 @@ export default async function GuidePage() {
               <em className="not-italic text-orange-500">imprenditori edili.</em>
             </h1>
             <p className="mt-5 text-lg text-gray-500 leading-relaxed">
-              Ogni guida nasce da una domanda reale dei nostri clienti. Scaricale gratis — niente abbonamenti, niente spam.
+              Ogni guida nasce da una domanda reale dei nostri clienti. Scaricale gratis: niente abbonamenti, niente spam.
             </p>
           </div>
         </div>

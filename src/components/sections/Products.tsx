@@ -54,7 +54,7 @@ export default function Products() {
     >
       {/* Dot grid */}
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.055) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
-      {/* Orange glow — bottom right */}
+      {/* Orange glow · bottom right */}
       <div aria-hidden="true" style={{ position: "absolute", bottom: -120, right: -80, width: 600, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
       {/* Subtle top-left glow */}
       <div aria-hidden="true" style={{ position: "absolute", top: -80, left: -80, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -72,7 +72,7 @@ export default function Products() {
             </h2>
             <p style={{ fontSize: "clamp(16px, 1.3vw, 18px)", color: "#64748b", marginTop: 16, lineHeight: 1.65 }}>
               Il Computatore genera il computo. Il Preventivatore lo trasforma in offerta commerciale.
-              Sono il primo asset di Cantieri Hub — disponibili oggi per tutte le imprese del network.
+              Sono il primo asset di Cantieri Hub, disponibili oggi per tutte le imprese del network.
             </p>
           </div>
         </Reveal>
@@ -106,7 +106,7 @@ export default function Products() {
                         }),
                   }}
                 >
-                  {/* Background mesh — orange card */}
+                  {/* Background mesh · orange card */}
                   {isOrange && (
                     <div
                       aria-hidden="true"
@@ -118,7 +118,7 @@ export default function Products() {
                       }}
                     />
                   )}
-                  {/* Background mesh — navy card */}
+                  {/* Background mesh · navy card */}
                   {!isOrange && (
                     <div
                       aria-hidden="true"

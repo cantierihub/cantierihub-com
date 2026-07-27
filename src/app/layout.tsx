@@ -32,7 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Cantieri Hub — Software AI per Preventivi Edili",
+    default: "Cantieri Hub · Software AI per Preventivi Edili",
     template: "%s | Cantieri Hub",
   },
   description:

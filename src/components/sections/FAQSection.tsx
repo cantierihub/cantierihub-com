@@ -20,7 +20,7 @@ interface FAQSectionProps {
 const defaultFAQs: FAQItem[] = [
   {
     q: "Devo installare qualcosa?",
-    a: "No. Cantieri Hub è un software cloud. Basta un browser e una connessione internet — funziona su PC, Mac e tablet.",
+    a: "No. Cantieri Hub è un software cloud. Basta un browser e una connessione internet: funziona su PC, Mac e tablet.",
   },
   {
     q: "Quali formati di file posso caricare?",
@@ -36,11 +36,11 @@ const defaultFAQs: FAQItem[] = [
   },
   {
     q: "Come funziona il supporto?",
-    a: "Ogni cliente ha un referente diretto raggiungibile via WhatsApp e videochiamata. Non esistono ticket anonimi — parli con una persona.",
+    a: "Ogni cliente ha un referente diretto raggiungibile via WhatsApp e videochiamata. Non esistono ticket anonimi: parli con una persona.",
   },
   {
     q: "Quanto costa?",
-    a: "Il prezzo non è pubblico — viene comunicato durante la demo, su misura per la tua impresa. Prenota una chiamata gratuita per scoprirlo.",
+    a: "Il prezzo non è pubblico: viene comunicato durante la demo, su misura per la tua impresa. Prenota una chiamata gratuita per scoprirlo.",
   },
 ];
 

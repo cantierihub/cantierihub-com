@@ -34,7 +34,7 @@ const formatiIngresso = [
   },
   {
     icon: FileSpreadsheet,
-    nome: "Excel — .xlsx e .xls",
+    nome: "Excel: .xlsx e .xls",
     desc: "I tuoi fogli di calcolo, vecchi e nuovi. Voci, quantità e prezzi entrano senza che tu riscriva nulla.",
   },
   {
@@ -108,7 +108,7 @@ export default function IntegrazioniPage() {
             <Reveal delay={0.2}>
               <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-2xl">
                 Non devi cambiare i tuoi file, né buttare via i prezzari che usi da anni. Cantieri Hub
-                legge quello che hai già — PDF, Excel, XML, perfino le piantine — e ti restituisce
+                legge quello che hai già, PDF, Excel, XML, perfino le piantine, e ti restituisce
                 documenti col tuo logo. <strong className="text-white">Tu continui a lavorare come sai,
                 solo molto più in fretta.</strong>
               </p>
@@ -191,7 +191,7 @@ export default function IntegrazioniPage() {
                   ))}
                 </ul>
                 <p className="mt-6 text-xs text-navy-500">
-                  Importi il tuo prezzario interno da Excel, CSV o PDF — il formato che hai già.
+                  Importi il tuo prezzario interno da Excel, CSV o PDF, il formato che hai già.
                 </p>
               </div>
             </Reveal>
@@ -290,7 +290,7 @@ export default function IntegrazioniPage() {
               </h2>
               <p className="mt-5 text-navy-500 leading-relaxed text-lg">
                 I tuoi file, i tuoi prezzari, il tuo logo, il tuo modo di fare i conti. Cantieri Hub si
-                inserisce in quello che fai già — toglie le ore di lavoro manuale e ti lascia il
+                inserisce in quello che fai già: toglie le ore di lavoro manuale e ti lascia il
                 controllo su ogni numero.
               </p>
               <div className="mt-8 inline-flex items-center gap-2 text-orange-500 font-semibold">
