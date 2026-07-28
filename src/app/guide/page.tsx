@@ -82,6 +82,15 @@ export default async function GuidePage() {
             <p className="mt-5 text-lg text-gray-500 leading-relaxed">
               Ogni guida nasce da una domanda reale dei nostri clienti. Scaricale gratis: niente abbonamenti, niente spam.
             </p>
+            {/* /risorse e' uscita dal footer il 28/07: senza questo link non
+                sarebbe piu' raggiungibile navigando, solo da Google. */}
+            <Link
+              href="/risorse"
+              className="mt-5 inline-flex items-center gap-2 text-orange-500 font-semibold text-sm"
+            >
+              Vedi tutte le risorse per imprese edili
+              <ArrowRight size={16} className="arrow" />
+            </Link>
           </div>
         </div>
       </section>

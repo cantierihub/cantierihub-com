@@ -159,7 +159,7 @@ export default function CalcolaPage() {
                   modificare e firmare.
                 </p>
                 <a
-                  href="/preventivatore"
+                  href="/analisi-prezzi"
                   className="mt-6 inline-flex items-center gap-2 text-orange-400 font-semibold"
                 >
                   Scopri l&apos;Analisi Prezzi AI <ArrowRight size={18} className="arrow" />

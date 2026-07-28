@@ -206,7 +206,7 @@ export default function ConfrontoPage() {
                   non torna indietro.
                 </p>
                 <a
-                  href="/preventivatore"
+                  href="/analisi-prezzi"
                   className="mt-7 inline-flex items-center gap-2 text-orange-500 font-semibold"
                 >
                   Scopri come funziona l&apos;Analisi Prezzi AI
