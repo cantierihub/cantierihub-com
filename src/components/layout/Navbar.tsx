@@ -8,14 +8,16 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WA_DEMO, WA_GENERALE } from "@/data/site";
 
-// Nota: le etichette restano corte per tenere la navbar su una riga sola.
+// I prodotti portano "AI" nel nome anche qui, come nel footer e nelle pagine.
+// EdilChat fa eccezione: non ha il suffisso da nessuna parte sul sito.
+// "Prezzo" non c'e' piu': i contenuti sono dentro le FAQ, che salgono nell'header.
 // "Lavora con noi" vive nel footer (colonna Azienda): non e un percorso di conversione.
 const navLinks = [
-  { label: "Preventivatore", href: "/preventivatore" },
-  { label: "Computatore", href: "/computatore" },
+  { label: "Preventivatore AI", href: "/preventivatore" },
+  { label: "Computatore AI", href: "/computatore" },
+  { label: "Analisi Prezzi AI", href: "/analisi-prezzi" },
   { label: "EdilChat", href: "/edilchat" },
-  { label: "Analisi Prezzi", href: "/analisi-prezzi" },
-  { label: "Prezzo", href: "/prezzo" },
+  { label: "FAQ", href: "/faq" },
   { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "Contatti", href: "/contatti" },
 ];

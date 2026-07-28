@@ -5,13 +5,13 @@ import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
-  title: "FAQ · Domande frequenti su Cantieri Hub",
+  title: "FAQ · Quanto costa Cantieri Hub e come funziona",
   description:
-    "Tutto quello che vuoi sapere su Cantieri Hub, il Preventivatore AI e il Computatore AI, prima di prenotare una demo.",
+    "Quanto costa Cantieri Hub, cosa comprende la licenza e come funzionano prodotti, sicurezza e supporto. Le risposte prima di prenotare una demo.",
   openGraph: {
-    title: "FAQ · Domande frequenti su Cantieri Hub",
+    title: "FAQ · Quanto costa Cantieri Hub e come funziona",
     description:
-      "Tutto quello che vuoi sapere su Cantieri Hub, il Preventivatore AI e il Computatore AI, prima di prenotare una demo.",
+      "Quanto costa Cantieri Hub, cosa comprende la licenza e come funzionano prodotti, sicurezza e supporto. Le risposte prima di prenotare una demo.",
     url: "https://cantierihub.com/faq",
     type: "website",
   },
@@ -33,7 +33,10 @@ const categories = [
     title: "Prezzi e contratti",
     faqs: [
       { q: "Quanto costa?", a: "Il prezzo non è comunicato pubblicamente: viene discusso durante la demo, su misura per la tua impresa. Prenota una chiamata gratuita per scoprirlo." },
-      { q: "Ci sono piani mensili?", a: "No. La licenza è annuale. In casi eccezionali è possibile rateizzare in 3-4 rate. Non esiste un piano mensile." },
+      { q: "Cosa è incluso nella licenza?", a: "Tutto dentro un'unica licenza annuale: tre utenti compresi, accesso a ogni modulo di Cantieri Hub senza funzioni premium sbloccate dopo, onboarding guidato e assistenza diretta su WhatsApp e in videochiamata. Quello che vedi in demo è quello che usi." },
+      { q: "Perché il prezzo lo dite solo in demo?", a: "Per tre motivi. Lo vedi sui tuoi file, non in teoria: portiamo i tuoi computi e i tuoi preventivi reali dentro la piattaforma. È su misura, perché ogni impresa parte da una situazione diversa. E un numero scritto su una pagina, senza contesto, non ti dice nulla: preferiamo mostrartelo dopo che hai visto con i tuoi occhi cosa ottieni." },
+      { q: "Ci sono costi nascosti?", a: "No. Nessuna funzione bloccata dietro un costo extra, nessun aumento a sorpresa, nessuna clausola scritta in piccolo. In demo ti diciamo il prezzo esatto per la tua impresa e cosa comprende, voce per voce." },
+      { q: "Ci sono piani mensili?", a: "No. La licenza è annuale: decidi una volta e lavori un anno intero, senza un abbonamento che ti pesa addosso ogni trenta giorni. In casi particolari possiamo rendere l'avvio più leggero rateizzando in 3-4 rate, ma la formula standard resta annuale." },
       { q: "Esiste una versione di prova gratuita?", a: "No. Ogni onboarding ha un costo operativo, quindi non offriamo trial. Offriamo invece una demo gratuita in cui vedi il prodotto funzionare con i tuoi file reali." },
       { q: "Posso acquistare solo il Computatore AI senza il Preventivatore?", a: "Sì. Sono prodotti separati con licenze separate. Chi ha già il Preventivatore paga meno per aggiungere il Computatore." },
     ],

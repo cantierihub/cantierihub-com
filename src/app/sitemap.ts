@@ -3,6 +3,7 @@ import { SITE_URL } from "@/data/site";
 
 // Solo pagine pubbliche indicizzabili.
 // Escluse di proposito le riservate noindex: /grazie.
+// /prezzo non esiste piu': fa redirect 301 su /faq (vedi next.config.ts).
 const routes = [
   "",
   "/preventivatore",
@@ -14,7 +15,6 @@ const routes = [
   "/demo",
   "/integrazioni",
   "/confronto",
-  "/prezzo",
   "/sicurezza",
   "/risorse",
   "/guide",

@@ -12,7 +12,7 @@ const linkGroups = [
       { label: "Analisi Prezzi AI", href: "/analisi-prezzi" },
       { label: "Integrazioni", href: "/integrazioni" },
       { label: "Confronto", href: "/confronto" },
-      { label: "Prezzo", href: "/prezzo" },
+      { label: "Quanto costa", href: "/faq" },
       { label: "Sicurezza", href: "/sicurezza" },
     ],
   },

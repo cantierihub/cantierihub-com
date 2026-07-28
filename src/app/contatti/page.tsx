@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
-import { MessageCircle, Calendar, Mail, ArrowRight } from "lucide-react";
+import { Calendar, Mail, ArrowRight } from "lucide-react";
 import ContattiForm from "./ContattiForm";
-import { WA_DEMO, WA_GENERALE, CONTACT_EMAIL } from "@/data/site";
+import { WA_DEMO, CONTACT_EMAIL } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Contatti · Prenota una demo gratuita",
@@ -28,15 +28,8 @@ const contactOptions = [
     external: true,
     primary: true,
   },
-  {
-    icon: MessageCircle,
-    title: "Scrivici su WhatsApp",
-    description: "Risposta diretta. Nessun chatbot, nessun ticket. Un essere umano che conosce il prodotto.",
-    cta: "Apri WhatsApp",
-    href: WA_GENERALE,
-    external: true,
-    primary: false,
-  },
+  // Il riquadro "Scrivici su WhatsApp" e' stato tolto il 28/07/2026 (scelta di
+  // Chiara): sulla pagina Contatti resta la mail, il WhatsApp vive nei bottoni.
   {
     icon: Mail,
     title: "Manda una email",
@@ -69,7 +62,7 @@ export default function ContattiPage() {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-5 mb-16">
+        <div className="grid md:grid-cols-2 gap-5 mb-16 max-w-3xl">
           {contactOptions.map((opt, i) => {
             const Icon = opt.icon;
             return (
