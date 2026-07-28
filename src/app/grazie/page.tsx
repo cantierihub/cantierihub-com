@@ -4,7 +4,7 @@ import Reveal from "@/components/ui/Reveal";
 import { CheckCircle, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Grazie — Abbiamo ricevuto il tuo messaggio",
+  title: "Grazie · Abbiamo ricevuto il tuo messaggio",
   description:
     "Abbiamo ricevuto la tua richiesta. Ti ricontattiamo entro 24 ore.",
   // Pagina di conferma post-form: non va indicizzata.

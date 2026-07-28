@@ -27,7 +27,7 @@ export default function HowItWorks() {
 
         <div className="grid md:grid-cols-3 gap-5">
 
-          {/* Step 01 — orange accent, drop zone */}
+          {/* Step 01 · orange accent, drop zone */}
           <Reveal delay={0}>
             <div
               style={{
@@ -64,7 +64,7 @@ export default function HowItWorks() {
                 fontWeight: 600, fontSize: 12, color: "#f97316",
                 letterSpacing: "0.06em", marginBottom: 20, textTransform: "uppercase",
               }}>
-                01 — UPLOAD
+                01 · UPLOAD
               </span>
 
               {/* Drop zone */}
@@ -102,7 +102,7 @@ export default function HowItWorks() {
             </div>
           </Reveal>
 
-          {/* Step 02 — AI progress visual */}
+          {/* Step 02 · AI progress visual */}
           <Reveal delay={0.1}>
             <div
               style={{
@@ -131,7 +131,7 @@ export default function HowItWorks() {
                 fontWeight: 600, fontSize: 12, color: "#f97316",
                 letterSpacing: "0.06em", marginBottom: 20, textTransform: "uppercase",
               }}>
-                02 — AI
+                02 · AI
               </span>
 
               {/* AI processing visual */}
@@ -169,7 +169,7 @@ export default function HowItWorks() {
             </div>
           </Reveal>
 
-          {/* Step 03 — dark navy, PDF download widget */}
+          {/* Step 03 · dark navy, PDF download widget */}
           <Reveal delay={0.2}>
             <div
               style={{
@@ -205,7 +205,7 @@ export default function HowItWorks() {
                 fontWeight: 600, fontSize: 12, color: "#fb923c",
                 letterSpacing: "0.06em", marginBottom: 20, textTransform: "uppercase",
               }}>
-                03 — INVIA
+                03 · INVIA
               </span>
 
               {/* PDF file widget */}

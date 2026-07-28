@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
-import { WA_DEMO } from "@/data/site";
+import { WA_DEMO, WA_GENERALE } from "@/data/site";
 import {
   MessageCircle,
   MonitorPlay,
@@ -14,12 +14,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Come funziona Cantieri Hub — Dalla demo all'uso quotidiano",
+  title: "Come funziona Cantieri Hub · Dalla demo all'uso quotidiano",
   description:
     "Il percorso completo per iniziare con Cantieri Hub: demo coi tuoi file reali, onboarding guidato con project manager dedicato e supporto umano diretto ogni giorno.",
   alternates: { canonical: "/come-funziona" },
   openGraph: {
-    title: "Come funziona Cantieri Hub — Dalla demo all'uso quotidiano",
+    title: "Come funziona Cantieri Hub · Dalla demo all'uso quotidiano",
     description:
       "Il percorso completo per iniziare con Cantieri Hub: demo coi tuoi file reali, onboarding guidato con project manager dedicato e supporto umano diretto ogni giorno.",
     url: "https://cantierihub.com/come-funziona",
@@ -33,12 +33,13 @@ const steps = [
     icon: MessageCircle,
     title: "Prenoti una demo",
     desc: "Un messaggio su WhatsApp e basta. Niente form infiniti, niente call center. Ci scrivi, fissiamo mezz'ora insieme e parti da lì.",
+    cta: { label: "Scrivi al consulente su WhatsApp", href: WA_DEMO },
   },
   {
     num: "02",
     icon: MonitorPlay,
     title: "Demo coi tuoi file reali",
-    desc: "Non una presentazione finta su dati inventati. Porti un tuo computo, un tuo preventivo, una tua voce difficile — e vedi il valore dal vivo, sui lavori che fai davvero.",
+    desc: "Non una presentazione finta su dati inventati. Porti un tuo computo, un tuo preventivo, una tua voce difficile, e vedi il valore dal vivo, sui lavori che fai davvero.",
   },
   {
     num: "03",
@@ -51,6 +52,7 @@ const steps = [
     icon: Headphones,
     title: "Uso quotidiano con supporto umano",
     desc: "Ti serve una mano? Scrivi su WhatsApp o fai una videochiamata e parli con una persona vera. Nessun ticket anonimo, nessuna risposta automatica, nessuna attesa di giorni.",
+    cta: { label: "Scrivi al consulente su WhatsApp", href: WA_GENERALE },
   },
 ];
 
@@ -142,6 +144,17 @@ export default function ComeFunzionaPage() {
                     <div className="pt-1">
                       <h3 className="font-display font-bold text-navy text-lg md:text-xl">{s.title}</h3>
                       <p className="mt-2 text-sm md:text-base text-navy-500 leading-relaxed">{s.desc}</p>
+                      {s.cta && (
+                        <a
+                          href={s.cta.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-orange-500"
+                        >
+                          {s.cta.label}
+                          <ArrowRight size={15} className="arrow" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </Reveal>
@@ -149,21 +162,8 @@ export default function ComeFunzionaPage() {
             })}
           </div>
 
-          <Reveal delay={0.1}>
-            <div className="mt-12 flex flex-wrap items-center gap-4">
-              <a
-                href={WA_DEMO}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary btn-lg cta-shimmer"
-              >
-                Prenota la tua demo <span className="arrow">→</span>
-              </a>
-              <span className="text-sm text-navy-500">
-                Mezz&apos;ora sui tuoi file. Nessun impegno.
-              </span>
-            </div>
-          </Reveal>
+          {/* Il bottone che stava qui e' stato tolto il 28/07: c'era gia' lo
+              stesso invito in fondo alla pagina (scelta di Chiara). */}
         </div>
       </section>
 
@@ -174,7 +174,7 @@ export default function ComeFunzionaPage() {
             <Reveal direction="left">
               <div className="h-full p-7 md:p-9 rounded-2xl bg-navy text-white">
                 <p className="eyebrow text-orange-400">L&apos;onboarding</p>
-                <h3 className="mt-3 font-display font-bold text-2xl">Non sei mai solo davanti al software.</h3>
+                <h3 className="mt-3 font-display font-bold text-white text-2xl">Non sei mai solo davanti al software.</h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">
                   Dal primo giorno hai un <strong className="text-white">gruppo WhatsApp dedicato</strong> con
                   il tuo project manager. Niente manuali da studiare da solo: ti formiamo passo passo, sui
@@ -244,7 +244,7 @@ export default function ComeFunzionaPage() {
             <div className="mt-10 max-w-3xl">
               <p className="text-navy-500 leading-relaxed text-lg">
                 In mezz&apos;ora di demo sui tuoi file capisci più di quanto faresti in una settimana di prova
-                a tentoni. <strong className="text-navy">Vedi il valore subito, sul tuo lavoro vero — e decidi con
+                a tentoni. <strong className="text-navy">Vedi il valore subito, sul tuo lavoro vero, e decidi con
                 tutte le informazioni in mano.</strong>
               </p>
               <div className="mt-7 inline-flex items-center gap-2 text-orange-500 font-semibold">
@@ -259,7 +259,7 @@ export default function ComeFunzionaPage() {
       <CTASection
         title="Pronto a vederlo sui tuoi file?"
         subtitle="Scrivici su WhatsApp: fissiamo mezz'ora e ti mostriamo Cantieri Hub sui tuoi computi reali, dal vivo."
-        primaryLabel="Prenota una demo"
+        primaryLabel="Parti dalla demo"
         whatsappText="Ciao! Ho letto come funziona Cantieri Hub e vorrei prenotare una demo gratuita."
       />
     </>

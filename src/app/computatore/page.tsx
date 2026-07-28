@@ -8,11 +8,11 @@ import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/computatore" },
-  title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
+  title: "Computatore AI · Genera il computo metrico da zero in pochi minuti",
   description:
     "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
   openGraph: {
-    title: "Computatore AI — Genera il computo metrico da zero in pochi minuti",
+    title: "Computatore AI · Genera il computo metrico da zero in pochi minuti",
     description:
       "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
     url: "https://cantierihub.com/computatore",
@@ -25,7 +25,7 @@ const wowMoments = [
     number: "01",
     title: "Da zero a computo: descrizione + foto di sopralluogo",
     description:
-      "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero — senza nessun documento preesistente. Una funzione che non trovi da nessun'altra parte.",
+      "Descrivi il progetto a parole e carica le foto scattate in cantiere. L'AI genera l'intero computo metrico da zero, senza nessun documento preesistente. Una funzione che non trovi da nessun'altra parte.",
     tag: "Il salto più grande",
     image: "/images/wow01-sopralluogo.jpg",
     imageAlt: "Professionista con caschetto Cantieri Hub e tablet in cantiere",
@@ -60,9 +60,9 @@ const steps = [
 const faqItems = [
   { q: "Posso generare un computo senza avere nessun documento di partenza?", a: "Sì. Descrivi il progetto in testo libero e carica le foto del sopralluogo. L'AI costruisce l'intero computo da zero." },
   { q: "Che qualità devono avere le piantine?", a: "Piantine architettoniche standard in PDF o immagine (JPG, PNG). Non è richiesto un formato tecnico specifico." },
-  { q: "Il Computatore sostituisce il Preventivatore?", a: "No — è complementare. Il Computatore produce il computo metrico (documento tecnico con voci e quantità). Il Preventivatore lo trasforma in offerta commerciale con prezzi, ribassi e PDF brandizzato." },
+  { q: "Il Computatore sostituisce il Preventivatore?", a: "No, è complementare. Il Computatore produce il computo metrico (documento tecnico con voci e quantità). Il Preventivatore lo trasforma in offerta commerciale con prezzi, ribassi e PDF brandizzato." },
   { q: "Posso usare solo il Computatore senza il Preventivatore?", a: "Sì. Sono prodotti vendibili separatamente. Molti clienti usano il Computatore per le gare d'appalto e il Preventivatore per le offerte ai privati." },
-  { q: "Chi ha già il Preventivatore paga di più per aggiungere il Computatore?", a: "No — il prezzo per i clienti già abbonati al Preventivatore è ridotto. Parliamone in una chiamata dedicata." },
+  { q: "Chi ha già il Preventivatore paga di più per aggiungere il Computatore?", a: "No, il prezzo per i clienti già abbonati al Preventivatore è ridotto. Parliamone in una chiamata dedicata." },
 ];
 
 const productJsonLd = {
@@ -154,7 +154,7 @@ export default function ComputatorePage() {
         </div>
       </section>
 
-      {/* I 3 WOW moment — layout 2 colonne zigzag */}
+      {/* I 3 WOW moment · layout 2 colonne zigzag */}
       <section style={{ background: "#f8fafc", padding: "clamp(64px, 9vw, 120px) 0" }}>
         <div className="container-main">
           <Reveal>
@@ -281,6 +281,8 @@ export default function ComputatorePage() {
         subtitle="Risposte dirette per chi vuole capire prima di decidere."
       />
       <CTASection
+        whatsappText="Ciao! Vorrei vedere il Computatore AI sui miei file."
+        primaryLabel="Vedilo sui tuoi file"
         title="Vedi il Computatore AI con i tuoi file reali."
         subtitle="Prenota una demo gratuita. In 30 minuti capiamo insieme se fa al caso tuo."
       />

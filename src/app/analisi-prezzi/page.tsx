@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
+import { WA_ANALISI_PREZZI } from "@/data/site";
 import {
   Package,
   Users,
@@ -19,18 +21,17 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Analisi Prezzi AI — La scomposizione costi di qualsiasi voce",
+  title: "Analisi Prezzi AI · La scomposizione costi di qualsiasi voce",
   description:
     "Genera la scomposizione di costo di qualsiasi voce d'opera: materiali, manodopera, noli, spese generali e sicurezza. Editabile, ricalcolata live, esportabile.",
+  alternates: { canonical: "/analisi-prezzi" },
   openGraph: {
-    title: "Analisi Prezzi AI — La scomposizione costi di qualsiasi voce",
+    title: "Analisi Prezzi AI · La scomposizione costi di qualsiasi voce",
     description:
       "Genera la scomposizione di costo di qualsiasi voce d'opera: materiali, manodopera, noli, spese generali e sicurezza. Editabile, ricalcolata live, esportabile.",
     url: "https://cantierihub.com/analisi-prezzi",
     type: "website",
   },
-  // Pagina riservata: niente menu, niente indicizzazione.
-  robots: { index: false, follow: false },
 };
 
 const componenti = [
@@ -115,12 +116,31 @@ export default function AnalisiPrezziPage() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-2xl">
-                Dai all&apos;AI una lavorazione e ti restituisce il prezzo costruito pezzo per pezzo —
-                materiali, manodopera, noli, spese generali, sicurezza — con un ragionamento che puoi
+                Dai all&apos;AI una lavorazione e ti restituisce il prezzo costruito pezzo per pezzo:
+                materiali, manodopera, noli, spese generali, sicurezza. Con un ragionamento che puoi
                 leggere, modificare e firmare. <strong className="text-white">Niente più voci stimate a occhio.</strong>
               </p>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* Schema: come si compone il prezzo.
+          Illustrazione, non una schermata: sorgente in grafiche/analisi-prezzi-scomposizione.html */}
+      <section className="bg-white pt-12 pb-4 md:pt-16 md:pb-6">
+        <div className="container-main">
+          <Reveal>
+            <div className="relative mx-auto max-w-4xl aspect-[7/5] rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/analisi-prezzi-scomposizione.png"
+                alt="Schema della scomposizione di costo: materiali, manodopera, noli e attrezzature, spese generali e sicurezza sommati danno il prezzo della voce"
+                fill
+                sizes="(max-width: 768px) 100vw, 900px"
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -137,18 +157,27 @@ export default function AnalisiPrezziPage() {
                 <p className="mt-5 text-gray-500 leading-relaxed">
                   Quando una lavorazione non c&apos;è sul prezzario regionale, parte la ricerca: telefonate
                   ai fornitori, vecchi preventivi da spulciare, stime fatte a sensazione. Ore di lavoro per
-                  un solo numero — che poi rischi di sbagliare in difetto e di lavorare in perdita.
+                  un solo numero, che poi rischi di sbagliare in difetto e di lavorare in perdita.
                 </p>
               </div>
             </Reveal>
             <Reveal direction="right" delay={0.1}>
+              <div className="mb-5 relative aspect-[16/9] rounded-2xl overflow-hidden border border-gray-200">
+                <Image
+                  src="/images/blueprint-desk.jpg"
+                  alt="Scrivania con planimetria, righello e blocco appunti: il lavoro di prezzatura fatto a mano"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
               <div className="rounded-2xl border border-gray-200 bg-gray-50 p-7 md:p-9">
                 <p className="font-display font-bold text-navy text-lg mb-5">Senza Analisi Prezzi AI</p>
                 <ul className="space-y-3.5 text-sm text-gray-600">
-                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">—</span> Cerchi il prezzo su tre fonti diverse e non combaciano</li>
-                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">—</span> Stimi a memoria e speri di non rimetterci</li>
-                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">—</span> Non sai spiegare al cliente come hai fatto quel numero</li>
-                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">—</span> Ogni voce nuova riparte da zero, ogni volta</li>
+                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">·</span> Cerchi il prezzo su tre fonti diverse e non combaciano</li>
+                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">·</span> Stimi a memoria e speri di non rimetterci</li>
+                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">·</span> Non sai spiegare al cliente come hai fatto quel numero</li>
+                  <li className="flex gap-3"><span className="text-orange-500 font-bold shrink-0">·</span> Ogni voce nuova riparte da zero, ogni volta</li>
                 </ul>
               </div>
             </Reveal>
@@ -233,13 +262,13 @@ export default function AnalisiPrezziPage() {
             <Reveal>
               <div className="h-full p-7 md:p-9 rounded-2xl bg-navy text-white">
                 <p className="eyebrow text-orange-400">Due modalità</p>
-                <h3 className="mt-3 font-display font-bold text-2xl">Una voce o cento.</h3>
+                <h3 className="mt-3 font-display font-bold text-white text-2xl">Una voce o cento.</h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">
-                  <strong className="text-white">Singola</strong> — analizzi la voce critica, quella fuori
+                  <strong className="text-white">Singola</strong>: analizzi la voce critica, quella fuori
                   prezzario, in pochi secondi.
                 </p>
                 <p className="mt-3 text-gray-300 text-sm leading-relaxed">
-                  <strong className="text-white">Batch</strong> — analizzi interi blocchi di voci in un colpo
+                  <strong className="text-white">Batch</strong>: analizzi interi blocchi di voci in un colpo
                   solo, quando devi prezzare un computo intero.
                 </p>
               </div>
@@ -277,13 +306,20 @@ export default function AnalisiPrezziPage() {
                 Nessun altro software edile lo fa a questo livello.
               </h2>
               <p className="mt-5 text-gray-500 leading-relaxed text-lg">
-                La scomposizione di costo contestuale — attendibile, ragionata, calibrata sul cantiere reale —
+                La scomposizione di costo contestuale, attendibile e calibrata sul cantiere reale,
                 è il cuore di Cantieri Hub. È la differenza tra un software che archivia prezzi e uno che
                 ti aiuta davvero a fare il prezzo giusto.
               </p>
-              <div className="mt-8 inline-flex items-center gap-2 text-orange-500 font-semibold">
-                Disponibile dentro la piattaforma Cantieri Hub
-                <ArrowRight size={18} className="arrow" />
+              <div className="mt-8">
+                <a
+                  href={WA_ANALISI_PREZZI}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-orange-500 font-semibold"
+                >
+                  Disponibile dentro la piattaforma Cantieri Hub. Richiedi una consulenza
+                  <ArrowRight size={18} className="arrow" />
+                </a>
               </div>
             </div>
           </Reveal>
@@ -298,9 +334,10 @@ export default function AnalisiPrezziPage() {
       />
 
       <CTASection
+        whatsappText="Ciao! Vorrei vedere l'Analisi Prezzi AI sulle mie voci."
         title="Vuoi vederla sui tuoi computi?"
         subtitle="Richiedi una demo: ti mostriamo l'Analisi Prezzi sulle tue voci reali, dal vivo."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Vedila sui tuoi computi"
       />
     </>
   );

@@ -6,17 +6,19 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { WA_DEMO, WA_GENERALE } from "@/data/site";
+import { WA_DEMO } from "@/data/site";
 
-// Nota: le etichette restano corte per tenere la navbar su una riga sola.
+// I prodotti portano "AI" nel nome anche qui, come nel footer e nelle pagine.
+// EdilChat fa eccezione: non ha il suffisso da nessuna parte sul sito.
+// "Prezzo" non c'e' piu': i contenuti sono dentro le FAQ, che salgono nell'header.
 // "Lavora con noi" vive nel footer (colonna Azienda): non e un percorso di conversione.
 const navLinks = [
-  { label: "Preventivatore", href: "/preventivatore" },
-  { label: "Computatore", href: "/computatore" },
+  { label: "Preventivatore AI", href: "/preventivatore" },
+  { label: "Computatore AI", href: "/computatore" },
+  { label: "Analisi Prezzi AI", href: "/analisi-prezzi" },
   { label: "EdilChat", href: "/edilchat" },
-  { label: "Prezzo", href: "/prezzo" },
-  { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "FAQ", href: "/faq" },
+  { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "Contatti", href: "/contatti" },
 ];
 
@@ -88,9 +90,6 @@ export default function Navbar() {
 
         {/* Desktop CTAs */}
         <div className="hidden lg:flex items-center gap-2" style={{ marginLeft: 8 }}>
-          <a href={WA_GENERALE} target="_blank" rel="noopener noreferrer" className="btn-ghost btn-sm">
-            WhatsApp
-          </a>
           <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm cta-shimmer">
             Prenota Demo
           </a>
@@ -136,7 +135,6 @@ export default function Navbar() {
                 </Link>
               ))}
               <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #f1f5f9", display: "flex", flexDirection: "column", gap: 8 }}>
-                <a href={WA_GENERALE} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ justifyContent: "center" }}>WhatsApp</a>
                 <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</a>
               </div>
             </div>

@@ -13,12 +13,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Prenota la tua demo gratuita — Cantieri Hub",
+  title: "Prenota la tua demo gratuita · Cantieri Hub",
   description:
     "30 minuti, dal vivo, sui tuoi file reali. Ti mostriamo come Cantieri Hub lavora il tuo computo metrico, scompone i prezzi con l'AI e ti restituisce un PDF pronto. Nessun impegno.",
   alternates: { canonical: "/demo" },
   openGraph: {
-    title: "Prenota la tua demo gratuita — Cantieri Hub",
+    title: "Prenota la tua demo gratuita · Cantieri Hub",
     description:
       "30 minuti, dal vivo, sui tuoi file reali. Ti mostriamo come Cantieri Hub lavora il tuo computo metrico, scompone i prezzi con l'AI e ti restituisce un PDF pronto. Nessun impegno.",
     url: "https://cantierihub.com/demo",
@@ -35,7 +35,7 @@ const cosaVedi = [
   {
     icon: Sparkles,
     nome: "L'Analisi Prezzi AI sulle tue voci",
-    desc: "Prendiamo le voci critiche del tuo lavoro — anche quelle fuori prezzario — e ti facciamo vedere come l'AI le scompone pezzo per pezzo.",
+    desc: "Prendiamo le voci critiche del tuo lavoro, anche quelle fuori prezzario, e ti facciamo vedere come l'AI le scompone pezzo per pezzo.",
   },
   {
     icon: FileText,
@@ -89,7 +89,7 @@ export default function DemoPage() {
             <Reveal delay={0.2}>
               <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-2xl">
                 30 minuti, dal vivo. Vedi il prodotto lavorare sui{" "}
-                <strong className="text-white">tuoi file reali</strong> — il tuo
+                <strong className="text-white">tuoi file reali</strong>: il tuo
                 computo, le tue voci, il tuo preventivo finito. Nessun impegno.
               </p>
             </Reveal>
@@ -101,7 +101,7 @@ export default function DemoPage() {
                   rel="noopener noreferrer"
                   className="btn-primary btn-lg cta-shimmer"
                 >
-                  Prenota su WhatsApp <span className="arrow">→</span>
+                  Scrivici ora su WhatsApp <span className="arrow">→</span>
                 </a>
                 <span className="text-sm" style={{ color: "#94a3b8" }}>
                   Ti rispondiamo di persona e fissiamo l&apos;orario.
@@ -123,7 +123,7 @@ export default function DemoPage() {
               </h2>
               <p className="mt-4 text-navy-500 leading-relaxed">
                 Niente slide. Apriamo il prodotto e ti mostriamo l&apos;intero
-                percorso, dal computo al PDF da inviare — con materiale tuo, non
+                percorso, dal computo al PDF da inviare, con materiale tuo, non
                 di esempio.
               </p>
             </div>

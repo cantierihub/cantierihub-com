@@ -14,11 +14,11 @@ import {
 
 export const metadata: Metadata = {
   alternates: { canonical: "/risorse" },
-  title: "Risorse per imprese edili — Guide, computo metrico e gestione cantieri",
+  title: "Risorse per imprese edili · Guide, computo metrico e gestione cantieri",
   description:
     "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
   openGraph: {
-    title: "Risorse per imprese edili — Guide, computo metrico e gestione cantieri",
+    title: "Risorse per imprese edili · Guide, computo metrico e gestione cantieri",
     description:
       "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
     url: "https://cantierihub.com/risorse",
@@ -122,7 +122,7 @@ export default function RisorsePage() {
         </div>
       </section>
 
-      {/* Guide gratuite — card grande */}
+      {/* Guide gratuite · card grande */}
       <section className="section-padding bg-white">
         <div className="container-main">
           <Reveal>
@@ -182,7 +182,7 @@ export default function RisorsePage() {
         </div>
       </section>
 
-      {/* Presto — approfondimenti in arrivo */}
+      {/* Presto · approfondimenti in arrivo */}
       <section style={{ background: "#f8fafc" }} className="section-padding">
         <div className="container-main">
           <Reveal>
@@ -246,7 +246,7 @@ export default function RisorsePage() {
       <CTASection
         title="Vuoi vedere gli strumenti all'opera?"
         subtitle="Le guide ti danno il metodo. Una demo ti mostra come Cantieri Hub lo fa al posto tuo, sui tuoi file reali."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Vedi gli strumenti all'opera"
         whatsappText="Ciao! Ho letto le risorse e vorrei vedere una demo di Cantieri Hub."
         dark={false}
       />

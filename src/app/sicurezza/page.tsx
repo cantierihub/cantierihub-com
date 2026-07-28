@@ -13,12 +13,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Sicurezza dei dati — I tuoi prezzari e preventivi al sicuro",
+  title: "Sicurezza dei dati · I tuoi prezzari e preventivi al sicuro",
   description:
     "Come Cantieri Hub protegge i tuoi dati: isolamento per azienda, crittografia in transito e a riposo, hosting europeo conforme GDPR e backup automatici.",
   alternates: { canonical: "/sicurezza" },
   openGraph: {
-    title: "Sicurezza dei dati — I tuoi prezzari e preventivi al sicuro",
+    title: "Sicurezza dei dati · I tuoi prezzari e preventivi al sicuro",
     description:
       "Come Cantieri Hub protegge i tuoi dati: isolamento per azienda, crittografia in transito e a riposo, hosting europeo conforme GDPR e backup automatici.",
     url: "https://cantierihub.com/sicurezza",
@@ -61,7 +61,7 @@ const garanzie = [
     icon: RefreshCw,
     titolo: "Backup automatici",
     desc:
-      "I tuoi dati vengono salvati con backup regolari. Se succede qualcosa — un errore, un imprevisto — il lavoro non va perso: si recupera.",
+      "I tuoi dati vengono salvati con backup regolari. Se succede qualcosa, un errore o un imprevisto, il lavoro non va perso: si recupera.",
   },
 ];
 
@@ -145,7 +145,7 @@ export default function SicurezzaPage() {
         </div>
       </section>
 
-      {/* Isolamento per azienda — focus */}
+      {/* Isolamento per azienda · focus */}
       <section style={{ background: "#f8fafc" }} className="section-padding">
         <div className="container-main">
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -175,7 +175,7 @@ export default function SicurezzaPage() {
             <Reveal direction="right" delay={0.1}>
               <div className="rounded-2xl bg-navy text-white p-7 md:p-9">
                 <p className="eyebrow text-orange-400">In sintesi</p>
-                <h3 className="mt-3 font-display font-bold text-2xl">Le garanzie, in una riga.</h3>
+                <h3 className="mt-3 font-display font-bold text-white text-2xl">Le garanzie, in una riga.</h3>
                 <ul className="mt-6 space-y-4">
                   {garanzieRapide.map((t) => (
                     <li key={t} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: "#cbd5e1" }}>

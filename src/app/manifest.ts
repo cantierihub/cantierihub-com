@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Cantieri Hub — Software AI per imprese edili",
+    name: "Cantieri Hub · Software AI per imprese edili",
     short_name: "Cantieri Hub",
     description: "Dal computo metrico al preventivo professionale in pochi minuti.",
     start_url: "/",

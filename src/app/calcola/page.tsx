@@ -6,11 +6,11 @@ import { Upload, ScanText, Database, Sparkles, ArrowRight, Check } from "lucide-
 
 export const metadata: Metadata = {
   alternates: { canonical: "/calcola" },
-  title: "Calcola il preventivo con l'AI — Dal computo al prezzo in pochi minuti",
+  title: "Calcola il preventivo con l'AI · Dal computo al prezzo in pochi minuti",
   description:
     "Calcola il tuo preventivo edile con l'AI di Cantieri Hub: carichi il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e stima le voci fuori prezzario. In pochi minuti, non in mezza giornata.",
   openGraph: {
-    title: "Calcola il preventivo con l'AI — Dal computo al prezzo in pochi minuti",
+    title: "Calcola il preventivo con l'AI · Dal computo al prezzo in pochi minuti",
     description:
       "Calcola il tuo preventivo edile con l'AI di Cantieri Hub: carichi il computo metrico, l'AI estrae le voci, abbina i prezzari regionali e stima le voci fuori prezzario. In pochi minuti, non in mezza giornata.",
     url: "https://cantierihub.com/calcola",
@@ -146,7 +146,7 @@ export default function CalcolaPage() {
             <Reveal direction="left">
               <div className="h-full p-7 md:p-9 rounded-2xl bg-navy text-white">
                 <p className="eyebrow text-orange-400">Il caso più difficile</p>
-                <h3 className="mt-3 font-display font-bold text-2xl leading-tight">
+                <h3 className="mt-3 font-display font-bold text-white text-2xl leading-tight">
                   E le voci che sul prezzario non ci sono?
                 </h3>
                 <p className="mt-4 text-gray-300 text-sm leading-relaxed">
@@ -154,12 +154,12 @@ export default function CalcolaPage() {
                   da spulciare, stime fatte a sensazione. Per quelle c&apos;è l&apos;Analisi Prezzi AI.
                 </p>
                 <p className="mt-3 text-gray-300 text-sm leading-relaxed">
-                  Ricostruisce il prezzo da zero — <strong className="text-white">materiali, manodopera,
-                  noli, spese generali, sicurezza</strong> — con un ragionamento che puoi leggere,
+                  Ricostruisce il prezzo da zero: <strong className="text-white">materiali, manodopera,
+                  noli, spese generali, sicurezza</strong>. Con un ragionamento che puoi leggere,
                   modificare e firmare.
                 </p>
                 <a
-                  href="/preventivatore"
+                  href="/analisi-prezzi"
                   className="mt-6 inline-flex items-center gap-2 text-orange-400 font-semibold"
                 >
                   Scopri l&apos;Analisi Prezzi AI <ArrowRight size={18} className="arrow" />
@@ -193,7 +193,7 @@ export default function CalcolaPage() {
       <CTASection
         title="Calcola il tuo prossimo preventivo con l'AI."
         subtitle="Scrivici su WhatsApp: lo calcoliamo insieme sui tuoi file reali, dal vivo."
-        primaryLabel="Calcola con noi su WhatsApp"
+        primaryLabel="Calcoliamolo insieme"
         whatsappText="Ciao! Vorrei calcolare un preventivo con l'AI di Cantieri Hub."
       />
     </>

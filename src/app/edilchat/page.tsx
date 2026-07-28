@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import { waLink } from "@/data/site";
 import {
   BookOpen,
   ListChecks,
-  Landmark,
+  ScrollText,
   FileSpreadsheet,
   MessageSquare,
   Target,
-  RefreshCw,
+  BookMarked,
   Quote,
   ArrowRight,
 } from "lucide-react";
@@ -19,13 +20,13 @@ import {
 const WA_EDILCHAT = waLink("Ciao! Vorrei provare EdilChat: come ottengo le credenziali?");
 
 export const metadata: Metadata = {
-  title: "EdilChat — L'assistente AI per chi costruisce in Italia",
+  title: "EdilChat · L'assistente AI per chi costruisce in Italia",
   description:
-    "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, bandi e operatività, con le fonti sempre citate. Knowledge base aggiornata ogni giorno.",
+    "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, capitolati e operatività, con le fonti sempre citate. Knowledge base verticale in continua espansione.",
   openGraph: {
-    title: "EdilChat — L'assistente AI per chi costruisce in Italia",
+    title: "EdilChat · L'assistente AI per chi costruisce in Italia",
     description:
-      "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, bandi e operatività, con le fonti sempre citate. Knowledge base aggiornata ogni giorno.",
+      "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, capitolati e operatività, con le fonti sempre citate. Knowledge base verticale in continua espansione.",
     url: "https://cantierihub.com/edilchat",
     type: "website",
   },
@@ -36,7 +37,7 @@ const funzionalita = [
   {
     icon: BookOpen,
     nome: "Normative",
-    desc: "D.Lgs. 81 sulla sicurezza, NTC, Testo Unico Edilizia. Consultazione sempre aggiornata.",
+    desc: "D.Lgs. 81 sulla sicurezza, NTC, Testo Unico Edilizia. Con il rimando all'articolo, non a orecchio.",
   },
   {
     icon: ListChecks,
@@ -44,9 +45,9 @@ const funzionalita = [
     desc: "Prezzari regionali e DEI, con riferimenti voce per voce.",
   },
   {
-    icon: Landmark,
-    nome: "Bandi & gare",
-    desc: "Monitoraggio di bandi PNRR, MIT e gare d'appalto.",
+    icon: ScrollText,
+    nome: "Capitolati",
+    desc: "Ti spiega cosa chiede davvero un capitolato, voce per voce, prima che tu prezzi.",
   },
   {
     icon: FileSpreadsheet,
@@ -64,12 +65,12 @@ const differenziatori = [
   {
     icon: Target,
     titolo: "Verticale, non generalista",
-    desc: "Solo edilizia italiana. Niente rumore, niente risposte da enciclopedia: parla la lingua del cantiere — computo metrico, capitolato, SAL, prezzari regionali, DEI, D.Lgs. 81/08.",
+    desc: "Solo edilizia italiana. Niente rumore, niente risposte da enciclopedia: parla la lingua del cantiere: computo metrico, capitolato, SAL, prezzari regionali, DEI, D.Lgs. 81/08.",
   },
   {
-    icon: RefreshCw,
-    titolo: "Sempre fresco",
-    desc: "Una knowledge base aggiornata ogni giorno da agenti dedicati. Un'AI generica ha un cutoff; EdilChat no — sulle fonti edili resta sempre al passo.",
+    icon: BookMarked,
+    titolo: "Fonti scelte, non tutto il web",
+    desc: "Una knowledge base verticale sull'edilizia italiana, curata e in continua espansione. Un'AI generica pesca da tutto il web e si ferma al suo cutoff: EdilChat lavora su fonti edili selezionate e ti dice sempre da quale arriva la risposta.",
   },
   {
     icon: Quote,
@@ -86,7 +87,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   url: "https://cantierihub.com/edilchat",
   description:
-    "Assistente AI verticale sull'edilizia italiana: normative, prezzari, bandi e gare, con le fonti sempre citate.",
+    "Assistente AI verticale sull'edilizia italiana: normative, prezzari, capitolati e operatività di cantiere, con le fonti sempre citate.",
   publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
 };
 
@@ -121,8 +122,8 @@ export default function EdilChatPage() {
             <Reveal delay={0.2}>
               <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
                 Risposte chiare con le fonti sempre citate. Niente fuffa, solo cantiere.
-                Un unico interlocutore che conosce normative, prezzi, bandi e operatività dell&apos;edilizia
-                italiana — dalla mattina alla sera.
+                Un unico interlocutore che conosce normative, prezzi, capitolati e operatività dell&apos;edilizia
+                italiana, dalla mattina alla sera.
               </p>
             </Reveal>
             <Reveal delay={0.3}>
@@ -159,6 +160,52 @@ export default function EdilChatPage() {
               </p>
             </div>
           </Reveal>
+
+          {/* Schema: la forma di ogni risposta.
+              Illustrazione, non una schermata: sorgente in grafiche/edilchat-anatomia-risposta.html */}
+          <Reveal delay={0.1}>
+            <div className="mt-12 relative mx-auto max-w-4xl aspect-[7/5] rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/edilchat-anatomia-risposta.png"
+                alt="Schema di una risposta EdilChat: la tua domanda, la risposta sull'edilizia italiana, la fonte sempre citata"
+                fill
+                sizes="(max-width: 768px) 100vw, 900px"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Il mestiere vero, non la teoria */}
+      <section className="section-padding bg-white pt-0">
+        <div className="container-main">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <Reveal direction="left">
+              <div className="relative aspect-[3/2] rounded-2xl overflow-hidden border border-gray-200">
+                <Image
+                  src="/images/workers-tablet.jpg"
+                  alt="Due tecnici in cantiere consultano un tablet durante i lavori"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </Reveal>
+            <Reveal direction="right" delay={0.1}>
+              <div>
+                <span className="eyebrow text-orange-500">Dove serve davvero</span>
+                <h2 className="mt-3 font-display font-extrabold text-navy text-3xl md:text-4xl leading-tight">
+                  La domanda arriva in cantiere, non alla scrivania.
+                </h2>
+                <p className="mt-5 text-gray-500 leading-relaxed">
+                  Il dubbio su una norma o su una voce di prezzario non aspetta il rientro in ufficio: viene
+                  fuori davanti al lavoro, con la squadra ferma. EdilChat sta nel telefono e risponde lì,
+                  con la fonte da mostrare a chi te la chiede.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -264,7 +311,7 @@ export default function EdilChatPage() {
               rel="noopener noreferrer"
               className="btn-primary btn-lg cta-shimmer"
             >
-              Scrivici su WhatsApp <ArrowRight size={18} className="arrow" />
+              Provalo sulle tue domande <ArrowRight size={18} className="arrow" />
             </a>
           </div>
         </Reveal>

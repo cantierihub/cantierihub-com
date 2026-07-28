@@ -4,10 +4,10 @@ import { ArrowRight, BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/guide" },
-  title: "Guide Gratuite per Imprese Edili — Cantieri Hub",
+  title: "Guide Gratuite per Imprese Edili · Cantieri Hub",
   description: "Scarica le guide pratiche di Cantieri Hub: preventivi, computo metrico, gestione cantieri e molto altro. Gratis.",
   openGraph: {
-    title: "Guide Gratuite per Imprese Edili — Cantieri Hub",
+    title: "Guide Gratuite per Imprese Edili · Cantieri Hub",
     description: "Scarica le guide pratiche di Cantieri Hub: preventivi, computo metrico, gestione cantieri e molto altro. Gratis.",
     url: "https://cantierihub.com/guide",
     type: "website",
@@ -80,8 +80,17 @@ export default async function GuidePage() {
               <em className="not-italic text-orange-500">imprenditori edili.</em>
             </h1>
             <p className="mt-5 text-lg text-gray-500 leading-relaxed">
-              Ogni guida nasce da una domanda reale dei nostri clienti. Scaricale gratis — niente abbonamenti, niente spam.
+              Ogni guida nasce da una domanda reale dei nostri clienti. Scaricale gratis: niente abbonamenti, niente spam.
             </p>
+            {/* /risorse e' uscita dal footer il 28/07: senza questo link non
+                sarebbe piu' raggiungibile navigando, solo da Google. */}
+            <Link
+              href="/risorse"
+              className="mt-5 inline-flex items-center gap-2 text-orange-500 font-semibold text-sm"
+            >
+              Vedi tutte le risorse per imprese edili
+              <ArrowRight size={16} className="arrow" />
+            </Link>
           </div>
         </div>
       </section>

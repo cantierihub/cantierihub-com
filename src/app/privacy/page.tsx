@@ -3,7 +3,7 @@ import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
-  title: "Privacy Policy — Cantieri Hub",
+  title: "Privacy Policy · Cantieri Hub",
   description: "Informativa sul trattamento dei dati personali di Cantieri Hub.",
 };
 

@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/chi-siamo" },
-  title: "Chi Siamo — Cantieri Hub",
+  title: "Chi Siamo · Cantieri Hub",
   description:
     "Cantieri Hub nasce da una domanda semplice: perché chi fa preventivi edili perde ancora ore su un lavoro che l'AI può fare in minuti?",
 };
@@ -45,7 +45,7 @@ const roadmap: FaseRoadmap[] = [
       {
         nome: "EdilChat",
         tag: "Le risposte dell'edilizia italiana.",
-        desc: "Normative, prezzari, bandi e gare. Risposte in linguaggio naturale, con le fonti sempre citate.",
+        desc: "Normative, prezzari e capitolati. Risposte in linguaggio naturale, con le fonti sempre citate.",
       },
     ],
   },
@@ -151,7 +151,7 @@ export default function ChiSiamoPage() {
                   L&apos;imprenditore edile italiano lavora duro. Conosce i materiali, conosce i cantieri, conosce i clienti. Ma perde ore a ridigitare voci da PDF, a cercare codici sui prezzari regionali, a formattare documenti che sembrano fatti negli anni &apos;90.
                 </p>
                 <p className="mt-4 text-gray-500 leading-relaxed">
-                  Noi abbiamo costruito uno strumento che elimina quella parte. Non la parte creativa, non la parte relazionale — solo quella meccanica e ripetitiva che nessuno dovrebbe fare a mano nel 2026.
+                  Noi abbiamo costruito uno strumento che elimina quella parte. Non la parte creativa, non la parte relazionale, solo quella meccanica e ripetitiva che nessuno dovrebbe fare a mano nel 2026.
                 </p>
                 <div className="mt-6">
                   <Link
@@ -261,7 +261,6 @@ export default function ChiSiamoPage() {
         subtitle="Cerchiamo persone che vogliano far crescere l'edilizia italiana. Compila il form o scrivici a info@cantierihub.com."
         primaryLabel="Mandaci la tua candidatura"
         primaryHref="/lavora-con-noi#candidatura"
-        whatsapp={false}
         dark={false}
       />
     </>

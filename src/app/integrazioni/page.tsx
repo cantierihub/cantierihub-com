@@ -13,12 +13,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Integrazioni — Si integra con come già lavori",
+  title: "Integrazioni · Si integra con come già lavori",
   description:
     "Cantieri Hub legge i tuoi file (PDF, Excel, XML di settore, piantine e foto), include i prezzari DEI e regionali, importa il tuo prezzario interno ed esporta PDF ed Excel col tuo logo. Niente da cambiare nel tuo modo di lavorare.",
   alternates: { canonical: "/integrazioni" },
   openGraph: {
-    title: "Integrazioni — Si integra con come già lavori",
+    title: "Integrazioni · Si integra con come già lavori",
     description:
       "Cantieri Hub legge i tuoi file (PDF, Excel, XML di settore, piantine e foto), include i prezzari DEI e regionali, importa il tuo prezzario interno ed esporta PDF ed Excel col tuo logo. Niente da cambiare nel tuo modo di lavorare.",
     url: "https://cantierihub.com/integrazioni",
@@ -34,7 +34,7 @@ const formatiIngresso = [
   },
   {
     icon: FileSpreadsheet,
-    nome: "Excel — .xlsx e .xls",
+    nome: "Excel: .xlsx e .xls",
     desc: "I tuoi fogli di calcolo, vecchi e nuovi. Voci, quantità e prezzi entrano senza che tu riscriva nulla.",
   },
   {
@@ -108,7 +108,7 @@ export default function IntegrazioniPage() {
             <Reveal delay={0.2}>
               <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-2xl">
                 Non devi cambiare i tuoi file, né buttare via i prezzari che usi da anni. Cantieri Hub
-                legge quello che hai già — PDF, Excel, XML, perfino le piantine — e ti restituisce
+                legge quello che hai già, PDF, Excel, XML, perfino le piantine, e ti restituisce
                 documenti col tuo logo. <strong className="text-white">Tu continui a lavorare come sai,
                 solo molto più in fretta.</strong>
               </p>
@@ -191,7 +191,7 @@ export default function IntegrazioniPage() {
                   ))}
                 </ul>
                 <p className="mt-6 text-xs text-navy-500">
-                  Importi il tuo prezzario interno da Excel, CSV o PDF — il formato che hai già.
+                  Importi il tuo prezzario interno da Excel, CSV o PDF, il formato che hai già.
                 </p>
               </div>
             </Reveal>
@@ -290,7 +290,7 @@ export default function IntegrazioniPage() {
               </h2>
               <p className="mt-5 text-navy-500 leading-relaxed text-lg">
                 I tuoi file, i tuoi prezzari, il tuo logo, il tuo modo di fare i conti. Cantieri Hub si
-                inserisce in quello che fai già — toglie le ore di lavoro manuale e ti lascia il
+                inserisce in quello che fai già: toglie le ore di lavoro manuale e ti lascia il
                 controllo su ogni numero.
               </p>
               <div className="mt-8 inline-flex items-center gap-2 text-orange-500 font-semibold">
@@ -305,7 +305,7 @@ export default function IntegrazioniPage() {
       <CTASection
         title="Funziona coi tuoi file?"
         subtitle="Mandaci un computo o un Excel reale: te lo facciamo girare nella demo e vedi coi tuoi occhi che si integra."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Mandaci un tuo file"
         whatsappText="Ciao! Vorrei capire se Cantieri Hub si integra coi miei file e prezzari. Posso mandarvi un esempio?"
       />
     </>

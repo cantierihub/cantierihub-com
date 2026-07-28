@@ -26,7 +26,7 @@ const pillars = [
     badgeColor: "#fb923c",
     badgeBg: "rgba(249,115,22,0.15)",
     title: "Formazione Pratica",
-    description: "Masterclass da imprenditori per imprenditori. Non burocrazia — strategie concrete per scalare fatturato e margine.",
+    description: "Masterclass da imprenditori per imprenditori. Non burocrazia: strategie concrete per scalare fatturato e margine.",
     accent: false,
   },
   {
@@ -87,7 +87,7 @@ export default function Network() {
               <span style={{ color: "#f97316" }}>Quattro asset.</span>
             </h2>
             <p style={{ fontSize: "clamp(16px, 1.3vw, 18px)", color: "#94a3b8", marginTop: 16, lineHeight: 1.65 }}>
-              Non solo un software. Un ecosistema pensato per far crescere l&apos;impresa edile italiana — strumento per strumento, cantiere per cantiere.
+              Non solo un software. Un ecosistema pensato per far crescere l&apos;impresa edile italiana, strumento per strumento, cantiere per cantiere.
             </p>
           </div>
         </Reveal>

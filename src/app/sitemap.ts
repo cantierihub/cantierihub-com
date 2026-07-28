@@ -2,18 +2,19 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
 
 // Solo pagine pubbliche indicizzabili.
-// Escluse di proposito le riservate noindex: /analisi-prezzi, /grazie.
+// Escluse di proposito le riservate noindex: /grazie.
+// /prezzo non esiste piu': fa redirect 301 su /faq (vedi next.config.ts).
 const routes = [
   "",
   "/preventivatore",
   "/computatore",
   "/edilchat",
+  "/analisi-prezzi",
   "/come-funziona",
   "/calcola",
   "/demo",
   "/integrazioni",
   "/confronto",
-  "/prezzo",
   "/sicurezza",
   "/risorse",
   "/guide",
@@ -31,6 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}${path}`,
     lastModified: now,
     changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : path.match(/preventivatore|computatore|demo|calcola/) ? 0.8 : 0.6,
+    priority:
+      path === ""
+        ? 1
+        : // I 4 prodotti Live + le pagine di conversione stanno tutti sullo stesso piano.
+          path.match(/preventivatore|computatore|edilchat|analisi-prezzi|demo|calcola/)
+          ? 0.8
+          : 0.6,
   }));
 }

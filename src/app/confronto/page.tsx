@@ -9,12 +9,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Perché scegliere Cantieri Hub — Il confronto",
+  title: "Perché scegliere Cantieri Hub · Il confronto",
   description:
     "Cantieri Hub a confronto con i software di preventivazione tradizionali: Analisi Prezzi AI, estrazione automatica, cloud senza installazione, supporto umano diretto.",
   alternates: { canonical: "/confronto" },
   openGraph: {
-    title: "Perché scegliere Cantieri Hub — Il confronto",
+    title: "Perché scegliere Cantieri Hub · Il confronto",
     description:
       "Cantieri Hub a confronto con i software di preventivazione tradizionali: Analisi Prezzi AI, estrazione automatica, cloud senza installazione, supporto umano diretto.",
     url: "https://cantierihub.com/confronto",
@@ -198,15 +198,15 @@ export default function ConfrontoPage() {
                   Tutti sanno archiviare un prezzario. La differenza si vede sulla voce che il prezzario
                   non ce l&apos;ha: quella che ti costringe a telefonare ai fornitori, spulciare vecchi
                   preventivi e stimare a sensazione. Cantieri Hub la{" "}
-                  <strong className="text-navy">ricostruisce da zero</strong> — materiali, manodopera,
-                  noli, spese generali, sicurezza — con un ragionamento che leggi, modifichi e firmi.
+                  <strong className="text-navy">ricostruisce da zero</strong>: materiali, manodopera,
+                  noli, spese generali, sicurezza. Con un ragionamento che leggi, modifichi e firmi.
                 </p>
                 <p className="mt-4 text-navy-500 leading-relaxed">
                   È il motore dietro ogni preventivo, ed è la ragione per cui chi prova Cantieri Hub
                   non torna indietro.
                 </p>
                 <a
-                  href="/preventivatore"
+                  href="/analisi-prezzi"
                   className="mt-7 inline-flex items-center gap-2 text-orange-500 font-semibold"
                 >
                   Scopri come funziona l&apos;Analisi Prezzi AI
@@ -256,7 +256,7 @@ export default function ConfrontoPage() {
       <CTASection
         title="Vuoi vedere la differenza dal vivo?"
         subtitle="Richiedi una demo: prendiamo una tua voce reale e te la prezziamo davanti, in pochi minuti."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Mettilo alla prova sul tuo preventivo"
         whatsappText="Ciao! Sto confrontando i software di preventivazione e vorrei vedere una demo di Cantieri Hub."
       />
     </>

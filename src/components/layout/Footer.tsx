@@ -2,45 +2,52 @@ import Link from "next/link";
 import Image from "next/image";
 import { WA_DEMO } from "@/data/site";
 
+// Footer riordinato il 28/07/2026 (scelta di Chiara).
+// Regola: "Prodotti" elenca solo cose che si vendono. Le pagine che servono a
+// convincere stanno in "Perche' Cantieri Hub". Privacy e Cookie sono scesi
+// nella barra in fondo, dove il visitatore li cerca.
 const linkGroups = [
   {
     title: "Prodotti",
     links: [
       { label: "Preventivatore AI", href: "/preventivatore" },
       { label: "Computatore AI", href: "/computatore" },
+      { label: "Analisi Prezzi AI", href: "/analisi-prezzi" },
       { label: "EdilChat", href: "/edilchat" },
-      { label: "Integrazioni", href: "/integrazioni" },
+    ],
+  },
+  {
+    title: "Perché Cantieri Hub",
+    links: [
+      { label: "Come funziona", href: "/come-funziona" },
       { label: "Confronto", href: "/confronto" },
-      { label: "Prezzo", href: "/prezzo" },
+      { label: "Integrazioni", href: "/integrazioni" },
       { label: "Sicurezza", href: "/sicurezza" },
     ],
   },
   {
     title: "Risorse",
     links: [
-      { label: "Come funziona", href: "/come-funziona" },
+      { label: "Guide gratuite", href: "/guide" },
       { label: "Calcola preventivo", href: "/calcola" },
       { label: "Prenota una demo", href: "/demo" },
-      { label: "Guide gratuite", href: "/guide" },
-      { label: "Risorse", href: "/risorse" },
     ],
   },
   {
     title: "Azienda",
     links: [
       { label: "Chi Siamo", href: "/chi-siamo" },
-      { label: "Lavora con noi", href: "/lavora-con-noi" },
       { label: "FAQ", href: "/faq" },
+      { label: "Lavora con noi", href: "/lavora-con-noi" },
       { label: "Contatti", href: "/contatti" },
     ],
   },
-  {
-    title: "Legale",
-    links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Cookie Policy", href: "/cookie" },
-    ],
-  },
+];
+
+// Vivono nella barra in fondo, non in una colonna.
+const linkLegali = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Cookie Policy", href: "/cookie" },
 ];
 
 export default function Footer() {
@@ -72,7 +79,7 @@ export default function Footer() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.7fr 1fr 1fr 1fr 0.9fr 1.3fr",
+            gridTemplateColumns: "1.7fr 1fr 1.1fr 1fr 1fr 1.3fr",
             gap: "48px 32px",
             marginBottom: 56,
           }}
@@ -149,6 +156,13 @@ export default function Footer() {
           <p style={{ fontSize: 12, color: "#94a3b8" }}>
             © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
           </p>
+          <nav style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+            {linkLegali.map((item) => (
+              <Link key={item.href} href={item.href} className="footer-link" style={{ fontSize: 12 }}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
 
