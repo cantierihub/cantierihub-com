@@ -295,7 +295,12 @@ export default function PreventivatorePage() {
         title="Domande sul Preventivatore"
         subtitle="Risposte dirette per chi vuole capire prima di decidere."
       />
-      <CTASection />
+      <CTASection
+        title="Vuoi vederlo sul tuo prossimo preventivo?"
+        subtitle="Porta un tuo computo reale: te lo lavoriamo davanti, dal computo al PDF finito."
+        primaryLabel="Vedilo sui tuoi file"
+        whatsappText="Ciao! Vorrei vedere il Preventivatore AI sui miei file."
+      />
     </>
   );
 }

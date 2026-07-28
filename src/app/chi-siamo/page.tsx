@@ -261,7 +261,6 @@ export default function ChiSiamoPage() {
         subtitle="Cerchiamo persone che vogliano far crescere l'edilizia italiana. Compila il form o scrivici a info@cantierihub.com."
         primaryLabel="Mandaci la tua candidatura"
         primaryHref="/lavora-con-noi#candidatura"
-        whatsapp={false}
         dark={false}
       />
     </>

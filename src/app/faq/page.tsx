@@ -108,9 +108,10 @@ export default function FAQPage() {
       ))}
 
       <CTASection
+        whatsappText="Ciao! Ho letto le FAQ ma mi e' rimasto un dubbio."
         title="Non hai trovato risposta?"
         subtitle="Scrivici direttamente. Risponderemo entro poche ore."
-        primaryLabel="Prenota una Demo"
+        primaryLabel="Fai la tua domanda"
         dark={false}
       />
     </>

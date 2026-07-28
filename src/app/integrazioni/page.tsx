@@ -305,7 +305,7 @@ export default function IntegrazioniPage() {
       <CTASection
         title="Funziona coi tuoi file?"
         subtitle="Mandaci un computo o un Excel reale: te lo facciamo girare nella demo e vedi coi tuoi occhi che si integra."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Mandaci un tuo file"
         whatsappText="Ciao! Vorrei capire se Cantieri Hub si integra coi miei file e prezzari. Posso mandarvi un esempio?"
       />
     </>

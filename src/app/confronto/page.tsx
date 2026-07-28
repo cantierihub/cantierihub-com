@@ -256,7 +256,7 @@ export default function ConfrontoPage() {
       <CTASection
         title="Vuoi vedere la differenza dal vivo?"
         subtitle="Richiedi una demo: prendiamo una tua voce reale e te la prezziamo davanti, in pochi minuti."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Mettilo alla prova sul tuo preventivo"
         whatsappText="Ciao! Sto confrontando i software di preventivazione e vorrei vedere una demo di Cantieri Hub."
       />
     </>

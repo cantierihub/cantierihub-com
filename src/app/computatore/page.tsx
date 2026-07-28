@@ -281,6 +281,8 @@ export default function ComputatorePage() {
         subtitle="Risposte dirette per chi vuole capire prima di decidere."
       />
       <CTASection
+        whatsappText="Ciao! Vorrei vedere il Computatore AI sui miei file."
+        primaryLabel="Vedilo sui tuoi file"
         title="Vedi il Computatore AI con i tuoi file reali."
         subtitle="Prenota una demo gratuita. In 30 minuti capiamo insieme se fa al caso tuo."
       />

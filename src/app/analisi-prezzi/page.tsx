@@ -334,9 +334,10 @@ export default function AnalisiPrezziPage() {
       />
 
       <CTASection
+        whatsappText="Ciao! Vorrei vedere l'Analisi Prezzi AI sulle mie voci."
         title="Vuoi vederla sui tuoi computi?"
         subtitle="Richiedi una demo: ti mostriamo l'Analisi Prezzi sulle tue voci reali, dal vivo."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Vedila sui tuoi computi"
       />
     </>
   );

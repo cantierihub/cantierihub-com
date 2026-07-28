@@ -246,7 +246,7 @@ export default function RisorsePage() {
       <CTASection
         title="Vuoi vedere gli strumenti all'opera?"
         subtitle="Le guide ti danno il metodo. Una demo ti mostra come Cantieri Hub lo fa al posto tuo, sui tuoi file reali."
-        primaryLabel="Richiedi una demo"
+        primaryLabel="Vedi gli strumenti all'opera"
         whatsappText="Ciao! Ho letto le risorse e vorrei vedere una demo di Cantieri Hub."
         dark={false}
       />

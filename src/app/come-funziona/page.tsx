@@ -259,7 +259,7 @@ export default function ComeFunzionaPage() {
       <CTASection
         title="Pronto a vederlo sui tuoi file?"
         subtitle="Scrivici su WhatsApp: fissiamo mezz'ora e ti mostriamo Cantieri Hub sui tuoi computi reali, dal vivo."
-        primaryLabel="Prenota una demo"
+        primaryLabel="Parti dalla demo"
         whatsappText="Ciao! Ho letto come funziona Cantieri Hub e vorrei prenotare una demo gratuita."
       />
     </>

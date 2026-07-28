@@ -311,7 +311,7 @@ export default function EdilChatPage() {
               rel="noopener noreferrer"
               className="btn-primary btn-lg cta-shimmer"
             >
-              Scrivici su WhatsApp <ArrowRight size={18} className="arrow" />
+              Provalo sulle tue domande <ArrowRight size={18} className="arrow" />
             </a>
           </div>
         </Reveal>

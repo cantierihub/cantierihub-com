@@ -193,7 +193,7 @@ export default function CalcolaPage() {
       <CTASection
         title="Calcola il tuo prossimo preventivo con l'AI."
         subtitle="Scrivici su WhatsApp: lo calcoliamo insieme sui tuoi file reali, dal vivo."
-        primaryLabel="Calcola con noi su WhatsApp"
+        primaryLabel="Calcoliamolo insieme"
         whatsappText="Ciao! Vorrei calcolare un preventivo con l'AI di Cantieri Hub."
       />
     </>
