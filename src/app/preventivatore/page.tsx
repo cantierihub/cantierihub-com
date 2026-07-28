@@ -6,6 +6,7 @@ import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
 import { ArrowRight, Zap, Database, Palette, Users, Archive } from "lucide-react";
+import { WA_PREVENTIVATORE } from "@/data/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/preventivatore" },
@@ -128,12 +129,14 @@ export default function PreventivatorePage() {
             </Reveal>
             <Reveal delay={0.3}>
               <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                  href="/contatti"
+                <a
+                  href={WA_PREVENTIVATORE}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="cta-shimmer inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-base font-semibold text-white bg-orange-500 hover:bg-orange-600 transition-colors w-full sm:w-auto justify-center"
                 >
                   Prenota una Demo <ArrowRight size={18} />
-                </Link>
+                </a>
                 <Link
                   href="/computatore"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-base font-semibold text-navy border border-gray-200 hover:bg-gray-50 transition-colors w-full sm:w-auto justify-center"
@@ -281,8 +284,8 @@ export default function PreventivatorePage() {
                 I software tradizionali lavorano sui prezzari standard. Ma il tuo cantiere ha sempre voci fuori prezzario: materiali speciali, lavorazioni non codificate, situazioni particolari. Prima le stimavi a occhio, o le lasciavi indietro perdendo margine. Adesso l&apos;AI scompone ogni voce in materiali, manodopera, noli, utile e spese generali, con parametri reali del tuo cantiere.
               </p>
               <div style={{ marginTop: 24 }}>
-                <Link href="/contatti" className="btn-primary cta-shimmer">
-                  Vedi come funziona in demo <span className="arrow">→</span>
+                <Link href="/analisi-prezzi" className="btn-primary cta-shimmer">
+                  Scopri l&apos;Analisi Prezzi AI <span className="arrow">→</span>
                 </Link>
               </div>
             </Reveal>

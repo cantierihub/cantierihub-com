@@ -101,7 +101,7 @@ export default function DemoPage() {
                   rel="noopener noreferrer"
                   className="btn-primary btn-lg cta-shimmer"
                 >
-                  Prenota su WhatsApp <span className="arrow">→</span>
+                  Scrivici ora su WhatsApp <span className="arrow">→</span>
                 </a>
                 <span className="text-sm" style={{ color: "#94a3b8" }}>
                   Ti rispondiamo di persona e fissiamo l&apos;orario.
