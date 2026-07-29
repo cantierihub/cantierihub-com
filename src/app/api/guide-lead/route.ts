@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, slug, title, company_url } = await req.json();
+    const { email, slug, title, company_url, provenienza } = await req.json();
 
     // honeypot: se compilato è un bot → scarta silenziosamente
     if (typeof company_url === "string" && company_url.trim()) {
@@ -33,6 +33,10 @@ export async function POST(req: NextRequest) {
             Email: { email },
             Guida: { title: [{ text: { content: title ?? slug } }] },
             Slug:  { rich_text: [{ text: { content: slug } }] },
+            // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
+            Provenienza: {
+              rich_text: [{ text: { content: String(provenienza ?? "").trim().slice(0, 300) } }],
+            },
           },
         }),
       });

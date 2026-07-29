@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, UploadCloud, FileText, X } from "lucide-react";
 import { RUOLI } from "@/data/ruoli";
+import { descriviProvenienza } from "@/lib/provenienza";
 
 const MAX_BYTES = 4 * 1024 * 1024; // 4 MB
 const ACCEPT = ".pdf,.doc,.docx";
@@ -53,6 +54,7 @@ export default function CandidaturaForm() {
     data.append("ruolo", form.ruolo);
     data.append("messaggio", form.messaggio);
     data.append("company_url", hp);
+    data.append("provenienza", descriviProvenienza());
     data.append("cv", file);
 
     try {

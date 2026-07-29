@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
     const telefono = String(body.telefono ?? "").trim();
     const messaggio = String(body.messaggio ?? "").trim();
     const company_url = String(body.company_url ?? "").trim();
+    // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
+    const provenienza = String(body.provenienza ?? "").trim().slice(0, 300);
 
     // honeypot: se compilato è un bot → scarta silenziosamente
     if (company_url) {
@@ -53,6 +55,8 @@ export async function POST(req: NextRequest) {
       "",
       "Messaggio:",
       messaggio,
+      "",
+      `Provenienza: ${provenienza || "non rilevata"}`,
     ].join("\n");
 
     const html = `
@@ -67,6 +71,8 @@ export async function POST(req: NextRequest) {
         </table>
         <p style="margin:18px 0 6px;color:#64748b;font-size:14px">Messaggio</p>
         <p style="margin:0;white-space:pre-wrap;font-size:14px;line-height:1.6">${esc(messaggio)}</p>
+        <p style="margin:22px 0 4px;color:#64748b;font-size:13px">Provenienza</p>
+        <p style="margin:0;font-size:13px;color:${provenienza ? "#0f172a" : "#94a3b8"}">${provenienza ? esc(provenienza) : "non rilevata"}</p>
         <p style="margin:22px 0 0;color:#94a3b8;font-size:13px">Rispondi a questa email per scrivere direttamente al contatto.</p>
       </div>`;
 
