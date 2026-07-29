@@ -14,13 +14,13 @@ import {
 
 export const metadata: Metadata = {
   alternates: { canonical: "/risorse" },
-  title: "Risorse per imprese edili · Guide, computo metrico e gestione cantieri",
+  title: "Risorse per imprese edili · Guide su preventivi, computo metrico e analisi prezzi",
   description:
-    "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
+    "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e analisi prezzi, più nuovi approfondimenti in arrivo.",
   openGraph: {
-    title: "Risorse per imprese edili · Guide, computo metrico e gestione cantieri",
+    title: "Risorse per imprese edili · Guide su preventivi, computo metrico e analisi prezzi",
     description:
-      "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e gestione cantieri, più nuovi approfondimenti in arrivo.",
+      "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e analisi prezzi, più nuovi approfondimenti in arrivo.",
     url: "https://cantierihub.com/risorse",
     type: "website",
   },
@@ -39,8 +39,8 @@ const guideTemi = [
   },
   {
     icon: HardHat,
-    titolo: "Gestione cantieri",
-    desc: "Tenere sotto controllo costi, tempi e fornitori senza perdere mezza giornata dietro ai conti.",
+    titolo: "Prezzi che reggono",
+    desc: "Come si costruisce il prezzo di una voce d'opera tra prezzario interno, prezzari regionali e lavorazioni fuori listino.",
   },
 ];
 
@@ -149,8 +149,8 @@ export default function RisorsePage() {
                       Scarica le guide pratiche su{" "}
                       <strong className="text-white">preventivi</strong>,{" "}
                       <strong className="text-white">computo metrico</strong> e{" "}
-                      <strong className="text-white">gestione cantieri</strong>. PDF concreti,
-                      scritti per imprenditori edili, da leggere e usare subito.
+                      <strong className="text-white">analisi prezzi</strong>. Guide concrete,
+                      scritte per imprenditori edili e geometri, da leggere e usare subito.
                     </p>
                     <span className="mt-6 inline-flex items-center gap-2 text-orange-400 font-semibold">
                       Vai alle guide
