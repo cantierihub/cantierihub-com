@@ -16,16 +16,16 @@ export default function CookiePage() {
             <span className="eyebrow text-orange-500">Legale</span>
             <h1 className="mt-3 font-display font-extrabold text-navy text-4xl mb-8">Cookie Policy</h1>
             <div className="prose prose-sm text-gray-600 space-y-6">
-              <p>Ultimo aggiornamento: maggio 2026</p>
+              <p>Ultimo aggiornamento: luglio 2026</p>
               <p>
-                Questo sito utilizza cookie e tecnologie simili per garantire il corretto funzionamento, analizzare il traffico e personalizzare i contenuti.
+                Questo sito è volutamente leggero: <strong>non usa cookie di profilazione e non traccia le persone su altri siti</strong>. Qui sotto trovi esattamente cosa viene salvato e perché.
               </p>
-              <h2 className="font-display font-bold text-navy text-xl mt-8">Tipi di cookie</h2>
+              <h2 className="font-display font-bold text-navy text-xl mt-8">Cosa salviamo davvero</h2>
               <div className="space-y-4">
                 {[
-                  { tipo: "Cookie tecnici", desc: "Necessari per il funzionamento del sito (es. preferenze cookie). Non richiedono consenso.", esempio: "ch-cookies-accepted" },
-                  { tipo: "Cookie analytics", desc: "Raccolgono dati aggregati sull'utilizzo del sito (es. Google Analytics). Richiedono consenso.", esempio: "Google Analytics (_ga, _gid)" },
-                  { tipo: "Cookie di marketing", desc: "Utilizzati per attività pubblicitarie e retargeting (es. Meta Pixel, TikTok Pixel). Richiedono consenso.", esempio: "fbq, ttq" },
+                  { tipo: "Memoria tecnica del browser", desc: "Serve al funzionamento del sito. Ricorda che hai già visto l'avviso cookie e, per la sola durata della scheda, da quale canale sei arrivato, così sappiamo a cosa attribuire un messaggio che ci invii. Non richiede consenso e non contiene dati personali.", esempio: "ch-cookies-accepted, ch-provenienza" },
+                  { tipo: "Statistiche di traffico senza cookie", desc: "Conteggi aggregati delle visite (pagine viste, provenienza, tipo di dispositivo) tramite Vercel Web Analytics. Non installa cookie, non crea profili e non identifica le singole persone.", esempio: "Vercel Web Analytics" },
+                  { tipo: "Cookie di marketing e retargeting", desc: "Al momento NON ne usiamo: nessun Meta Pixel, nessun TikTok Pixel, nessun Google Analytics. Se in futuro dovessimo introdurli, questa pagina verrà aggiornata e il consenso ti sarà chiesto prima dell'attivazione.", esempio: "nessuno attivo" },
                 ].map((c) => (
                   <div key={c.tipo} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
                     <p className="font-semibold text-navy mb-1">{c.tipo}</p>
@@ -34,9 +34,9 @@ export default function CookiePage() {
                   </div>
                 ))}
               </div>
-              <h2 className="font-display font-bold text-navy text-xl mt-8">Come gestire i cookie</h2>
+              <h2 className="font-display font-bold text-navy text-xl mt-8">Come cancellare quello che è stato salvato</h2>
               <p>
-                Puoi revocare il consenso in qualsiasi momento tramite le impostazioni del browser o cliccando nuovamente sul banner cookie. Per maggiori informazioni consulta la nostra{" "}
+                Puoi svuotare in qualsiasi momento la memoria del sito dalle impostazioni del browser, alla voce dati dei siti o cronologia. Chiudendo la scheda, il dato sulla provenienza si cancella da solo. Per maggiori informazioni consulta la nostra{" "}
                 <a href="/privacy" className="text-orange-500 hover:underline">Privacy Policy</a>.
               </p>
               <p>

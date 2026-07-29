@@ -30,6 +30,8 @@ export async function POST(req: NextRequest) {
     const ruolo = String(form.get("ruolo") ?? "").trim();
     const messaggio = String(form.get("messaggio") ?? "").trim();
     const company_url = String(form.get("company_url") ?? "").trim();
+    // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
+    const provenienza = String(form.get("provenienza") ?? "").trim().slice(0, 300);
     const cv = form.get("cv");
 
     // honeypot: se compilato è un bot → scarta silenziosamente
@@ -81,6 +83,8 @@ export async function POST(req: NextRequest) {
       "",
       "Messaggio:",
       messaggio || "(nessun messaggio)",
+      "",
+      `Provenienza: ${provenienza || "non rilevata"}`,
     ].join("\n");
 
     const html = `
@@ -94,6 +98,8 @@ export async function POST(req: NextRequest) {
           <tr><td style="padding:6px 0;color:#64748b">Ruolo</td><td style="padding:6px 0;font-weight:600">${esc(ruolo)}</td></tr>
         </table>
         ${messaggio ? `<p style="margin:18px 0 6px;color:#64748b;font-size:14px">Messaggio</p><p style="margin:0;white-space:pre-wrap;font-size:14px;line-height:1.6">${esc(messaggio)}</p>` : ""}
+        <p style="margin:22px 0 4px;color:#64748b;font-size:13px">Provenienza</p>
+        <p style="margin:0;font-size:13px;color:${provenienza ? "#0f172a" : "#94a3b8"}">${provenienza ? esc(provenienza) : "non rilevata"}</p>
         <p style="margin:22px 0 0;color:#94a3b8;font-size:13px">📎 CV in allegato. Rispondi a questa email per scrivere direttamente al candidato.</p>
       </div>`;
 

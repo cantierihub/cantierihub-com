@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import { descriviProvenienza } from "@/lib/provenienza";
 
 const inputClass =
   "w-full px-4 py-3 rounded-lg border border-gray-200 text-sm text-navy placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-colors bg-white";
@@ -24,7 +25,7 @@ export default function ContattiForm() {
       const res = await fetch("/api/contatti", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, company_url: hp }),
+        body: JSON.stringify({ ...form, company_url: hp, provenienza: descriviProvenienza() }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
