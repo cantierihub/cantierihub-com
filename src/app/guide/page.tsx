@@ -5,10 +5,10 @@ import { ArrowRight, BookOpen } from "lucide-react";
 export const metadata: Metadata = {
   alternates: { canonical: "/guide" },
   title: "Guide Gratuite per Imprese Edili · Cantieri Hub",
-  description: "Scarica le guide pratiche di Cantieri Hub: preventivi, computo metrico, gestione cantieri e molto altro. Gratis.",
+  description: "Le guide pratiche di Cantieri Hub: preventivi, computo metrico e analisi prezzi. Scritte per imprese edili e geometri, gratuite.",
   openGraph: {
     title: "Guide Gratuite per Imprese Edili · Cantieri Hub",
-    description: "Scarica le guide pratiche di Cantieri Hub: preventivi, computo metrico, gestione cantieri e molto altro. Gratis.",
+    description: "Le guide pratiche di Cantieri Hub: preventivi, computo metrico e analisi prezzi. Scritte per imprese edili e geometri, gratuite.",
     url: "https://cantierihub.com/guide",
     type: "website",
   },
