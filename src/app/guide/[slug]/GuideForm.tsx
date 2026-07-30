@@ -93,6 +93,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
         />
         <input
           type="email"
+          name="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}

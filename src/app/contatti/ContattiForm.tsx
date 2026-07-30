@@ -10,7 +10,7 @@ const inputClass =
 
 export default function ContattiForm() {
   const router = useRouter();
-  const [form, setForm] = useState({ nome: "", azienda: "", email: "", telefono: "", messaggio: "" });
+  const [form, setForm] = useState({ nome: "", azienda: "", email: "", telefono: "", prodotto: "", messaggio: "" });
   const [hp, setHp] = useState(""); // honeypot anti-spam
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState("");
@@ -61,33 +61,53 @@ export default function ContattiForm() {
           <label htmlFor="nome" className="block text-sm font-medium text-navy mb-1.5">
             Nome e Cognome <span className="text-orange-500">*</span>
           </label>
-          <input id="nome" type="text" required placeholder="Mario Rossi" value={form.nome}
+          <input id="nome" name="nome" type="text" required placeholder="Mario Rossi" value={form.nome}
             onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="azienda" className="block text-sm font-medium text-navy mb-1.5">Azienda</label>
-          <input id="azienda" type="text" placeholder="Impresa Rossi Costruzioni" value={form.azienda}
+          <input id="azienda" name="azienda" type="text" placeholder="Impresa Rossi Costruzioni" value={form.azienda}
             onChange={(e) => setForm((f) => ({ ...f, azienda: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-navy mb-1.5">
             Email <span className="text-orange-500">*</span>
           </label>
-          <input id="email" type="email" required placeholder="tua@email.com" value={form.email}
+          <input id="email" name="email" type="email" required placeholder="tua@email.com" value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="telefono" className="block text-sm font-medium text-navy mb-1.5">Telefono</label>
-          <input id="telefono" type="tel" placeholder="+39 333 000 0000" value={form.telefono}
+          <input id="telefono" name="phone" type="tel" placeholder="+39 333 000 0000" value={form.telefono}
             onChange={(e) => setForm((f) => ({ ...f, telefono: e.target.value }))} className={inputClass} />
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="prodotto" className="block text-sm font-medium text-navy mb-1.5">
+          Per quale servizio stai chiedendo informazioni? <span className="text-orange-500">*</span>
+        </label>
+        {/* Scelta singola e non testo libero: il valore smista il lead nel CRM, quindi
+            deve combaciare esattamente. «Non lo so ancora» esiste di proposito: senza
+            quella voce chi non ha ancora deciso sceglie a caso e sporca il dato. */}
+        <select id="prodotto" name="prodotto" required
+          value={form.prodotto}
+          onChange={(e) => setForm((f) => ({ ...f, prodotto: e.target.value }))}
+          className={inputClass}>
+          <option value="">Scegli…</option>
+          <option value="Preventivatore AI">Preventivatore AI</option>
+          <option value="Computatore AI">Computatore AI</option>
+          <option value="EdilChat AI">EdilChat AI</option>
+          <option value="Analisi Prezzi AI">Analisi Prezzi AI</option>
+          <option value="Non lo so ancora">Non lo so ancora, vorrei capire</option>
+        </select>
       </div>
 
       <div>
         <label htmlFor="messaggio" className="block text-sm font-medium text-navy mb-1.5">
           Messaggio <span className="text-orange-500">*</span>
         </label>
-        <textarea id="messaggio" rows={4} required
+        <textarea id="messaggio" name="messaggio" rows={4} required
           placeholder="Descrivici brevemente come lavori e cosa stai cercando..."
           value={form.messaggio}
           onChange={(e) => setForm((f) => ({ ...f, messaggio: e.target.value }))}

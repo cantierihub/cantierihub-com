@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     const email = String(body.email ?? "").trim();
     const telefono = String(body.telefono ?? "").trim();
     const messaggio = String(body.messaggio ?? "").trim();
+    const prodotto = String(body.prodotto ?? "").trim().slice(0, 80);
     const company_url = String(body.company_url ?? "").trim();
     // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
     const provenienza = String(body.provenienza ?? "").trim().slice(0, 300);
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest) {
       `Azienda:   ${azienda || "-"}`,
       `Email:     ${email}`,
       `Telefono:  ${telefono || "-"}`,
+      `Servizio:  ${prodotto || "-"}`,
       "",
       "Messaggio:",
       messaggio,
@@ -68,6 +70,7 @@ export async function POST(req: NextRequest) {
           <tr><td style="padding:6px 0;color:#64748b">Azienda</td><td style="padding:6px 0">${esc(azienda) || "-"}</td></tr>
           <tr><td style="padding:6px 0;color:#64748b">Email</td><td style="padding:6px 0"><a href="mailto:${esc(email)}" style="color:#f97316">${esc(email)}</a></td></tr>
           <tr><td style="padding:6px 0;color:#64748b">Telefono</td><td style="padding:6px 0">${esc(telefono) || "-"}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b">Servizio</td><td style="padding:6px 0;font-weight:600">${esc(prodotto) || "-"}</td></tr>
         </table>
         <p style="margin:18px 0 6px;color:#64748b;font-size:14px">Messaggio</p>
         <p style="margin:0;white-space:pre-wrap;font-size:14px;line-height:1.6">${esc(messaggio)}</p>
@@ -80,7 +83,7 @@ export async function POST(req: NextRequest) {
       from: FROM,
       to: DEST,
       replyTo: email,
-      subject: `Nuovo contatto dal sito · ${nome}`,
+      subject: `Nuovo contatto dal sito · ${prodotto || "servizio non indicato"} · ${nome}`,
       text,
       html,
     });

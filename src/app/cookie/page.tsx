@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
+import RevocaConsenso from "@/components/ui/RevocaConsenso";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/cookie" },
@@ -25,7 +26,8 @@ export default function CookiePage() {
                 {[
                   { tipo: "Memoria tecnica del browser", desc: "Serve al funzionamento del sito. Ricorda che hai già visto l'avviso cookie e, per la sola durata della scheda, da quale canale sei arrivato, così sappiamo a cosa attribuire un messaggio che ci invii. Non richiede consenso e non contiene dati personali.", esempio: "ch-cookies-accepted, ch-provenienza" },
                   { tipo: "Statistiche di traffico senza cookie", desc: "Conteggi aggregati delle visite (pagine viste, provenienza, tipo di dispositivo) tramite Vercel Web Analytics. Non installa cookie, non crea profili e non identifica le singole persone.", esempio: "Vercel Web Analytics" },
-                  { tipo: "Cookie di marketing e retargeting", desc: "Al momento NON ne usiamo: nessun Meta Pixel, nessun TikTok Pixel, nessun Google Analytics. Se in futuro dovessimo introdurli, questa pagina verrà aggiornata e il consenso ti sarà chiesto prima dell'attivazione.", esempio: "nessuno attivo" },
+                  { tipo: "Tracciamento della provenienza (richiede il tuo consenso)", desc: "Se accetti, carichiamo lo script del nostro CRM Salesflow (LeadConnector): registra le pagine che visiti e, se ci scrivi tramite un modulo, collega la tua richiesta al canale da cui sei arrivato. Serve a capire quali contenuti sono utili. Senza il tuo consenso non viene nemmeno scaricato.", esempio: "link.msgsndr.com" },
+                  { tipo: "Cookie pubblicitari e di retargeting", desc: "Al momento NON ne usiamo: nessun Meta Pixel, nessun TikTok Pixel, nessun Google Analytics. Se in futuro dovessimo introdurli, questa pagina verrà aggiornata e il consenso ti sarà chiesto prima dell'attivazione.", esempio: "nessuno attivo" },
                 ].map((c) => (
                   <div key={c.tipo} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
                     <p className="font-semibold text-navy mb-1">{c.tipo}</p>
@@ -34,9 +36,10 @@ export default function CookiePage() {
                   </div>
                 ))}
               </div>
-              <h2 className="font-display font-bold text-navy text-xl mt-8">Come cancellare quello che è stato salvato</h2>
+              <h2 className="font-display font-bold text-navy text-xl mt-8">La tua scelta</h2>
+              <RevocaConsenso />
               <p>
-                Puoi svuotare in qualsiasi momento la memoria del sito dalle impostazioni del browser, alla voce dati dei siti o cronologia. Chiudendo la scheda, il dato sulla provenienza si cancella da solo. Per maggiori informazioni consulta la nostra{" "}
+                Puoi anche svuotare in qualsiasi momento la memoria del sito dalle impostazioni del browser, alla voce dati dei siti o cronologia. Chiudendo la scheda, il dato sulla provenienza si cancella da solo. Per maggiori informazioni consulta la nostra{" "}
                 <a href="/privacy" className="text-orange-500 hover:underline">Privacy Policy</a>.
               </p>
               <p>

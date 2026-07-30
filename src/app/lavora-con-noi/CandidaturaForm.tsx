@@ -93,21 +93,21 @@ export default function CandidaturaForm() {
           <label htmlFor="nome" className="block text-sm font-medium text-navy mb-1.5">
             Nome e Cognome <span className="text-orange-500">*</span>
           </label>
-          <input id="nome" type="text" required placeholder="Mario Rossi" value={form.nome}
+          <input id="nome" name="nome" type="text" required placeholder="Mario Rossi" value={form.nome}
             onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-navy mb-1.5">
             Email <span className="text-orange-500">*</span>
           </label>
-          <input id="email" type="email" required placeholder="tua@email.com" value={form.email}
+          <input id="email" name="email" type="email" required placeholder="tua@email.com" value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="telefono" className="block text-sm font-medium text-navy mb-1.5">
             Telefono <span className="text-orange-500">*</span>
           </label>
-          <input id="telefono" type="tel" required placeholder="+39 333 000 0000" value={form.telefono}
+          <input id="telefono" name="phone" type="tel" required placeholder="+39 333 000 0000" value={form.telefono}
             onChange={(e) => setForm((f) => ({ ...f, telefono: e.target.value }))} className={inputClass} />
         </div>
         <div>
@@ -115,7 +115,7 @@ export default function CandidaturaForm() {
             Per quale ruolo? <span className="text-orange-500">*</span>
           </label>
           <select
-            id="ruolo"
+            id="ruolo" name="ruolo"
             required
             value={form.ruolo}
             onChange={(e) => setForm((f) => ({ ...f, ruolo: e.target.value }))}
@@ -138,7 +138,7 @@ export default function CandidaturaForm() {
           Raccontaci di te <span className="text-gray-400 font-normal">(facoltativo)</span>
         </label>
         <textarea
-          id="messaggio"
+          id="messaggio" name="messaggio"
           rows={4}
           placeholder="Due righe su di te: cosa sai fare, cosa cerchi, perché Cantieri Hub."
           value={form.messaggio}
