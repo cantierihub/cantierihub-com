@@ -8,6 +8,7 @@ import BackToTop from "@/components/ui/BackToTop";
 import CookieBanner from "@/components/ui/CookieBanner";
 import CatturaProvenienza from "@/components/ui/CatturaProvenienza";
 import TracciamentoSalesflow from "@/components/ui/TracciamentoSalesflow";
+import PixelMeta from "@/components/ui/PixelMeta";
 import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
@@ -101,6 +102,7 @@ export default function RootLayout({
         <CookieBanner />
         <CatturaProvenienza />
         <TracciamentoSalesflow />
+        <PixelMeta />
         <Analytics />
       </body>
     </html>
