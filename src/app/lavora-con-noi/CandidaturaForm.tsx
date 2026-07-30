@@ -93,7 +93,7 @@ export default function CandidaturaForm() {
           <label htmlFor="nome" className="block text-sm font-medium text-navy mb-1.5">
             Nome e Cognome <span className="text-orange-500">*</span>
           </label>
-          <input id="nome" name="nome" type="text" required placeholder="Mario Rossi" value={form.nome}
+          <input id="nome" name="first_name" type="text" required placeholder="Mario Rossi" value={form.nome}
             onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} className={inputClass} />
         </div>
         <div>
