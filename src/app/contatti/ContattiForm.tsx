@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { descriviProvenienza } from "@/lib/provenienza";
+import { tracciaLead } from "@/lib/pixelMeta";
 import { PRODOTTI, MOTIVAZIONI, CANALI, type Prodotto } from "@/data/moduloLead";
 
 const inputClass =
@@ -33,6 +34,8 @@ export default function ContattiForm() {
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
+        // Solo il prodotto: nome, email e messaggio non escono da qui.
+        tracciaLead(form.prodotto);
         router.push("/grazie");
       } else {
         setStatus("error");
