@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import BackToTop from "@/components/ui/BackToTop";
 import CookieBanner from "@/components/ui/CookieBanner";
 import CatturaProvenienza from "@/components/ui/CatturaProvenienza";
+import TracciamentoSalesflow from "@/components/ui/TracciamentoSalesflow";
 import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
@@ -99,6 +100,7 @@ export default function RootLayout({
         <BackToTop />
         <CookieBanner />
         <CatturaProvenienza />
+        <TracciamentoSalesflow />
         <Analytics />
       </body>
     </html>

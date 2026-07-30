@@ -72,7 +72,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="sito-guida" name="sito-guida" onSubmit={handleSubmit}>
       <p className="font-display font-bold" style={{ fontSize: 18, color: "#0f172a", margin: "0 0 6px" }}>
         Scarica la guida gratuita
       </p>
@@ -93,6 +93,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
         />
         <input
           type="email"
+          name="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
