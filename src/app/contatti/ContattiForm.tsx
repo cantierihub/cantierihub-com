@@ -125,7 +125,7 @@ export default function ContattiForm() {
           <label htmlFor="motivazione" className="block text-sm font-medium text-navy mb-1.5">
             Cosa ti serve risolvere? <span className="text-orange-500">*</span>
           </label>
-          <select id="motivazione" name="motivazione" required
+          <select id="motivazione" name="esigenza" required
             value={form.motivazione}
             onChange={(e) => setForm((f) => ({ ...f, motivazione: e.target.value }))}
             className={inputClass}>
@@ -143,7 +143,7 @@ export default function ContattiForm() {
         </label>
         {/* Vale più di tutto il tracciamento tecnico messo insieme: è l'unico modo di sapere
             di chi ha visto un reel e ci ha cercato su Google tre giorni dopo. */}
-        <select id="canale" name="canale" required
+        <select id="canale" name="come_ci_ha_conosciuti" required
           value={form.canale}
           onChange={(e) => setForm((f) => ({ ...f, canale: e.target.value }))}
           className={inputClass}>
