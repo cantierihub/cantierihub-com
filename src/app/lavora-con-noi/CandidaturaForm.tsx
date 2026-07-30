@@ -75,7 +75,7 @@ export default function CandidaturaForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form id="sito-candidatura" name="sito-candidatura" onSubmit={handleSubmit} className="space-y-4">
       {/* honeypot: invisibile agli umani, compilato dai bot */}
       <input
         type="text"

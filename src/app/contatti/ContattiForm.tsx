@@ -47,7 +47,7 @@ export default function ContattiForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form id="sito-contatti" name="sito-contatti" onSubmit={handleSubmit} className="space-y-4">
       {/* honeypot: invisibile agli umani, compilato dai bot */}
       <input
         type="text"
