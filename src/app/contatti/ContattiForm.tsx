@@ -65,19 +65,19 @@ export default function ContattiForm() {
           <label htmlFor="nome" className="block text-sm font-medium text-navy mb-1.5">
             Nome <span className="text-orange-500">*</span>
           </label>
-          <input id="nome" name="nome" type="text" required placeholder="Mario" value={form.nome}
+          <input id="nome" name="first_name" type="text" required placeholder="Mario" value={form.nome}
             onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="cognome" className="block text-sm font-medium text-navy mb-1.5">
             Cognome <span className="text-orange-500">*</span>
           </label>
-          <input id="cognome" name="cognome" type="text" required placeholder="Rossi" value={form.cognome}
+          <input id="cognome" name="last_name" type="text" required placeholder="Rossi" value={form.cognome}
             onChange={(e) => setForm((f) => ({ ...f, cognome: e.target.value }))} className={inputClass} />
         </div>
         <div>
           <label htmlFor="azienda" className="block text-sm font-medium text-navy mb-1.5">Azienda</label>
-          <input id="azienda" name="azienda" type="text" placeholder="Impresa Rossi Costruzioni" value={form.azienda}
+          <input id="azienda" name="company_name" type="text" placeholder="Impresa Rossi Costruzioni" value={form.azienda}
             onChange={(e) => setForm((f) => ({ ...f, azienda: e.target.value }))} className={inputClass} />
         </div>
         <div>

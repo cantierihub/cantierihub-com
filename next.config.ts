@@ -13,7 +13,7 @@ import type { NextConfig } from "next";
  * Convenzione degli UTM: vault, `Social/MD/Linee guida copy — SEO & GEO.md`.
  * Link in uso e stato: vault, `Social/Link UTM.md`.
  */
-const CAMPAGNA_BIO = "bio-ago26";
+const MESE_BIO = "ago26";
 
 const BIO_SOCIAL: Record<string, string> = {
   ig: "instagram",
@@ -27,7 +27,11 @@ const nextConfig: NextConfig = {
     return [
       ...Object.entries(BIO_SOCIAL).map(([scorciatoia, social]) => ({
         source: `/${scorciatoia}`,
-        destination: `/?utm_source=${social}&utm_medium=bio&utm_campaign=${CAMPAGNA_BIO}`,
+        // Il canale sta anche dentro il nome della campagna, non solo in utm_source.
+        // Verificato il 30/07 su un contatto reale in Salesflow: la campagna arriva,
+        // la sorgente resta «Direct traffic». Con la sola campagna, quattro link che
+        // differiscono solo per utm_source diventerebbero indistinguibili nel CRM.
+        destination: `/?utm_source=${social}&utm_medium=bio&utm_campaign=bio-${scorciatoia}-${MESE_BIO}`,
         // Temporaneo di proposito. Un redirect permanente finisce nella cache
         // del browser e non se ne va più: al cambio di campagna chi ha già
         // cliccato continuerebbe ad arrivare su quella vecchia, in silenzio.
