@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
+import { fetchAllGuides } from "@/lib/guide";
 
 // Solo pagine pubbliche indicizzabili.
 // Escluse di proposito le riservate noindex: /grazie.
@@ -26,9 +27,10 @@ const routes = [
   "/cookie",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  return routes.map((path) => ({
+
+  const statiche: MetadataRoute.Sitemap = routes.map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: now,
     changeFrequency: path === "" ? "weekly" : "monthly",
@@ -40,4 +42,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
           ? 0.8
           : 0.6,
   }));
+
+  // Le singole guide sono rotte dinamiche (/guide/[slug]) alimentate da un altro
+  // repo: senza questo blocco Google le raggiunge solo dal link interno su /guide.
+  // Se GitHub non risponde, fetchAllGuides torna [] e la sitemap resta quella statica.
+  const guide: MetadataRoute.Sitemap = (await fetchAllGuides()).map((g) => ({
+    url: `${SITE_URL}/guide/${g.slug}`,
+    lastModified: g.created_at ? new Date(g.created_at) : now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...statiche, ...guide];
 }
