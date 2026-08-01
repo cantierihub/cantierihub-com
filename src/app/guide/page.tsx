@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { fetchAllGuides } from "@/lib/guide";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/guide" },
@@ -13,52 +14,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-interface GuideMeta {
-  slug: string;
-  title: string;
-  subtitle: string;
-  topic: string;
-  cover_image?: string;
-  created_at: string;
-  published: boolean;
-}
-
-async function fetchAllGuides(): Promise<GuideMeta[]> {
-  try {
-    const token = process.env.GITHUB_TOKEN;
-    const res = await fetch(
-      "https://api.github.com/repos/cantierihub/cantierihub-guide/contents/public/guide",
-      {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        next: { revalidate: 1800 },
-      }
-    );
-    if (!res.ok) return [];
-    const files: Array<{ name: string; download_url: string }> = await res.json();
-    const jsonFiles = files.filter((f) => f.name.endsWith(".json"));
-
-    const guides = await Promise.all(
-      jsonFiles.map(async (f) => {
-        try {
-          const r = await fetch(f.download_url, { next: { revalidate: 1800 } });
-          return r.ok ? (r.json() as Promise<GuideMeta>) : null;
-        } catch {
-          return null;
-        }
-      })
-    );
-
-    return guides
-      .filter((g): g is GuideMeta => g !== null && g.published)
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  } catch {
-    return [];
-  }
-}
 
 export default async function GuidePage() {
   const guides = await fetchAllGuides();
