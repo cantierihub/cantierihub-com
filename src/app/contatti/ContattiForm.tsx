@@ -101,8 +101,8 @@ export default function ContattiForm() {
           Per quale servizio stai chiedendo informazioni? <span className="text-orange-500">*</span>
         </label>
         {/* Scelta singola e non testo libero: il valore smista il lead nel CRM, quindi deve
-            combaciare esattamente. «Non lo so ancora» esiste di proposito: senza quella voce
-            chi non ha ancora deciso sceglie a caso e sporca il dato. */}
+            combaciare esattamente. Si mostra `etichetta` (con la descrizione) ma si invia
+            `valore`, corto: è quello che finisce nel nome del cartellino in Salesflow. */}
         <select id="prodotto" name="prodotto" required
           value={form.prodotto}
           onChange={(e) =>
@@ -113,14 +113,15 @@ export default function ContattiForm() {
           className={inputClass}>
           <option value="">Scegli&hellip;</option>
           {PRODOTTI.map((p) => (
-            <option key={p} value={p}>{p}</option>
+            <option key={p.valore} value={p.valore}>{p.etichetta}</option>
           ))}
         </select>
       </div>
 
       {/* Compare solo dopo la scelta del prodotto, con le sue motivazioni: il modulo resta
-          corto e la domanda arriva quando ha senso. */}
-      {form.prodotto && (
+          corto e la domanda arriva quando ha senso. Se per quel prodotto non ci sono motivazioni
+          («Altro») la domanda si salta: è obbligatoria, e senza opzioni bloccherebbe l'invio. */}
+      {form.prodotto && (MOTIVAZIONI[form.prodotto as Prodotto] ?? []).length > 0 && (
         <div>
           <label htmlFor="motivazione" className="block text-sm font-medium text-navy mb-1.5">
             Cosa ti serve risolvere? <span className="text-orange-500">*</span>
@@ -159,7 +160,7 @@ export default function ContattiForm() {
           Messaggio <span className="text-orange-500">*</span>
         </label>
         <textarea id="messaggio" name="messaggio" rows={4} required
-          placeholder="Descrivici brevemente come lavori e cosa stai cercando..."
+          placeholder="Indicaci quanti computi o preventivi fai mensilmente, e se sei il titolare dell'azienda, un progettista o un collaboratore..."
           value={form.messaggio}
           onChange={(e) => setForm((f) => ({ ...f, messaggio: e.target.value }))}
           className={`${inputClass} resize-none`} />

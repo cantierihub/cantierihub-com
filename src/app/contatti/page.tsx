@@ -90,7 +90,7 @@ export default function ContattiPage() {
         <Reveal delay={0.2}>
           <div className="max-w-xl mx-auto">
             <h2 className="font-display font-bold text-navy text-2xl mb-6 text-center">
-              O lasciaci un messaggio
+              Compila il modulo per essere ricontattato
             </h2>
             <ContattiForm />
           </div>

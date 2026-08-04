@@ -5,82 +5,76 @@
  * Salesflow: per ogni prodotto due domande di qualifica, una sul **ruolo** e una sul
  * **problema**. Serve al setter per sapere di cosa parlare prima di chiamare.
  *
- * ⚠️ I nomi dei prodotti si scrivono **con «AI»** (AI Act) e devono combaciare esattamente
- * con quelli usati per smistare il lead nel CRM: sono valori, non testo libero.
+ * ⚠️ **Etichetta e valore sono due cose diverse, di proposito.** L'utente legge `etichetta`
+ * (con la descrizione fra parentesi), ma nel CRM finisce `valore`, che è corto. Il nome del
+ * cartellino in Salesflow si compone come «nome contatto - Prodotto richiesto»: se salvassimo
+ * la frase intera il commerciale si troverebbe una bacheca di titoli lunghi tre righe.
  *
- * ⚠️ Tre voci NON sono prodotti disponibili: su Notion (*Servizi/Prodotti*) «Gestione
- * Cantieri AI» e «All Tools Complete Pack» sono allo stadio **Idea**, «Contabilità AI» è in
- * **Ricerca**, previste per il 2027. Sono in elenco per **raccogliere domanda**, come chiesto
- * da Dante, e per questo dicono «soluzione su misura, da valutare insieme»: nessuno deve
- * pensare di poterle comprare oggi, altrimenti il setter deve rimangiarsi la promessa.
+ * ⚠️ Il `valore` **smista il lead nel CRM**: è un valore, non testo libero. Cambiarlo significa
+ * che i lead vecchi e quelli nuovi non si filtrano più insieme.
  */
 
 export const PRODOTTI = [
-  "Preventivatore AI",
-  "Computatore AI",
-  "EdilChat AI",
-  "Analisi Prezzi AI",
-  "Tutti i prodotti insieme",
-  "Gestione cantieri (soluzione su misura, da valutare insieme)",
-  "Contabilità e SAL (soluzione su misura, da valutare insieme)",
-  "Non lo so ancora, vorrei capire",
+  {
+    valore: "Preventivatore",
+    etichetta: "Preventivatore (dal computo metrico al preventivo in 3 minuti)",
+  },
+  {
+    valore: "Computatore",
+    etichetta: "Computatore (dal sopralluogo al computo metrico in 3 minuti)",
+  },
+  {
+    valore: "Gestione Cantieri",
+    etichetta: "Gestione Cantieri (soluzione personalizzata, da valutare insieme)",
+  },
+  {
+    valore: "Marketing",
+    etichetta: "Marketing (gestione social media, sito web e aumento clienti)",
+  },
+  {
+    valore: "Altro",
+    etichetta: "Altro (indicalo nel messaggio)",
+  },
 ] as const;
 
-export type Prodotto = (typeof PRODOTTI)[number];
+export type Prodotto = (typeof PRODOTTI)[number]["valore"];
 
-/** Le motivazioni cambiano col prodotto: compare solo quella che serve, così il modulo resta corto. */
-export const MOTIVAZIONI: Record<Prodotto, string[]> = {
-  "Preventivatore AI": [
+/**
+ * Le motivazioni cambiano col prodotto: compare solo quella che serve, così il modulo resta corto.
+ *
+ * Elenco vuoto = la seconda domanda **non compare**. È il caso di «Altro», dove la richiesta la
+ * scrive lui nel messaggio: chiedergli di scegliere fra opzioni che non lo riguardano lo
+ * bloccherebbe soltanto.
+ */
+export const MOTIVAZIONI: Record<Prodotto, readonly string[]> = {
+  Preventivatore: [
     "Ci metto troppo tempo a fare i preventivi",
     "Arrivo dopo i concorrenti e perdo il lavoro",
     "Non sono sicuro dei margini che sto facendo",
     "Voglio consegnare preventivi più professionali",
     "Altro",
   ],
-  "Computatore AI": [
+  Computatore: [
     "Faccio i computi a mano e ci perdo giornate",
     "Devo trasformare disegni e PDF in un computo",
     "Sbaglio le quantità e me ne accorgo in cantiere",
     "Voglio portare il computo direttamente nel preventivo",
     "Altro",
   ],
-  "EdilChat AI": [
-    "Perdo tempo a cercare le voci di prezzario",
-    "Ho dubbi tecnici o normativi e non so a chi chiedere",
-    "Devo convertire documenti e PDF in Excel",
-    "Voglio una consulenza disponibile quando serve",
-    "Altro",
-  ],
-  "Analisi Prezzi AI": [
-    "Ho lavorazioni fuori prezzario da quotare",
-    "Devo giustificare i prezzi al committente",
-    "Non so come si compone un'analisi prezzi",
-    "Altro",
-  ],
-  "Tutti i prodotti insieme": [
-    "Voglio cambiare del tutto il modo in cui lavoro",
-    "Uso già altri software e voglio valutare un'alternativa",
-    "Siamo un'impresa strutturata e ci serve tutto integrato",
-    "Altro",
-  ],
-  "Gestione cantieri (soluzione su misura, da valutare insieme)": [
+  "Gestione Cantieri": [
     "Non ho controllo su squadre e materiali in cantiere",
     "Non so mai a che punto è davvero l'avanzamento",
     "Devo gestire la sicurezza e i documenti di cantiere",
     "Altro",
   ],
-  "Contabilità e SAL (soluzione su misura, da valutare insieme)": [
-    "I SAL me li faccio a mano e ci perdo tempo",
-    "Non riesco a confrontare i costi reali col preventivo",
-    "Devo gestire la fatturazione progressiva",
+  Marketing: [
+    "Il sito non mi porta richieste",
+    "Non ho tempo di curare i social",
+    "Voglio farmi conoscere nella mia zona",
+    "Voglio più richieste di preventivo",
     "Altro",
   ],
-  "Non lo so ancora, vorrei capire": [
-    "Voglio capire se può servire alla mia impresa",
-    "Vorrei vedere come funziona prima di decidere",
-    "Me ne hanno parlato e voglio saperne di più",
-    "Altro",
-  ],
+  Altro: [],
 };
 
 /**
