@@ -34,19 +34,20 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Cantieri Hub · Software AI per Preventivi Edili",
+    default: "Software con Intelligenza Artificiale per Imprese Edili",
     template: "%s | Cantieri Hub",
   },
   description:
-    "Il software AI per imprese edili italiane. Dal computo metrico al preventivo professionale in 3 minuti. Prezzari regionali, PDF brandizzati, Analisi Prezzi AI.",
+    "Software con intelligenza artificiale per imprese edili italiane: computi metrici, preventivi, analisi prezzi e assistente normativo in pochi minuti.",
   keywords: [
-    "preventivi edili",
-    "software preventivi",
-    "computo metrico",
-    "AI edilizia",
-    "prezzari regionali",
-    "preventivatore edile",
+    "intelligenza artificiale edilizia",
+    "intelligenza artificiale cantieri",
     "software imprese edili",
+    "preventivi edili",
+    "computo metrico",
+    "analisi prezzi",
+    "prezzari regionali",
+    "AI edilizia",
   ],
   authors: [{ name: "Cantieri Hub" }],
   creator: "Cantieri Hub",
@@ -56,14 +57,15 @@ export const metadata: Metadata = {
     locale: "it_IT",
     url: "https://cantierihub.com",
     siteName: "Cantieri Hub",
-    title: "Cantieri Hub · Software AI per Preventivi Edili",
+    title: "Software con Intelligenza Artificiale per Imprese Edili",
     description:
-      "Dal computo metrico al preventivo in 3 minuti. Il software AI per imprese edili italiane.",
+      "Computi metrici, preventivi, analisi prezzi e assistente normativo. L'intelligenza artificiale al servizio delle imprese edili italiane.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cantieri Hub · Software AI per Preventivi Edili",
-    description: "Dal computo metrico al preventivo in 3 minuti.",
+    title: "Software con Intelligenza Artificiale per Imprese Edili",
+    description:
+      "Computi metrici, preventivi e analisi prezzi per imprese edili italiane.",
   },
   robots: { index: true, follow: true },
 };
@@ -88,7 +90,7 @@ export default function RootLayout({
               url: "https://cantierihub.com",
               logo: "https://cantierihub.com/images/logo-color.png",
               description:
-                "Software AI per imprese edili italiane: dal computo metrico al preventivo professionale in pochi minuti.",
+                "Software con intelligenza artificiale per imprese edili italiane: computi metrici, preventivi, analisi prezzi e assistente normativo.",
               areaServed: "IT",
             }),
           }}

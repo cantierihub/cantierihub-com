@@ -24,6 +24,7 @@ const routes = [
   "/contatti",
   "/privacy",
   "/cookie",
+  "/ai-trasparenza",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

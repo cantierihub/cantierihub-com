@@ -48,6 +48,7 @@ const linkGroups = [
 const linkLegali = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Cookie Policy", href: "/cookie" },
+  { label: "AI e Trasparenza", href: "/ai-trasparenza" },
 ];
 
 export default function Footer() {
