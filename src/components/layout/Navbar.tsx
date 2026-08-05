@@ -91,7 +91,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-2" style={{ marginLeft: 8 }}>
           <Link href="/contatti" className="btn-primary btn-sm cta-shimmer">
             Prenota Demo
-          </a>
+          </Link>
         </div>
 
         {/* Mobile burger */}
