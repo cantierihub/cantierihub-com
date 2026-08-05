@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Download, CheckCircle } from "lucide-react";
 import { descriviProvenienza } from "@/lib/provenienza";
+import CampiProvenienza from "@/components/ui/CampiProvenienza";
 
 interface GuideFormProps {
   slug: string;
@@ -81,6 +82,8 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       </p>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {/* Da dove arriva chi scarica: anche la guida è un lead, e finiva senza canale. */}
+        <CampiProvenienza />
         <input
           type="text"
           name="company_url"
