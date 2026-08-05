@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
 import { Calendar, Mail, ArrowRight } from "lucide-react";
 import ContattiForm from "./ContattiForm";
+import LinkWhatsApp from "@/components/ui/LinkWhatsApp";
 import { WA_DEMO, CONTACT_EMAIL } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -27,9 +28,13 @@ const contactOptions = [
     href: WA_DEMO,
     external: true,
     primary: true,
+    // Il link vero lo costruisce LinkWhatsApp al volo, col canale dentro il messaggio.
+    whatsapp: true,
   },
-  // Il riquadro "Scrivici su WhatsApp" e' stato tolto il 28/07/2026 (scelta di
-  // Chiara): sulla pagina Contatti resta la mail, il WhatsApp vive nei bottoni.
+  // Il riquadro "Scrivici su WhatsApp" separato e' stato tolto il 28/07/2026 (scelta di
+  // Chiara). Resta questa scheda, ed e' quella che conta: dal 05/08/2026 i pulsanti
+  // "Prenota una Demo" di home e barra in alto atterrano qui, dove la persona sceglie
+  // fra modulo (entra nel CRM) e WhatsApp (piu' veloce, ma cieco).
   {
     icon: Mail,
     title: "Manda una email",
@@ -38,6 +43,7 @@ const contactOptions = [
     href: `mailto:${CONTACT_EMAIL}`,
     external: false,
     primary: false,
+    whatsapp: false,
   },
 ];
 
@@ -73,14 +79,27 @@ export default function ContattiPage() {
                   </div>
                   <h3 className={`font-display font-bold text-lg mb-2 ${opt.primary ? "text-white" : "text-navy"}`}>{opt.title}</h3>
                   <p className={`text-sm leading-relaxed mb-5 flex-1 ${opt.primary ? "text-gray-300" : "text-navy-500"}`}>{opt.description}</p>
-                  <a
-                    href={opt.href}
-                    {...(opt.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className={`inline-flex items-center gap-2 text-sm font-semibold group transition-colors ${opt.primary ? "text-orange-400 hover:text-orange-300" : "text-orange-500 hover:text-orange-600"}`}
-                  >
-                    {opt.cta}
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  {/* Il riquadro WhatsApp usa un link che si porta dietro il canale: chi
+                      sceglie la chat invece del modulo non lascia niente nel CRM, e almeno
+                      il setter legge da dove arriva nella prima riga del messaggio. */}
+                  {opt.whatsapp ? (
+                    <LinkWhatsApp
+                      richiesta="prenotare una demo gratuita di Cantieri Hub"
+                      className="inline-flex items-center gap-2 text-sm font-semibold group transition-colors text-orange-400 hover:text-orange-300"
+                    >
+                      {opt.cta}
+                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </LinkWhatsApp>
+                  ) : (
+                    <a
+                      href={opt.href}
+                      {...(opt.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className={`inline-flex items-center gap-2 text-sm font-semibold group transition-colors ${opt.primary ? "text-orange-400 hover:text-orange-300" : "text-orange-500 hover:text-orange-600"}`}
+                    >
+                      {opt.cta}
+                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  )}
                 </div>
               </Reveal>
             );

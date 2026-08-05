@@ -24,7 +24,11 @@ export default function HomePage() {
       <HowItWorks />
       <Testimonials />
       <FAQSection />
-      <CTASection />
+      {/* Come il pulsante dell'Hero: passa dalla pagina contatti invece di andare dritto
+          a WhatsApp, così chi compila entra nel CRM con prodotto, esigenza e canale.
+          Il valore è esplicito qui e non nel componente: le altre pagine che usano
+          CTASection continuano ad andare su WhatsApp, e cambiarle è una decisione a parte. */}
+      <CTASection primaryHref="/contatti" />
     </>
   );
 }
