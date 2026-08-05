@@ -108,3 +108,38 @@ export function descriviProvenienza(): string {
     return "";
   }
 }
+
+/**
+ * Gli stessi dati, ma separati uno per uno.
+ *
+ * `descriviProvenienza()` produce una frase per l'email interna: si legge bene ma non ci
+ * si può filtrare sopra. Questi valori finiscono invece nei campi nascosti del modulo, che
+ * lo script di Salesflow legge dagli attributi `name` per riversarli nei campi
+ * personalizzati del CRM — e su quelli le automazioni possono decidere.
+ *
+ * Perché serve: l'attribuzione nativa di Salesflow, al momento dell'invio del modulo, dice
+ * «Direct traffic». Gli UTM li ha visti solo la pagina di atterraggio, e quella sessione lì
+ * il CRM non la collega al contatto. Verificato dal vivo il 05/08/2026: due prove da
+ * Instagram, due volte etichetta sbagliata.
+ *
+ * Quando gli UTM mancano ma il referrer c'è, il referrer diventa la sorgente: è così che
+ * chi ci trova su Google risulta Google invece che «non lo sappiamo».
+ */
+export function valoriProvenienza(): { source: string; medium: string; campagna: string } {
+  const vuoto = { source: "", medium: "", campagna: "" };
+  if (typeof window === "undefined") return vuoto;
+
+  try {
+    const grezzo = window.sessionStorage.getItem(CHIAVE);
+    if (!grezzo) return vuoto;
+
+    const d: Provenienza = JSON.parse(grezzo);
+    return {
+      source: d.source ?? d.referrer ?? "",
+      medium: d.medium ?? (d.referrer ? "referral" : ""),
+      campagna: d.campagna ?? "",
+    };
+  } catch {
+    return vuoto;
+  }
+}

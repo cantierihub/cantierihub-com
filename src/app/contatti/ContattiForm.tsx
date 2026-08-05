@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { descriviProvenienza } from "@/lib/provenienza";
+import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import { PRODOTTI, MOTIVAZIONI, CANALI, type Prodotto } from "@/data/moduloLead";
 
 const inputClass =
@@ -16,6 +16,11 @@ export default function ContattiForm() {
     prodotto: "", motivazione: "", canale: "", messaggio: "",
   });
   const [hp, setHp] = useState(""); // honeypot anti-spam
+  // Si legge dopo il montaggio: `sessionStorage` non esiste durante il render sul server.
+  const [utm, setUtm] = useState({ source: "", medium: "", campagna: "" });
+  useEffect(() => {
+    setUtm(valoriProvenienza());
+  }, []);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState("");
   const [fallback, setFallback] = useState(false);
@@ -59,6 +64,16 @@ export default function ContattiForm() {
         aria-hidden="true"
         style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
       />
+
+      {/* Provenienza per il CRM. Non li vede nessuno e non li compila nessuno: li legge lo
+          script di Salesflow dagli attributi `name`, che devono combaciare **esattamente**
+          con le chiavi dei campi personalizzati (`form_utm_source`, `form_utm_medium`,
+          `form_utm_campaign`). Un nome diverso e il campo resta vuoto, senza errori.
+          Servono perché l'attribuzione nativa del CRM, al momento dell'invio, dice
+          «Direct traffic»: gli UTM li ha visti solo la pagina di atterraggio. */}
+      <input type="hidden" name="form_utm_source" value={utm.source} readOnly />
+      <input type="hidden" name="form_utm_medium" value={utm.medium} readOnly />
+      <input type="hidden" name="form_utm_campaign" value={utm.campagna} readOnly />
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
