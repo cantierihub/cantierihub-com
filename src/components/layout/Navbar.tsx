@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { WA_DEMO } from "@/data/site";
 
 // I prodotti portano "AI" nel nome anche qui, come nel footer e nelle pagine.
 // EdilChat fa eccezione: non ha il suffisso da nessuna parte sul sito.
@@ -90,7 +89,7 @@ export default function Navbar() {
 
         {/* Desktop CTAs */}
         <div className="hidden lg:flex items-center gap-2" style={{ marginLeft: 8 }}>
-          <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm cta-shimmer">
+          <Link href="/contatti" className="btn-primary btn-sm cta-shimmer">
             Prenota Demo
           </a>
         </div>
@@ -135,7 +134,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #f1f5f9", display: "flex", flexDirection: "column", gap: 8 }}>
-                <a href={WA_DEMO} target="_blank" rel="noopener noreferrer" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</a>
+                <Link href="/contatti" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</Link>
               </div>
             </div>
           </motion.div>
