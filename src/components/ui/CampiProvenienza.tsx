@@ -4,8 +4,21 @@ import { useEffect, useRef } from "react";
 import { valoriProvenienza } from "@/lib/provenienza";
 
 /**
- * I tre campi che portano la provenienza dentro il CRM. Da mettere dentro ogni modulo
- * che genera un lead.
+ * I campi tecnici che ogni modulo lead passa al CRM: **da dove arriva** la persona e
+ * **quando** ha compilato.
+ *
+ * ── `form_inviato_il` ──
+ * Un orario ISO, riscritto a ogni caricamento della pagina. Serve a dare al CRM un
+ * **segnale che cambia solo quando qualcuno compila davvero**: su Salesflow il trigger
+ * «Modulo inviato» copre soltanto i moduli nativi (il nostro è un modulo del sito,
+ * catturato dallo script di tracciamento), e l'unica alternativa — «Contatto aggiornato»
+ * sui campi del modulo — scatterebbe anche quando un setter modifica la scheda a mano.
+ * Ascoltando questo campo invece non ci sono falsi positivi: nessuno lo tocca a mano.
+ *
+ * Effetto collaterale utile: dice **quando** una persona ha compilato l'ultima volta.
+ * Un lead che torna a scrivere dopo mesi è un segnale forte, e prima non lo vedeva nessuno.
+ *
+ * ── la provenienza ──
  *
  * **Perché servono.** L'attribuzione nativa di Salesflow, al momento dell'invio del
  * modulo, dice `Direct traffic`: gli UTM li ha visti solo la pagina di atterraggio, e
@@ -39,6 +52,7 @@ export default function CampiProvenienza() {
   const source = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
   const campagna = useRef<HTMLInputElement>(null);
+  const invio = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // `sessionStorage` non esiste durante il render sul server: si legge dopo il montaggio.
@@ -53,6 +67,7 @@ export default function CampiProvenienza() {
     scrivi(source.current, v.source);
     scrivi(medium.current, v.medium);
     scrivi(campagna.current, v.campagna);
+    scrivi(invio.current, new Date().toISOString());
   }, []);
 
   const comuni = {
@@ -70,6 +85,7 @@ export default function CampiProvenienza() {
       <input ref={source} name="form_utm_source" {...comuni} />
       <input ref={medium} name="form_utm_medium" {...comuni} />
       <input ref={campagna} name="form_utm_campaign" {...comuni} />
+      <input ref={invio} name="form_inviato_il" {...comuni} />
     </>
   );
 }
