@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Download, CheckCircle } from "lucide-react";
 import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
+import { eUsaEGetta, MESSAGGIO_USA_E_GETTA } from "@/lib/emailUsaEGetta";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
 
 // Stesso trucco di CampiProvenienza: fuori dallo schermo ma dentro il form, cosi' lo
@@ -22,6 +23,8 @@ interface GuideFormProps {
 }
 
 export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
+  const [nome, setNome] = useState("");
+  const [cognome, setCognome] = useState("");
   const [email, setEmail] = useState("");
   const [hp, setHp] = useState(""); // honeypot anti-spam
   const [loading, setLoading] = useState(false);
@@ -31,6 +34,14 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
+
+    // Il controllo sta anche sul server: qui serve solo a dirlo subito invece
+    // di far compilare, aspettare, e rimandare indietro.
+    if (eUsaEGetta(email)) {
+      setError(MESSAGGIO_USA_E_GETTA);
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -38,7 +49,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       await fetch("/api/guide-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug, title, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), prodotto: "Guida" }),
+        body: JSON.stringify({ email, nome, cognome, slug, title, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), prodotto: "Guida" }),
       });
       setDone(true);
     } catch {
@@ -137,6 +148,48 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
           aria-hidden="true"
           style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
         />
+        {/* ── Nome e cognome ──────────────────────────────────────────────────
+            Non sono decorativi: Salesflow intitola il cartellino in pipeline come
+            «nome cognome - Prodotto richiesto». Senza, in bacheca si leggeva
+            «. . Guida», che a chi lavora i lead non dice niente. I `name` sono
+            quelli canonici del CRM, gli stessi del modulo contatti.
+            ──────────────────────────────────────────────────────────────────── */}
+        <div style={{ display: "flex", gap: 10 }}>
+          <input
+            type="text"
+            name="first_name"
+            required
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Nome"
+            style={{
+            width: "100%", padding: "12px 16px",
+            border: "1.5px solid #e2e8f0", borderRadius: 9,
+            fontSize: 15, color: "#0f172a",
+            outline: "none", boxSizing: "border-box",
+            transition: "border-color 120ms",
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#f97316")}
+            onBlur={(e) => (e.target.style.borderColor = "#e2e8f0")}
+          />
+          <input
+            type="text"
+            name="last_name"
+            required
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            placeholder="Cognome"
+            style={{
+            width: "100%", padding: "12px 16px",
+            border: "1.5px solid #e2e8f0", borderRadius: 9,
+            fontSize: 15, color: "#0f172a",
+            outline: "none", boxSizing: "border-box",
+            transition: "border-color 120ms",
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#f97316")}
+            onBlur={(e) => (e.target.style.borderColor = "#e2e8f0")}
+          />
+        </div>
         <input
           type="email"
           name="email"
