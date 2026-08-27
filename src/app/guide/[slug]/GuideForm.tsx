@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Download, CheckCircle } from "lucide-react";
-import { descriviProvenienza } from "@/lib/provenienza";
+import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
 
 interface GuideFormProps {
@@ -28,7 +28,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       await fetch("/api/guide-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug, title, company_url: hp, provenienza: descriviProvenienza() }),
+        body: JSON.stringify({ email, slug, title, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza() }),
       });
       setDone(true);
     } catch {

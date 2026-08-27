@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { valoriProvenienza } from "@/lib/provenienza";
+import { catturaProvenienza, valoriProvenienza } from "@/lib/provenienza";
 
 /**
  * I campi tecnici che ogni modulo lead passa al CRM: **da dove arriva** la persona e
@@ -56,6 +56,17 @@ export default function CampiProvenienza() {
 
   useEffect(() => {
     // `sessionStorage` non esiste durante il render sul server: si legge dopo il montaggio.
+    //
+    // ⚠️ E si cattura PRIMA di leggere. React esegue gli effetti dal figlio al genitore:
+    // questo componente sta dentro il modulo, `CatturaProvenienza` sta nel layout, quindi
+    // qui si arrivava prima che la provenienza fosse stata scritta. Sulla pagina di
+    // ATTERRAGGIO i tre campi UTM restavano vuoti per sempre, perché le dipendenze sono
+    // vuote e l'effetto non ripassa. Dalla seconda pagina in poi funzionava, ed è per
+    // questo che non si vedeva: si vedeva solo in chi atterra e compila subito, cioè
+    // esattamente chi arriva dal link in bio a una pagina con il modulo dentro.
+    // `catturaProvenienza` è first-touch e idempotente: chiamarla qui non sovrascrive niente.
+    catturaProvenienza();
+
     const v = valoriProvenienza();
 
     const scrivi = (el: HTMLInputElement | null, valore: string) => {

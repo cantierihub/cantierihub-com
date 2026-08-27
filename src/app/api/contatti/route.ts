@@ -25,6 +25,15 @@ export async function POST(req: NextRequest) {
     const company_url = String(body.company_url ?? "").trim();
     // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
     const provenienza = String(body.provenienza ?? "").trim().slice(0, 300);
+    // Il canale in forma secca, per chi smista i lead: `provenienza` e' prosa, questo e' il dato.
+    // Se manca (modulo vecchio in cache) resta solo la prosa, come prima.
+    const utm = body.utm ?? {};
+    const canale = String(utm.source ?? "").trim().slice(0, 80);
+    const mezzo = String(utm.medium ?? "").trim().slice(0, 80);
+    const campagna = String(utm.campagna ?? "").trim().slice(0, 80);
+    const canaleSecco = canale
+      ? `${canale}${mezzo ? ` / ${mezzo}` : ""}${campagna ? ` · ${campagna}` : ""}`
+      : "";
 
     // honeypot: se compilato è un bot → scarta silenziosamente
     if (company_url) {
@@ -65,6 +74,7 @@ export async function POST(req: NextRequest) {
       "Messaggio:",
       messaggio,
       "",
+      `Canale: ${canaleSecco || "non rilevato"}`,
       `Provenienza: ${provenienza || "non rilevata"}`,
     ].join("\n");
 
