@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { descriviProvenienza } from "@/lib/provenienza";
+import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
 import { PRODOTTI, MOTIVAZIONI, CANALI, type Prodotto } from "@/data/moduloLead";
 
@@ -30,7 +30,7 @@ export default function ContattiForm() {
       const res = await fetch("/api/contatti", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, company_url: hp, provenienza: descriviProvenienza() }),
+        body: JSON.stringify({ ...form, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza() }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {

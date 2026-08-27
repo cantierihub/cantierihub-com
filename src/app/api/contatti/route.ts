@@ -25,6 +25,17 @@ export async function POST(req: NextRequest) {
     const company_url = String(body.company_url ?? "").trim();
     // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
     const provenienza = String(body.provenienza ?? "").trim().slice(0, 300);
+    // ⚠️ Attenzione ai nomi: `canale` qui sopra e' «come ci ha conosciuti», cioe' il canale
+    // DICHIARATO dalla persona. Quello che segue e' il canale MISURATO dagli UTM. Sono due
+    // cose diverse e possono non coincidere, quindi non si sovrappongono.
+    // Se `utm` manca (versione vecchia del modulo in cache) resta solo la prosa, come prima.
+    const utm = body.utm ?? {};
+    const utmSource = String(utm.source ?? "").trim().slice(0, 80);
+    const utmMedium = String(utm.medium ?? "").trim().slice(0, 80);
+    const utmCampagna = String(utm.campagna ?? "").trim().slice(0, 80);
+    const canaleTracciato = utmSource
+      ? `${utmSource}${utmMedium ? ` / ${utmMedium}` : ""}${utmCampagna ? ` · ${utmCampagna}` : ""}`
+      : "";
 
     // honeypot: se compilato è un bot → scarta silenziosamente
     if (company_url) {
@@ -65,6 +76,7 @@ export async function POST(req: NextRequest) {
       "Messaggio:",
       messaggio,
       "",
+      `Canale tracciato: ${canaleTracciato || "non rilevato"}`,
       `Provenienza: ${provenienza || "non rilevata"}`,
     ].join("\n");
 
