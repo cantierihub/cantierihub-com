@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { eUsaEGetta } from "@/lib/emailUsaEGetta";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, slug, title, company_url, provenienza, utm } = await req.json();
+    const { email, nome, cognome, slug, title, company_url, provenienza, utm } = await req.json();
 
     // honeypot: se compilato è un bot → scarta silenziosamente
     if (typeof company_url === "string" && company_url.trim()) {
@@ -11,6 +12,12 @@ export async function POST(req: NextRequest) {
 
     if (!email || !slug) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
+
+    // Il controllo c'e' anche nel modulo, ma quello si aggira: la richiesta arriva
+    // dal browser e chiunque puo' rifarla a mano. La porta vera e' questa.
+    if (eUsaEGetta(email)) {
+      return NextResponse.json({ error: "Disposable email" }, { status: 400 });
     }
 
     const token = process.env.NOTION_TOKEN;
@@ -26,9 +33,16 @@ export async function POST(req: NextRequest) {
     const mezzo = String(utm?.medium ?? "").trim().slice(0, 80);
     const campagna = String(utm?.campagna ?? "").trim().slice(0, 80);
     const prosa = String(provenienza ?? "").trim().slice(0, 300);
+    // Nome e cognome vanno a Salesflow attraverso i campi del modulo, che e' dove
+    // servono (intitolano il cartellino). Su Notion il database non ha una colonna
+    // per il nome, quindi si accodano qui invece di inventare una proprieta' nuova:
+    // scrivere su una proprieta' che non esiste farebbe fallire l'intera riga.
+    const chi = [String(nome ?? "").trim(), String(cognome ?? "").trim()]
+      .filter(Boolean).join(" ").slice(0, 80);
     const descrizione = (canale
       ? `canale: ${canale}${mezzo ? ` (${mezzo})` : ""}${campagna ? ` · campagna: ${campagna}` : ""}`
       : prosa) || "non rilevata";
+    const descrizioneCompleta = chi ? `${chi} · ${descrizione}` : descrizione;
 
     if (token && dbId) {
       const res = await fetch("https://api.notion.com/v1/pages", {
@@ -45,7 +59,7 @@ export async function POST(req: NextRequest) {
             Guida: { title: [{ text: { content: title ?? slug } }] },
             Slug:  { rich_text: [{ text: { content: slug } }] },
             // Arriva dal browser, quindi si tronca: nessuno ci infila dentro un romanzo.
-            Provenienza: { rich_text: [{ text: { content: descrizione } }] },
+            Provenienza: { rich_text: [{ text: { content: descrizioneCompleta } }] },
           },
         }),
       });
