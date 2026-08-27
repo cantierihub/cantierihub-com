@@ -5,6 +5,16 @@ import { ArrowRight, Download, CheckCircle } from "lucide-react";
 import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
 
+// Stesso trucco di CampiProvenienza: fuori dallo schermo ma dentro il form, cosi' lo
+// script di tracciamento li legge e nessuno li vede.
+const NASCOSTO: React.CSSProperties = {
+  position: "absolute",
+  left: "-9999px",
+  width: 1,
+  height: 1,
+  opacity: 0,
+};
+
 interface GuideFormProps {
   slug: string;
   title: string;
@@ -28,7 +38,7 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       await fetch("/api/guide-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug, title, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza() }),
+        body: JSON.stringify({ email, slug, title, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), prodotto: "Guida" }),
       });
       setDone(true);
     } catch {
@@ -74,6 +84,39 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
 
   return (
     <form id="sito-guida" name="sito-guida" onSubmit={handleSubmit}>
+      {/* ── Perche' questi due campi esistono ──────────────────────────────────────
+          Il flusso «Lead Inbound» di Salesflow parte sul trigger
+          «Contatto creato (Prodotto richiesto non vuoto)». Un lead da guida arrivava
+          col campo vuoto, quindi il flusso NON partiva: il contatto nasceva in rubrica
+          ma l'opportunita' in pipeline no, e chi scarica una guida restava illeggibile
+          per chi lavora i lead. Misurato il 27/08/2026: pipeline «Lead inbound» con una
+          sola opportunita', nessuna proveniente dalle guide.
+
+          `Prodotto richiesto` e' «Linea singola», chiave `prodotto`: testo libero, quindi
+          non c'e' niente da creare nel CRM. Ma il cartellino si compone come
+          «nome contatto - Prodotto richiesto», percio' il valore resta corto: il titolo
+          della guida va nel messaggio, dove non sporca la bacheca.
+          ────────────────────────────────────────────────────────────────────────── */}
+      <input
+        type="text"
+        name="prodotto"
+        value="Guida"
+        readOnly
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        style={NASCOSTO}
+      />
+      <input
+        type="text"
+        name="messaggio"
+        value={`Ha scaricato la guida: ${title}`}
+        readOnly
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        style={NASCOSTO}
+      />
       <p className="font-display font-bold" style={{ fontSize: 18, color: "#0f172a", margin: "0 0 6px" }}>
         Scarica la guida gratuita
       </p>
