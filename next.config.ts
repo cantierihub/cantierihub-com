@@ -45,6 +45,16 @@ const nextConfig: NextConfig = {
         destination: "/faq",
         permanent: true,
       },
+      {
+        // Lo slug di questa guida era una frase troncata a meta' parola
+        // («…stesso-tipo-di-l»): il titolo nuovo del 02/09 se n'e' portato dietro uno
+        // coerente. Permanente come /prezzo, perche' il vecchio indirizzo era gia'
+        // online. Il rimando gemello per il file .html sta in vercel.json del repo
+        // cantierihub-guide.
+        source: "/guide/due-imprese-edili-a-torino-stesso-quartiere-stesso-tipo-di-l",
+        destination: "/guide/preventivo-che-chiude-far-dire-si-al-cliente",
+        permanent: true,
+      },
     ];
   },
 };
