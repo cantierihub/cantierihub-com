@@ -49,10 +49,11 @@ export async function generateMetadata(
   // Ripeterlo qui faceva uscire «… | Cantieri Hub | Cantieri Hub» in ogni scheda.
   const titolo = `${guide.title} · Guida Gratuita`;
 
-  // Nessuna guida ha una cover_image, e prima si passava `images: []`. Un array vuoto non
-  // è «nessuna preferenza»: sopprime l'immagine di /opengraph-image, ed è il motivo per cui
-  // il link arrivava muto in DM. Omettendo il campo, Next usa quella ufficiale del sito.
-  const copertina = guide.cover_image ? { images: [guide.cover_image] } : {};
+  // Nessuna guida ha una cover_image, e il link arrivava muto in DM. Prima la causa era
+  // `images: []`, che sopprime l'immagine invece di lasciarla al valore predefinito. Ma
+  // toglierlo non basta: /opengraph-image vale per la home e NON viene ereditato qui, quindi
+  // l'immagine ufficiale va indicata a mano. Verificato in produzione il 02/09.
+  const copertina = [guide.cover_image || "/opengraph-image"];
 
   return {
     title: titolo,
@@ -64,14 +65,17 @@ export async function generateMetadata(
       title: guide.title,
       description: guide.description,
       url: `/guide/${slug}`,
-      ...copertina,
+      images: copertina,
     },
     // Senza questi, X e gli altri mostravano il titolo generico del sito al posto
     // di quello della guida.
     twitter: {
+      // Senza dichiararlo qui scende a "summary" e l'anteprima diventa la miniatura piccola:
+      // l'oggetto twitter di questa pagina sostituisce quello del layout, non lo completa.
+      card: "summary_large_image",
       title: guide.title,
       description: guide.description,
-      ...copertina,
+      images: copertina,
     },
   };
 }
