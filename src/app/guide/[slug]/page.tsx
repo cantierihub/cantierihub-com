@@ -43,14 +43,35 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
   const guide = await fetchGuide(slug);
-  if (!guide) return { title: "Guida non trovata · Cantieri Hub" };
+  if (!guide) return { title: "Guida non trovata" };
+
+  // Il brand lo aggiunge già il template dei metadata nel layout (`%s | Cantieri Hub`).
+  // Ripeterlo qui faceva uscire «… | Cantieri Hub | Cantieri Hub» in ogni scheda.
+  const titolo = `${guide.title} · Guida Gratuita`;
+
+  // Nessuna guida ha una cover_image, e prima si passava `images: []`. Un array vuoto non
+  // è «nessuna preferenza»: sopprime l'immagine di /opengraph-image, ed è il motivo per cui
+  // il link arrivava muto in DM. Omettendo il campo, Next usa quella ufficiale del sito.
+  const copertina = guide.cover_image ? { images: [guide.cover_image] } : {};
+
   return {
-    title: `${guide.title} · Guida Gratuita | Cantieri Hub`,
+    title: titolo,
     description: guide.description,
+    // La stessa guida è servita anche dal dominio che ospita i file: senza canonical,
+    // per Google sono due pagine identiche.
+    alternates: { canonical: `/guide/${slug}` },
     openGraph: {
       title: guide.title,
       description: guide.description,
-      images: guide.cover_image ? [guide.cover_image] : [],
+      url: `/guide/${slug}`,
+      ...copertina,
+    },
+    // Senza questi, X e gli altri mostravano il titolo generico del sito al posto
+    // di quello della guida.
+    twitter: {
+      title: guide.title,
+      description: guide.description,
+      ...copertina,
     },
   };
 }
