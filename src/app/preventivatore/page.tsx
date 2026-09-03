@@ -5,7 +5,7 @@ import Badge from "@/components/ui/Badge";
 import Reveal from "@/components/ui/Reveal";
 import CTASection from "@/components/sections/CTASection";
 import FAQSection from "@/components/sections/FAQSection";
-import { ArrowRight, Zap, Database, Palette, Users, Archive } from "lucide-react";
+import { ArrowRight, Zap, Database, Palette, Users, Archive, Lightbulb } from "lucide-react";
 import { WA_PREVENTIVATORE } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -32,6 +32,11 @@ const features = [
     icon: Database,
     title: "Prezzari regionali inclusi",
     description: "DEI, Regione Lombardia, Sicilia e altri prezzari regionali italiani. Più il tuo prezzario aziendale personalizzato. Matching automatico con tre livelli di confidenza.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Lavorazioni mancanti suggerite",
+    description: "Mentre estrae le voci, l'AI segnala le lavorazioni che il lavoro richiede ma che nel computo ricevuto non ci sono. Te le propone: nel preventivo entrano solo se le approvi tu.",
   },
   {
     icon: Zap,
@@ -64,7 +69,7 @@ const steps = [
   {
     n: "02",
     title: "L'AI estrae e abbina",
-    description: "Estrae ogni voce, la abbina ai prezzari selezionati. Badge di confidenza per ogni match. Tu rivedi e approvi.",
+    description: "Estrae ogni voce, la abbina ai prezzari selezionati e segnala le lavorazioni mancanti. Badge di confidenza per ogni match. Tu rivedi e approvi.",
   },
   {
     n: "03",
@@ -82,6 +87,7 @@ const faqItems = [
   { q: "Funziona con i file XML standard del settore?", a: "Sì. Il Preventivatore supporta il formato XML standard utilizzato dai principali software di computo metrico, oltre a PDF ed Excel." },
   { q: "Posso usare il mio prezzario aziendale?", a: "Sì. Puoi importare il tuo prezzario interno da Excel, CSV o PDF. Viene aggiornato automaticamente con ogni preventivo salvato." },
   { q: "Cosa fa l'Analisi Prezzi AI?", a: "Per le voci non trovate nei prezzari, genera la scomposizione dettagliata dei costi: materiali, manodopera, noli, utile e spese generali. Con parametri reali (tipo lavorazione, dimensione cantiere, urgenza)." },
+  { q: "L'AI può aggiungere voci che nel computo non ci sono?", a: "Le propone, non le aggiunge. Se una lavorazione serve al lavoro ma nel computo ricevuto manca, il Preventivatore te la segnala come proposta: entra nel preventivo solo se la approvi tu." },
   { q: "Quanti utenti sono inclusi?", a: "Ogni licenza include 3 utenti: il titolare e 2 collaboratori. Tutti accedono agli stessi dati aziendali in tempo reale." },
   { q: "Esiste una versione di prova gratuita?", a: "No. Ogni onboarding ha un costo operativo, quindi non offriamo trial. Offriamo invece una demo gratuita in cui vediamo insieme il tuo caso reale." },
 ];
