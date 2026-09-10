@@ -21,8 +21,11 @@ export default function ContattiForm() {
   const [error, setError] = useState("");
   const [fallback, setFallback] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // Lo stesso orario che legge lo script di tracciamento: vedi `lib/salesflow.ts`.
+    const campoInvio = e.currentTarget.elements.namedItem("form_inviato_il");
+    const inviatoIl = campoInvio instanceof HTMLInputElement ? campoInvio.value : "";
     setStatus("loading");
     setError("");
     setFallback(false);
@@ -30,7 +33,7 @@ export default function ContattiForm() {
       const res = await fetch("/api/contatti", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza() }),
+        body: JSON.stringify({ ...form, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), inviato_il: inviatoIl }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
