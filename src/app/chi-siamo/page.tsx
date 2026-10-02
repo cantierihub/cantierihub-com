@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/chi-siamo" },
-  title: "Chi Siamo · Cantieri Hub",
+  title: "Chi siamo",
   description:
     "Cantieri Hub nasce da una domanda semplice: perché chi fa preventivi edili perde ancora ore su un lavoro che l'AI può fare in minuti?",
 };
@@ -88,9 +88,20 @@ const roadmap: FaseRoadmap[] = [
   },
 ];
 
+// La persona dietro Cantieri Hub come entità (audit SEO 01/10/2026): per le AI «chi c'è dietro» deve essere un dato.
+const personaJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Raffaele Russo",
+  jobTitle: "Co-founder",
+  image: "https://cantierihub.com/images/raffaele-sed.jpg",
+  worksFor: { "@id": "https://cantierihub.com/#organizzazione" },
+};
+
 export default function ChiSiamoPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personaJsonLd) }} />
       {/* Hero */}
       <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-white overflow-hidden">
         {/* Dot grid */}

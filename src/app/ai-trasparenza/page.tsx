@@ -3,7 +3,7 @@ import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/ai-trasparenza" },
-  title: "AI e Trasparenza · Cantieri Hub",
+  title: "AI e trasparenza: come la usiamo",
   description:
     "Dove Cantieri Hub usa l'intelligenza artificiale, cosa comporta per il tuo lavoro e come restano il controllo e la responsabilità professionale.",
 };

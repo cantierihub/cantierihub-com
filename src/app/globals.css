@@ -543,3 +543,36 @@
   .roadmap-card.is-open { transform: none; }
   .roadmap-pallino { animation: none; }
 }
+
+/* ── Notizie: la pagina dell'articolo ─────────────────────────────────────────
+   Chi legge ha 35-65 anni e spesso legge dal telefono in cantiere: corpo 18px, righe da ~68 caratteri,
+   contrasto pieno (navy su bianco), sottotitoli grossi, link sempre sottolineati. */
+.articolo { font-size: 18px; line-height: 1.75; color: #1e293b; }
+.articolo p { margin: 0 0 1.15em; }
+.articolo h2 {
+  font-family: var(--font-display); font-weight: 800; color: #0f172a;
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem); line-height: 1.25; letter-spacing: -0.01em;
+  margin: 2.2em 0 0.7em; scroll-margin-top: 96px;
+}
+.articolo h3 { font-family: var(--font-display); font-weight: 700; color: #0f172a; font-size: 1.15rem; margin: 1.6em 0 0.5em; }
+.articolo ul, .articolo ol { margin: 0 0 1.2em; padding-left: 1.3em; }
+.articolo li { margin: 0.35em 0; }
+.articolo ul li::marker { color: #f97316; }
+.articolo ol li::marker { color: #ea580c; font-weight: 700; }
+.articolo a { color: #c2410c; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.articolo a:hover { color: #9a3412; }
+.articolo strong { color: #0f172a; font-weight: 700; }
+.articolo blockquote { margin: 1.4em 0; padding: 0.2em 0 0.2em 1.1em; border-left: 3px solid #fdba74; color: #334155; font-style: italic; }
+.articolo table { width: 100%; border-collapse: collapse; margin: 1.4em 0; font-size: 16px; display: block; overflow-x: auto; }
+.articolo th, .articolo td { border-bottom: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; vertical-align: top; }
+.articolo th { background: #f8fafc; font-weight: 700; color: #0f172a; white-space: nowrap; }
+.articolo img { max-width: 100%; height: auto; border-radius: 12px; }
+
+/* I due riquadri che fanno il valore dell'articolo */
+.riquadro { border-radius: 16px; padding: 22px 24px 8px; margin: 2em 0; }
+.riquadro h2 { margin-top: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+.riquadro--cambia { background: #fff7ed; border: 1px solid #fed7aa; }
+.riquadro--fare { background: #0f172a; color: #e2e8f0; }
+.riquadro--fare h2, .riquadro--fare strong { color: #fff; }
+.riquadro--fare a { color: #fdba74; }
+.riquadro--fare ol li::marker, .riquadro--fare ul li::marker { color: #fb923c; }

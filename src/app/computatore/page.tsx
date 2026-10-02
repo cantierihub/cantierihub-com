@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/computatore" },
-  title: "Computatore AI · Genera il computo metrico da zero in pochi minuti",
+  title: "Computatore AI: computo metrico in minuti",
   description:
     "Descrivi il lavoro, carica le foto del sopralluogo. L'AI genera l'intero computo metrico. La chat integrata controlla che non manchi nulla.",
   openGraph: {
@@ -226,6 +226,9 @@ export default function ComputatorePage() {
                     <div
                       style={{
                         order: isReverse ? 1 : 2,
+                        // Su mobile il contenitore è flex-col con alignItems:center: senza larghezza esplicita il
+                        // riquadro collassava a 0 px e le foto sparivano (misurato il 30/09 a 390 px).
+                        width: "100%",
                         aspectRatio: "4/3",
                         borderRadius: 14,
                         overflow: "hidden",

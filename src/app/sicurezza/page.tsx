@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Sicurezza dei dati · I tuoi prezzari e preventivi al sicuro",
+  title: "Sicurezza dei dati: prezzari e preventivi",
   description:
     "Come Cantieri Hub protegge i tuoi dati: isolamento per azienda, crittografia in transito e a riposo, hosting europeo conforme GDPR e backup automatici.",
   alternates: { canonical: "/sicurezza" },

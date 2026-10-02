@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Analisi Prezzi AI · La scomposizione costi di qualsiasi voce",
+  title: "Analisi prezzi AI per voci fuori prezzario",
   description:
     "Genera la scomposizione di costo di qualsiasi voce d'opera: materiali, manodopera, noli, spese generali e sicurezza. Editabile, ricalcolata live, esportabile.",
   alternates: { canonical: "/analisi-prezzi" },
@@ -90,9 +90,22 @@ const faq = [
   },
 ];
 
+// Era l'unico dei quattro prodotti senza scheda SoftwareApplication (audit SEO 01/10/2026).
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Analisi Prezzi AI",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description:
+    "La scomposizione del costo di qualsiasi voce, anche fuori prezzario: materiali, manodopera, noli, spese generali e sicurezza, modificabili componente per componente.",
+  publisher: { "@type": "Organization", name: "Cantieri Hub", url: "https://cantierihub.com" },
+};
+
 export default function AnalisiPrezziPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       {/* Hero */}
       <section className="relative pt-12 pb-8 md:pt-24 md:pb-16 bg-navy overflow-hidden">
         <div className="absolute top-0 right-0 w-[480px] h-[480px] rounded-full bg-orange-500/8 blur-[100px] pointer-events-none" />

@@ -5,7 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
-  title: "FAQ · Quanto costa Cantieri Hub e come funziona",
+  title: "FAQ: quanto costa e come funziona",
   description:
     "Quanto costa Cantieri Hub, cosa comprende la licenza e come funzionano prodotti, sicurezza e supporto. Le risposte prima di prenotare una demo.",
   openGraph: {
@@ -104,6 +104,7 @@ export default function FAQPage() {
           title={cat.title}
           subtitle=""
           showCTA={false}
+          conSchema={false}
         />
       ))}
 

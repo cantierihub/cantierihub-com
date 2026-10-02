@@ -4,7 +4,7 @@ import RevocaConsenso from "@/components/ui/RevocaConsenso";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/cookie" },
-  title: "Cookie Policy · Cantieri Hub",
+  title: "Cookie policy",
   description: "Informativa sull'uso dei cookie su Cantieri Hub.",
 };
 
