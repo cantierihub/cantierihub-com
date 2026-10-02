@@ -183,14 +183,24 @@ function PaginaArticolo({ n }: { n: Notizia }) {
               <span aria-hidden="true">·</span>
               <span>{n.minutiLettura} min di lettura</span>
             </p>
+            {/* AI Act art. 50: la dichiarazione va «all'inizio» del testo (linee guida della Commissione, punto 143).
+                Vault: sito-seo/CONFORMITA.md §3.2. */}
+            <p className="mt-2 text-sm text-navy-500">
+              Scritto con l&apos;aiuto dell&apos;intelligenza artificiale e controllato da una persona ·{" "}
+              <Link href="/ai-trasparenza#notizie" className="underline underline-offset-2 hover:text-navy">Come lavoriamo</Link>
+            </p>
           </div>
         </header>
 
         {n.immagine && (
           <div className="container-main mt-8">
-            <div className="relative mx-auto max-w-[960px] aspect-[16/9] overflow-hidden rounded-2xl bg-navy-100">
-              <Image src={n.immagine} alt={n.immagineAlt ?? ""} fill priority sizes="(max-width: 1000px) 100vw, 960px" style={{ objectFit: "cover" }} />
-            </div>
+            <figure className="mx-auto max-w-[960px]">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-navy-100">
+                <Image src={n.immagine} alt={n.immagineAlt ?? ""} fill priority sizes="(max-width: 1000px) 100vw, 960px" style={{ objectFit: "cover" }} />
+              </div>
+              {/* Un'immagine fotorealistica fatta con l'AI va dichiarata a vista (AI Act art. 50, linee guida punto 117). */}
+              {n.immagineAi && <figcaption className="mt-2 text-[13px] text-navy-500">Immagine generata con l&apos;intelligenza artificiale</figcaption>}
+            </figure>
           </div>
         )}
 
@@ -261,17 +271,23 @@ function PaginaArticolo({ n }: { n: Notizia }) {
               </section>
             )}
 
-            <div className="mt-8 space-y-3 text-[14px] leading-relaxed text-navy-500">
-              <p>
-                Questo articolo spiega la norma in generale. Per il caso della tua impresa chiedi al tuo commercialista o
-                consulente del lavoro.
+            {/* Testo da CONFORMITA.md §3.2 (studio della Conformità AI e legale, 02/10/2026). */}
+            <section aria-labelledby="come-nasce" className="mt-8 rounded-2xl border border-navy-200 p-6 text-[15px] leading-relaxed text-navy-600">
+              <h2 id="come-nasce" className="font-display font-bold text-navy text-base">Come è nato questo articolo</h2>
+              <p className="mt-2">
+                Abbiamo preparato questo articolo con l&apos;aiuto di strumenti di intelligenza artificiale, partendo solo
+                dagli atti ufficiali elencati nelle Fonti. Prima di pubblicarlo, una persona della Redazione Cantieri Hub
+                l&apos;ha letto per intero e ha controllato i fatti sulle fonti. La responsabilità di quello che pubblichiamo
+                è di Cantieri Hub.
               </p>
-              <p>
-                Come lavoriamo: ogni articolo parte dalle fonti ufficiali citate qui sopra ed è controllato sui loro
-                testi. Per scrivere e verificare usiamo anche strumenti di intelligenza artificiale.{" "}
-                <Link href="/ai-trasparenza" className="underline underline-offset-2 hover:text-navy">AI e trasparenza</Link>
+              <p className="mt-2">
+                L&apos;articolo spiega la norma in generale: per il tuo caso chiedi al tuo commercialista, al consulente del
+                lavoro o a un avvocato. Hai visto un errore? Scrivi a{" "}
+                <a href="mailto:info@cantierihub.com" className="underline underline-offset-2 hover:text-navy">info@cantierihub.com</a>:
+                lo correggiamo e lo diciamo in cima all&apos;articolo.{" "}
+                <Link href="/ai-trasparenza#notizie" className="underline underline-offset-2 hover:text-navy">Come lavoriamo</Link>
               </p>
-            </div>
+            </section>
           </div>
         </div>
       </article>

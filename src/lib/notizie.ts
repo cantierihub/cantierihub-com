@@ -67,6 +67,8 @@ export interface Notizia {
   inBreve: string;
   immagine?: string;
   immagineAlt?: string;
+  /** La copertina è generata con l'AI: si dichiara a vista (vero se non c'è scritto il contrario). */
+  immagineAi: boolean;
   fonti: Fonte[];
   faq: Domanda[];
   sezioni: Sezione[];
@@ -130,6 +132,7 @@ function leggi(file: string): Notizia {
     inBreve: String(fm.in_breve ?? ""),
     immagine: fm.immagine,
     immagineAlt: fm.immagine_alt,
+    immagineAi: fm.immagine_ai !== false,
     fonti: (fm.fonti ?? []) as Fonte[],
     faq: (fm.faq ?? []) as Domanda[],
     sezioni: dividi(marked.parse(content, { async: false }) as string),
