@@ -709,3 +709,38 @@
 @media (prefers-reduced-motion: reduce) {
   .indice-mobile__freccia, .domande__segno, .indice-laterale a { transition: none; }
 }
+
+/* ── Notizie: il blocco «Pubblicità» in fondo all'articolo (funnel, 03/10/2026) ──────────────────────────────
+   È pubblicità e deve sembrarlo (D.Lgs. 145/2007, art. 5): etichetta scritta in alto, e una forma che i riquadri
+   della redazione non hanno (fondo a puntini, bordo), così non si confonde con «Cosa cambia» o «Cosa fare». */
+.blocco-prodotto {
+  margin: 2.4em 0; padding: 20px 20px 22px; border-radius: 18px; border: 1px solid #cbd5e1;
+  background-color: #fff;
+  background-image: radial-gradient(circle, rgba(15,23,42,0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+@media (min-width: 768px) { .blocco-prodotto { padding: 26px 30px 28px; } }
+.articolo .blocco-prodotto__testa {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 16px;
+  font-size: 14px; line-height: 1.4; color: #475569;
+}
+.blocco-prodotto__etichetta {
+  display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 9999px;
+  background: #0f172a; color: #fff; font-weight: 600; letter-spacing: 0.01em;
+}
+.articolo .blocco-prodotto__nome { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #c2410c; }
+.articolo .blocco-prodotto h2 {
+  margin: 0 0 0.5em; padding: 0; border: 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.5rem); line-height: 1.25; text-wrap: balance;
+}
+.articolo .blocco-prodotto__testo { margin: 0 0 18px; font-size: 16px; line-height: 1.6; color: #334155; }
+.articolo .blocco-prodotto__pulsante,
+.articolo .blocco-prodotto__pulsante:hover {
+  color: #fff; text-decoration: none;
+}
+.blocco-prodotto__pulsante {
+  width: 100%; justify-content: center; min-height: 48px; white-space: normal; text-align: center;
+  font-size: 15px; line-height: 1.3;
+}
+@media (min-width: 640px) { .blocco-prodotto__pulsante { width: auto; } }
+.articolo .blocco-prodotto__nota { margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: #475569; }

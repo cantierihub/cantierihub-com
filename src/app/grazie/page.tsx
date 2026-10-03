@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
+import TornaAllArticolo from "@/components/notizie/TornaAllArticolo";
 import { CheckCircle, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -53,6 +54,8 @@ export default function GraziePage() {
 
         <Reveal delay={0.3}>
           <div className="mt-9 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
+            {/* Chi si è candidato da una notizia può tornare all'articolo (funnel delle Notizie, 03/10/2026). */}
+            <TornaAllArticolo className="btn-ghost btn-lg !text-navy" />
             <Link href="/" className="btn-ghost btn-lg">
               Torna alla home
             </Link>

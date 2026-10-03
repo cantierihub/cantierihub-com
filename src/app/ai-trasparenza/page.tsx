@@ -68,21 +68,22 @@ export default function AiTrasparenzaPage() {
                 <li>partiamo solo da atti ufficiali (Gazzetta Ufficiale, ministeri, Agenzia delle Entrate, INPS, INAIL, Regioni…) e li citiamo in fondo a ogni articolo;</li>
                 <li>strumenti di intelligenza artificiale ci aiutano a leggere gli atti, a scrivere una prima versione, a controllare ogni dato sulla fonte e a preparare le immagini;</li>
                 <li>prima di pubblicare, una persona della Redazione legge l&apos;articolo per intero, controlla i fatti sulle fonti e decide se pubblicarlo, correggerlo o scartarlo. Nessun articolo va online senza questo passaggio;</li>
-                <li>le immagini sono generate con l&apos;intelligenza artificiale e lo scriviamo su ognuna. Non ritraggono persone reali, luoghi veri o fatti accaduti;</li>
+                <li>le immagini sono generate con l&apos;intelligenza artificiale e lo scriviamo su ognuna, con l&apos;etichetta «AI GENERATED» nell&apos;angolo in alto a destra. È l&apos;icona ufficiale dell&apos;Unione europea per i contenuti generati con l&apos;intelligenza artificiale. Le immagini non ritraggono persone reali, luoghi veri o fatti accaduti;</li>
                 <li>non usiamo mai i dati dei clienti di Cantieri Hub, né quello che ci raccontano, per scrivere gli articoli;</li>
-                <li>gli articoli spiegano le norme in generale e non sono una consulenza sul tuo caso: per quella rivolgiti al tuo commercialista, al consulente del lavoro o a un avvocato.</li>
+                <li>gli articoli spiegano le norme in generale e non sono una consulenza sul tuo caso: per quella rivolgiti al tuo commercialista, al consulente del lavoro o a un avvocato;</li>
+                <li>in fondo a molti articoli c&apos;è un riquadro con l&apos;etichetta «Pubblicità»: presenta il software di Cantieri Hub che c&apos;entra con il tema. È separato dal testo della redazione, e quello che vendiamo non cambia quello che scriviamo.</li>
               </ul>
               <p>La sezione Notizie è lo spazio informativo di un&apos;azienda di software, non una testata giornalistica.</p>
               <p>
                 <strong>Responsabilità editoriale:</strong> Cantieri Hub. Contatti:{" "}
-                <a href="mailto:info@cantierihub.com" className="text-orange-500 hover:underline">info@cantierihub.com</a>.{" "}
+                <a href="mailto:info@cantierihub.com" className="text-orange-700 underline-offset-2 hover:underline">info@cantierihub.com</a>.{" "}
                 <strong>Hai visto un errore?</strong> Scrivici: lo correggiamo e in cima all&apos;articolo trovi la data e cosa è cambiato.
               </p>
 
               <h2 className="font-display font-bold text-navy text-xl mt-8">Domande</h2>
               <p>
                 Per qualsiasi chiarimento su come usiamo l&apos;intelligenza artificiale scrivi a{" "}
-                <a href="mailto:info@cantierihub.com" className="text-orange-500 hover:underline">info@cantierihub.com</a>.
+                <a href="mailto:info@cantierihub.com" className="text-orange-700 underline-offset-2 hover:underline">info@cantierihub.com</a>.
               </p>
             </div>
           </div>

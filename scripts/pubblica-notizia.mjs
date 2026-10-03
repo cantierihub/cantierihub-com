@@ -125,6 +125,15 @@ if (lDesc < 70 || lDesc > 160) problemi.push(`descrizione di ${lDesc} caratteri 
 if (!inBreve) problemi.push("manca la risposta d'apertura («in breve»)");
 if (fonti.length === 0) problemi.push("nessuna fonte");
 if (copertina && !alt) problemi.push("la copertina non ha il testo alternativo (immagine_alt)");
+// Il blocco «Pubblicità» in fondo (funnel delle Notizie, 03/10/2026): un prodotto fra quelli del sito, o «nessuno».
+const PRODOTTI_BLOCCO = ["analisi-prezzi", "preventivatore", "computatore", "cantieri-hub", "nessuno"];
+if (fm.prodotto && !PRODOTTI_BLOCCO.includes(String(fm.prodotto).trim().toLowerCase())) {
+  problemi.push(`prodotto «${fm.prodotto}» non valido (validi: ${PRODOTTI_BLOCCO.join(", ")})`);
+}
+// Un solo aggancio a un prodotto, ed è il blocco: un link a una pagina prodotto dentro il testo farebbe due agganci,
+// e uno dentro i consigli della redazione (CONFORMITA §1.6 e checklist n. 8).
+const linkProdotto = corpo.match(/\]\((?:https?:\/\/(?:www\.)?cantierihub\.com)?\/(analisi-prezzi|preventivatore|computatore|edilchat|demo)\b[^)]*\)/);
+if (linkProdotto) problemi.push(`nel testo c'è un link a un prodotto (${linkProdotto[0]}): l'aggancio è il blocco in fondo, si sceglie con «prodotto:»`);
 if (problemi.length) fuori(`il pacchetto non è pronto:\n  - ${problemi.join("\n  - ")}`);
 
 const intestazione = {
@@ -138,6 +147,9 @@ const intestazione = {
   data_aggiornamento: giorno(fm.data_aggiornamento) || giorno(fm.data_pubblicazione) || oggi(),
   ...(fm.nota_aggiornamento ? { nota_aggiornamento: fm.nota_aggiornamento } : {}),
   in_breve: inBreve,
+  ...(fm.prodotto ? { prodotto: String(fm.prodotto).trim().toLowerCase() } : {}),
+  ...(fm.gancio ? { gancio: String(fm.gancio).trim() } : {}),
+  ...(fm.nota_ai_in_alto === true ? { nota_ai_in_alto: true } : {}),
   ...(copertina ? { immagine: `/images/notizie/${slug}/${copertina}`, immagine_alt: alt } : {}),
   fonti,
   faq,

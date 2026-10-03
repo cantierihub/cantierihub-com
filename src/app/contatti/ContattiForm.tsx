@@ -5,17 +5,38 @@ import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
-import { PRODOTTI, MOTIVAZIONI, CANALI, type Prodotto } from "@/data/moduloLead";
+import { useArticoloDiProvenienza } from "@/components/notizie/TornaAllArticolo";
+import { PRODOTTI, MOTIVAZIONI, CANALI, RUOLI, type Prodotto } from "@/data/moduloLead";
 
+// text-base sul telefono: sotto i 16 px Safari su iPhone ingrandisce la pagina a ogni tocco su un campo.
 const inputClass =
-  "w-full px-4 py-3 rounded-lg border border-gray-200 text-sm text-navy placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-colors bg-white";
+  "w-full px-4 py-3 rounded-lg border border-gray-200 text-base md:text-sm text-navy placeholder:text-gray-400 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-colors bg-white";
 
-export default function ContattiForm() {
+/**
+ * Il modulo che porta un lead nel CRM. Due modi:
+ * - la pagina **contatti** (senza props): la persona sceglie il servizio e scrive il messaggio;
+ * - **la candidatura alla demo** delle Notizie (`modoDemo`, 03/10/2026): il prodotto è già scelto dalla pagina
+ *   (`prodottoFisso`), si chiede il ruolo, il messaggio è facoltativo, e lo slug dell'articolo da cui arriva
+ *   (`?da=` nell'indirizzo) va al server, che mette l'etichetta «notizie» (vedi `lib/funnel.ts`).
+ */
+export default function ContattiForm({
+  prodottoFisso = null,
+  modoDemo = false,
+  testoPulsante = "Invia messaggio",
+}: {
+  prodottoFisso?: Prodotto | null;
+  modoDemo?: boolean;
+  testoPulsante?: string;
+} = {}) {
   const router = useRouter();
   const [form, setForm] = useState({
     nome: "", cognome: "", azienda: "", email: "", telefono: "",
-    prodotto: "", motivazione: "", canale: "", messaggio: "",
+    prodotto: prodottoFisso ?? "", motivazione: "", canale: "", messaggio: "", ruolo: "",
   });
+  // L'articolo si legge dall'indirizzo nel browser: la pagina resta statica (niente useSearchParams). Il server lo
+  // ricontrolla comunque (`lib/funnel.ts`).
+  const daIndirizzo = useArticoloDiProvenienza();
+  const articolo = modoDemo ? daIndirizzo : "";
   const [hp, setHp] = useState(""); // honeypot anti-spam
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState("");
@@ -30,14 +51,22 @@ export default function ContattiForm() {
     setError("");
     setFallback(false);
     try {
+      // Nella candidatura il ruolo apre il messaggio: nel CRM non c'è un campo apposta, e al setter serve.
+      const { ruolo, ...campi } = form;
+      const messaggio = modoDemo
+        ? [`Ruolo: ${ruolo}`, form.messaggio.trim()].filter(Boolean).join("\n\n")
+        : form.messaggio;
       const res = await fetch("/api/contatti", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), inviato_il: inviatoIl }),
+        body: JSON.stringify({
+          ...campi, messaggio, articolo,
+          company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), inviato_il: inviatoIl,
+        }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
-        router.push("/grazie");
+        router.push(articolo ? `/grazie?da=${encodeURIComponent(articolo)}` : "/grazie");
       } else {
         setStatus("error");
         setFallback(Boolean(json.fallback));
@@ -103,6 +132,12 @@ export default function ContattiForm() {
         </div>
       </div>
 
+      {prodottoFisso ? (
+        // Il prodotto lo sceglie la pagina. Resta un campo vero (nascosto col CSS, come quelli della provenienza),
+        // così lo script di Salesflow, che legge i moduli dal nome dei campi, lo vede come sempre.
+        <input type="text" name="prodotto" value={prodottoFisso} readOnly tabIndex={-1} aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
+      ) : (
       <div>
         <label htmlFor="prodotto" className="block text-sm font-medium text-navy mb-1.5">
           Per quale servizio stai chiedendo informazioni? <span className="text-orange-500">*</span>
@@ -124,6 +159,25 @@ export default function ContattiForm() {
           ))}
         </select>
       </div>
+      )}
+
+      {modoDemo && (
+        <div>
+          <label htmlFor="ruolo" className="block text-sm font-medium text-navy mb-1.5">
+            Che ruolo hai? <span className="text-orange-500">*</span>
+          </label>
+          {/* name="ruolo": nessun campo del CRM si chiama così, quindi lo script di Salesflow non lo tocca.
+              Il ruolo arriva al CRM dentro il messaggio, composto dal modulo. */}
+          <select id="ruolo" name="ruolo" required value={form.ruolo}
+            onChange={(e) => setForm((f) => ({ ...f, ruolo: e.target.value }))}
+            className={inputClass}>
+            <option value="">Scegli&hellip;</option>
+            {RUOLI.map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Compare solo dopo la scelta del prodotto, con le sue motivazioni: il modulo resta
           corto e la domanda arriva quando ha senso. Se per quel prodotto non ci sono motivazioni
@@ -164,10 +218,19 @@ export default function ContattiForm() {
 
       <div>
         <label htmlFor="messaggio" className="block text-sm font-medium text-navy mb-1.5">
-          Messaggio <span className="text-orange-500">*</span>
+          {modoDemo ? (
+            <>Vuoi dirci qualcosa? <span className="font-normal text-navy-600">(facoltativo)</span></>
+          ) : (
+            <>Messaggio <span className="text-orange-500">*</span></>
+          )}
         </label>
-        <textarea id="messaggio" name="messaggio" rows={4} required
-          placeholder="Indicaci quanti computi o preventivi fai mensilmente, e se sei il titolare dell'azienda, un progettista o un collaboratore..."
+        {/* Nella candidatura il campo si chiama «nota», non «messaggio»: il messaggio del CRM lo compone il modulo
+            (ruolo + nota) e il server ci aggiunge l'articolo. Se lo script di Salesflow lo leggesse da qui, potrebbe
+            sovrascriverlo con la sola nota. */}
+        <textarea id="messaggio" name={modoDemo ? "nota" : "messaggio"} rows={modoDemo ? 3 : 4} required={!modoDemo}
+          placeholder={modoDemo
+            ? "Per esempio: quanti preventivi o computi fai al mese, su che lavori."
+            : "Indicaci quanti computi o preventivi fai mensilmente, e se sei il titolare dell'azienda, un progettista o un collaboratore..."}
           value={form.messaggio}
           onChange={(e) => setForm((f) => ({ ...f, messaggio: e.target.value }))}
           className={`${inputClass} resize-none`} />
@@ -189,12 +252,12 @@ export default function ContattiForm() {
 
       <button type="submit" disabled={status === "loading"}
         className="cta-shimmer w-full py-3.5 rounded-lg text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-70">
-        {status === "loading" ? "Invio in corso…" : (<>Invia messaggio <ArrowRight size={16} className="arrow" /></>)}
+        {status === "loading" ? "Invio in corso…" : (<>{testoPulsante} <ArrowRight size={16} className="arrow" /></>)}
       </button>
 
-      <p className="text-xs text-gray-400 text-center">
+      <p className="text-sm text-navy-600 text-center">
         Inviando accetti la nostra{" "}
-        <a href="/privacy" className="text-orange-500 hover:underline">Privacy Policy</a>.
+        <a href="/privacy" className="text-orange-700 underline-offset-2 hover:underline">Privacy Policy</a>.
       </p>
     </form>
   );
