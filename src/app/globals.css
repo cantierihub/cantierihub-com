@@ -612,7 +612,7 @@
   text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum'; font-weight: 600; color: #0f172a;
 }
-.articolo th.num { white-space: normal; font-weight: 600; color: #334155; }
+.articolo th.num { white-space: nowrap; font-weight: 600; color: #334155; }
 
 /* «In breve»: la risposta che regge da sola. */
 .in-breve { border-radius: 16px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 18px 20px 20px; }
@@ -637,7 +637,8 @@
 .indice-mobile[open] .indice-mobile__freccia { transform: rotate(180deg); }
 .indice-mobile ol { border-top: 1px solid #e2e8f0; padding: 6px 0; }
 .indice-mobile a {
-  display: block; padding: 10px 16px; font-size: 15px; line-height: 1.4; color: #334155;
+  display: flex; align-items: center; min-height: 44px; padding: 8px 16px;
+  font-size: 15px; line-height: 1.4; color: #334155;
 }
 .indice-mobile a:hover { color: #c2410c; background: #fff7ed; }
 
@@ -680,6 +681,9 @@
 /* Domande frequenti: si apre quella che serve. */
 .domande { border-top: 1px solid #e2e8f0; }
 .domande details { border-bottom: 1px solid #e2e8f0; }
+/* L'ultima domanda non chiude con la sua riga: sotto c'è già quella del titolo «Fonti» (due righe a 50 px sembravano
+   una riga vuota, Controllo visivo CAN-36). */
+.domande details:last-child { border-bottom: 0; }
 .domande summary {
   display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; cursor: pointer; list-style: none;
 }

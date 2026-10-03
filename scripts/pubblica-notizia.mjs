@@ -70,14 +70,22 @@ for (const s of sezioni) {
     if (fonti.length === 0) {
       for (const r of s.split("\n").filter((x) => /^\s*[-*]\s/.test(x))) {
         // Forma tipica: «- ENTE, [titolo](url), descrizione ([PDF](url))». L'ente è quello che sta prima del primo
-        // link; il titolo è il testo del link più la descrizione in chiaro (i link annidati diventano testo).
-        const link = r.match(/\[([^\]]+)\]\((https?:[^)]+)\)/);
-        if (!link) continue;
+        // link; il titolo è il testo del link più la descrizione in chiaro. Ogni altro link della riga diventa una
+        // fonte sua: prima diventava testo e il link al PDF del comunicato ISTAT si perdeva, lasciando un «(PDF)» che
+        // apriva la pagina web (Controllo visivo, CAN-36, 03/10/2026).
+        const link = [...r.matchAll(/\[([^\]]+)\]\((https?:[^)]+)\)/g)];
+        if (link.length === 0) continue;
+        const [primo, ...altri] = link;
         const riga = r.replace(/^\s*[-*]\s*/, "");
-        const i = riga.indexOf(link[0]);
+        const i = riga.indexOf(primo[0]);
         const prima = riga.slice(0, i).replace(/\*\*/g, "").replace(/[\s,—–:·-]+$/, "").trim();
-        const dopo = riga.slice(i + link[0].length).replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*/g, "").replace(/^[\s,—–:·-]+/, "").trim();
-        fonti.push({ ente: prima || "Fonte ufficiale", titolo: dopo ? `${link[1]}, ${dopo}` : link[1], url: link[2] });
+        let dopo = riga.slice(i + primo[0].length);
+        for (const l of altri) dopo = dopo.split(l[0]).join("");
+        dopo = dopo.replace(/\(\s*\)/g, "").replace(/\*\*/g, "").replace(/^[\s,—–:·-]+/, "").replace(/[\s,—–:·-]+$/, "").trim();
+        const maiuscola = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+        const ente = prima || "Fonte ufficiale";
+        fonti.push({ ente, titolo: maiuscola(dopo ? `${primo[1]}, ${dopo}` : primo[1]), url: primo[2] });
+        for (const l of altri) fonti.push({ ente, titolo: maiuscola(`${primo[1]} (${l[1]})`), url: l[2] });
       }
     }
   } else {

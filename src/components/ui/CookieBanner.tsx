@@ -47,7 +47,7 @@ export default function CookieBanner() {
             Vorremmo capire da quale contenuto arrivi, così sappiamo cosa vale la pena
             raccontare. Sono strumenti di terze parti: <strong>partono solo se ci dai l&apos;ok</strong>.
             Se rifiuti il sito funziona esattamente come prima.{" "}
-            <Link href="/cookie" className="text-orange-500 underline hover:text-orange-600">
+            <Link href="/cookie" className="text-orange-700 underline hover:text-orange-800">
               Dettagli
             </Link>
           </p>
