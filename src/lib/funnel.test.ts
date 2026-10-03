@@ -28,3 +28,20 @@ test("senza articolo il messaggio resta com'è (il modulo di /contatti non cambi
 test("messaggio vuoto e articolo: resta solo la riga", () => {
   assert.equal(messaggioConArticolo("", "abc-def"), "Arriva dalla notizia: https://cantierihub.com/notizie/abc-def");
 });
+
+test("il campo della nota non si chiama come nessun campo letto dallo script di Salesflow", async () => {
+  const { NOME_CAMPO_NOTA } = await import("./funnel.ts");
+  // I nomi che lo script mappa sui campi del CRM (ContattiForm e CampiProvenienza).
+  const letti = ["first_name", "last_name", "company_name", "email", "phone", "prodotto", "esigenza",
+    "come_ci_ha_conosciuti", "messaggio", "form_utm_source", "form_utm_medium", "form_utm_campaign", "form_inviato_il"];
+  assert.equal(letti.includes(NOME_CAMPO_NOTA), false);
+});
+
+test("il messaggio della candidatura: ruolo, nota, articolo", async () => {
+  const { messaggioCandidatura } = await import("./funnel.ts");
+  assert.equal(
+    messaggioCandidatura("Titolare dell'impresa", "  10 preventivi al mese ", "abc-def"),
+    "Ruolo: Titolare dell'impresa\n\n10 preventivi al mese\n\nArriva dalla notizia: https://cantierihub.com/notizie/abc-def",
+  );
+  assert.equal(messaggioCandidatura("Altro", "", ""), "Ruolo: Altro");
+});

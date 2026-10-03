@@ -23,16 +23,24 @@ export default function BloccoProdotto({
 }) {
   const p = FUNNEL[prodotto];
   return (
-    <aside aria-labelledby="blocco-prodotto-titolo" className="blocco-prodotto">
+    // Il nome per chi usa un lettore di schermo dice subito che è pubblicità, non solo il titolo.
+    <aside aria-label={`Pubblicità: ${p.nome}`} className="blocco-prodotto">
       <p className="blocco-prodotto__testa">
         <span className="blocco-prodotto__etichetta">Pubblicità</span>
-        <span>Il software di Cantieri Hub, che cura queste notizie</span>
+        <span>
+          {p.slug === "cantieri-hub" ? "Cantieri Hub" : `${p.nome}, un software di Cantieri Hub`}, l&apos;azienda che pubblica
+          queste notizie
+        </span>
       </p>
-      <p className="blocco-prodotto__nome">{p.nome}</p>
-      <h2 id="blocco-prodotto-titolo">{gancio || p.blocco.titolo}</h2>
-      <p className="blocco-prodotto__testo">{p.blocco.testo}</p>
-      <Link href={`/demo/${p.slug}?da=${encodeURIComponent(articolo)}`} className="btn-primary blocco-prodotto__pulsante">
-        Guarda cosa fa e candidati <ArrowRight size={16} className="arrow" aria-hidden="true" />
+      {/* Il titolo è lo stesso della pagina della demo: chi clicca ritrova la promessa che ha cliccato. Il gancio
+          dell'articolo, se c'è, apre il testo. */}
+      <h2>{p.blocco.titolo}</h2>
+      <p className="blocco-prodotto__testo">
+        {gancio ? `${gancio.replace(/[.\s]+$/, "")}. ` : ""}
+        {p.blocco.testo}
+      </p>
+      <Link href={`/demo/${p.slug}?da=${encodeURIComponent(articolo)}`} className="btn-funnel blocco-prodotto__pulsante">
+        Guarda cosa fa e candidati alla demo <ArrowRight size={16} className="arrow" aria-hidden="true" />
       </Link>
       <p className="blocco-prodotto__nota">Demo gratuita, dal vivo, sui tuoi file. Nessun impegno.</p>
     </aside>

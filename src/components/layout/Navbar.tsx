@@ -26,6 +26,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const sullaCandidatura = pathname?.startsWith("/demo/") ?? false;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
@@ -90,9 +91,15 @@ export default function Navbar() {
 
         {/* Desktop CTAs */}
         <div className="hidden lg:flex items-center gap-2" style={{ marginLeft: 8 }}>
-          <Link href="/contatti" className="btn-primary btn-sm cta-shimmer">
-            Prenota Demo
-          </Link>
+          {/* Sulle pagine di candidatura delle Notizie il pulsante porta al modulo della pagina: su /contatti si
+              perderebbe l'articolo di provenienza (e l'etichetta «notizie» nel CRM). */}
+          {sullaCandidatura ? (
+            <a href="#candidatura" className="btn-primary btn-sm cta-shimmer">Candidati</a>
+          ) : (
+            <Link href="/contatti" className="btn-primary btn-sm cta-shimmer">
+              Prenota Demo
+            </Link>
+          )}
         </div>
 
         {/* Mobile burger */}
@@ -135,7 +142,11 @@ export default function Navbar() {
                 </Link>
               ))}
               <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #f1f5f9", display: "flex", flexDirection: "column", gap: 8 }}>
-                <Link href="/contatti" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</Link>
+                {sullaCandidatura ? (
+                  <a href="#candidatura" onClick={() => setMobileOpen(false)} className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Candidati per la demo</a>
+                ) : (
+                  <Link href="/contatti" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</Link>
+                )}
               </div>
             </div>
           </motion.div>

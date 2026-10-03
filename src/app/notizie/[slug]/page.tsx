@@ -154,9 +154,9 @@ function PaginaArticolo({ n }: { n: Notizia }) {
       : []),
   ];
 
-  // Dove va il blocco «Pubblicità»: dopo «Cosa fare adesso», o in fondo al corpo se l'articolo non ce l'ha.
-  const iFare = n.sezioni.findIndex((s) => s.tipo === "fare");
-  const indiceBlocco = iFare >= 0 ? iFare : n.sezioni.length - 1;
+  // Il blocco «Pubblicità» va SEMPRE dopo l'ultima sezione del corpo (di regola «Cosa fare adesso»), mai in mezzo al
+  // testo della redazione: un sottotitolo a domanda come «Cosa fare se…» a metà articolo non lo deve attirare lì.
+  const indiceBlocco = n.sezioni.length - 1;
 
   // L'indice: le domande del corpo, poi le domande frequenti e le fonti.
   const voci = [
@@ -188,7 +188,7 @@ function PaginaArticolo({ n }: { n: Notizia }) {
               <div className="min-w-0 text-sm leading-snug">
                 {/* La firma porta a chi siamo e a come lavoriamo (CONFORMITA §3.2, 03/10: con la riga sull'AI in alto
                     se n'è andato il suo «Come lavoriamo»; Google chiede che la firma porti a chi scrive). */}
-                <Link href="/ai-trasparenza#notizie" className="font-semibold text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">
+                <Link href="/ai-trasparenza#notizie" className="-my-3 inline-block py-3 font-semibold text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">
                   {n.autore}
                 </Link>
                 <p className="mt-0.5 text-navy-600">
@@ -280,8 +280,8 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                         <div dangerouslySetInnerHTML={{ __html: s.html }} />
                       </section>
                     )}
-                    {/* Il blocco «Pubblicità» chiude l'articolo: subito dopo «Cosa fare adesso», quando chi legge si chiede
-                        cosa fare, e prima delle domande e delle fonti. Senza «Cosa fare», dopo l'ultima sezione. */}
+                    {/* Il blocco «Pubblicità» chiude l'articolo: dopo l'ultima sezione (di regola «Cosa fare adesso»), quando
+                        chi legge si chiede cosa fare, e prima delle domande e delle fonti. */}
                     {n.prodotto && i === indiceBlocco && <BloccoProdotto prodotto={n.prodotto} articolo={n.slug} gancio={n.gancio} />}
                   </Fragment>
                 ))}

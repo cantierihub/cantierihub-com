@@ -28,3 +28,15 @@ export function messaggioConArticolo(messaggio: string, articolo: string, sito =
   const riga = `Arriva dalla notizia: ${sito}/notizie/${articolo}`;
   return messaggio ? `${messaggio}\n\n${riga}` : riga;
 }
+
+/**
+ * Nella candidatura il campo libero si chiama così, non «messaggio»: lo script di Salesflow legge i moduli dal nome dei
+ * campi, e un «messaggio» con la sola nota potrebbe sovrascrivere quello composto (ruolo + nota + articolo). Non deve
+ * essere il nome di nessun campo del CRM (prova in `funnel.test.ts`).
+ */
+export const NOME_CAMPO_NOTA = "nota";
+
+/** Il messaggio della candidatura, uguale nel browser (campo nascosto per lo script) e sul server. */
+export function messaggioCandidatura(ruolo: string, nota: string, articolo: string): string {
+  return messaggioConArticolo([ruolo ? `Ruolo: ${ruolo}` : "", nota.trim()].filter(Boolean).join("\n\n"), articolo);
+}

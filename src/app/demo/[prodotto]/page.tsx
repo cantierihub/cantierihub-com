@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDown, Check, PhoneCall, Send, MonitorPlay } from "lucide-react";
+import { ArrowDown, Check } from "lucide-react";
 import ContattiForm from "@/app/contatti/ContattiForm";
 import TornaAllArticolo from "@/components/notizie/TornaAllArticolo";
 import { PRODOTTI_FUNNEL, schedaFunnel } from "@/data/funnelNotizie";
@@ -30,13 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<{ prodotto:
     // Pagina di conversione: le pagine da trovare su Google sono quelle dei prodotti, non queste.
     robots: { index: false, follow: true },
     alternates: { canonical: `/demo/${p.slug}` },
+    // Se il link si condivide (WhatsApp, un setter), l'anteprima mostra questa pagina e non la home.
+    openGraph: { title: `${titolo} · Cantieri Hub`, description: p.pagina_demo.sottotitolo, url: `/demo/${p.slug}`, type: "website" },
   };
 }
 
 const PASSI = [
-  { icona: Send, titolo: "Ti candidi", testo: "Ci dici chi sei, che lavoro fai e cosa ti serve, con il modulo qui sopra." },
-  { icona: PhoneCall, titolo: "Ti chiamiamo", testo: "Un consulente di Cantieri Hub, una persona vera, ti richiama per capire il tuo lavoro e fissare la demo." },
-  { icona: MonitorPlay, titolo: "La vedi sui tuoi file", testo: "Dal vivo, sul tuo computo o sul tuo preventivo, non su un esempio preparato. Nessun impegno." },
+  { titolo: "Ti candidi", testo: "Compili il modulo: chi sei, che lavoro fai e cosa ti serve." },
+  { titolo: "Ti chiamiamo", testo: "Ti chiama una persona di Cantieri Hub. Capisce il tuo lavoro e fissa con te la demo." },
+  { titolo: "La vedi sui tuoi file", testo: "La facciamo dal vivo su un tuo computo o preventivo, non su un esempio. Nessun impegno." },
 ];
 
 export default async function PaginaDemo({ params }: { params: Promise<{ prodotto: string }> }) {
@@ -51,7 +52,7 @@ export default async function PaginaDemo({ params }: { params: Promise<{ prodott
     },
     {
       d: "C'è una prova gratuita?",
-      r: "No. Facciamo una demo gratuita, dal vivo, sui tuoi file e con un consulente: così vedi il risultato sul tuo lavoro, non su un esempio.",
+      r: "No. C'è la demo gratuita dal vivo con una persona di Cantieri Hub. Così vedi il risultato sul tuo lavoro e non su un esempio.",
     },
     { d: "Cosa devo preparare?", r: `${d.portaConTe} Se non hai niente sotto mano, va bene lo stesso: ne parliamo al telefono.` },
   ];
@@ -68,8 +69,10 @@ export default async function PaginaDemo({ params }: { params: Promise<{ prodott
 
         <div className="container-main relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-14">
           <div>
-            <TornaAllArticolo className="-ml-1 mb-4 !text-navy-200 hover:!text-white" />
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm font-semibold text-white">
+            <div className="mb-4 empty:hidden">
+              <TornaAllArticolo className="-ml-1 !text-navy-200 hover:!text-white" />
+            </div>
+            <p className="flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm font-semibold text-white">
               <span className="h-1.5 w-1.5 rounded-full bg-orange-500" aria-hidden="true" />
               {p.slug === "cantieri-hub" ? "Cantieri Hub" : p.nome} · demo gratuita sui tuoi file
             </p>
@@ -78,9 +81,12 @@ export default async function PaginaDemo({ params }: { params: Promise<{ prodott
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-navy-200 md:text-xl">{d.sottotitolo}</p>
 
-            <a href="#candidatura" className="btn-primary btn-lg mt-7 lg:hidden">
-              Candidati per la demo <ArrowDown size={16} aria-hidden="true" />
-            </a>
+            {/* Solo sul telefono: sul computer il modulo è già qui accanto. */}
+            <div className="mt-7 lg:hidden">
+              <a href="#candidatura" className="btn-funnel">
+                Candidati per la demo <ArrowDown size={16} aria-hidden="true" />
+              </a>
+            </div>
 
             <h2 className="mt-12 font-display text-xl font-semibold tracking-[-0.01em] text-white">Cosa fa</h2>
             <ul className="mt-5 space-y-5">
@@ -97,21 +103,17 @@ export default async function PaginaDemo({ params }: { params: Promise<{ prodott
               ))}
             </ul>
             <p className="mt-7 border-t border-white/10 pt-5 text-[16px] leading-relaxed text-navy-200">{d.limite}</p>
-            {p.slug !== "cantieri-hub" && (
-              <p className="mt-3 text-[15px] text-navy-300">
-                Vuoi leggere tutto?{" "}
-                <Link href={p.pagina} className="font-semibold text-white underline decoration-white/30 underline-offset-[3px] hover:decoration-white">
-                  Vai alla pagina {p.nome}
-                </Link>
-              </p>
-            )}
+            {/* Niente link alle pagine prodotto (revisione del 03/10): lì ci sono ancora tempi promessi, confronti con
+                «gli altri software» e foto AI non dichiarate, e i loro pulsanti portano a WhatsApp, dove si perde
+                l'etichetta «notizie». Si torna a metterlo quando quelle pagine seguono le stesse regole. */}
           </div>
 
           <div id="candidatura" className="scroll-mt-24 lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-2xl bg-white p-5 shadow-[0_24px_60px_rgba(2,6,23,0.35)] md:p-7">
               <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-navy">Candidati per la demo</h2>
               <p className="mt-2 text-[15px] leading-relaxed text-navy-600">
-                Ci dici chi sei e cosa ti serve: ti richiamiamo entro 24 ore e fissiamo la demo sui tuoi file.
+                La demo è per chi fa computi e preventivi per mestiere. Ci dici chi sei e ti chiamiamo entro 24 ore per
+                fissarla.
               </p>
               <div className="mt-5">
                 <ContattiForm prodottoFisso={p.valoreCrm} modoDemo testoPulsante="Invia la candidatura" />
@@ -127,10 +129,7 @@ export default async function PaginaDemo({ params }: { params: Promise<{ prodott
           <ol className="mt-8 grid gap-8 md:grid-cols-3 md:gap-10">
             {PASSI.map((s, i) => (
               <li key={s.titolo}>
-                <span className="flex items-center gap-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-navy font-display text-[15px] font-bold text-white">{i + 1}</span>
-                  <s.icona size={20} className="text-orange-600" aria-hidden="true" />
-                </span>
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-navy font-display text-[15px] font-bold text-white">{i + 1}</span>
                 <span className="mt-4 block font-display text-lg font-semibold text-navy">{s.titolo}</span>
                 <span className="mt-1.5 block text-[16px] leading-relaxed text-navy-600">{s.testo}</span>
               </li>
@@ -150,7 +149,7 @@ export default async function PaginaDemo({ params }: { params: Promise<{ prodott
               </div>
             ))}
           </dl>
-          <a href="#candidatura" className="btn-primary btn-lg mt-8">
+          <a href="#candidatura" className="btn-funnel mt-8">
             Candidati per la demo
           </a>
         </div>

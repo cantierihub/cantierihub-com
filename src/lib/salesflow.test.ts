@@ -8,10 +8,12 @@ import { portaNelCrm, type LeadSito } from "./salesflow.ts";
 type Chiamata = { metodo: string; percorso: string; corpo: unknown };
 let chiamate: Chiamata[] = [];
 let esistente: { id: string } | null = null;
+let doppioPerTelefono = false;
 
 beforeEach(() => {
   chiamate = [];
   esistente = null;
+  doppioPerTelefono = false;
   process.env.SALESFLOW_PIT = "finto";
   process.env.SALESFLOW_LOCATION_ID = "loc-finta";
   globalThis.fetch = (async (url: string, opz: RequestInit) => {
@@ -20,7 +22,10 @@ beforeEach(() => {
     chiamate.push({ metodo: String(opz.method), percorso, corpo });
     let risposta: unknown = {};
     if (percorso.startsWith("contacts/search/duplicate")) risposta = { contact: esistente };
-    else if (percorso === "contacts/") risposta = { contact: { id: "nuovo-1" } };
+    else if (percorso === "contacts/" && doppioPerTelefono) {
+      return new Response(JSON.stringify({ message: "This location does not allow duplicated contacts." }), { status: 400 });
+    } else if (percorso === "contacts/") risposta = { contact: { id: "nuovo-1" } };
+    else if (percorso === "contacts/upsert") risposta = { contact: { id: "unito-5" }, new: false };
     return new Response(JSON.stringify(risposta), { status: 200 });
   }) as typeof fetch;
 });
@@ -59,4 +64,14 @@ test("un prodotto senza etichetta e senza articolo: nessuna etichetta, nessuna c
   esistente = { id: "vecchio-2" };
   await portaNelCrm(lead({ prodotto: "Marketing" }));
   assert.equal(chiamate.some((c) => c.percorso.endsWith("/tags")), false);
+});
+
+test("stessa persona con un'altra email ma lo stesso telefono: upsert, poi le etichette a parte", async () => {
+  doppioPerTelefono = true;
+  const esito = await portaNelCrm(lead({ etichetteExtra: ["notizie"] }));
+  assert.equal(esito.ok, true);
+  const upsert = chiamate.find((c) => c.percorso === "contacts/upsert");
+  assert.equal((upsert?.corpo as Record<string, unknown>).tags, undefined, "l'upsert non deve sostituire le etichette");
+  const tags = chiamate.find((c) => c.percorso === "contacts/unito-5/tags");
+  assert.deepEqual((tags?.corpo as { tags: string[] }).tags, ["analisi-prezzi", "notizie"]);
 });

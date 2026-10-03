@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
-import TornaAllArticolo from "@/components/notizie/TornaAllArticolo";
-import { CheckCircle, Clock } from "lucide-react";
+import TestoGrazie from "./TestoGrazie";
+import { CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Grazie · Abbiamo ricevuto il tuo messaggio",
@@ -36,38 +35,7 @@ export default function GraziePage() {
           </span>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <h1
-            className="mt-8 font-display font-extrabold text-white leading-tight"
-            style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)" }}
-          >
-            Grazie! Abbiamo ricevuto{" "}
-            <span className="text-orange-400">il tuo messaggio.</span>
-          </h1>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <p className="mt-5 text-lg text-gray-300 leading-relaxed max-w-xl mx-auto">
-            Ti ricontattiamo <strong className="text-white">entro 24 ore</strong>.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.3}>
-          <div className="mt-9 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
-            {/* Chi si è candidato da una notizia può tornare all'articolo (funnel delle Notizie, 03/10/2026). */}
-            <TornaAllArticolo className="btn-ghost btn-lg !text-navy" />
-            <Link href="/" className="btn-ghost btn-lg">
-              Torna alla home
-            </Link>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.4}>
-          <p className="mt-8 inline-flex items-center gap-2 text-sm text-gray-400">
-            <Clock size={15} className="text-gray-400" />
-            Tempo medio di risposta: meno di un&apos;ora negli orari di lavoro.
-          </p>
-        </Reveal>
+        <TestoGrazie />
       </div>
     </section>
   );
