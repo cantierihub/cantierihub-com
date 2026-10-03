@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import TestataNotizie from "@/components/notizie/TestataNotizie";
 import SchedaNotizia from "@/components/notizie/SchedaNotizia";
 import { CATEGORIE, notizieDellaCategoria, tutteLeNotizie } from "@/lib/notizie";
@@ -54,25 +55,29 @@ export default function NotiziePage() {
 
       <section className="bg-white py-12 md:py-16">
         <div className="container-main">
-          <h2 className="font-display font-extrabold text-navy text-2xl md:text-3xl">Le sezioni</h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="font-display font-bold text-navy text-2xl tracking-[-0.01em] md:text-3xl">Le sezioni</h2>
+          {/* Un elenco, non una griglia di schede uguali: si legge dall'alto in basso come un indice. */}
+          <ul className="mt-6 grid border-t border-navy-200 md:grid-cols-2 md:gap-x-12">
             {CATEGORIE.map((c) => {
               const quante = notizieDellaCategoria(c.slug).length;
               return (
-                <Link
-                  key={c.slug}
-                  href={`/notizie/${c.slug}`}
-                  className="group rounded-2xl border border-navy-200 p-5 transition-colors hover:border-orange-300 hover:bg-orange-50"
-                >
-                  <p className="font-display font-bold text-navy group-hover:text-orange-700">{c.nome}</p>
-                  <p className="mt-1.5 text-[15px] text-navy-600 leading-relaxed">{c.breve}</p>
-                  <p className="mt-3 text-[13px] font-semibold text-navy-500">
-                    {quante === 0 ? "In arrivo" : quante === 1 ? "1 articolo" : `${quante} articoli`}
-                  </p>
-                </Link>
+                <li key={c.slug} className="border-b border-navy-200">
+                  <Link href={`/notizie/${c.slug}`} className="group flex items-start gap-4 py-5">
+                    <span className="min-w-0 flex-1">
+                      <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className="font-display text-lg font-semibold text-navy group-hover:text-orange-700">{c.nome}</span>
+                        <span className={`text-[13px] font-semibold ${quante === 0 ? "text-navy-500" : "text-orange-700"}`}>
+                          {quante === 0 ? "in arrivo" : quante === 1 ? "1 articolo" : `${quante} articoli`}
+                        </span>
+                      </span>
+                      <span className="mt-1 block text-[15px] leading-relaxed text-navy-600">{c.breve}</span>
+                    </span>
+                    <ChevronRight size={20} aria-hidden="true" className="mt-1 shrink-0 text-navy-400 transition-transform group-hover:translate-x-0.5 group-hover:text-orange-600" />
+                  </Link>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </section>
     </>
