@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, ExternalLink, Info, ListChecks, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronRight, ExternalLink, HardHat, Info, ListChecks, Plus } from "lucide-react";
+import IndiceArticolo from "@/components/notizie/IndiceArticolo";
 import TestataNotizie from "@/components/notizie/TestataNotizie";
 import SchedaNotizia from "@/components/notizie/SchedaNotizia";
 import {
@@ -151,143 +152,194 @@ function PaginaArticolo({ n }: { n: Notizia }) {
       : []),
   ];
 
+  // L'indice: le domande del corpo, poi le domande frequenti e le fonti.
+  const voci = [
+    ...n.sezioni.filter((s) => s.titolo).map((s) => ({ id: s.id, titolo: s.titolo! })),
+    ...(n.faq.length ? [{ id: "domande-frequenti", titolo: "Domande frequenti" }] : []),
+    ...(n.fonti.length ? [{ id: "fonti", titolo: "Fonti" }] : []),
+  ];
+
   return (
     <>
       <article className="bg-white">
-        <header className="container-main pt-10 md:pt-14">
-          <nav aria-label="Percorso" className="flex flex-wrap items-center gap-1 text-[13px] text-navy-500">
-            <Link href="/" className="hover:text-navy">Home</Link>
-            <ChevronRight size={13} aria-hidden="true" />
-            <Link href="/notizie" className="hover:text-navy">Notizie</Link>
-            <ChevronRight size={13} aria-hidden="true" />
-            <Link href={`/notizie/${categoria.slug}`} className="font-semibold text-orange-700 hover:text-orange-800">{categoria.nome}</Link>
-          </nav>
+        <header className="container-main pt-8 md:pt-14">
+          <div className="mx-auto max-w-[680px]">
+            <nav aria-label="Percorso" className="flex flex-wrap items-center gap-1 text-sm text-navy-500">
+              <Link href="/notizie" className="py-2 hover:text-navy">Notizie</Link>
+              <ChevronRight size={14} aria-hidden="true" />
+              <Link href={`/notizie/${categoria.slug}`} className="py-2 font-semibold text-orange-700 hover:text-orange-800">
+                {categoria.nome}
+              </Link>
+            </nav>
 
-          <div className="mx-auto max-w-[760px]">
-            <h1 className="mt-6 font-display font-extrabold text-navy leading-[1.12] tracking-tight text-[2rem] md:text-[2.75rem]">
+            <h1 className="mt-3 font-display font-bold text-navy text-[2rem] leading-[1.15] tracking-[-0.02em] md:text-[2.75rem] md:leading-[1.1]">
               {n.titolo}
             </h1>
-            <p className="mt-4 text-navy-600 text-lg md:text-xl leading-relaxed">{n.descrizione}</p>
-            <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-navy-500">
-              <span className="font-semibold text-navy">{n.autore}</span>
-              <span aria-hidden="true">·</span>
-              <span>Pubblicato il <time dateTime={n.dataPubblicazione}>{dataLeggibile(n.dataPubblicazione)}</time></span>
-              {aggiornato && (
-                <>
-                  <span aria-hidden="true">·</span>
-                  <span className="font-semibold text-orange-700">
-                    Aggiornato il <time dateTime={n.dataAggiornamento}>{dataLeggibile(n.dataAggiornamento)}</time>
-                  </span>
-                </>
-              )}
-              <span aria-hidden="true">·</span>
-              <span>{n.minutiLettura} min di lettura</span>
-            </p>
+            <p className="mt-4 text-[1.1875rem] leading-relaxed text-navy-700 md:text-xl">{n.descrizione}</p>
+
+            <div className="mt-6 flex items-center gap-3">
+              <MarchioCH />
+              <div className="min-w-0 text-sm leading-snug">
+                <p className="font-semibold text-navy">{n.autore}</p>
+                <p className="mt-0.5 text-navy-600">
+                  <time dateTime={n.dataPubblicazione}>{dataLeggibile(n.dataPubblicazione)}</time>
+                  {aggiornato && (
+                    <>
+                      {" · "}
+                      <span className="font-semibold text-orange-800">
+                        aggiornato il <time dateTime={n.dataAggiornamento}>{dataLeggibile(n.dataAggiornamento)}</time>
+                      </span>
+                    </>
+                  )}
+                  {` · ${n.minutiLettura} min di lettura`}
+                </p>
+              </div>
+            </div>
             {/* AI Act art. 50: la dichiarazione va «all'inizio» del testo (linee guida della Commissione, punto 143).
                 Vault: sito-seo/CONFORMITA.md §3.2. */}
-            <p className="mt-2 text-sm text-navy-500">
-              Scritto con l&apos;aiuto dell&apos;intelligenza artificiale e controllato da una persona ·{" "}
-              <Link href="/ai-trasparenza#notizie" className="underline underline-offset-2 hover:text-navy">Come lavoriamo</Link>
+            <p className="mt-4 border-t border-navy-200 pt-3 text-sm leading-snug text-navy-600">
+              Scritto con l&apos;aiuto dell&apos;intelligenza artificiale e controllato da una persona.{" "}
+              <Link href="/ai-trasparenza#notizie" className="whitespace-nowrap font-medium text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">
+                Come lavoriamo
+              </Link>
             </p>
           </div>
         </header>
 
         {n.immagine && (
-          <div className="container-main mt-8">
-            <figure className="mx-auto max-w-[960px]">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-navy-100">
-                <Image src={n.immagine} alt={n.immagineAlt ?? ""} fill priority sizes="(max-width: 1000px) 100vw, 960px" style={{ objectFit: "cover" }} />
-              </div>
-              {/* Un'immagine fotorealistica fatta con l'AI va dichiarata a vista (AI Act art. 50, linee guida punto 117). */}
-              {n.immagineAi && <figcaption className="mt-2 text-[13px] text-navy-500">Immagine generata con l&apos;intelligenza artificiale</figcaption>}
-            </figure>
-          </div>
+          <figure className="mx-auto mt-8 md:w-[min(960px,calc(100%_-_48px))]">
+            <div className="relative aspect-[16/9] overflow-hidden bg-navy-100 md:rounded-2xl">
+              <Image src={n.immagine} alt={n.immagineAlt ?? ""} fill priority sizes="(max-width: 1000px) 100vw, 960px" style={{ objectFit: "cover" }} />
+            </div>
+            {/* Un'immagine fotorealistica fatta con l'AI va dichiarata a vista (AI Act art. 50, linee guida punto 117). */}
+            {n.immagineAi && (
+              <figcaption className="mt-2 px-6 text-sm text-navy-600 md:px-0">Immagine generata con l&apos;intelligenza artificiale</figcaption>
+            )}
+          </figure>
         )}
 
         <div className="container-main pb-16 md:pb-24">
-          <div className="mx-auto max-w-[680px]">
-            {n.inBreve && (
-              <section aria-label="In breve" className="mt-10 rounded-2xl border-l-4 border-orange-500 bg-navy-50 px-6 py-5">
-                <p className="eyebrow !text-orange-700">In breve</p>
-                <p className="mt-2 text-[19px] leading-relaxed font-medium text-navy">{n.inBreve}</p>
-              </section>
-            )}
-
-            {aggiornato && n.notaAggiornamento && (
-              <p className="mt-6 flex gap-2 rounded-xl bg-orange-50 px-4 py-3 text-[15px] text-orange-900">
-                <Info size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
-                <span><strong>Aggiornamento del {dataLeggibile(n.dataAggiornamento)}:</strong> {n.notaAggiornamento}</span>
-              </p>
-            )}
-
-            <div className="articolo mt-8">
-              {n.sezioni.map((s) =>
-                s.tipo === "testo" ? (
-                  <div key={s.id}>
-                    {s.titolo && <h2 id={s.id}>{s.titolo}</h2>}
-                    <div dangerouslySetInnerHTML={{ __html: s.html }} />
-                  </div>
-                ) : (
-                  <section key={s.id} className={`riquadro riquadro--${s.tipo}`}>
-                    <h2 id={s.id}>
-                      {s.tipo === "cambia" ? <TriangleAlert size={22} className="text-orange-600" aria-hidden="true" /> : <ListChecks size={22} className="text-orange-400" aria-hidden="true" />}
-                      {s.titolo}
-                    </h2>
-                    <div dangerouslySetInnerHTML={{ __html: s.html }} />
-                  </section>
-                ),
+          <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_680px_minmax(0,1fr)] xl:gap-x-12">
+            <div className="mx-auto max-w-[680px] xl:col-start-2 xl:mx-0">
+              {n.inBreve && (
+                <section aria-labelledby="in-breve" className="in-breve mt-8 md:mt-10">
+                  <h2 id="in-breve">In breve</h2>
+                  <p>{n.inBreve}</p>
+                </section>
               )}
 
-              {n.faq.length > 0 && (
-                <>
-                  <h2 id="domande-frequenti">Domande frequenti</h2>
-                  <div className="not-articolo divide-y divide-navy-200 rounded-2xl border border-navy-200">
-                    {n.faq.map((d) => (
-                      <div key={d.domanda} className="px-5 py-4">
-                        <h3 className="!mt-0 !mb-1.5 !text-[17px]">{d.domanda}</h3>
-                        <p className="!mb-0 text-[16px] text-navy-700">{d.risposta}</p>
-                      </div>
+              {aggiornato && n.notaAggiornamento && (
+                <p className="mt-6 flex gap-2 rounded-xl bg-orange-50 px-4 py-3 text-[15px] text-orange-900">
+                  <Info size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
+                  <span><strong>Aggiornamento del {dataLeggibile(n.dataAggiornamento)}:</strong> {n.notaAggiornamento}</span>
+                </p>
+              )}
+
+              {voci.length >= 3 && (
+                <details className="indice-mobile mt-4 xl:hidden">
+                  <summary>
+                    <span>In questo articolo</span>
+                    <span className="indice-mobile__conta">{voci.length} sezioni</span>
+                    <ChevronDown size={18} aria-hidden="true" className="indice-mobile__freccia" />
+                  </summary>
+                  <ol>
+                    {voci.map((v) => (
+                      <li key={v.id}><a href={`#${v.id}`}>{v.titolo}</a></li>
                     ))}
-                  </div>
-                </>
+                  </ol>
+                </details>
               )}
+
+              <div className="articolo mt-8">
+                {n.sezioni.map((s) =>
+                  s.tipo === "testo" ? (
+                    <div key={s.id}>
+                      {s.titolo && <h2 id={s.id}>{s.titolo}</h2>}
+                      <div dangerouslySetInnerHTML={{ __html: s.html }} />
+                    </div>
+                  ) : (
+                    <section key={s.id} aria-labelledby={s.id} className={`riquadro riquadro--${s.tipo}`}>
+                      <h2 id={s.id}>
+                        <span className="riquadro__icona" aria-hidden="true">
+                          {s.tipo === "cambia" ? <HardHat size={20} /> : <ListChecks size={20} />}
+                        </span>
+                        {s.titolo}
+                      </h2>
+                      <div dangerouslySetInnerHTML={{ __html: s.html }} />
+                    </section>
+                  ),
+                )}
+
+                {n.faq.length > 0 && (
+                  <section aria-labelledby="domande-frequenti">
+                    <h2 id="domande-frequenti">Domande frequenti</h2>
+                    <div className="domande">
+                      {n.faq.map((d) => (
+                        <details key={d.domanda}>
+                          <summary>
+                            <h3>{d.domanda}</h3>
+                            <Plus size={20} aria-hidden="true" className="domande__segno" />
+                          </summary>
+                          <p>{d.risposta}</p>
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {n.fonti.length > 0 && (
+                  <section aria-labelledby="fonti">
+                    <h2 id="fonti">Fonti</h2>
+                    <ol className="fonti">
+                      {n.fonti.map((f) => (
+                        <li key={f.url}>
+                          <span className="fonti__ente">{f.ente}</span>
+                          <a href={f.url} target="_blank" rel="noopener">
+                            {f.titolo}
+                            <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                )}
+              </div>
+
+              {/* Testo da CONFORMITA.md §3.2 (studio della Conformità AI e legale, 02/10/2026). */}
+              <section aria-labelledby="come-nasce" className="mt-12 rounded-2xl bg-navy-50 p-5 text-[15px] leading-relaxed text-navy-700 md:p-6">
+                <h2 id="come-nasce" className="font-display text-base font-semibold tracking-normal text-navy">Come è nato questo articolo</h2>
+                <p className="mt-2">
+                  Abbiamo preparato questo articolo con l&apos;aiuto di strumenti di intelligenza artificiale, partendo solo
+                  dagli atti ufficiali elencati nelle Fonti. Prima di pubblicarlo, una persona della Redazione Cantieri Hub
+                  l&apos;ha letto per intero e ha controllato i fatti sulle fonti. La responsabilità di quello che pubblichiamo
+                  è di Cantieri Hub.
+                </p>
+                <p className="mt-2">
+                  L&apos;articolo spiega la norma in generale: per il tuo caso chiedi al tuo commercialista, al consulente del
+                  lavoro o a un avvocato. Hai visto un errore? Scrivi a{" "}
+                  <a href="mailto:info@cantierihub.com" className="font-medium text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">info@cantierihub.com</a>:
+                  lo correggiamo e lo diciamo in cima all&apos;articolo.{" "}
+                  <Link href="/ai-trasparenza#notizie" className="font-medium text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">Come lavoriamo</Link>
+                </p>
+              </section>
+
+              <nav aria-label="Altre notizie" className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-semibold">
+                <Link href="/notizie" className="inline-flex min-h-11 items-center gap-1.5 text-navy hover:text-orange-700">
+                  <ArrowLeft size={16} aria-hidden="true" /> Tutte le notizie
+                </Link>
+                <Link href={`/notizie/${categoria.slug}`} className="inline-flex min-h-11 items-center text-navy hover:text-orange-700">
+                  Altro su {categoria.nome.toLowerCase()}
+                </Link>
+              </nav>
             </div>
 
-            {n.fonti.length > 0 && (
-              <section aria-labelledby="fonti" className="mt-12 rounded-2xl border border-navy-200 bg-navy-50 p-6">
-                <h2 id="fonti" className="font-display font-bold text-navy text-lg">Fonti</h2>
-                <ul className="mt-3 space-y-2.5">
-                  {n.fonti.map((f) => (
-                    <li key={f.url} className="text-[15px] leading-snug">
-                      <span className="font-semibold text-navy">{f.ente}</span>
-                      {" — "}
-                      <a href={f.url} target="_blank" rel="noopener" className="text-orange-700 underline underline-offset-2 hover:text-orange-800">
-                        {f.titolo}
-                        <ExternalLink size={13} className="ml-1 inline align-[-1px]" aria-hidden="true" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {voci.length >= 3 && (
+              <aside className="hidden xl:block">
+                <div className="sticky top-28 pt-10">
+                  <IndiceArticolo voci={voci} />
+                </div>
+              </aside>
             )}
-
-            {/* Testo da CONFORMITA.md §3.2 (studio della Conformità AI e legale, 02/10/2026). */}
-            <section aria-labelledby="come-nasce" className="mt-8 rounded-2xl border border-navy-200 p-6 text-[15px] leading-relaxed text-navy-600">
-              <h2 id="come-nasce" className="font-display font-bold text-navy text-base">Come è nato questo articolo</h2>
-              <p className="mt-2">
-                Abbiamo preparato questo articolo con l&apos;aiuto di strumenti di intelligenza artificiale, partendo solo
-                dagli atti ufficiali elencati nelle Fonti. Prima di pubblicarlo, una persona della Redazione Cantieri Hub
-                l&apos;ha letto per intero e ha controllato i fatti sulle fonti. La responsabilità di quello che pubblichiamo
-                è di Cantieri Hub.
-              </p>
-              <p className="mt-2">
-                L&apos;articolo spiega la norma in generale: per il tuo caso chiedi al tuo commercialista, al consulente del
-                lavoro o a un avvocato. Hai visto un errore? Scrivi a{" "}
-                <a href="mailto:info@cantierihub.com" className="underline underline-offset-2 hover:text-navy">info@cantierihub.com</a>:
-                lo correggiamo e lo diciamo in cima all&apos;articolo.{" "}
-                <Link href="/ai-trasparenza#notizie" className="underline underline-offset-2 hover:text-navy">Come lavoriamo</Link>
-              </p>
-            </section>
           </div>
         </div>
       </article>
@@ -295,7 +347,7 @@ function PaginaArticolo({ n }: { n: Notizia }) {
       {correlate.length > 0 && (
         <section className="bg-navy-50 py-12 md:py-16">
           <div className="container-main">
-            <h2 className="font-display font-extrabold text-navy text-2xl">Altre notizie su {categoria.nome.toLowerCase()}</h2>
+            <h2 className="font-display font-bold text-navy text-2xl tracking-[-0.01em]">Altre notizie su {categoria.nome.toLowerCase()}</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {correlate.map((x) => <SchedaNotizia key={x.slug} notizia={x} />)}
             </div>
@@ -305,5 +357,23 @@ function PaginaArticolo({ n }: { n: Notizia }) {
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </>
+  );
+}
+
+/** Il marchio di Cantieri Hub accanto alla firma: è la redazione che firma, non una persona. */
+function MarchioCH() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true" className="shrink-0">
+      <rect width="32" height="32" rx="8" fill="#0f172a" />
+      <rect x="6.5" y="9" width="2.8" height="14" rx="1.4" fill="#f97316" />
+      <path d="M9.3 10.5 C12 10.5 13.5 8 16.5 8 L21.5 8" stroke="#f97316" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M9.3 13.5 L21.5 13.5" stroke="#f97316" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M9.3 18.5 L21.5 18.5" stroke="#f97316" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M9.3 21.5 C12 21.5 13.5 24 16.5 24 L21.5 24" stroke="#f97316" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="23.2" cy="8" r="1.7" stroke="#f97316" strokeWidth="1.5" />
+      <circle cx="23.2" cy="13.5" r="1.7" stroke="#f97316" strokeWidth="1.5" />
+      <circle cx="23.2" cy="18.5" r="1.7" stroke="#f97316" strokeWidth="1.5" />
+      <circle cx="23.2" cy="24" r="1.7" stroke="#f97316" strokeWidth="1.5" />
+    </svg>
   );
 }

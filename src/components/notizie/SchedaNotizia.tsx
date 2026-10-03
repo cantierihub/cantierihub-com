@@ -22,7 +22,7 @@ export default function SchedaNotizia({ notizia, grande = false }: { notizia: No
         </div>
       )}
       <div className={`flex flex-col gap-3 p-6 ${grande ? "md:w-1/2 md:p-8 md:justify-center" : ""}`}>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px]">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
           <Link
             href={`/notizie/${notizia.categoria}`}
             className="relative z-10 font-semibold text-orange-700 hover:text-orange-800"

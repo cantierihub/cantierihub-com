@@ -87,12 +87,48 @@ function idDa(titolo: string): string {
   return titolo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+// marked scrive l'apostrofo come `&#39;`. Il titolo di una sezione esce dall'HTML e React lo stampa come testo: senza
+// questa decodifica il lettore vedeva \u00abdell&#39;industria\u00bb (anteprima del 03/10/2026).
+const ENTITA: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: "\u00a0" };
+export function decodifica(s: string): string {
+  return s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (tutto, e: string) => {
+    if (e[0] === "#") {
+      const n = e[1].toLowerCase() === "x" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+      return Number.isFinite(n) ? String.fromCodePoint(n) : tutto;
+    }
+    return ENTITA[e.toLowerCase()] ?? tutto;
+  });
+}
+
+const NUMERO = /^[+\-\u2212\u2013]?\s*(\u20ac\s*)?\d[\d.,\s]*(%|\u20ac|\s?punti)?$/;
+
+// Le colonne fatte solo di numeri si allineano a destra e con le cifre della stessa larghezza, cos\u00ec sul telefono si
+// confrontano a colpo d'occhio. La tabella sta in un contenitore che scorre se proprio non ci sta.
+function tabelle(html: string): string {
+  return html.replace(/<table>([\s\S]*?)<\/table>/g, (_, dentro: string) => {
+    const righe = [...dentro.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map((r) => [...r[1].matchAll(/<(t[hd])([^>]*)>([\s\S]*?)<\/\1>/g)]);
+    const colonne = Math.max(0, ...righe.map((r) => r.length));
+    const numeriche = Array.from({ length: colonne }, (_, c) => {
+      const celle = righe.flatMap((r) => (r[c] && r[c][1] === "td" ? [decodifica(r[c][3].replace(/<[^>]+>/g, "")).trim()] : []));
+      return c > 0 && celle.length > 0 && celle.every((t) => t === "" || NUMERO.test(t));
+    });
+    const nuovo = dentro.replace(/<tr>([\s\S]*?)<\/tr>/g, (_t, celle: string) => {
+      let c = -1;
+      return `<tr>${celle.replace(/<(t[hd])([^>]*)>/g, (_m, tag: string, attr: string) => {
+        c++;
+        return numeriche[c] ? `<${tag}${attr} class="num">` : `<${tag}${attr}>`;
+      })}</tr>`;
+    });
+    return `<div class="tabella" role="region" aria-label="Tabella" tabindex="0"><table>${nuovo}</table></div>`;
+  });
+}
+
 function dividi(html: string): Sezione[] {
-  const pezzi = html.split(/<h2[^>]*>([\s\S]*?)<\/h2>/);
+  const pezzi = tabelle(html).split(/<h2[^>]*>([\s\S]*?)<\/h2>/);
   const sezioni: Sezione[] = [];
   if (pezzi[0].trim()) sezioni.push({ id: "apertura", titolo: null, html: pezzi[0], tipo: "testo" });
   for (let i = 1; i < pezzi.length; i += 2) {
-    const titolo = pezzi[i].replace(/<[^>]+>/g, "").trim();
+    const titolo = decodifica(pezzi[i].replace(/<[^>]+>/g, "")).trim();
     const t = titolo.toLowerCase();
     const tipo = t.startsWith("cosa cambia") ? "cambia" : t.startsWith("cosa fare") ? "fare" : "testo";
     sezioni.push({ id: idDa(titolo), titolo, html: pezzi[i + 1] ?? "", tipo });

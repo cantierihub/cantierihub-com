@@ -545,34 +545,163 @@
 }
 
 /* ── Notizie: la pagina dell'articolo ─────────────────────────────────────────
-   Chi legge ha 35-65 anni e spesso legge dal telefono in cantiere: corpo 18px, righe da ~68 caratteri,
-   contrasto pieno (navy su bianco), sottotitoli grossi, link sempre sottolineati. */
-.articolo { font-size: 18px; line-height: 1.75; color: #1e293b; }
-.articolo p { margin: 0 0 1.15em; }
+   Chi legge ha 35-65 anni e spesso legge dal telefono in cantiere: corpo 17-18px, righe da ~68 caratteri,
+   contrasto pieno (navy su bianco), sottotitoli grossi, link sempre sottolineati.
+   ⛔ Tailwind toglie i pallini e i numeri agli elenchi (preflight): qui si rimettono a mano, altrimenti un elenco
+   sembra una fila di paragrafi rientrati (anteprima del 03/10/2026). */
+.articolo { font-size: 17px; line-height: 1.7; color: #1e293b; }
+@media (min-width: 768px) { .articolo { font-size: 18px; line-height: 1.75; } }
+.articolo p { margin: 0 0 1em; }
+.articolo > div > div > :last-child { margin-bottom: 0; }
+
 .articolo h2 {
-  font-family: var(--font-display); font-weight: 800; color: #0f172a;
-  font-size: clamp(1.35rem, 2.4vw, 1.7rem); line-height: 1.25; letter-spacing: -0.01em;
-  margin: 2.2em 0 0.7em; scroll-margin-top: 96px;
+  font-family: var(--font-display); font-weight: 700; color: #0f172a;
+  font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.75rem); line-height: 1.25; letter-spacing: -0.01em;
+  margin: 1.9em 0 0.6em; padding-top: 1.1em; border-top: 1px solid #e2e8f0;
+  scroll-margin-top: 88px;
 }
-.articolo h3 { font-family: var(--font-display); font-weight: 700; color: #0f172a; font-size: 1.15rem; margin: 1.6em 0 0.5em; }
-.articolo ul, .articolo ol { margin: 0 0 1.2em; padding-left: 1.3em; }
-.articolo li { margin: 0.35em 0; }
+.articolo > div:first-child > h2:first-child { margin-top: 0.4em; padding-top: 0; border-top: 0; }
+.articolo h3 {
+  font-family: var(--font-display); font-weight: 600; color: #0f172a;
+  font-size: 1.125rem; line-height: 1.35; letter-spacing: -0.005em; margin: 1.6em 0 0.4em;
+}
+
+.articolo ul, .articolo ol { margin: 0 0 1.1em; padding: 0; }
+.articolo ul { list-style: disc; padding-left: 1.3em; }
+.articolo ul li { padding-left: 0.2em; margin: 0.45em 0; }
 .articolo ul li::marker { color: #f97316; }
-.articolo ol li::marker { color: #ea580c; font-weight: 700; }
+.articolo ol { list-style: none; counter-reset: passo; }
+.articolo ol > li { counter-increment: passo; position: relative; padding-left: 2.6rem; margin: 0.8em 0; }
+.articolo ol > li::before {
+  content: counter(passo); position: absolute; left: 0; top: 0.1em;
+  width: 1.75rem; height: 1.75rem; border-radius: 9999px;
+  display: grid; place-items: center;
+  font: 700 15px/1 var(--font-display); color: #fff; background: #0f172a;
+}
+
 .articolo a { color: #c2410c; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.articolo a:hover { color: #9a3412; }
+.articolo a:hover { color: #9a3412; text-decoration-thickness: 2px; }
 .articolo strong { color: #0f172a; font-weight: 700; }
-.articolo blockquote { margin: 1.4em 0; padding: 0.2em 0 0.2em 1.1em; border-left: 3px solid #fdba74; color: #334155; font-style: italic; }
-.articolo table { width: 100%; border-collapse: collapse; margin: 1.4em 0; font-size: 16px; display: block; overflow-x: auto; }
-.articolo th, .articolo td { border-bottom: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; vertical-align: top; }
-.articolo th { background: #f8fafc; font-weight: 700; color: #0f172a; white-space: nowrap; }
+.articolo blockquote { margin: 1.4em 0; padding: 0.9em 1.1em; border-radius: 12px; background: #f8fafc; color: #334155; font-style: italic; }
 .articolo img { max-width: 100%; height: auto; border-radius: 12px; }
 
-/* I due riquadri che fanno il valore dell'articolo */
-.riquadro { border-radius: 16px; padding: 22px 24px 8px; margin: 2em 0; }
-.riquadro h2 { margin-top: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+/* Un paragrafo tutto in corsivo (es. «*Fonte: ISTAT…*» sotto una tabella) è una nota: piccola e discreta. */
+.articolo p:has(> em:only-child) { font-size: 14px; line-height: 1.5; color: #475569; margin-top: -0.25em; }
+.articolo p:has(> em:only-child) em { font-style: normal; }
+
+/* Tabelle: stanno nello schermo del telefono (le intestazioni vanno a capo), le colonne di numeri si allineano a
+   destra; se proprio non ci stanno, scorre il riquadro e non la pagina. */
+.articolo .tabella {
+  margin: 1.4em 0 0.9em; border: 1px solid #e2e8f0; border-radius: 14px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.articolo .tabella:focus-visible { outline: 2px solid #f97316; outline-offset: 2px; }
+.articolo table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.4; }
+@media (min-width: 768px) { .articolo table { font-size: 16px; } }
+.articolo th, .articolo td { padding: 11px 10px; text-align: left; vertical-align: top; }
+.articolo th:first-child, .articolo td:first-child { padding-left: 14px; }
+.articolo th:last-child, .articolo td:last-child { padding-right: 14px; }
+@media (min-width: 768px) { .articolo th, .articolo td { padding-inline: 14px; } }
+.articolo th {
+  background: #f8fafc; color: #334155; font-weight: 600; font-size: 14px; line-height: 1.3;
+  border-bottom: 1px solid #e2e8f0; text-wrap: balance; vertical-align: bottom;
+}
+.articolo tbody tr + tr td { border-top: 1px solid #f1f5f9; }
+.articolo td:first-child { color: #0f172a; min-width: 8.5em; }
+.articolo .num {
+  text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum'; font-weight: 600; color: #0f172a;
+}
+.articolo th.num { white-space: normal; font-weight: 600; color: #334155; }
+
+/* «In breve»: la risposta che regge da sola. */
+.in-breve { border-radius: 16px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 18px 20px 20px; }
+@media (min-width: 768px) { .in-breve { padding: 22px 26px 24px; } }
+.in-breve h2 {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 15px; font-weight: 600; letter-spacing: 0; color: #c2410c;
+}
+.in-breve h2::before { content: ""; width: 8px; height: 8px; border-radius: 9999px; background: #f97316; }
+.in-breve p { margin-top: 8px; font-size: 18px; line-height: 1.6; color: #0f172a; }
+@media (min-width: 768px) { .in-breve p { font-size: 19px; } }
+
+/* L'indice su telefono e tablet: chiuso, si apre con un tocco. */
+.indice-mobile { border: 1px solid #e2e8f0; border-radius: 14px; }
+.indice-mobile summary {
+  display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 16px;
+  cursor: pointer; list-style: none; font-weight: 600; color: #0f172a; font-size: 16px;
+}
+.indice-mobile summary::-webkit-details-marker { display: none; }
+.indice-mobile__conta { font-weight: 500; font-size: 14px; color: #475569; }
+.indice-mobile__freccia { margin-left: auto; color: #475569; transition: transform 200ms var(--ease-out); }
+.indice-mobile[open] .indice-mobile__freccia { transform: rotate(180deg); }
+.indice-mobile ol { border-top: 1px solid #e2e8f0; padding: 6px 0; }
+.indice-mobile a {
+  display: block; padding: 10px 16px; font-size: 15px; line-height: 1.4; color: #334155;
+}
+.indice-mobile a:hover { color: #c2410c; background: #fff7ed; }
+
+/* L'indice a lato sugli schermi larghi. */
+.indice-laterale a {
+  display: block; padding: 6px 0 6px 14px; margin-left: -1px; border-left: 2px solid #e2e8f0;
+  font-size: 14px; line-height: 1.4; color: #475569; transition: color 150ms, border-color 150ms;
+}
+.indice-laterale a:hover { color: #0f172a; }
+.indice-laterale a[aria-current] { color: #0f172a; font-weight: 600; border-left-color: #f97316; }
+
+/* I due riquadri che fanno il valore dell'articolo. */
+.riquadro { border-radius: 18px; padding: 22px 20px 6px; margin: 2.4em 0; }
+@media (min-width: 768px) { .riquadro { padding: 28px 30px 10px; } }
+.riquadro h2 {
+  margin: 0 0 0.8em; padding: 0; border: 0;
+  display: flex; align-items: center; gap: 12px; font-size: 1.3rem; line-height: 1.25;
+}
+.riquadro__icona {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+}
 .riquadro--cambia { background: #fff7ed; border: 1px solid #fed7aa; }
+.riquadro--cambia .riquadro__icona { background: #ffedd5; color: #c2410c; }
 .riquadro--fare { background: #0f172a; color: #e2e8f0; }
 .riquadro--fare h2, .riquadro--fare strong { color: #fff; }
+.riquadro--fare .riquadro__icona { background: rgba(249,115,22,0.16); color: #fb923c; }
 .riquadro--fare a { color: #fdba74; }
-.riquadro--fare ol li::marker, .riquadro--fare ul li::marker { color: #fb923c; }
+.riquadro--fare a:hover { color: #fed7aa; }
+.riquadro--fare ol { margin-bottom: 0.4em; }
+.riquadro--fare ol > li { margin: 0; padding-top: 0.85em; padding-bottom: 0.85em; }
+.riquadro--fare ol > li + li { border-top: 1px solid rgba(255,255,255,0.09); }
+.riquadro--fare ol > li::before { background: #f97316; top: 0.95em; }
+.riquadro--fare ul li::marker { color: #fb923c; }
+/* La frase dopo i passi (l'eventuale aggancio a un prodotto) si stacca dai consigli: è un'altra cosa. */
+.riquadro--fare ol + p {
+  margin-top: 0.4em; padding-top: 1em; border-top: 1px solid rgba(255,255,255,0.14);
+  font-size: 16px; line-height: 1.6; color: #cbd5e1;
+}
+
+/* Domande frequenti: si apre quella che serve. */
+.domande { border-top: 1px solid #e2e8f0; }
+.domande details { border-bottom: 1px solid #e2e8f0; }
+.domande summary {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; cursor: pointer; list-style: none;
+}
+.domande summary::-webkit-details-marker { display: none; }
+.domande summary h3 { margin: 0; flex: 1; font-size: 17px; line-height: 1.4; }
+.domande summary:hover h3 { color: #c2410c; }
+.domande__segno { flex-shrink: 0; margin-top: 1px; color: #f97316; transition: transform 200ms var(--ease-out); }
+.domande details[open] .domande__segno { transform: rotate(45deg); }
+.domande details p { margin: -4px 0 18px; font-size: 16px; line-height: 1.65; color: #334155; }
+
+/* Fonti: l'ente sopra, l'atto sotto, cliccabile. */
+.articolo .fonti { counter-reset: none; }
+.articolo .fonti > li { padding-left: 0; margin: 0; padding-block: 12px; }
+.articolo .fonti > li + li { border-top: 1px solid #f1f5f9; }
+.articolo .fonti > li::before { content: none; }
+.fonti__ente { display: block; font-size: 14px; font-weight: 600; color: #475569; }
+.articolo .fonti a {
+  display: inline; font-size: 16px; line-height: 1.5; color: #0f172a;
+  text-decoration-color: #cbd5e1; text-decoration-thickness: 1px;
+}
+.articolo .fonti a:hover { color: #c2410c; text-decoration-color: currentColor; }
+
+@media (prefers-reduced-motion: reduce) {
+  .indice-mobile__freccia, .domande__segno, .indice-laterale a { transition: none; }
+}
