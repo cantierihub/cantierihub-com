@@ -20,7 +20,7 @@ import {
 const WA_EDILCHAT = waLink("Ciao! Vorrei provare EdilChat: come ottengo le credenziali?");
 
 export const metadata: Metadata = {
-  title: "EdilChat · L'assistente AI per chi costruisce in Italia",
+  title: "EdilChat: l'assistente AI per l'edilizia",
   description:
     "Il ChatGPT verticale sull'edilizia italiana: normative, prezzari, capitolati e operatività, con le fonti sempre citate. Knowledge base verticale in continua espansione.",
   openGraph: {

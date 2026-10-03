@@ -22,7 +22,20 @@ const BIO_SOCIAL: Record<string, string> = {
   yt: "youtube",
 };
 
+// Header di sicurezza su tutte le pagine (audit SEO 01/10/2026: c'era solo HSTS di Vercel). Niente
+// Content-Security-Policy per ora: il sito carica script di terzi (analytics, tracciamento Salesflow) e una CSP
+// sbagliata li romperebbe in silenzio; va scritta a parte, provandola pagina per pagina.
+const HEADER_SICUREZZA = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+];
+
 const nextConfig: NextConfig = {
+  async headers() {
+    return [{ source: "/:path*", headers: HEADER_SICUREZZA }];
+  },
   async redirects() {
     return [
       ...Object.entries(BIO_SOCIAL).map(([scorciatoia, social]) => ({

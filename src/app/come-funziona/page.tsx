@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Come funziona Cantieri Hub · Dalla demo all'uso quotidiano",
+  title: "Come funziona: dalla demo all'uso quotidiano",
   description:
     "Il percorso completo per iniziare con Cantieri Hub: demo coi tuoi file reali, onboarding guidato con project manager dedicato e supporto umano diretto ogni giorno.",
   alternates: { canonical: "/come-funziona" },

@@ -15,6 +15,8 @@ interface FAQSectionProps {
   title?: string;
   subtitle?: string;
   showCTA?: boolean;
+  /** Schema FAQPage con le risposte. Spento solo dove la pagina ne ha già uno suo (/faq). */
+  conSchema?: boolean;
 }
 
 const defaultFAQs: FAQItem[] = [
@@ -61,11 +63,11 @@ function FAQAccordionItem({ item, isOpen, onToggle, id }: { item: FAQItem; isOpe
           {isOpen ? <Minus size={14} /> : <Plus size={14} />}
         </span>
       </button>
-      {isOpen && (
-        <div id={`${id}-panel`} role="region" aria-labelledby={`${id}-btn`} className="pb-5">
-          <p className="text-navy-500 text-sm leading-relaxed">{item.a}</p>
-        </div>
-      )}
+      {/* La risposta sta sempre nell'HTML, chiusa solo a vista (audit SEO 01/10/2026): prima veniva montata al clic,
+          e per Google e per le AI le risposte non esistevano. */}
+      <div id={`${id}-panel`} role="region" aria-labelledby={`${id}-btn`} hidden={!isOpen} className="pb-5">
+        <p className="text-navy-500 text-sm leading-relaxed">{item.a}</p>
+      </div>
     </div>
   );
 }
@@ -75,11 +77,24 @@ export default function FAQSection({
   title = "Domande frequenti",
   subtitle = "Tutto quello che vuoi sapere prima di prenotare una demo.",
   showCTA = true,
+  conSchema = true,
 }: FAQSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="section-padding bg-white">
+      {conSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: items.map((d) => ({ "@type": "Question", name: d.q, acceptedAnswer: { "@type": "Answer", text: d.a } })),
+            }),
+          }}
+        />
+      )}
       <div className="container-main">
         <Reveal>
           <div className="text-center mb-12">

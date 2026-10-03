@@ -67,7 +67,9 @@ export const metadata: Metadata = {
     description:
       "Computi metrici, preventivi e analisi prezzi per imprese edili italiane.",
   },
-  robots: { index: true, follow: true },
+  // Niente `robots: index, follow` qui: è già il comportamento normale, e dichiararlo nel layout lo faceva comparire
+  // anche nella pagina 404 accanto al `noindex` che Next aggiunge da solo (due istruzioni in contraddizione,
+  // audit SEO del 01/10/2026). Le pagine che non vanno indicizzate lo dicono da sole.
 };
 
 export const viewport = {
@@ -83,16 +85,33 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Cantieri Hub",
-              url: "https://cantierihub.com",
-              logo: "https://cantierihub.com/images/logo-color.png",
-              description:
-                "Software con intelligenza artificiale per imprese edili italiane: computi metrici, preventivi, analisi prezzi e assistente normativo.",
-              areaServed: "IT",
-            }),
+            // Organization + WebSite (audit SEO 01/10/2026): per Google e per le AI l'entità «Cantieri Hub» deve
+            // essere una sola, con i suoi profili veri (sameAs). Profili verificati il 02/10.
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "@id": "https://cantierihub.com/#organizzazione",
+                name: "Cantieri Hub",
+                url: "https://cantierihub.com",
+                logo: "https://cantierihub.com/images/logo-color.png",
+                description:
+                  "Software con intelligenza artificiale per imprese edili italiane: computi metrici, preventivi, analisi prezzi e assistente normativo.",
+                areaServed: "IT",
+                foundingDate: "2025",
+                email: "info@cantierihub.com",
+                sameAs: ["https://www.youtube.com/@CantieriHub", "https://www.instagram.com/cantierihub/"],
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "@id": "https://cantierihub.com/#sito",
+                name: "Cantieri Hub",
+                url: "https://cantierihub.com",
+                inLanguage: "it-IT",
+                publisher: { "@id": "https://cantierihub.com/#organizzazione" },
+              },
+            ]),
           }}
         />
         <ScrollProgress />

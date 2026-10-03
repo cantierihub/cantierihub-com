@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Prenota la tua demo gratuita · Cantieri Hub",
+  title: "Prenota la tua demo gratuita",
   description:
     "30 minuti, dal vivo, sui tuoi file reali. Ti mostriamo come Cantieri Hub lavora il tuo computo metrico, scompone i prezzi con l'AI e ti restituisce un PDF pronto. Nessun impegno.",
   alternates: { canonical: "/demo" },

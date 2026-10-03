@@ -14,7 +14,7 @@ import {
 
 export const metadata: Metadata = {
   alternates: { canonical: "/risorse" },
-  title: "Risorse per imprese edili · Guide su preventivi, computo metrico e analisi prezzi",
+  title: "Risorse per imprese edili: guide e strumenti",
   description:
     "Il punto di partenza per chi costruisce: guide pratiche gratuite su preventivi, computo metrico e analisi prezzi, più nuovi approfondimenti in arrivo.",
   openGraph: {

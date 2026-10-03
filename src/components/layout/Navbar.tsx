@@ -16,6 +16,7 @@ const navLinks = [
   { label: "Computatore AI", href: "/computatore" },
   { label: "Analisi Prezzi AI", href: "/analisi-prezzi" },
   { label: "EdilChat", href: "/edilchat" },
+  { label: "Notizie", href: "/notizie" },
   { label: "FAQ", href: "/faq" },
   { label: "Chi Siamo", href: "/chi-siamo" },
   { label: "Contatti", href: "/contatti" },

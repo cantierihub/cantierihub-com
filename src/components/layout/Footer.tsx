@@ -28,6 +28,7 @@ const linkGroups = [
   {
     title: "Risorse",
     links: [
+      { label: "Notizie", href: "/notizie" },
       { label: "Guide gratuite", href: "/guide" },
       { label: "Calcola preventivo", href: "/calcola" },
       { label: "Prenota una demo", href: "/demo" },
