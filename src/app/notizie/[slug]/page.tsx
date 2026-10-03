@@ -165,14 +165,14 @@ function PaginaArticolo({ n }: { n: Notizia }) {
         <header className="container-main pt-8 md:pt-14">
           <div className="mx-auto max-w-[680px]">
             <nav aria-label="Percorso" className="flex flex-wrap items-center gap-1 text-sm text-navy-500">
-              <Link href="/notizie" className="py-2 hover:text-navy">Notizie</Link>
+              <Link href="/notizie" className="inline-flex min-h-11 items-center hover:text-navy">Notizie</Link>
               <ChevronRight size={14} aria-hidden="true" />
-              <Link href={`/notizie/${categoria.slug}`} className="py-2 font-semibold text-orange-700 hover:text-orange-800">
+              <Link href={`/notizie/${categoria.slug}`} className="inline-flex min-h-11 items-center font-semibold text-orange-700 hover:text-orange-800">
                 {categoria.nome}
               </Link>
             </nav>
 
-            <h1 className="mt-3 font-display font-bold text-navy text-[2rem] leading-[1.15] tracking-[-0.02em] md:text-[2.75rem] md:leading-[1.1]">
+            <h1 className="mt-2 font-display font-bold text-navy text-[2rem] leading-[1.15] tracking-[-0.02em] md:text-[2.75rem] md:leading-[1.1]">
               {n.titolo}
             </h1>
             <p className="mt-4 text-[1.1875rem] leading-relaxed text-navy-700 md:text-xl">{n.descrizione}</p>
