@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { portaNelCrm } from "@/lib/salesflow";
+import { articoloValido, ETICHETTA_NOTIZIE, messaggioConArticolo } from "@/lib/funnel";
 
 export const runtime = "nodejs";
 
@@ -22,7 +23,9 @@ export async function POST(req: NextRequest) {
     const azienda = String(body.azienda ?? "").trim();
     const email = String(body.email ?? "").trim();
     const telefono = String(body.telefono ?? "").trim();
-    const messaggio = String(body.messaggio ?? "").trim();
+    // Funnel delle Notizie (03/10/2026): lo slug dell'articolo da cui arriva, se c'è. Vedi `lib/funnel.ts`.
+    const articolo = articoloValido(body.articolo);
+    const messaggio = messaggioConArticolo(String(body.messaggio ?? "").trim(), articolo);
     const prodotto = String(body.prodotto ?? "").trim().slice(0, 80);
     const motivazione = String(body.motivazione ?? "").trim().slice(0, 120);
     const canale = String(body.canale ?? "").trim().slice(0, 60);
@@ -64,6 +67,7 @@ export async function POST(req: NextRequest) {
     const crm = await portaNelCrm({
       nome, cognome, azienda, email, telefono, prodotto, motivazione, canale, messaggio,
       utmSource, utmMedium, utmCampagna, inviatoIl,
+      etichetteExtra: articolo ? [ETICHETTA_NOTIZIE] : [],
     });
     if (!crm.ok) console.error("[contatti] CRM:", crm.errore);
     const rigaCrm = crm.ok
@@ -129,7 +133,7 @@ export async function POST(req: NextRequest) {
       from: FROM,
       to: DEST,
       replyTo: email,
-      subject: `Nuovo contatto dal sito · ${prodotto || "servizio non indicato"} · ${nomeCompleto}`,
+      subject: `Nuovo contatto dal sito${articolo ? " (dalle Notizie)" : ""} · ${prodotto || "servizio non indicato"} · ${nomeCompleto}`,
       text,
       html,
     });

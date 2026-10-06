@@ -26,18 +26,30 @@ chi tocca il sito, persone o agenti: si parte da qui, non si inventa.
   in griglia quando basta un elenco.
 
 ## La pagina articolo (`/notizie/<slug>`)
-Ordine fisso, dall'alto: percorso (Notizie › categoria) · titolo · descrizione · firma col marchio («Redazione
-Cantieri Hub», data, minuti) · nota AI · copertina (a tutto schermo su telefono, dichiarata AI) · **In breve** ·
-indice (chiuso su telefono, fisso a destra da 1280 px) · corpo · **Cosa cambia per la tua impresa** (riquadro
-arancio chiaro) · **Cosa fare adesso** (riquadro navy, passi numerati in cerchi arancio; l'eventuale aggancio a un
-prodotto sta sotto una riga, separato dai consigli) · Domande frequenti (a fisarmonica) · Fonti (ente sopra, atto
-sotto) · «Come è nato questo articolo» · link a tutte le notizie.
+Ordine fisso, dall'alto (aggiornato il 03/10 sera, CAN-37 e funnel delle Notizie):
+percorso (Notizie › categoria) · titolo · descrizione · firma col marchio («Redazione Cantieri Hub», link a
+`/ai-trasparenza#notizie`, data, minuti) · copertina (a tutto schermo su telefono; l'immagine AI porta **dentro il
+file** l'icona UE «AI GENERATED» a 1/5 della larghezza, niente didascalia) · **In breve** · indice (chiuso su telefono,
+fisso a destra da 1280 px) · corpo · **Cosa cambia per la tua impresa** (riquadro arancio chiaro) · **Cosa fare
+adesso** (riquadro navy, passi numerati in cerchi arancio) · **blocco «Pubblicità»** (dopo l'ultima sezione; bordo
+tratteggiato, etichetta scritta, titolo in Inter; testi fissi in `src/data/funnelNotizie.ts`; si spegne con
+`prodotto: nessuno`) · Domande frequenti (a fisarmonica) · Fonti (ente sopra, atto sotto) · **«Come è nato questo
+articolo»** (l'unica nota sull'AI della pagina, con la frase sulla copertina) · link a tutte le notizie.
+
+⛔ In alto niente nota sull'AI (si riaccende solo con `nota_ai_in_alto: true`) e nel testo nessun prodotto: il richiamo
+commerciale è il blocco, e solo lui. Il blocco non deve somigliare ai riquadri della redazione.
+
+## Il funnel delle Notizie (`/demo/<prodotto>`)
+Articolo → blocco «Pubblicità» → `/demo/<prodotto>?da=<slug>` (cosa fa, il limite, la candidatura, come funziona, le
+domande; noindex) → `/grazie?da=<slug>` («Candidatura ricevuta»). Il pulsante del funnel è `.btn-funnel`: arancio del
+marchio con il testo **navy** (il bianco sull'arancio fa 2,8:1 e al sole non si legge). Sulle `/demo/*` il pulsante del
+menu porta al modulo della pagina e il piè di pagina non ha la colonna «Inizia adesso».
 
 Il Markdown dell'articolo diventa così:
 | Markdown | Sulla pagina |
 |---|---|
 | `## Domanda?` | sottotitolo con una riga sottile sopra, voce dell'indice |
-| `## Cosa cambia…` / `## Cosa fare…` | i due riquadri |
+| `## Cosa cambia…` / `## Cosa fare…` | i due riquadri (il blocco «Pubblicità» lo aggiunge il sito dopo l'ultima sezione) |
 | `- voce` | elenco col pallino arancio |
 | `1. passo` | passi numerati in cerchi |
 | tabella | riquadro con bordo; le colonne di soli numeri si allineano a destra, cifre di larghezza fissa |

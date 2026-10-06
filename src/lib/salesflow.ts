@@ -46,6 +46,11 @@ const CAMPO = {
 const ETICHETTA_PRODOTTO: Record<string, string> = {
   Preventivatore: "preventivatore",
   Computatore: "computatore",
+  // 03/10/2026: etichetta nuova, per filtrare i lead dell'Analisi Prezzi (prima finivano in «Altro»). Nessun flusso
+  // parte da lei: il benvenuto a 15 email parte dalla creazione del contatto ed è del Preventivatore, e ne esce solo
+  // chi ha «computatore» (vault, commerciale/flussi-email-crm.md). Quindi un lead dell'Analisi Prezzi riceve il
+  // benvenuto del Preventivatore, come oggi chi sceglie «Altro».
+  "Analisi Prezzi": "analisi-prezzi",
 };
 
 export type LeadSito = {
@@ -62,6 +67,11 @@ export type LeadSito = {
   utmMedium: string;
   utmCampagna: string;
   inviatoIl: string;
+  /**
+   * Etichette in più, oltre a quella del prodotto: «notizie» per chi arriva dagli articoli (03/10/2026). Si
+   * aggiungono, non sostituiscono: valgono le stesse regole dell'etichetta del prodotto.
+   */
+  etichetteExtra?: string[];
 };
 
 export type EsitoCrm = { ok: true; contactId: string; nuovo: boolean } | { ok: false; errore: string };
@@ -108,7 +118,9 @@ export async function portaNelCrm(lead: LeadSito): Promise<EsitoCrm> {
     { id: CAMPO.utmCampaign, field_value: lead.utmCampagna },
     { id: CAMPO.formInviatoIl, field_value: lead.inviatoIl },
   ].filter((c) => c.field_value);
-  const etichetta = ETICHETTA_PRODOTTO[lead.prodotto];
+  const etichette = [ETICHETTA_PRODOTTO[lead.prodotto], ...(lead.etichetteExtra ?? [])].filter(
+    (e): e is string => Boolean(e),
+  );
 
   try {
     const duplicato = await chiama(
@@ -125,7 +137,7 @@ export async function portaNelCrm(lead: LeadSito): Promise<EsitoCrm> {
       if (!esistente.phone && lead.telefono) aggiornamento.phone = lead.telefono;
       if (!esistente.companyName && lead.azienda) aggiornamento.companyName = lead.azienda;
       await chiama("PUT", `contacts/${esistente.id}`, aggiornamento);
-      if (etichetta) await chiama("POST", `contacts/${esistente.id}/tags`, { tags: [etichetta] });
+      if (etichette.length) await chiama("POST", `contacts/${esistente.id}/tags`, { tags: etichette });
       return { ok: true, contactId: esistente.id, nuovo: false };
     }
 
@@ -142,7 +154,7 @@ export async function portaNelCrm(lead: LeadSito): Promise<EsitoCrm> {
     try {
       // Creato già con l'etichetta: così un lead del Computatore non entra, nemmeno per un
       // istante, nel benvenuto del Preventivatore.
-      const creato = await chiama("POST", "contacts/", { ...nuovo, tags: etichetta ? [etichetta] : [] });
+      const creato = await chiama("POST", "contacts/", { ...nuovo, tags: etichette });
       const id = creato?.contact?.id;
       if (!id) throw new Error("contatto creato ma senza id");
       return { ok: true, contactId: id, nuovo: true };
@@ -153,7 +165,7 @@ export async function portaNelCrm(lead: LeadSito): Promise<EsitoCrm> {
       const unito = await chiama("POST", "contacts/upsert", nuovo);
       const id = unito?.contact?.id;
       if (!id) throw new Error("upsert riuscito ma senza id del contatto");
-      if (etichetta) await chiama("POST", `contacts/${id}/tags`, { tags: [etichetta] });
+      if (etichette.length) await chiama("POST", `contacts/${id}/tags`, { tags: etichette });
       return { ok: true, contactId: id, nuovo: Boolean(unito?.new) };
     }
   } catch (errore) {

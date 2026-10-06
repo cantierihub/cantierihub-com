@@ -235,7 +235,8 @@ export default function CandidaturaForm() {
       </button>
 
       <p className="text-xs text-gray-400 text-center">
-        Candidandoti accetti la nostra{" "}
+        {/* Un'informativa, non un consenso: la base è la candidatura stessa (lett. b), come dice /privacy. */}
+        Usiamo i tuoi dati per valutare la tua candidatura. Come li trattiamo:{" "}
         <a href="/privacy" className="text-orange-500 hover:underline">
           Privacy Policy
         </a>

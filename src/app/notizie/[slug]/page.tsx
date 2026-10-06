@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ChevronDown, ChevronRight, ExternalLink, HardHat, Info, ListChecks, Plus } from "lucide-react";
 import IndiceArticolo from "@/components/notizie/IndiceArticolo";
+import BloccoProdotto from "@/components/notizie/BloccoProdotto";
 import TestataNotizie from "@/components/notizie/TestataNotizie";
 import SchedaNotizia from "@/components/notizie/SchedaNotizia";
 import {
@@ -152,6 +154,10 @@ function PaginaArticolo({ n }: { n: Notizia }) {
       : []),
   ];
 
+  // Il blocco «Pubblicità» va SEMPRE dopo l'ultima sezione del corpo (di regola «Cosa fare adesso»), mai in mezzo al
+  // testo della redazione: un sottotitolo a domanda come «Cosa fare se…» a metà articolo non lo deve attirare lì.
+  const indiceBlocco = n.sezioni.length - 1;
+
   // L'indice: le domande del corpo, poi le domande frequenti e le fonti.
   const voci = [
     ...n.sezioni.filter((s) => s.titolo).map((s) => ({ id: s.id, titolo: s.titolo! })),
@@ -180,7 +186,11 @@ function PaginaArticolo({ n }: { n: Notizia }) {
             <div className="mt-6 flex items-center gap-3">
               <MarchioCH />
               <div className="min-w-0 text-sm leading-snug">
-                <p className="font-semibold text-navy">{n.autore}</p>
+                {/* La firma porta a chi siamo e a come lavoriamo (CONFORMITA §3.2, 03/10: con la riga sull'AI in alto
+                    se n'è andato il suo «Come lavoriamo»; Google chiede che la firma porti a chi scrive). */}
+                <Link href="/ai-trasparenza#notizie" className="-my-3 inline-block py-3 font-semibold text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">
+                  {n.autore}
+                </Link>
                 <p className="mt-0.5 text-navy-600">
                   <time dateTime={n.dataPubblicazione}>{dataLeggibile(n.dataPubblicazione)}</time>
                   {aggiornato && (
@@ -195,14 +205,17 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                 </p>
               </div>
             </div>
-            {/* AI Act art. 50: la dichiarazione va «all'inizio» del testo (linee guida della Commissione, punto 143).
-                Vault: sito-seo/CONFORMITA.md §3.2. */}
-            <p className="mt-4 border-t border-navy-200 pt-3 text-sm leading-snug text-navy-600">
-              Scritto con l&apos;aiuto dell&apos;intelligenza artificiale e controllato da una persona.{" "}
-              <Link href="/ai-trasparenza#notizie" className="whitespace-nowrap font-medium text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">
-                Come lavoriamo
-              </Link>
-            </p>
+            {/* Dal 03/10 la nota sull'AI è una sola, in fondo (Raffaele; CONFORMITA §3.2). Questa riga resta spenta e si
+                riaccende con `nota_ai_in_alto: true` se un articolo esce senza la lettura completa di Raffaele: allora
+                l'esenzione dell'AI Act cade e la dichiarazione va «all'inizio» del testo (linee guida, punto 143). */}
+            {n.notaAiInAlto && (
+              <p className="mt-4 border-t border-navy-200 pt-3 text-sm leading-snug text-navy-600">
+                Scritto con l&apos;aiuto dell&apos;intelligenza artificiale.{" "}
+                <Link href="/ai-trasparenza#notizie" className="whitespace-nowrap font-medium text-navy underline decoration-navy-300 underline-offset-[3px] hover:decoration-navy">
+                  Come lavoriamo
+                </Link>
+              </p>
+            )}
           </div>
         </header>
 
@@ -211,10 +224,8 @@ function PaginaArticolo({ n }: { n: Notizia }) {
             <div className="relative aspect-[16/9] overflow-hidden bg-navy-100 md:rounded-2xl">
               <Image src={n.immagine} alt={n.immagineAlt ?? ""} fill priority sizes="(max-width: 1000px) 100vw, 960px" style={{ objectFit: "cover" }} />
             </div>
-            {/* Un'immagine fotorealistica fatta con l'AI va dichiarata a vista (AI Act art. 50, linee guida punto 117). */}
-            {n.immagineAi && (
-              <figcaption className="mt-2 px-6 text-sm text-navy-600 md:px-0">Immagine generata con l&apos;intelligenza artificiale</figcaption>
-            )}
+            {/* Niente didascalia dal 03/10: l'immagine AI è dichiarata dall'icona UE «AI GENERATED» dentro il file, a
+                1/5 della larghezza perché si legga dal telefono (CONFORMITA §3.3), e dal riquadro in fondo. */}
           </figure>
         )}
 
@@ -251,24 +262,29 @@ function PaginaArticolo({ n }: { n: Notizia }) {
               )}
 
               <div className="articolo mt-8">
-                {n.sezioni.map((s) =>
-                  s.tipo === "testo" ? (
-                    <div key={s.id}>
-                      {s.titolo && <h2 id={s.id}>{s.titolo}</h2>}
-                      <div dangerouslySetInnerHTML={{ __html: s.html }} />
-                    </div>
-                  ) : (
-                    <section key={s.id} aria-labelledby={s.id} className={`riquadro riquadro--${s.tipo}`}>
-                      <h2 id={s.id}>
-                        <span className="riquadro__icona" aria-hidden="true">
-                          {s.tipo === "cambia" ? <HardHat size={20} /> : <ListChecks size={20} />}
-                        </span>
-                        {s.titolo}
-                      </h2>
-                      <div dangerouslySetInnerHTML={{ __html: s.html }} />
-                    </section>
-                  ),
-                )}
+                {n.sezioni.map((s, i) => (
+                  <Fragment key={s.id}>
+                    {s.tipo === "testo" ? (
+                      <div>
+                        {s.titolo && <h2 id={s.id}>{s.titolo}</h2>}
+                        <div dangerouslySetInnerHTML={{ __html: s.html }} />
+                      </div>
+                    ) : (
+                      <section aria-labelledby={s.id} className={`riquadro riquadro--${s.tipo}`}>
+                        <h2 id={s.id}>
+                          <span className="riquadro__icona" aria-hidden="true">
+                            {s.tipo === "cambia" ? <HardHat size={20} /> : <ListChecks size={20} />}
+                          </span>
+                          {s.titolo}
+                        </h2>
+                        <div dangerouslySetInnerHTML={{ __html: s.html }} />
+                      </section>
+                    )}
+                    {/* Il blocco «Pubblicità» chiude l'articolo: dopo l'ultima sezione (di regola «Cosa fare adesso»), quando
+                        chi legge si chiede cosa fare, e prima delle domande e delle fonti. */}
+                    {n.prodotto && i === indiceBlocco && <BloccoProdotto prodotto={n.prodotto} articolo={n.slug} gancio={n.gancio} />}
+                  </Fragment>
+                ))}
 
                 {n.faq.length > 0 && (
                   <section aria-labelledby="domande-frequenti">
@@ -305,7 +321,7 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                 )}
               </div>
 
-              {/* Testo da CONFORMITA.md §3.2 (studio della Conformità AI e legale, 02/10/2026). */}
+              {/* Testo da CONFORMITA.md §3.2 (Conformità AI e legale, 03/10/2026, CAN-37): l'unica nota sull'AI della pagina. */}
               <section aria-labelledby="come-nasce" className="mt-12 rounded-2xl bg-navy-50 p-5 text-[15px] leading-relaxed text-navy-700 md:p-6">
                 <h2 id="come-nasce" className="font-display text-base font-semibold tracking-normal text-navy">Come è nato questo articolo</h2>
                 <p className="mt-2">
@@ -313,6 +329,12 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                   dagli atti ufficiali elencati nelle Fonti. Prima di pubblicarlo, una persona della Redazione Cantieri Hub
                   l&apos;ha letto per intero e ha controllato i fatti sulle fonti. La responsabilità di quello che pubblichiamo
                   è di Cantieri Hub.
+                  {n.immagine && n.immagineAi && (
+                    <>
+                      {" "}Anche l&apos;immagine di copertina è fatta con l&apos;intelligenza artificiale, come dice l&apos;etichetta
+                      «AI» nell&apos;angolo: non è una foto vera.
+                    </>
+                  )}
                 </p>
                 <p className="mt-2">
                   L&apos;articolo spiega la norma in generale: per il tuo caso chiedi al tuo commercialista, al consulente del

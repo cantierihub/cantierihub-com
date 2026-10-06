@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { PRODOTTO_DELLA_SEZIONE, schedaFunnel, type ProdottoFunnel } from "@/data/funnelNotizie";
 
 export const CATEGORIE = [
   {
@@ -69,6 +70,19 @@ export interface Notizia {
   immagineAlt?: string;
   /** La copertina è generata con l'AI: si dichiara a vista (vero se non c'è scritto il contrario). */
   immagineAi: boolean;
+  /**
+   * La riga «Scritto con l'aiuto dell'intelligenza artificiale…» in alto. Spenta di regola dal 03/10/2026 (basta il
+   * riquadro in fondo, CONFORMITA §3.2): si riaccende con `nota_ai_in_alto: true` se un articolo esce senza la
+   * lettura completa di Raffaele, perché allora l'esenzione dell'AI Act cade e la dichiarazione va all'inizio.
+   */
+  notaAiInAlto: boolean;
+  /**
+   * Il prodotto del blocco «Pubblicità» in fondo all'articolo (funnel delle Notizie). Dal frontmatter `prodotto:`;
+   * se manca, quello della sezione; `nessuno` lo spegne (notizie tragiche). `null` = nessun blocco.
+   */
+  prodotto: ProdottoFunnel | null;
+  /** La frase d'aggancio del blocco, se l'articolo ne ha una sua (`gancio:`); se no vale il titolo fisso del prodotto. */
+  gancio?: string;
   fonti: Fonte[];
   faq: Domanda[];
   sezioni: Sezione[];
@@ -138,6 +152,16 @@ function dividi(html: string): Sezione[] {
 
 const CARTELLA = path.join(process.cwd(), "content", "notizie");
 
+function prodottoDi(valore: unknown, categoria: string, file: string): ProdottoFunnel | null {
+  if (valore === undefined || valore === null || valore === "") return PRODOTTO_DELLA_SEZIONE[categoria] ?? null;
+  const v = String(valore).trim().toLowerCase();
+  if (v === "nessuno") return null;
+  const scheda = schedaFunnel(v);
+  // Un errore al build è meglio di un blocco pubblicitario sbagliato o vuoto.
+  if (!scheda) throw new Error(`content/notizie/${file}: prodotto «${valore}» non valido`);
+  return scheda.slug;
+}
+
 function data(v: unknown): string {
   if (v instanceof Date) return v.toISOString().slice(0, 10);
   return String(v ?? "").slice(0, 10);
@@ -169,6 +193,9 @@ function leggi(file: string): Notizia {
     immagine: fm.immagine,
     immagineAlt: fm.immagine_alt,
     immagineAi: fm.immagine_ai !== false,
+    notaAiInAlto: fm.nota_ai_in_alto === true,
+    prodotto: prodottoDi(fm.prodotto, categoria, file),
+    gancio: fm.gancio ? String(fm.gancio).trim() : undefined,
     fonti: (fm.fonti ?? []) as Fonte[],
     faq: (fm.faq ?? []) as Domanda[],
     sezioni: dividi(marked.parse(content, { async: false }) as string),

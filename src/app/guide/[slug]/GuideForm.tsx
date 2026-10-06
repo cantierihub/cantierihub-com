@@ -5,6 +5,7 @@ import { ArrowRight, Download, CheckCircle } from "lucide-react";
 import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import { eUsaEGetta, MESSAGGIO_USA_E_GETTA } from "@/lib/emailUsaEGetta";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
+import { TESTO_EMAIL_PROMOZIONALI } from "@/lib/emailPromozionali";
 
 // Stesso trucco di CampiProvenienza: fuori dallo schermo ma dentro il form, cosi' lo
 // script di tracciamento li legge e nessuno li vede.
@@ -208,6 +209,9 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
           onBlur={(e) => (e.target.style.borderColor = "#e2e8f0")}
         />
         {error && <p style={{ fontSize: 13, color: "#ef4444", margin: 0 }}>{error}</p>}
+        {/* Le email promozionali: niente da scegliere, ma si legge PRIMA di inviare (Raffaele, 06/10). Vedi
+            `lib/emailPromozionali.ts`. Colore pieno, non il grigio chiaro della riga in fondo. */}
+        <p style={{ fontSize: 14, color: "#334155", margin: 0, lineHeight: 1.5 }}>{TESTO_EMAIL_PROMOZIONALI}</p>
         <button
           type="submit"
           disabled={loading}
@@ -221,7 +225,8 @@ export default function GuideForm({ slug, title, htmlUrl }: GuideFormProps) {
       </div>
 
       <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 14, textAlign: "center", lineHeight: 1.5 }}>
-        Gratuita. Zero spam. Leggi la nostra{" "}
+        {/* «Zero spam» tolto il 06/10: accanto alla frase sulle nostre email sarebbe suonato come una smentita. */}
+        Gratuita. Come trattiamo i tuoi dati:{" "}
         <a href="/privacy" style={{ color: "#f97316", textDecoration: "none" }}>Privacy Policy</a>.
       </p>
     </form>

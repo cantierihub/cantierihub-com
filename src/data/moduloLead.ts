@@ -17,11 +17,20 @@
 export const PRODOTTI = [
   {
     valore: "Preventivatore",
-    etichetta: "Preventivatore (dal computo metrico al preventivo in 3 minuti)",
+    // 03/10/2026: tolto «in 3 minuti» dalle etichette (FONDAMENTA §7.1: la promessa di tempo non è decisa). Il valore,
+    // che smista il lead nel CRM, è lo stesso di prima.
+    etichetta: "Preventivatore (dal computo metrico al preventivo)",
   },
   {
     valore: "Computatore",
-    etichetta: "Computatore (dal sopralluogo al computo metrico in 3 minuti)",
+    etichetta: "Computatore (dal sopralluogo al computo metrico)",
+  },
+  {
+    // Aggiunta il 03/10/2026 per il funnel delle Notizie: prima chi arrivava per l'Analisi Prezzi doveva scegliere
+    // «Altro». Il campo «Prodotto richiesto» del CRM è testo libero (letto dalla definizione del campo), quindi un
+    // valore nuovo non rompe niente: finisce nel nome del cartellino come gli altri.
+    valore: "Analisi Prezzi",
+    etichetta: "Analisi Prezzi (il prezzo di ogni voce, scomposto in materiali, manodopera e noli)",
   },
   {
     valore: "Gestione Cantieri",
@@ -61,6 +70,12 @@ export const MOTIVAZIONI: Record<Prodotto, readonly string[]> = {
     "Voglio portare il computo direttamente nel preventivo",
     "Altro",
   ],
+  "Analisi Prezzi": [
+    "Ho voci fuori prezzario e le stimo a occhio",
+    "Voglio sapere quanto mi costa davvero ogni lavorazione",
+    "I costi si sono mossi e devo rifare i prezzi",
+    "Altro",
+  ],
   "Gestione Cantieri": [
     "Non ho controllo su squadre e materiali in cantiere",
     "Non so mai a che punto è davvero l'avanzamento",
@@ -78,6 +93,18 @@ export const MOTIVAZIONI: Record<Prodotto, readonly string[]> = {
 };
 
 /**
+ * Il ruolo di chi compila. Nei moduli lead di Meta c'è, in quello del sito no: lo chiede la pagina della demo delle
+ * Notizie, e finisce nel messaggio (nel CRM non c'è un campo apposta).
+ */
+export const RUOLI = [
+  "Titolare dell'impresa",
+  "Socio o direttore tecnico",
+  "Geometra o tecnico dell'impresa",
+  "Progettista o libero professionista",
+  "Altro",
+] as const;
+
+/**
  * Da dove ci ha conosciuti, dichiarato da lui.
  *
  * È la domanda che vale più di tutte le altre insieme: **cattura quello che gli UTM non
@@ -89,5 +116,20 @@ export const CANALI = [
   "Video sui social",
   "Ricerca su Google",
   "Passaparola",
+  // 03/10/2026: per chi si candida da una notizia del sito. Il campo del CRM è testo libero.
+  "Ho letto un articolo sul sito",
   "Altro",
 ] as const;
+
+/**
+ * La scelta del prodotto nella candidatura generale delle Notizie (/demo/cantieri-hub): solo i tre strumenti che la
+ * pagina presenta, con etichette pubblicitarie pulite (niente tempi, niente Gestione Cantieri né Marketing).
+ * Il `valore` è lo stesso di `PRODOTTI`: il CRM e le etichette non cambiano. «Non lo so ancora» → «Altro», e allora
+ * il messaggio diventa obbligatorio, così il setter sa di cosa parlare.
+ */
+export const PRODOTTI_DEMO: readonly { valore: Prodotto; etichetta: string }[] = [
+  { valore: "Computatore", etichetta: "Il computo metrico (Computatore)" },
+  { valore: "Analisi Prezzi", etichetta: "Il prezzo di ogni voce (Analisi Prezzi)" },
+  { valore: "Preventivatore", etichetta: "Dal computo all'offerta (Preventivatore)" },
+  { valore: "Altro", etichetta: "Non lo so ancora: ne parliamo al telefono" },
+];

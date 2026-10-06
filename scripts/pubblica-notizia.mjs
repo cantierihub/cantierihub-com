@@ -18,6 +18,7 @@ import os from "node:os";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
+import { marked } from "marked";
 
 // fileURLToPath e non .pathname: la cartella si chiama «CANTIERI HUB», e .pathname dava «CANTIERI%20HUB» (02/10:
 // lo strumento aveva creato una cartella nuova con quel nome).
@@ -125,6 +126,34 @@ if (lDesc < 70 || lDesc > 160) problemi.push(`descrizione di ${lDesc} caratteri 
 if (!inBreve) problemi.push("manca la risposta d'apertura («in breve»)");
 if (fonti.length === 0) problemi.push("nessuna fonte");
 if (copertina && !alt) problemi.push("la copertina non ha il testo alternativo (immagine_alt)");
+// Lo slug va nell'indirizzo e nel funnel (`?da=<slug>`): se non ha questa forma, la candidatura perde l'articolo in
+// silenzio (lib/funnel.ts del sito).
+if (!/^[a-z0-9]+(?:-[a-z0-9]+){1,12}$/.test(slug) || slug.length > 100) {
+  problemi.push(`slug «${slug}» non valido: minuscole, numeri e trattini, da 2 a 13 parole`);
+}
+// Il blocco «Pubblicità» in fondo (funnel delle Notizie, 03/10/2026): un prodotto fra quelli del sito, o «nessuno».
+// ⚠️ `prodotto: false` YAML lo legge come booleano: senza questo controllo sparirebbe e varrebbe il prodotto della
+// sezione, cioè una pubblicità proprio dove la si voleva spegnere.
+const PRODOTTI_BLOCCO = ["analisi-prezzi", "preventivatore", "computatore", "cantieri-hub", "nessuno"];
+if (fm.prodotto !== undefined && fm.prodotto !== null && !PRODOTTI_BLOCCO.includes(String(fm.prodotto).trim().toLowerCase())) {
+  problemi.push(`prodotto «${fm.prodotto}» non valido (validi: ${PRODOTTI_BLOCCO.join(", ")}; per spegnere il blocco: nessuno)`);
+}
+if (fm.gancio && String(fm.gancio).trim().length > 90) {
+  problemi.push(`gancio di ${String(fm.gancio).trim().length} caratteri (massimo 90)`);
+}
+// Un solo aggancio a un prodotto, ed è il blocco (CONFORMITA §1.6 e checklist n. 8). Si guarda la pagina vera: i link
+// come li vede il lettore (anche quelli scritti in chiaro, che marked trasforma in link) e i nomi dei prodotti.
+const PERCORSI_COMMERCIALI = /^\/(analisi-prezzi|preventivatore|computatore|edilchat|demo|calcola|come-funziona|contatti)(\/|$|\?|#)/;
+for (const [, href] of String(marked.parse(corpo, { async: false })).matchAll(/href="([^"]+)"/g)) {
+  let u;
+  try { u = new URL(href, "https://cantierihub.com"); } catch { continue; }
+  const nostro = /(^|\.)cantierihub\.com$/.test(u.hostname);
+  if (u.hostname === "app.cantierihub.com" || (nostro && PERCORSI_COMMERCIALI.test(u.pathname))) {
+    problemi.push(`nel testo c'è un link commerciale (${href}): l'aggancio è il blocco in fondo, si sceglie con «prodotto:»`);
+  }
+}
+const nomeProdotto = corpo.match(/\b(Preventivatore|Computatore|EdilChat|Analisi Prezzi AI|Analisi Prezzi di Cantieri Hub)\b/);
+if (nomeProdotto) problemi.push(`nel testo c'è il nome di un prodotto («${nomeProdotto[0]}»): lo presenta il blocco in fondo`);
 if (problemi.length) fuori(`il pacchetto non è pronto:\n  - ${problemi.join("\n  - ")}`);
 
 const intestazione = {
@@ -138,6 +167,9 @@ const intestazione = {
   data_aggiornamento: giorno(fm.data_aggiornamento) || giorno(fm.data_pubblicazione) || oggi(),
   ...(fm.nota_aggiornamento ? { nota_aggiornamento: fm.nota_aggiornamento } : {}),
   in_breve: inBreve,
+  ...(fm.prodotto ? { prodotto: String(fm.prodotto).trim().toLowerCase() } : {}),
+  ...(fm.gancio ? { gancio: String(fm.gancio).trim() } : {}),
+  ...(fm.nota_ai_in_alto === true ? { nota_ai_in_alto: true } : {}),
   ...(copertina ? { immagine: `/images/notizie/${slug}/${copertina}`, immagine_alt: alt } : {}),
   fonti,
   faq,

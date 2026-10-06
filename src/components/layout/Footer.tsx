@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { WA_DEMO } from "@/data/site";
+import ColonnaCtaFooter from "./ColonnaCtaFooter";
 
 // Footer riordinato il 28/07/2026 (scelta di Chiara).
 // Regola: "Prodotti" elenca solo cose che si vendono. Le pagine che servono a
@@ -101,7 +101,7 @@ export default function Footer() {
               </div>
             </div>
             <p style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.7, maxWidth: 260 }}>
-              Software AI per imprese edili italiane. Dal computo metrico al preventivo professionale, in pochi minuti.
+              Software AI per imprese edili italiane: computo metrico, analisi prezzi e preventivo.
             </p>
           </div>
 
@@ -123,24 +123,8 @@ export default function Footer() {
             </div>
           ))}
 
-          {/* CTA col */}
-          <div>
-            <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
-              Inizia adesso
-            </h4>
-            <p style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.65, marginBottom: 20 }}>
-              30 minuti di demo gratuita. Vedi come funziona con i tuoi file reali.
-            </p>
-            <a
-              href={WA_DEMO}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary cta-shimmer"
-              style={{ width: "100%", justifyContent: "center" }}
-            >
-              Prenota Demo <span className="arrow">→</span>
-            </a>
-          </div>
+          {/* CTA col: sulle pagine di candidatura delle Notizie non c'è (il modulo è già nella pagina). */}
+          <ColonnaCtaFooter />
         </div>
 
         {/* Bottom bar */}
@@ -155,8 +139,11 @@ export default function Footer() {
             gap: 12,
           }}
         >
+          {/* Chi c'è dietro il sito, con i dati dei contratti (06/10/2026): la responsabilità editoriale delle Notizie e il
+              titolare della privacy li chiedono (vault, sito-seo, CONFORMITA §3.4 e §5, CAN-17). */}
           <p style={{ fontSize: 12, color: "#94a3b8" }}>
-            © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
+            © {new Date().getFullYear()} Cantieri Hub, marchio di Adact Studio International LLC · 30 N Gould St Ste R,
+            Sheridan, WY 82801, USA. Tutti i diritti riservati.
           </p>
           <nav style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
             {linkLegali.map((item) => (
