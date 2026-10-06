@@ -19,9 +19,10 @@ export default function PrivacyPage() {
               <p>Ultimo aggiornamento: ottobre 2026</p>
 
               {/* Riscritta il 06/10/2026 con le correzioni della Conformità (vault, sito-seo, CONFORMITA §3.7, CAN-39):
-                  titolare con i dati dei contratti, Salesflow fra i fornitori, base giuridica per ogni finalità, email
-                  promozionali solo con la casella del modulo, conservazione con un periodo. Le scelte sono di Raffaele
-                  (06/10): casella su /contatti e sulla demo, 24 mesi, sede legale come nei contratti. */}
+                  titolare con i dati dei contratti, Salesflow fra i fornitori, base giuridica per ogni finalità,
+                  conservazione con un periodo. Le scelte sono di Raffaele (06/10): 24 mesi, sede legale come nei
+                  contratti, e niente casella per le email promozionali, ma la frase sopra il pulsante di ogni modulo
+                  (`lib/emailPromozionali.ts`). La Conformità consigliava la casella: domanda 7 al legale. */}
               <h2 className="font-display font-bold text-navy text-xl mt-8">Chi tratta i tuoi dati</h2>
               <p>
                 Il titolare del trattamento dei dati raccolti con il sito cantierihub.com e con la piattaforma è{" "}
@@ -36,7 +37,6 @@ export default function PrivacyPage() {
               <ul className="list-disc pl-5 space-y-1">
                 <li><strong>Form di contatto:</strong> nome, cognome, email, telefono, azienda, il servizio che ti interessa, cosa ti serve risolvere, come ci hai conosciuti e il messaggio.</li>
                 <li><strong>Richiesta di demo:</strong> nome, cognome, azienda, email, telefono, il tuo ruolo, lo strumento che vuoi vedere, il messaggio e, se arrivi da un articolo della sezione Notizie, quale articolo stavi leggendo.</li>
-                <li><strong>Email promozionali:</strong> se nel modulo spunti la casella per riceverle, lo registriamo insieme alla tua richiesta.</li>
                 <li><strong>Guide gratuite:</strong> l&apos;indirizzo email e quale guida hai richiesto.</li>
                 <li><strong>Candidature:</strong> nome, email, telefono, ruolo, messaggio e il curriculum che alleghi.</li>
                 <li><strong>Provenienza:</strong> da quale canale sei arrivato sul sito (per esempio un link con etichetta da un social). Serve a capire quali contenuti funzionano, viene allegata al messaggio che ci invii e non identifica nessuno.</li>
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
               <ul className="list-disc pl-5 space-y-1">
                 <li>Rispondere alle tue richieste, richiamarti per fissare la demo che hai chiesto e fartela vedere: lo chiedi tu (misure precontrattuali, art. 6, par. 1, lett. b GDPR).</li>
                 <li>Mandarti la guida che hai richiesto: stessa base.</li>
-                <li>Mandarti via email consigli, novità e offerte sui prodotti di Cantieri Hub, <strong>solo se l&apos;hai chiesto spuntando la casella nel modulo</strong>: il tuo consenso (art. 6, par. 1, lett. a GDPR e art. 130 del Codice privacy). Puoi ritirarlo quando vuoi.</li>
+                <li>Mandarti via email consigli, novità e offerte sui prodotti di Cantieri Hub. <strong>Te lo diciamo in ogni modulo, sopra il pulsante, prima che tu lo invii</strong>: inviandolo ci dai il tuo consenso (art. 6, par. 1, lett. a GDPR e art. 130 del Codice privacy). Puoi ritirarlo quando vuoi, con un clic.</li>
                 <li>Valutare la tua candidatura, se ti sei proposto per una posizione: lett. b.</li>
                 <li>Gestire il contratto con i clienti della piattaforma: lett. b, e gli obblighi di legge (lett. c).</li>
                 <li>Capire in forma aggregata come viene usato il sito: il nostro legittimo interesse (lett. f), senza cookie.</li>

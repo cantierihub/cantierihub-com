@@ -1,29 +1,33 @@
-// Prove del consenso alle email promozionali. Si lanciano con: node --test src/lib/emailPromozionali.test.ts
+// Prove della frase sulle email promozionali. Si lanciano con: node --test src/lib/emailPromozionali.test.ts
+//
+// Rovesciate il 06/10/2026: prima tenevano la casella non spuntata e le sue due etichette; Raffaele l'ha tolta
+// («non voglio che debbano scegliere»). Ora tengono quello che la sostituisce: la frase, uguale nei tre moduli, sopra
+// il pulsante, e nessuna scelta da fare.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import {
-  consensoEmailDato, etichettaConsensoEmail, NOME_CAMPO_CONSENSO_EMAIL,
-  ETICHETTA_CONSENSO_EMAIL, ETICHETTA_SENZA_CONSENSO_EMAIL,
-} from "./emailPromozionali.ts";
+import { readFileSync } from "node:fs";
+import { TESTO_EMAIL_PROMOZIONALI } from "./emailPromozionali.ts";
 
-test("solo un true vero è un consenso", () => {
-  assert.equal(consensoEmailDato(true), true);
-  for (const no of [false, "true", "on", "si", 1, null, undefined, {}, []]) {
-    assert.equal(consensoEmailDato(no), false, JSON.stringify(no));
+const MODULI = ["src/app/contatti/ContattiForm.tsx", "src/app/guide/[slug]/GuideForm.tsx"];
+
+test("la frase dice le due cose: che arrivano le email e che si smette quando si vuole", () => {
+  assert.match(TESTO_EMAIL_PROMOZIONALI, /ricevi anche le nostre email/);
+  assert.match(TESTO_EMAIL_PROMOZIONALI, /Puoi smettere quando vuoi/);
+});
+
+test("i moduli mostrano la frase prima del pulsante d'invio", () => {
+  // ContattiForm vale per /contatti e per la demo delle Notizie; GuideForm per le guide gratuite.
+  for (const file of MODULI) {
+    const sorgente = readFileSync(file, "utf8");
+    const frase = sorgente.indexOf("{TESTO_EMAIL_PROMOZIONALI}");
+    assert.ok(frase > 0, `${file}: la frase non c'è`);
+    // Dopo la frase c'è ancora un pulsante d'invio: la frase si legge prima di inviare, non sotto.
+    assert.ok(sorgente.indexOf('type="submit"', frase) > frase, `${file}: la frase sta sotto il pulsante`);
   }
 });
 
-test("chi spunta la casella prende «consenso-email», chi no «senza-consenso-email»", () => {
-  assert.equal(etichettaConsensoEmail(true), "consenso-email");
-  assert.equal(etichettaConsensoEmail(false), "senza-consenso-email");
-  // Il CRM le cerca con questi nomi esatti: cambiarli qui senza cambiare il flusso riapre il benvenuto a tutti.
-  assert.equal(ETICHETTA_CONSENSO_EMAIL, "consenso-email");
-  assert.equal(ETICHETTA_SENZA_CONSENSO_EMAIL, "senza-consenso-email");
-});
-
-test("la casella non si chiama come nessun campo letto dallo script di Salesflow", () => {
-  // Gli stessi nomi della prova sul campo della nota (funnel.test.ts).
-  const letti = ["first_name", "last_name", "company_name", "email", "phone", "prodotto", "esigenza",
-    "come_ci_ha_conosciuti", "messaggio", "form_utm_source", "form_utm_medium", "form_utm_campaign", "form_inviato_il"];
-  assert.equal(letti.includes(NOME_CAMPO_CONSENSO_EMAIL), false);
+test("nessun modulo chiede di scegliere: niente casella per le email", () => {
+  for (const file of MODULI) {
+    assert.equal(/type="checkbox"/.test(readFileSync(file, "utf8")), false, file);
+  }
 });
