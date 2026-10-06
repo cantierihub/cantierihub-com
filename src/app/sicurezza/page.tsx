@@ -41,9 +41,9 @@ const garanzie = [
   },
   {
     icon: Server,
-    titolo: "Server in Europa, conformi GDPR",
+    titolo: "Database e file in Europa, secondo il GDPR",
     desc:
-      "L'infrastruttura è ospitata su data center europei e gestita nel rispetto del GDPR. I tuoi dati non finiscono in giro per il mondo: restano dove la legge italiana ed europea li tutela.",
+      "Il database e i file che carichi stanno su server nell'Unione Europea, in Germania e in Francia, gestiti nel rispetto del GDPR. L'intelligenza artificiale può elaborare i testi anche fuori dall'UE: in quel caso valgono le garanzie che il GDPR chiede per i trasferimenti. Come trattiamo i dati con l'AI lo spieghiamo nella pagina AI e trasparenza.",
   },
   {
     icon: FileKey,
@@ -68,7 +68,8 @@ const garanzie = [
 const garanzieRapide = [
   "Un'azienda non vede mai i dati di un'altra",
   "Dati cifrati mentre viaggiano e mentre sono fermi",
-  "Server europei, gestiti secondo il GDPR",
+  "Database e file in Europa, gestiti secondo il GDPR",
+  "Non usiamo i tuoi dati per addestrare l'AI né per altri clienti",
   "Backup regolari: il tuo lavoro non si perde",
 ];
 
@@ -100,7 +101,7 @@ export default function SicurezzaPage() {
                 I tuoi prezzi, i tuoi preventivi, lo storico dei tuoi cantieri: è il patrimonio
                 della tua impresa. Lo trattiamo come tale.{" "}
                 <strong className="text-white">
-                  Isolato, cifrato, ospitato in Europa e salvato di continuo.
+                  Isolato, cifrato, con database e file in Europa, salvato di continuo.
                 </strong>
               </p>
             </Reveal>
