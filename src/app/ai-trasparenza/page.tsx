@@ -47,7 +47,7 @@ export default function AiTrasparenzaPage() {
               </p>
 
               {/* Le domande dei clienti su dati e AI (Stilcolor, 05/10/2026): fornitore, addestramento, conservazione,
-                  dove lavora. Deve combaciare col contratto di licenza (art. 5.2 e Allegato B). Finché «AI app context» di Lovable
+                  dove lavora. Deve combaciare col contratto di licenza (art. 5.2 e Allegato A). Finché «AI app context» di Lovable
                   è acceso (tiene richieste e risposte per 90 giorni) qui non si scrive che i fornitori non le conservano. */}
               <h2 id="dati-e-ai" className="font-display font-bold text-navy text-xl mt-8 scroll-mt-24">I tuoi dati e l&apos;AI</h2>
               <p>Vale per il Preventivatore AI, dove carichi computi, preventivi e prezzi della tua impresa.</p>
@@ -58,7 +58,7 @@ export default function AiTrasparenzaPage() {
                 <li><strong>Cosa resta.</strong> Nel tuo account restano i tuoi file e i risultati, per esempio le voci del preventivo. Delle richieste all&apos;AI, nel database della piattaforma registriamo solo il tipo di operazione e i crediti usati.</li>
                 <li><strong>Dove lavora.</strong> Il database e i file stanno nell&apos;Unione Europea, a Francoforte. L&apos;elaborazione con l&apos;AI può avvenire anche fuori dall&apos;UE: in quel caso il trasferimento avviene con le garanzie del GDPR, come le clausole contrattuali tipo della Commissione europea o il Data Privacy Framework UE-USA.</li>
               </ul>
-              <p>Per i clienti della piattaforma questi impegni sono scritti nel contratto di licenza: all&apos;articolo 5 e nell&apos;Allegato B, sul trattamento dei dati personali.</p>
+              <p>Per i clienti della piattaforma questi impegni sono scritti nel contratto di licenza: all&apos;articolo 5 e nell&apos;Allegato A, sul trattamento dei dati personali.</p>
 
               <h2 className="font-display font-bold text-navy text-xl mt-8">Quando parli con un&apos;AI</h2>
               <p>
