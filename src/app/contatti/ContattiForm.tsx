@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { descriviProvenienza, valoriProvenienza } from "@/lib/provenienza";
 import { messaggioCandidatura, NOME_CAMPO_NOTA } from "@/lib/funnel";
+import { NOME_CAMPO_CONSENSO_EMAIL, TESTO_CONSENSO_EMAIL } from "@/lib/emailPromozionali";
 import CampiProvenienza from "@/components/ui/CampiProvenienza";
 import { useArticoloDiProvenienza } from "@/components/notizie/TornaAllArticolo";
 import { PRODOTTI, PRODOTTI_DEMO, MOTIVAZIONI, CANALI, RUOLI, type Prodotto } from "@/data/moduloLead";
@@ -39,6 +40,8 @@ export default function ContattiForm({
     nome: "", cognome: "", azienda: "", email: "", telefono: "",
     prodotto: prodottoFisso ?? "", motivazione: "", canale: "", messaggio: "", ruolo: "",
   });
+  // ⛔ Parte NON spuntata, sempre: un consenso già spuntato non vale (CONFORMITA §3.7). Vedi `lib/emailPromozionali.ts`.
+  const [consensoEmail, setConsensoEmail] = useState(false);
   // L'articolo si legge dall'indirizzo nel browser: la pagina resta statica (niente useSearchParams). Il server lo
   // ricontrolla comunque (`lib/funnel.ts`).
   const daIndirizzo = useArticoloDiProvenienza();
@@ -69,7 +72,7 @@ export default function ContattiForm({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...campi, messaggio, articolo,
+          ...campi, messaggio, articolo, consenso_email: consensoEmail,
           company_url: hp, provenienza: descriviProvenienza(), utm: valoriProvenienza(), inviato_il: inviatoIl,
         }),
       });
@@ -245,6 +248,15 @@ export default function ContattiForm({
           className={`${inputClass} resize-none`} />
       </div>
 
+      {/* La casella delle email promozionali: facoltativa, non spuntata, staccata dal pulsante. Senza, chi scrive viene
+          richiamato per la sua richiesta e basta: il benvenuto a 15 email non parte (etichetta `senza-consenso-email`). */}
+      <label htmlFor="consenso-email" className="flex items-start gap-3 py-1 text-sm text-navy cursor-pointer">
+        <input id="consenso-email" name={NOME_CAMPO_CONSENSO_EMAIL} type="checkbox" checked={consensoEmail}
+          onChange={(e) => setConsensoEmail(e.target.checked)}
+          className="mt-0.5 h-5 w-5 shrink-0 rounded border-navy-500 accent-orange-500 cursor-pointer" />
+        <span>{TESTO_CONSENSO_EMAIL} <span className="text-navy-600">(facoltativo)</span></span>
+      </label>
+
       {error && (
         <p role="alert" className="text-sm text-red-700">
           {error}
@@ -270,8 +282,12 @@ export default function ContattiForm({
         </button>
       )}
 
+      {/* Un'informativa, non un consenso: per richiamare chi chiede la demo basta la sua richiesta (art. 6, par. 1,
+          lett. b GDPR). «Inviando accetti» faceva sembrare l'invio un consenso, che così non vale (vault, sito-seo,
+          CONFORMITA §1.4 e §3.7, CAN-39). */}
       <p className="text-sm text-navy-600 text-center">
-        Inviando accetti la nostra{" "}
+        {modoDemo ? "Usiamo i tuoi dati per richiamarti e fissare la demo." : "Usiamo i tuoi dati per risponderti e richiamarti."}{" "}
+        Come li trattiamo:{" "}
         <a href="/privacy" className="text-orange-700 underline underline-offset-2">Privacy Policy</a>.
       </p>
     </form>

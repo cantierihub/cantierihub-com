@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { portaNelCrm } from "@/lib/salesflow";
 import { articoloValido, ETICHETTA_NOTIZIE, messaggioConArticolo } from "@/lib/funnel";
+import { consensoEmailDato, etichettaConsensoEmail } from "@/lib/emailPromozionali";
 
 export const runtime = "nodejs";
 
@@ -26,6 +27,8 @@ export async function POST(req: NextRequest) {
     // Funnel delle Notizie (03/10/2026): lo slug dell'articolo da cui arriva, se c'è. Vedi `lib/funnel.ts`.
     const articolo = articoloValido(body.articolo);
     const messaggio = messaggioConArticolo(String(body.messaggio ?? "").trim(), articolo);
+    // La casella delle email promozionali (06/10/2026). Vedi `lib/emailPromozionali.ts`.
+    const consensoEmail = consensoEmailDato(body.consenso_email);
     const prodotto = String(body.prodotto ?? "").trim().slice(0, 80);
     const motivazione = String(body.motivazione ?? "").trim().slice(0, 120);
     const canale = String(body.canale ?? "").trim().slice(0, 60);
@@ -67,9 +70,14 @@ export async function POST(req: NextRequest) {
     const crm = await portaNelCrm({
       nome, cognome, azienda, email, telefono, prodotto, motivazione, canale, messaggio,
       utmSource, utmMedium, utmCampagna, inviatoIl,
-      etichetteExtra: articolo ? [ETICHETTA_NOTIZIE] : [],
+      etichetteExtra: [...(articolo ? [ETICHETTA_NOTIZIE] : []), etichettaConsensoEmail(consensoEmail)],
     });
     if (!crm.ok) console.error("[contatti] CRM:", crm.errore);
+    // Nell'email a info@ anche il consenso: se il CRM non risponde e il contatto lo crea lo script di Salesflow (o lo
+    // inserisce qualcuno a mano), l'etichetta del consenso non c'è, e chi lo sistema deve sapere quale mettere.
+    const rigaConsenso = consensoEmail
+      ? "sì, ha spuntato la casella (consenso-email)"
+      : "no, non ha spuntato la casella (senza-consenso-email)";
     const rigaCrm = crm.ok
       ? "Importato nel CRM (Salesflow)."
       : "ATTENZIONE: non importato nel CRM, va inserito a mano in Salesflow.";
@@ -98,6 +106,7 @@ export async function POST(req: NextRequest) {
       `Servizio:  ${prodotto || "-"}`,
       `Esigenza:  ${motivazione || "-"}`,
       `Ci ha conosciuti da: ${canale || "-"}`,
+      `Email promozionali: ${rigaConsenso}`,
       "",
       "Messaggio:",
       messaggio,
@@ -120,6 +129,7 @@ export async function POST(req: NextRequest) {
           <tr><td style="padding:6px 0;color:#64748b">Servizio</td><td style="padding:6px 0;font-weight:600">${esc(prodotto) || "-"}</td></tr>
           <tr><td style="padding:6px 0;color:#64748b">Esigenza</td><td style="padding:6px 0">${esc(motivazione) || "-"}</td></tr>
           <tr><td style="padding:6px 0;color:#64748b">Ci ha conosciuti da</td><td style="padding:6px 0;font-weight:600">${esc(canale) || "-"}</td></tr>
+          <tr><td style="padding:6px 0;color:#64748b">Email promozionali</td><td style="padding:6px 0">${esc(rigaConsenso)}</td></tr>
         </table>
         <p style="margin:18px 0 6px;color:#64748b;font-size:14px">Messaggio</p>
         <p style="margin:0;white-space:pre-wrap;font-size:14px;line-height:1.6">${esc(messaggio)}</p>
