@@ -54,7 +54,8 @@ export default function PrivacyPage() {
                 <li><strong>Resend</strong> — recapita alla nostra casella i messaggi e le candidature inviate dai form.</li>
                 <li><strong>Notion</strong> — conserva le richieste delle guide gratuite.</li>
               </ul>
-              {/* La parte sulla piattaforma (06/10/2026, domande di Stilcolor): deve combaciare con l'Allegato B del contratto. */}
+              {/* La parte sulla piattaforma (06/10/2026, domande di Stilcolor): deve combaciare con l'Allegato A del contratto, che per
+                  l'elenco dei sub-responsabili rimanda a questa pagina: a ogni cambio di fornitore si aggiorna qui. */}
               <h2 className="font-display font-bold text-navy text-xl mt-8">I dati nella piattaforma</h2>
               <p>
                 Per i dati dei clienti della piattaforma (account, utenti, fatturazione) il titolare è Adact Studio International LLC.
@@ -62,7 +63,7 @@ export default function PrivacyPage() {
                 documenti che carica, il titolare è il cliente: noi li trattiamo per suo conto, come responsabile del trattamento
                 (art. 28 GDPR), secondo il contratto di licenza.
               </p>
-              <p>Per far funzionare la piattaforma ci appoggiamo a questi fornitori:</p>
+              <p>Per far funzionare la piattaforma ci appoggiamo a questi fornitori (sub-responsabili del trattamento):</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li><strong>Lovable</strong> — ospita l&apos;applicazione e dà l&apos;accesso ai modelli di intelligenza artificiale.</li>
                 <li><strong>Supabase</strong> — database e archivio dei file, su server nell&apos;Unione Europea: a Francoforte per il Preventivatore, a Parigi per il Computatore.</li>
