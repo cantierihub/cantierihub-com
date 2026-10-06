@@ -17,18 +17,18 @@ export default function PrivacyPage() {
             <h1 className="mt-3 font-display font-extrabold text-navy text-4xl mb-8">Privacy Policy</h1>
             <div className="prose prose-sm text-gray-600 space-y-6">
               <p>Ultimo aggiornamento: ottobre 2026</p>
-
               {/* Riscritta il 06/10/2026 con le correzioni della Conformità (vault, sito-seo, CONFORMITA §3.7, CAN-39):
                   titolare con i dati dei contratti, Salesflow fra i fornitori, base giuridica per ogni finalità,
                   conservazione con un periodo. Le scelte sono di Raffaele (06/10): 24 mesi, sede legale come nei
                   contratti, e niente casella per le email promozionali, ma la frase sopra il pulsante di ogni modulo
-                  (`lib/emailPromozionali.ts`). La Conformità consigliava la casella: domanda 7 al legale. */}
+                  (`lib/emailPromozionali.ts`). La Conformità consigliava la casella: domanda 7 al legale.
+                  Unita lo stesso giorno con le sezioni sulla piattaforma (#40-#42): quelle restano com'erano. */}
               <h2 className="font-display font-bold text-navy text-xl mt-8">Chi tratta i tuoi dati</h2>
               <p>
-                Il titolare del trattamento dei dati raccolti con il sito cantierihub.com e con la piattaforma è{" "}
-                <strong>Adact Studio International LLC</strong>, società di diritto statunitense costituita nello Stato del
-                Wyoming il 6 febbraio 2024 (Filing Number 2024-001405443, EIN 35-2837991), con sede legale in 30 N Gould St
-                Ste R, Sheridan, WY 82801, Stati Uniti. Opera con il marchio Cantieri Hub.
+                Il titolare del trattamento è <strong>Adact Studio International LLC</strong>, società di diritto statunitense
+                costituita nello Stato del Wyoming il 6 febbraio 2024 (Filing Number 2024-001405443, EIN 35-2837991), con sede
+                legale in 30 N Gould St, Ste R, Sheridan, WY 82801, Stati Uniti: la società che gestisce il marchio Cantieri Hub,
+                il sito cantierihub.com e le sue piattaforme.
               </p>
               <p>Per tutto quello che riguarda i tuoi dati scrivi a <a href="mailto:info@cantierihub.com" className="text-orange-500 hover:underline">info@cantierihub.com</a>.</p>
 
@@ -66,11 +66,39 @@ export default function PrivacyPage() {
                 <li><strong>Notion</strong>: conserva le richieste delle guide gratuite.</li>
                 <li><strong>Salesflow</strong>: il nostro CRM, che usa la piattaforma HighLevel (LeadConnector) negli Stati Uniti. Conserva i contatti e le richieste di demo, ci serve per richiamarti e manda le email. Se accetti i cookie di tracciamento, registra anche le pagine che visiti sul sito.</li>
               </ul>
-              <p>Vercel, Resend, Notion e HighLevel hanno sede negli Stati Uniti. Il trasferimento avviene con le garanzie previste dal GDPR (Capo V): la decisione di adeguatezza UE-USA (Data Privacy Framework) per i fornitori certificati, oppure le clausole contrattuali standard della Commissione europea. Per saperne di più scrivi a <a href="mailto:info@cantierihub.com" className="text-orange-500 hover:underline">info@cantierihub.com</a>.</p>
+              {/* La parte sulla piattaforma (06/10/2026, domande di Stilcolor): deve combaciare con l'Allegato A del contratto, che per
+                  l'elenco dei sub-responsabili rimanda a questa pagina: a ogni cambio di fornitore si aggiorna qui. */}
+              <h2 className="font-display font-bold text-navy text-xl mt-8">I dati nella piattaforma</h2>
+              <p>
+                Per i dati dei clienti della piattaforma (account, utenti, fatturazione) il titolare è Adact Studio International LLC.
+                Per i dati che il cliente inserisce nella piattaforma, per esempio le anagrafiche dei suoi clienti e fornitori o i
+                documenti che carica, il titolare è il cliente: noi li trattiamo per suo conto, come responsabile del trattamento
+                (art. 28 GDPR), secondo il contratto di licenza.
+              </p>
+              <p>Per far funzionare la piattaforma ci appoggiamo a questi fornitori (sub-responsabili del trattamento):</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><strong>Lovable</strong> — ospita l&apos;applicazione e dà l&apos;accesso ai modelli di intelligenza artificiale.</li>
+                <li><strong>Supabase</strong> — database e archivio dei file, su server nell&apos;Unione Europea: a Francoforte per il Preventivatore, a Parigi per il Computatore.</li>
+                <li><strong>Google</strong> — i modelli di intelligenza artificiale Gemini.</li>
+                <li><strong>Resend</strong> — le email di servizio, come gli avvisi e il recupero della password.</li>
+                <li><strong>Stripe</strong> — i pagamenti dei pacchetti di crediti.</li>
+              </ul>
+              <p>
+                Come usiamo l&apos;intelligenza artificiale con i tuoi dati lo spieghiamo in{" "}
+                <a href="/ai-trasparenza#dati-e-ai" className="text-orange-500 hover:underline">AI e trasparenza</a>.
+              </p>
+
+              <h2 className="font-display font-bold text-navy text-xl mt-8">Trasferimenti fuori dall&apos;Unione Europea</h2>
+              <p>
+                Adact Studio International LLC ha sede negli Stati Uniti, e alcuni fornitori trattano dati fuori dall&apos;Unione
+                Europea. I trasferimenti avvengono con le garanzie del Capo V del GDPR, come le clausole contrattuali tipo adottate
+                dalla Commissione europea o l&apos;adesione del destinatario al Data Privacy Framework UE-USA.
+              </p>
 
               <h2 className="font-display font-bold text-navy text-xl mt-8">Conservazione</h2>
               <p>Le richieste di contatto, di demo e delle guide le teniamo per 24 mesi dall&apos;ultima volta che ci siamo sentiti, poi le cancelliamo, a meno che tu non diventi cliente: in quel caso valgono i tempi del contratto e quelli di legge. Se ritiri il consenso alle email, smettiamo subito di mandartele.</p>
               <p>Gli altri dati li teniamo per il tempo necessario alle finalità indicate, o per gli obblighi di legge. Il dato sulla provenienza si cancella da solo quando chiudi la scheda del browser.</p>
+              <p>I dati della piattaforma si cancellano alla fine del contratto, come previsto dal contratto di licenza: entro 60 giorni dalla cessazione, ed entro 90 giorni anche dalle copie di backup.</p>
 
               <h2 className="font-display font-bold text-navy text-xl mt-8">Diritti dell&apos;interessato</h2>
               <p>Hai diritto di accedere ai tuoi dati, chiederne la rettifica o la cancellazione, limitarne o opporti al trattamento, e riceverli in formato leggibile. Dove il trattamento si basa sul consenso, puoi revocarlo in qualsiasi momento senza che questo pregiudichi quanto fatto prima. Per esercitare questi diritti scrivi a <a href="mailto:info@cantierihub.com" className="text-orange-500 hover:underline">info@cantierihub.com</a>.</p>
