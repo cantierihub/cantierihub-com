@@ -90,16 +90,16 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
     blocco: {
       titolo: "Dal computo all'offerta, vedendo il margine prima di mandarla",
       testo:
-        "Carichi il computo del committente. Ogni voce si abbina al prezzario regionale o ai tuoi listini. Prima di mandare l'offerta vedi costo, margine e utile.",
+        "Carichi il computo del committente. Ogni voce si cerca sul prezzario regionale o nei tuoi listini. Prima di mandare l'offerta vedi costo, margine e utile.",
     },
     pagina_demo: {
       titolo: "Dal computo all'offerta, vedendo il margine prima di mandarla.",
       sottotitolo:
-        "Nella demo porti un computo vero e lo trasformiamo in offerta insieme. Vedi ogni voce sul prezzario e il margine prima che l'offerta parta.",
+        "Nella demo porti un computo vero e lo trasformiamo in offerta insieme. Vedi le voci sul prezzario e il margine prima che l'offerta parta.",
       cosaFa: [
         {
           titolo: "Le voci sul prezzario",
-          testo: "Ogni voce del computo si abbina al prezzario regionale o ai tuoi listini. La cerca per codice o per descrizione.",
+          testo: "Ogni voce del computo si cerca sul prezzario regionale o nei tuoi listini, per codice o per descrizione.",
         },
         {
           titolo: "Il margine prima di firmare",
