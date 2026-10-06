@@ -1,42 +1,20 @@
 /**
- * Le email promozionali solo a chi le ha chieste (Raffaele, 06/10/2026: «casella dappertutto»).
+ * Le email promozionali (il benvenuto a 15 email e gli altri flussi di marketing del CRM): chi lascia i dati in un
+ * modulo del sito le riceve, e lo legge PRIMA di inviare, sopra il pulsante.
  *
- * Chi chiede una demo o scrive da /contatti ci chiede di essere richiamato, non di ricevere il benvenuto a 15 email:
- * per mandargli email promozionali serve un consenso a parte (art. 130 del Codice privacy; vault, sito-seo,
- * CONFORMITA §1.4 e §3.7, CAN-39). Quindi nel modulo c'è una casella NON spuntata, staccata dal pulsante, e il server
- * mette al contatto una di queste due etichette:
- * - `consenso-email` a chi la spunta;
- * - `senza-consenso-email` a chi no. È questa che il CRM guarda: il benvenuto, dopo la sua prima attesa, fa uscire chi
- *   ce l'ha e non ha anche `consenso-email`.
+ * Raffaele, 06/10/2026: «io non voglio che debbano scegliere». Quindi niente casella: la frase dice chiaro che con la
+ * richiesta arrivano anche le nostre email, e come smettere. Vale per /contatti, per la candidatura alla demo e per le
+ * guide gratuite, con lo stesso testo.
  *
- * ⛔ Perché due etichette e non una sola. Il benvenuto parte per OGNI contatto nuovo, anche per i lead delle campagne
- * Meta, che una casella non ce l'hanno. Con la sola `consenso-email` il CRM dovrebbe fermare chiunque non l'abbia, e i
- * lead Meta perderebbero il benvenuto. Con l'etichetta del «no» il blocco tocca solo chi ha compilato un modulo del sito.
- * ⛔ Chi ha già `consenso-email` e riscrive senza spuntare la casella resta col suo consenso: non spuntarla una seconda
- * volta non vale come ritiro. Il ritiro passa dal link in fondo a ogni email o da info@ (vedi /privacy).
+ * ⛔ La Conformità consigliava la casella non spuntata (vault, sito-seo, CONFORMITA §3.7, CAN-39): per l'art. 130 del
+ * Codice privacy le email promozionali a chi non è cliente vogliono un consenso a parte. La frase è la versione più
+ * difendibile della scelta di Raffaele, non una garanzia: va fatta confermare al legale (CONFORMITA §5, domanda 7).
+ * ⛔ Per questo la frase sta SOPRA il pulsante, si legge senza ingrandire e non si accorcia: deve dire tutte e due le
+ * cose, che arrivano le email e che si smette con un clic. La privacy (`/privacy`) dice lo stesso.
  *
- * Funzioni pure, senza import: si provano con `node --test src/lib/emailPromozionali.test.ts`.
+ * Il 06/10 c'era stata per un'ora la casella con le etichette `consenso-email` / `senza-consenso-email`: tolta prima
+ * di andare online, nel CRM non esiste nessuna delle due.
  */
 
-export const ETICHETTA_CONSENSO_EMAIL = "consenso-email";
-export const ETICHETTA_SENZA_CONSENSO_EMAIL = "senza-consenso-email";
-
-/**
- * Il nome della casella nel modulo. Lo script di Salesflow legge i moduli dal nome dei campi: questo non deve essere il
- * nome di nessun campo del CRM (prova in `emailPromozionali.test.ts`). Il consenso al CRM lo porta il server, come
- * etichetta.
- */
-export const NOME_CAMPO_CONSENSO_EMAIL = "consenso_email";
-
-/** Il testo accanto alla casella (CONFORMITA §3.7). Uguale su /contatti e sulla demo. */
-export const TESTO_CONSENSO_EMAIL =
-  "Voglio ricevere via email consigli e novità sui prodotti di Cantieri Hub. Posso smettere quando voglio.";
-
-/** Vale come consenso solo un `true` vero: una stringa, un numero o un campo che manca (modulo vecchio in cache) no. */
-export function consensoEmailDato(grezzo: unknown): boolean {
-  return grezzo === true;
-}
-
-export function etichettaConsensoEmail(consenso: boolean): string {
-  return consenso ? ETICHETTA_CONSENSO_EMAIL : ETICHETTA_SENZA_CONSENSO_EMAIL;
-}
+export const TESTO_EMAIL_PROMOZIONALI =
+  "Lasciando i tuoi dati ricevi anche le nostre email con consigli e novità. Puoi smettere quando vuoi con un clic.";

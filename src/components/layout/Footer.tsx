@@ -139,8 +139,11 @@ export default function Footer() {
             gap: 12,
           }}
         >
+          {/* Chi c'è dietro il sito, con i dati dei contratti (06/10/2026): la responsabilità editoriale delle Notizie e il
+              titolare della privacy li chiedono (vault, sito-seo, CONFORMITA §3.4 e §5, CAN-17). */}
           <p style={{ fontSize: 12, color: "#94a3b8" }}>
-            © {new Date().getFullYear()} Cantieri Hub. Tutti i diritti riservati.
+            © {new Date().getFullYear()} Cantieri Hub, marchio di Adact Studio International LLC · 30 N Gould St Ste R,
+            Sheridan, WY 82801, USA. Tutti i diritti riservati.
           </p>
           <nav style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
             {linkLegali.map((item) => (

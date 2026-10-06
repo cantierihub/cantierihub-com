@@ -75,7 +75,7 @@ export default function AiTrasparenzaPage() {
               </ul>
               <p>La sezione Notizie è lo spazio informativo di un&apos;azienda di software, non una testata giornalistica.</p>
               <p>
-                <strong>Responsabilità editoriale:</strong> Cantieri Hub. Contatti:{" "}
+                <strong>Responsabilità editoriale:</strong> Adact Studio International LLC, che opera con il marchio Cantieri Hub, 30 N Gould St Ste R, Sheridan, WY 82801, Stati Uniti. Contatti:{" "}
                 <a href="mailto:info@cantierihub.com" className="text-orange-700 underline underline-offset-2">info@cantierihub.com</a>.{" "}
                 <strong>Hai visto un errore?</strong> Scrivici: lo correggiamo e in cima all&apos;articolo trovi la data e cosa è cambiato.
               </p>
