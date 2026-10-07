@@ -118,16 +118,14 @@ export default function AnalisiPrezziDemo({ whatsapp }: { whatsapp: string }) {
   // ── La prova ──
   const [rimaste, setRimaste] = useState(MAX_ANALISI);
   const [disponibile, setDisponibile] = useState(true);
-  const [esempio, setEsempio] = useState(false);
   const risultati = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch(`/api/prova/analisi${contatto ? `?c=${encodeURIComponent(contatto)}` : ""}`)
       .then((r) => r.json())
-      .then((d: { rimaste?: number; disponibile?: boolean; esempio?: boolean }) => {
+      .then((d: { rimaste?: number; disponibile?: boolean }) => {
         if (typeof d.rimaste === "number") setRimaste(d.rimaste);
         if (d.disponibile === false) setDisponibile(false);
-        if (d.esempio) setEsempio(true);
       })
       .catch(() => {});
   }, [contatto]);
@@ -245,13 +243,6 @@ export default function AnalisiPrezziDemo({ whatsapp }: { whatsapp: string }) {
 
   return (
     <div className="space-y-4">
-      {esempio && (
-        <p className="rounded-lg border-2 border-dashed border-orange-500 bg-orange-50 px-4 py-3 text-[15px] leading-relaxed text-navy">
-          <strong>Anteprima.</strong>{" "}Il risultato è sempre lo stesso esempio (un pozzetto in Lombardia), qualunque voce si
-          scriva: la prova vera parte quando l&apos;account demo è collegato.
-        </p>
-      )}
-
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
         {/* SINISTRA: il modulo */}
         <Card>

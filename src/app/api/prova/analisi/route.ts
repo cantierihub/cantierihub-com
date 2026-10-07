@@ -23,7 +23,7 @@ import { idContatto, proveDelContatto, segnaApprofondimento, segnaProva } from "
 
 // La prova dell'Analisi Prezzi su /prova/analisi-prezzi (07/10/2026). Regole e motivi in lib/prova/analisi.ts.
 // Si conta solo ciò che è riuscito: un errore della funzione non consuma una prova.
-// Con l'analisi d'esempio (sviluppo, anteprime) nel CRM non si scrive niente.
+// Con l'analisi d'esempio (solo in sviluppo sul Mac) nel CRM non si scrive niente.
 
 export const runtime = "nodejs";
 // La funzione del Preventivatore impiega decine di secondi; il CRM si aggiorna dopo la risposta (after).
@@ -44,8 +44,8 @@ const MESSAGGI = {
 
 function segreto(): string | null {
   if (process.env.PROVA_SEGRETO) return process.env.PROVA_SEGRETO;
-  // Senza segreto la prova vera non parte; l'esempio (sviluppo, anteprime) sì, con un segreto che non vale niente.
-  return provaFinta() ? "solo-esempio-non-in-produzione" : null;
+  // Senza segreto la prova non parte; solo l'esempio in sviluppo sul Mac usa un segreto che non vale niente.
+  return provaFinta() ? "solo-sviluppo-sul-mac" : null;
 }
 
 function rifiuto(motivo: keyof typeof MESSAGGI | "non-valida", status: number, extra: Record<string, unknown> = {}, messaggio?: string) {
@@ -78,7 +78,7 @@ export async function GET(req: NextRequest) {
   const s = segreto();
   const c = s ? await leggiConteggio(req.cookies.get(COOKIE)?.value, s) : { a: [], r: [] };
   const { fatte: n } = await fatte(c, idContatto(req.nextUrl.searchParams.get("c")));
-  return NextResponse.json({ ok: true, rimaste: rimaste(n), disponibile: !!s && provaConfigurata(), esempio: provaFinta() });
+  return NextResponse.json({ ok: true, rimaste: rimaste(n), disponibile: !!s && provaConfigurata() });
 }
 
 export async function POST(req: NextRequest) {

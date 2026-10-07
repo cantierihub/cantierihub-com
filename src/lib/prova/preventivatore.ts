@@ -10,10 +10,9 @@
  * - `PROVA_SUPABASE_ANON_KEY`: la chiave pubblica del Preventivatore (è quella che il browser del prodotto già usa);
  * - `PROVA_SUPABASE_URL`: facoltativa, il progetto del Preventivatore.
  *
- * L'ESEMPIO: torna sempre la stessa analisi vera fatta da un account interno (`esempioSviluppo.ts`), senza chiamare
- * niente. Vale in sviluppo con `PROVA_FINTA=1`, e da solo nelle anteprime di Vercel finché l'account demo non è
- * collegato: così le pagine si guardano dal telefono prima di accendere la prova. La pagina lo dice con un avviso.
- * In produzione (cantierihub.com) l'esempio non parte mai.
+ * Sul sito (produzione e anteprime) la prova è solo VERA: senza le variabili la pagina dice «la prova è ferma»
+ * (decisione di Raffaele, 07/10/2026: «l'anteprima toglila, deve essere reale»). Solo sul Mac, in sviluppo, con
+ * `PROVA_FINTA=1` torna un'analisi vera d'esempio (`esempioSviluppo.ts`) per provare la pagina senza spendere.
  */
 
 import { ESEMPIO_ANALISI } from "./esempioSviluppo";
@@ -38,9 +37,7 @@ function configurazione() {
   return { url, chiave, email, password };
 }
 
-export const provaFinta = () =>
-  (process.env.PROVA_FINTA === "1" && process.env.NODE_ENV !== "production") ||
-  (process.env.VERCEL_ENV === "preview" && configurazione() === null);
+export const provaFinta = () => process.env.PROVA_FINTA === "1" && process.env.NODE_ENV === "development" && !process.env.VERCEL;
 
 export const provaConfigurata = () => provaFinta() || configurazione() !== null;
 

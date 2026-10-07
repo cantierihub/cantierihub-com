@@ -27,7 +27,19 @@ export default function PaginaProva() {
           <h1 className="max-w-3xl text-balance font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.02em] text-navy md:text-[2.75rem] md:leading-[1.06]">
             {TITOLO_PROVA}
           </h1>
-          <p className="mt-4 max-w-3xl text-[17px] leading-relaxed text-navy-700 md:text-lg">{COME_SI_USA}</p>
+          <p className="mt-4 text-[17px] font-semibold text-navy md:text-lg">È l&apos;analisi prezzi del Preventivatore. Si usa così:</p>
+          <ol className="mt-4 max-w-3xl space-y-3">
+            {COME_SI_USA.map((p, i) => (
+              <li key={p.gesto} className="flex gap-3 text-[17px] leading-relaxed text-navy-700 md:text-lg">
+                <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-orange-500 font-display text-[15px] font-bold text-navy" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span>
+                  <strong className="font-semibold text-navy">{p.gesto}</strong> {p.resto}
+                </span>
+              </li>
+            ))}
+          </ol>
           <div className="mt-8">
             <AnalisiPrezziDemo whatsapp={whatsapp} />
           </div>

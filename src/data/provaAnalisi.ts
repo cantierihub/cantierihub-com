@@ -6,8 +6,13 @@
 
 export const TITOLO_PROVA = "Prova l'analisi prezzi su una voce tua";
 
-export const COME_SI_USA =
-  "Scrivi la lavorazione come la scrivi nel computo, scegli unità, quantità e regione e imposta il cantiere. Premi «Analizza Prezzo»: vedi il costo diviso in materiali, manodopera e noli, il prezzo suggerito e il range di mercato della tua regione. Poi rispondi alle domande sotto il risultato e la stima si ricalcola.";
+/** Come si usa, a passi: la parte in grassetto è il gesto, il resto è cosa succede. */
+export const COME_SI_USA = [
+  { gesto: "Scrivi la lavorazione", resto: "come la scrivi nel computo." },
+  { gesto: "Scegli unità, quantità e regione", resto: "e, se vuoi, i dati del cantiere." },
+  { gesto: "Premi «Analizza Prezzo»", resto: "e vedi il costo diviso in materiali, manodopera e noli, il prezzo suggerito e il range di mercato della tua regione." },
+  { gesto: "Rispondi alle domande", resto: "sotto il risultato: la stima si ricalcola." },
+] as const;
 
 export const DESCRIZIONE_META =
   "La stessa analisi prezzi del Preventivatore di Cantieri Hub, da provare su una lavorazione tua: materiali, manodopera, noli, spese generali, utile e range di mercato.";
