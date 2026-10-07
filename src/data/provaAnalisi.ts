@@ -17,12 +17,15 @@ export const COME_SI_USA = [
 export const DESCRIZIONE_META =
   "La stessa analisi prezzi del Preventivatore di Cantieri Hub, da provare su una lavorazione tua: materiali, manodopera, noli, spese generali, utile e range di mercato.";
 
-/** «E non finisce qui»: le quattro cose dette da Raffaele, ognuna con una clip muta del programma vero. */
+/**
+ * «E non finisce qui»: le quattro cose dette da Raffaele, ognuna con una clip muta del Preventivatore di oggi,
+ * registrata il 07/10/2026 con l'account demo «Impresa Edile Esempio» sul «Computo Tipo» delle demo di vendita.
+ */
 export const ANCHE = [
-  { file: "pdf-voci", larghezza: 1046, altezza: 548, testo: "Importare dal tuo PDF, in un minuto, tutta la lista delle voci" },
-  { file: "prezzario", larghezza: 1046, altezza: 548, testo: "Abbinare ogni voce al suo prezzo del prezzario regionale" },
-  { file: "pdf-finale", larghezza: 1046, altezza: 548, testo: "Stampare con un clic il preventivo completo e professionale" },
-  { file: "quadro-economico", larghezza: 840, altezza: 452, testo: "Analizzare con un clic il quadro economico e vedere l'utile che ti resta" },
+  { file: "pdf-voci", larghezza: 1280, altezza: 906, testo: "Importare dal tuo PDF, in un minuto, tutta la lista delle voci" },
+  { file: "prezzario", larghezza: 1280, altezza: 906, testo: "Abbinare ogni voce al suo prezzo del prezzario regionale" },
+  { file: "pdf-finale", larghezza: 1280, altezza: 906, testo: "Stampare con un clic il preventivo completo e professionale" },
+  { file: "quadro-economico", larghezza: 1280, altezza: 906, testo: "Analizzare con un clic il quadro economico e vedere l'utile che ti resta" },
 ] as const;
 
 export const MESSAGGIO_WHATSAPP = "Ciao! Ho provato l'analisi prezzi sul sito e vorrei vedere il Preventivatore sul mio computo.";
