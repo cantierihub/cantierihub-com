@@ -7,7 +7,7 @@ import {
   conApprofondimento,
   corpoAnalisi,
   corpoApprofondimento,
-  eAngolo,
+  domandeDa,
   firmaConteggio,
   leggiConteggio,
   notaPerIlCrm,
@@ -17,10 +17,11 @@ import {
   validaRisposte,
   type Conteggio,
 } from "@/lib/prova/analisi";
+import { domandeDiRiserva } from "@/lib/prova/prodotto/priceAnalysisCategories";
 import { chiamaAnalisi, provaConfigurata, provaFinta, type EsitoFunzione } from "@/lib/prova/preventivatore";
 import { idContatto, proveDelContatto, segnaApprofondimento, segnaProva } from "@/lib/prova/crm";
 
-// La prova dell'Analisi Prezzi sulle pagine /prova/* (07/10/2026). Regole e motivi in lib/prova/analisi.ts.
+// La prova dell'Analisi Prezzi su /prova/analisi-prezzi (07/10/2026). Regole e motivi in lib/prova/analisi.ts.
 // Si conta solo ciò che è riuscito: un errore della funzione non consuma una prova.
 // Con l'analisi d'esempio (sviluppo, anteprime) nel CRM non si scrive niente.
 
@@ -34,7 +35,7 @@ const MAX_CORPO = 24 * 1024;
 
 const MESSAGGI = {
   limite: "Le 2 analisi gratuite sono state usate. Le altre voci le vediamo insieme in chiamata, sul tuo computo.",
-  limiteApprofondimento: "Questa analisi è già stata approfondita una volta: nella prova il giro è uno solo.",
+  limiteApprofondimento: "Nella prova l'approfondimento è uno per analisi. Nel Preventivatore puoi continuare finché la stima non ti torna.",
   "non-configurata": "La prova è ferma in questo momento. Scrivici su WhatsApp: l'analisi te la facciamo vedere noi.",
   esaurita: "Le prove gratuite sono esaurite per oggi. Scrivici su WhatsApp: l'analisi te la facciamo vedere noi.",
   occupata: "Troppe richieste in questo momento. Riprova fra un minuto: questa non è stata contata.",
@@ -93,8 +94,6 @@ export async function POST(req: NextRequest) {
     return rifiuto("non-valida", 400, {}, "Richiesta non leggibile.");
   }
 
-  const angolo = corpo.angolo;
-  if (!eAngolo(angolo)) return rifiuto("non-valida", 400, {}, "Pagina della prova sconosciuta.");
   const richiesta = validaRichiesta(corpo.richiesta);
   if (!richiesta.ok) return rifiuto("non-valida", 400, {}, richiesta.errore);
   const r = richiesta.valore;
@@ -102,6 +101,7 @@ export async function POST(req: NextRequest) {
   const c = await leggiConteggio(req.cookies.get(COOKIE)?.value, s);
   const contatto = idContatto(corpo.contatto);
   const { fatte: n, contattoLetto } = await fatte(c, contatto);
+  const scriviNelCrm = !!contatto && contattoLetto && !provaFinta();
 
   // ── Il giro di approfondimento (uno per analisi) ──
   if (corpo.fase === "approfondimento") {
@@ -115,12 +115,11 @@ export async function POST(req: NextRequest) {
     const analisi = analisiDaRisposta(esito.json);
     if (!analisi) return erroreFunzione({ ok: false, motivo: "errore", dettaglio: "approfondimento senza prezzo" });
     analisi.id = prima.id;
-    analisi.domande = [];
 
-    if (contatto && contattoLetto && !provaFinta()) {
+    if (scriviNelCrm) {
       const numero = Math.max(1, c.a.indexOf(prima.id!) + 1);
-      const nota = notaPerIlCrm({ angolo, numero, richiesta: r, analisi, approfondimento: { risposte, prezzoPrima: prima.prezzo } });
-      after(() => segnaApprofondimento(contatto, nota));
+      const nota = notaPerIlCrm({ numero, richiesta: r, analisi, approfondimento: { risposte, prezzoPrima: prima.prezzo } });
+      after(() => segnaApprofondimento(contatto!, nota));
     }
     return conCookie(NextResponse.json({ ok: true, analisi, rimaste: rimaste(n) }), conApprofondimento(c, prima.id!), s);
   }
@@ -132,11 +131,13 @@ export async function POST(req: NextRequest) {
   if (!esito.ok) return erroreFunzione(esito);
   const analisi = analisiDaRisposta(esito.json);
   if (!analisi) return erroreFunzione({ ok: false, motivo: "errore", dettaglio: "analisi senza prezzo" });
+  // Come il prodotto: se l'AI non propone domande, valgono quelle di riserva della categoria.
+  if (analisi.domande.length === 0) analisi.domande = domandeDa(domandeDiRiserva(r.voce));
 
   const numero = n + 1;
-  if (contatto && contattoLetto && !provaFinta()) {
-    const nota = notaPerIlCrm({ angolo, numero, richiesta: r, analisi });
-    after(() => segnaProva(contatto, { angolo, numero, nota }));
+  if (scriviNelCrm) {
+    const nota = notaPerIlCrm({ numero, richiesta: r, analisi });
+    after(() => segnaProva(contatto!, { numero, nota }));
   }
   // Il cookie segue le prove di questo telefono; se il contatto ne aveva già di più, si allinea a quelle.
   let nuovo = conAnalisi(c, analisi.id);

@@ -22,7 +22,7 @@ function useMenoMovimento(): boolean {
   );
 }
 
-export default function ClipProdotto({ file, titolo }: { file: string; titolo: string }) {
+export default function ClipProdotto({ file, titolo, larghezza, altezza }: { file: string; titolo: string; larghezza: number; altezza: number }) {
   const video = useRef<HTMLVideoElement>(null);
   // A mano: chi ha chiesto meno movimento, o un telefono che non lascia partire il video da solo.
   const menoMovimento = useMenoMovimento();
@@ -48,7 +48,8 @@ export default function ClipProdotto({ file, titolo }: { file: string; titolo: s
     <div className="relative overflow-hidden rounded-xl border border-navy-200 bg-navy-50 shadow-sm">
       <video
         ref={video}
-        className="block aspect-[1046/548] w-full"
+        className="block w-full"
+        style={{ aspectRatio: `${larghezza} / ${altezza}` }}
         src={`/video/prova/${file}.mp4`}
         poster={`/video/prova/${file}.jpg`}
         muted

@@ -1,27 +1,26 @@
 /**
  * La prova dell'Analisi Prezzi del Preventivatore sul sito (07/10/2026).
  *
- * Il lead arriva da WhatsApp, scrive una voce sua e vede la scomposizione vera: il sito chiama la stessa funzione del
- * prodotto (`analyze-price` del Preventivatore) con un account demo che ha crediti suoi. Il prompt non si copia: resta
- * nel prodotto, e qui arriva solo il risultato.
+ * Il lead arriva da WhatsApp, scrive una lavorazione sua e la analizza come nel Preventivatore: il server del sito
+ * chiama la STESSA funzione del prodotto (`analyze-price`) con un account demo che ha crediti suoi. Il prompt (costi
+ * della manodopera regione per regione, prezzi dei materiali, sfridi, correttivi del cantiere, spese generali e
+ * utile) resta nel prodotto e non si copia: quando lì migliora, migliora anche qui.
  *
- * Questo modulo è PURO (niente Next, niente rete): le regole della prova, provate in `analisi.test.ts`.
- * - cosa si può chiedere: gli stessi elenchi del Preventivatore (`src/lib/regions.ts`, `src/lib/units.ts`,
- *   `PriceAnalysisInline.tsx` del 07/10), così la funzione riceve quello che riceve dal prodotto;
- * - cosa torna al browser: solo i campi che la pagina mostra, letti con difesa (un campo che manca non fa cadere niente);
+ * Il modulo è una replica di `PriceAnalysisInline.tsx` del Preventivatore (origin/main 4eefacec, 07/10/2026): stessi
+ * campi, stesse scelte, stessi predefiniti, stesso corpo mandato alla funzione. Se il prodotto cambia, si cambia qui.
+ *
+ * Questo file è PURO (niente Next, niente rete): le regole della prova, provate in `analisi.test.ts`.
+ * - cosa torna al browser: solo i campi che la pagina mostra, letti con difesa;
  * - il limite: **2 analisi**, ognuna con **un** giro di approfondimento (il primo, che nel prodotto è gratuito). Il
  *   conto sta in un cookie firmato dal server; chi arriva col link del CRM ha il conto anche nelle etichette del
- *   contatto (`crm.ts`), che una finestra in incognito non azzera. Il tetto vero della spesa sono i crediti dell'account.
+ *   contatto (`crm.ts`). Il tetto vero della spesa sono i crediti dell'account demo.
  */
 
 export const MAX_ANALISI = 2;
 
-export const ANGOLI = ["margine", "fuori-prezzario"] as const;
-export type Angolo = (typeof ANGOLI)[number];
+type Opzione = { valore: string; etichetta: string };
 
-export function eAngolo(v: unknown): v is Angolo {
-  return typeof v === "string" && (ANGOLI as readonly string[]).includes(v);
-}
+// ── Gli elenchi del Preventivatore (src/lib/regions.ts, src/lib/units.ts, PriceAnalysisInline.tsx) ─────────────
 
 export const REGIONI = [
   "Abruzzo", "Basilicata", "Calabria", "Campania", "Emilia-Romagna",
@@ -37,110 +36,191 @@ export const UNITA = [
   "ora", "giorno", "mese", "settimana",
 ] as const;
 
-export const TIPI_LAVORO = [
-  { valore: "nuovo", etichetta: "Nuova costruzione" },
-  { valore: "ristrutturazione_leggera", etichetta: "Ristrutturazione leggera" },
-  { valore: "ristrutturazione_pesante", etichetta: "Ristrutturazione pesante" },
+export const TIPI_LAVORO: Opzione[] = [
+  { valore: "nuovo", etichetta: "Nuovo" },
+  { valore: "ristrutturazione_leggera", etichetta: "Ristr. leggera" },
+  { valore: "ristrutturazione_pesante", etichetta: "Ristr. pesante" },
   { valore: "edificio_abitato", etichetta: "Edificio abitato" },
-  { valore: "edificio_vincolato", etichetta: "Edificio vincolato o storico" },
-] as const;
+  { valore: "edificio_vincolato", etichetta: "Vincolato/storico" },
+];
 
-export const FORNITURE = [
-  { valore: "fornitura_posa", etichetta: "Fornitura e posa" },
-  { valore: "solo_posa", etichetta: "Solo posa" },
-  { valore: "subappalto", etichetta: "Subappalto chiavi in mano" },
-] as const;
-
-export const COMMITTENTI = [
+export const COMMITTENTI: Opzione[] = [
   { valore: "privato", etichetta: "Privato" },
+  { valore: "pubblico", etichetta: "Ente Pubblico" },
   { valore: "impresa", etichetta: "Impresa" },
-  { valore: "pubblico", etichetta: "Ente pubblico" },
-] as const;
+];
 
-/** Le voci da toccare sopra il campo: con la pagina bianca non si comincia. */
-export const VOCI_ESEMPIO = [
-  { titolo: "Cappotto termico", voce: "Cappotto termico in EPS da 10 cm, rasato e finito con intonachino", unita: "m²" },
-  { titolo: "Massetto", voce: "Massetto in sabbia e cemento, spessore 5 cm, tirato a staggia", unita: "m²" },
-  { titolo: "Cartongesso", voce: "Parete in cartongesso a doppia lastra con isolante in lana minerale", unita: "m²" },
-  { titolo: "Tinteggiatura", voce: "Tinteggiatura di pareti interne con idropittura traspirante, due mani", unita: "m²" },
-] as const;
+export const DIMENSIONI: Opzione[] = [
+  { valore: "piccolo", etichetta: "Piccolo (<20k €)" },
+  { valore: "medio_piccolo", etichetta: "Medio-piccolo (20-50k €)" },
+  { valore: "medio", etichetta: "Medio (50-150k €)" },
+  { valore: "grande", etichetta: "Grande (150-500k €)" },
+  { valore: "molto_grande", etichetta: "Molto grande (>500k €)" },
+];
 
-export const VOCE_MIN = 8;
-export const VOCE_MAX = 600;
+export const FORNITURE: Opzione[] = [
+  { valore: "solo_posa", etichetta: "Solo posa" },
+  { valore: "fornitura_posa", etichetta: "Fornitura e posa" },
+  { valore: "subappalto", etichetta: "Subappalto chiavi in mano" },
+];
+
+/** I parametri avanzati: «none» vuol dire non specificato e alla funzione non si manda. */
+export const STAGIONI: Opzione[] = [
+  { valore: "none", etichetta: "Non specificata" },
+  { valore: "estate", etichetta: "Estate" },
+  { valore: "inverno", etichetta: "Inverno" },
+  { valore: "mezza_stagione", etichetta: "Mezza stagione" },
+];
+export const VINCOLI_ORARI: Opzione[] = [
+  { valore: "none", etichetta: "Nessuno" },
+  { valore: "notturno", etichetta: "Notturno" },
+  { valore: "festivo", etichetta: "Festivo" },
+  { valore: "h24", etichetta: "H24" },
+];
+export const URGENZE: Opzione[] = [
+  { valore: "none", etichetta: "Normale" },
+  { valore: "urgente", etichetta: "Urgente" },
+  { valore: "emergenza", etichetta: "Emergenza" },
+];
+export const ACCESSIBILITA: Opzione[] = [
+  { valore: "none", etichetta: "Non specificata" },
+  { valore: "buona", etichetta: "Buona" },
+  { valore: "limitata", etichetta: "Limitata" },
+  { valore: "difficile", etichetta: "Difficile (ZTL, piano alto)" },
+];
+export const PIANI: Opzione[] = [
+  { valore: "none", etichetta: "Non specificato" },
+  { valore: "piano_terra", etichetta: "Piano terra / Interrato" },
+  { valore: "piano_1_2", etichetta: "1°-2° piano" },
+  { valore: "piano_3_4", etichetta: "3°-4° piano" },
+  { valore: "piano_5_6", etichetta: "5°-6° piano" },
+  { valore: "piano_7_plus", etichetta: "7° piano e oltre" },
+  { valore: "copertura", etichetta: "Copertura / tetto" },
+  { valore: "sotterraneo", etichetta: "Sotterraneo / cavità" },
+];
+export const DISTANZE: Opzione[] = [
+  { valore: "none", etichetta: "Non specificata" },
+  { valore: "entro_20km", etichetta: "Entro 20 km" },
+  { valore: "20_40km", etichetta: "20-40 km" },
+  { valore: "40_70km", etichetta: "40-70 km" },
+  { valore: "oltre_70km", etichetta: "Oltre 70 km" },
+];
+
+/** I predefiniti del prodotto per chi non li ha ancora impostati in Impostazioni; i cursori vanno 0-30 e 0-25. */
+export const SPESE_GENERALI = 15;
+export const UTILE = 10;
+export const SPESE_GENERALI_MAX = 30;
+export const UTILE_MAX = 25;
+
+export const VOCE_MAX = 1000;
+export const NOTE_MAX = 800;
 
 export type RichiestaProva = {
   voce: string;
   unita: string;
+  quantita: number;
   regione: string;
   tipoLavoro: string;
-  fornitura: string;
   committente: string;
-  /** Il prezzo che mette lui, per il confronto. Non va alla funzione: serve solo alla pagina e alla nota. */
-  prezzoTuo: number | null;
+  dimensione: string;
+  fornitura: string;
+  stagione: string;
+  vincoliOrari: string;
+  urgenza: string;
+  accessibilita: string;
+  piano: string;
+  distanza: string;
+  note: string;
+  speseGenerali: number;
+  utile: number;
 };
 
 type Esito<T> = { ok: true; valore: T } | { ok: false; errore: string };
 
-const valoriDi = (elenco: readonly { valore: string }[]) => elenco.map((e) => e.valore);
+const valoriDi = (elenco: readonly Opzione[]) => elenco.map((e) => e.valore);
 
 function scelta(v: unknown, ammessi: readonly string[], predefinito: string): string | null {
   if (v === undefined || v === null || v === "") return predefinito;
   return typeof v === "string" && ammessi.includes(v) ? v : null;
 }
 
-/**
- * «45», «45,50», «1.250,00», «€ 45» e anche «45.50»: con la virgola i punti sono le migliaia; senza virgola, un punto
- * seguito da una o due cifre è il decimale (chi scrive dal telefono usa il punto della tastiera).
- */
-export function leggiPrezzo(v: unknown): number | null {
-  if (v === undefined || v === null || v === "") return null;
+function intero(v: unknown, min: number, max: number, predefinito: number): number | null {
+  if (v === undefined || v === null || v === "") return predefinito;
+  const n = Number(v);
+  return Number.isFinite(n) && n >= min && n <= max ? Math.round(n) : null;
+}
+
+/** La quantità come la scrive un imprenditore: «12», «12,5», «1.250,5». Vuota vale 1, come nel prodotto. */
+export function leggiQuantita(v: unknown): number | null {
+  if (v === undefined || v === null || v === "") return 1;
   let n: number;
   if (typeof v === "number") n = v;
   else {
-    const s = String(v).replace(/\s|€/g, "");
+    const s = String(v).replace(/\s/g, "");
     if (s.includes(",")) n = Number(s.replace(/\./g, "").replace(",", "."));
     else if (/^\d+\.\d{1,2}$/.test(s)) n = Number(s);
     else n = Number(s.replace(/\./g, ""));
   }
-  return Number.isFinite(n) && n > 0 && n < 1_000_000 ? Math.round(n * 100) / 100 : null;
+  return Number.isFinite(n) && n >= 0 && n < 10_000_000 ? Math.round(n * 100) / 100 : null;
 }
 
 export function validaRichiesta(x: unknown): Esito<RichiestaProva> {
   if (!x || typeof x !== "object") return { ok: false, errore: "Richiesta vuota." };
   const r = x as Record<string, unknown>;
-  const voce = typeof r.voce === "string" ? r.voce.replace(/\s+/g, " ").trim() : "";
-  if (voce.length < VOCE_MIN) return { ok: false, errore: "Descrivi la lavorazione con qualche parola in più." };
+  const voce = typeof r.voce === "string" ? r.voce.trim() : "";
+  // Come il prodotto: servono descrizione e regione.
+  if (!voce) return { ok: false, errore: "Compila descrizione e regione." };
   if (voce.length > VOCE_MAX) return { ok: false, errore: `La descrizione supera i ${VOCE_MAX} caratteri.` };
-  const unita = scelta(r.unita, UNITA, "");
-  if (!unita) return { ok: false, errore: "Scegli l'unità di misura." };
   const regione = scelta(r.regione, REGIONI, "");
-  if (!regione) return { ok: false, errore: "Scegli la regione del cantiere." };
-  const tipoLavoro = scelta(r.tipoLavoro, valoriDi(TIPI_LAVORO), "ristrutturazione_leggera");
-  const fornitura = scelta(r.fornitura, valoriDi(FORNITURE), "fornitura_posa");
-  const committente = scelta(r.committente, valoriDi(COMMITTENTI), "privato");
-  if (!tipoLavoro || !fornitura || !committente) return { ok: false, errore: "Una delle scelte non è valida." };
-  return {
-    ok: true,
-    valore: { voce, unita, regione, tipoLavoro, fornitura, committente, prezzoTuo: leggiPrezzo(r.prezzoTuo) },
+  if (!regione) return { ok: false, errore: "Compila descrizione e regione." };
+  const unita = scelta(r.unita, UNITA, "m²");
+  const quantita = leggiQuantita(r.quantita);
+  if (!unita || quantita === null) return { ok: false, errore: "Unità o quantità non valida." };
+
+  const campi = {
+    tipoLavoro: scelta(r.tipoLavoro, valoriDi(TIPI_LAVORO), "nuovo"),
+    committente: scelta(r.committente, valoriDi(COMMITTENTI), "privato"),
+    dimensione: scelta(r.dimensione, valoriDi(DIMENSIONI), "piccolo"),
+    fornitura: scelta(r.fornitura, valoriDi(FORNITURE), "fornitura_posa"),
+    stagione: scelta(r.stagione, valoriDi(STAGIONI), "none"),
+    vincoliOrari: scelta(r.vincoliOrari, valoriDi(VINCOLI_ORARI), "none"),
+    urgenza: scelta(r.urgenza, valoriDi(URGENZE), "none"),
+    accessibilita: scelta(r.accessibilita, valoriDi(ACCESSIBILITA), "none"),
+    piano: scelta(r.piano, valoriDi(PIANI), "none"),
+    distanza: scelta(r.distanza, valoriDi(DISTANZE), "none"),
   };
+  if (Object.values(campi).some((v) => v === null)) return { ok: false, errore: "Una delle scelte non è valida." };
+
+  const speseGenerali = intero(r.speseGenerali, 0, SPESE_GENERALI_MAX, SPESE_GENERALI);
+  const utile = intero(r.utile, 0, UTILE_MAX, UTILE);
+  if (speseGenerali === null || utile === null) return { ok: false, errore: "Spese generali o utile fuori misura." };
+
+  const note = typeof r.note === "string" ? r.note.trim().slice(0, NOTE_MAX) : "";
+  return { ok: true, valore: { voce, unita, quantita, regione, ...(campi as Record<keyof typeof campi, string>), note, speseGenerali, utile } };
 }
 
-/** Spese generali e utile della prova: i predefiniti del prodotto per chi non li ha ancora impostati. */
-export const SPESE_GENERALI = 15;
-export const UTILE = 10;
+const seDetto = (v: string) => (v === "none" ? undefined : v);
 
-/** Il corpo per `analyze-price`, con i nomi del Preventivatore (`PriceAnalysisInline.tsx`, 07/10/2026). */
+/** Il corpo per `analyze-price`, campo per campo come lo manda `PriceAnalysisInline.tsx` (07/10/2026). */
 export function corpoAnalisi(r: RichiestaProva): Record<string, unknown> {
   return {
     description: r.voce,
     unit: r.unita,
     region: r.regione,
     workType: r.tipoLavoro,
-    supplyType: r.fornitura,
+    quantity: r.quantita,
     clientType: r.committente,
-    projectSize: "piccolo",
-    overhead_percent: SPESE_GENERALI,
-    profit_percent: UTILE,
+    projectSize: r.dimensione,
+    supplyType: r.fornitura,
+    season: seDetto(r.stagione),
+    timeConstraints: seDetto(r.vincoliOrari),
+    urgency: seDetto(r.urgenza),
+    accessibility: seDetto(r.accessibilita),
+    floorLevel: seDetto(r.piano),
+    travelDistance: seDetto(r.distanza),
+    userNotes: r.note || undefined,
+    overhead_percent: r.speseGenerali,
+    profit_percent: r.utile,
   };
 }
 
@@ -167,12 +247,12 @@ export function corpoApprofondimento(r: RichiestaProva, a: AnalisiMostrata, risp
 }
 
 export function validaRisposte(x: unknown): Risposta[] | null {
-  if (!Array.isArray(x) || x.length === 0 || x.length > 6) return null;
+  if (!Array.isArray(x) || x.length === 0 || x.length > 8) return null;
   const esito: Risposta[] = [];
   for (const v of x) {
     if (!v || typeof v !== "object") return null;
     const { id, answer } = v as Record<string, unknown>;
-    if (typeof id !== "string" || !/^[\w-]{1,20}$/.test(id)) return null;
+    if (typeof id !== "string" || !/^[\w-]{1,40}$/.test(id)) return null;
     if (typeof answer !== "string") return null;
     const testo = answer.replace(/\s+/g, " ").trim().slice(0, 200);
     if (testo) esito.push({ id, answer: testo });
@@ -196,7 +276,7 @@ export type AnalisiMostrata = {
   costoDiretto: number;
   prezzo: number;
   mercato: { basso: number; medio: number; alto: number } | null;
-  confidenza: "alta" | "media" | "bassa" | null;
+  confidenza: "alta" | "media" | "bassa";
   note: string;
   righe: { materiali: RigaMateriale[]; manodopera: RigaManodopera[]; noli: RigaNolo[] };
   domande: Domanda[];
@@ -211,6 +291,19 @@ const elenco = (v: unknown): Record<string, unknown>[] =>
   Array.isArray(v) ? v.filter((x): x is Record<string, unknown> => !!x && typeof x === "object") : [];
 
 const FORMA_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Le domande come le disegna il prodotto: a scelta se hanno opzioni, altrimenti a risposta scritta. */
+export function domandeDa(v: unknown): Domanda[] {
+  return elenco(v).slice(0, 6).map((d, i) => {
+    const opzioni = Array.isArray(d.options) ? d.options.map((o) => testo(o, 120)).filter(Boolean).slice(0, 6) : [];
+    return {
+      id: typeof d.id === "string" && /^[\w-]{1,40}$/.test(d.id) ? d.id : `q${i + 1}`,
+      testo: testo(d.label, 240),
+      tipo: d.type === "choice" && opzioni.length > 0 ? ("scelta" as const) : ("testo" as const),
+      opzioni,
+    };
+  }).filter((d) => d.testo);
+}
 
 /** Legge l'analisi della funzione. `null` se mancano i due numeri senza cui la pagina non ha niente da mostrare. */
 export function analisiDaRisposta(json: unknown): AnalisiMostrata | null {
@@ -228,7 +321,7 @@ export function analisiDaRisposta(json: unknown): AnalisiMostrata | null {
     ? { basso, medio, alto }
     : null;
 
-  const confidenza = r.confidence === "alta" || r.confidence === "media" || r.confidence === "bassa" ? r.confidence : null;
+  const confidenza = r.confidence === "alta" || r.confidence === "bassa" ? r.confidence : "media";
   const id = typeof r.analisi_id === "string" && FORMA_UUID.test(r.analisi_id) ? r.analisi_id.toLowerCase() : null;
 
   return {
@@ -240,37 +333,29 @@ export function analisiDaRisposta(json: unknown): AnalisiMostrata | null {
     prezzo,
     mercato,
     confidenza,
-    note: testo(r.notes, 1200),
+    note: testo(r.notes, 1500),
     righe: {
-      materiali: elenco(r.materials_breakdown).slice(0, 12).map((m) => ({
+      materiali: elenco(r.materials_breakdown).slice(0, 15).map((m) => ({
         nome: testo(m.name, 160),
         quantita: num(m.quantity) ?? 0,
         unita: testo(m.unit, 12),
         prezzo: num(m.unit_price) ?? 0,
         subtotale: num(m.subtotal) ?? 0,
       })).filter((m) => m.nome),
-      manodopera: elenco(r.labor_breakdown).slice(0, 8).map((m) => ({
+      manodopera: elenco(r.labor_breakdown).slice(0, 10).map((m) => ({
         categoria: testo(m.category, 120),
         ore: num(m.hours_per_unit) ?? 0,
         costoOrario: num(m.hourly_rate) ?? 0,
         subtotale: num(m.subtotal) ?? 0,
       })).filter((m) => m.categoria),
-      noli: elenco(r.equipment_breakdown).slice(0, 8).map((m) => ({
+      noli: elenco(r.equipment_breakdown).slice(0, 10).map((m) => ({
         tipo: testo(m.type, 160),
         quantita: num(m.quantity) ?? 0,
         costo: num(m.unit_cost) ?? 0,
         subtotale: num(m.subtotal) ?? 0,
       })).filter((m) => m.tipo),
     },
-    domande: elenco(r.refinement_questions).slice(0, 4).map((d, i) => {
-      const opzioni = Array.isArray(d.options) ? d.options.map((o) => testo(o, 120)).filter(Boolean).slice(0, 4) : [];
-      return {
-        id: typeof d.id === "string" && /^[\w-]{1,20}$/.test(d.id) ? d.id : `q${i + 1}`,
-        testo: testo(d.label, 240),
-        tipo: d.type === "choice" && opzioni.length >= 2 ? ("scelta" as const) : ("testo" as const),
-        opzioni,
-      };
-    }).filter((d) => d.testo),
+    domande: domandeDa(r.refinement_questions),
   };
 }
 
@@ -290,11 +375,16 @@ export function analisiDalBrowser(x: unknown): AnalisiMostrata | null {
     costoDiretto,
     prezzo,
     mercato: null,
-    confidenza: null,
+    confidenza: "media",
     note: "",
     righe: { materiali: [], manodopera: [], noli: [] },
     domande: [],
   };
+}
+
+/** Il prezzo coi cursori di spese generali e utile, con la formula del prodotto (`recalculatedPrice`). */
+export function prezzoRicalcolato(costoDiretto: number, speseGenerali: number, utile: number): number {
+  return costoDiretto * (1 + speseGenerali / 100) * (1 + utile / 100);
 }
 
 // ── Il conto delle prove: un cookie firmato ─────────────────────────────────────────────────────────────────────
@@ -347,13 +437,7 @@ export function conApprofondimento(c: Conteggio, id: string): Conteggio {
   return { a: c.a, r: [...c.r, id] };
 }
 
-// ── Il confronto col prezzo suo e la nota per il CRM ────────────────────────────────────────────────────────────
-
-/** Quanto il suo prezzo sta sotto (negativo) o sopra (positivo) il prezzo suggerito, in percentuale. */
-export function scartoPercento(prezzoTuo: number | null, prezzo: number): number | null {
-  if (prezzoTuo === null || prezzo <= 0) return null;
-  return Math.round(((prezzoTuo - prezzo) / prezzo) * 1000) / 10;
-}
+// ── La nota per il CRM ──────────────────────────────────────────────────────────────────────────────────────────
 
 /** «3.540,00 €»: in italiano Intl non separa le migliaia sotto i 10.000, e un imprenditore il punto se lo aspetta. */
 const FORMATO_EURO = new Intl.NumberFormat("it-IT", {
@@ -368,11 +452,9 @@ export function euro(n: number): string {
   return FORMATO_EURO.format(n);
 }
 
-const etichettaDi = (elenco: readonly { valore: string; etichetta: string }[], v: string) =>
-  elenco.find((e) => e.valore === v)?.etichetta ?? v;
+export const etichettaDi = (elenco: readonly Opzione[], v: string) => elenco.find((e) => e.valore === v)?.etichetta ?? v;
 
 export function notaPerIlCrm(p: {
-  angolo: Angolo;
   numero: number;
   richiesta: RichiestaProva;
   analisi: AnalisiMostrata;
@@ -380,21 +462,31 @@ export function notaPerIlCrm(p: {
 }): string {
   const { richiesta: r, analisi: a } = p;
   const u = r.unita;
+  const avanzati = [
+    [STAGIONI, r.stagione, "stagione"],
+    [VINCOLI_ORARI, r.vincoliOrari, "vincoli"],
+    [URGENZE, r.urgenza, "urgenza"],
+    [ACCESSIBILITA, r.accessibilita, "accessibilità"],
+    [PIANI, r.piano, "piano"],
+    [DISTANZE, r.distanza, "distanza"],
+  ] as const;
   const righe = [
     p.approfondimento
-      ? `Prova dell'analisi prezzi dal sito: approfondimento dell'analisi ${p.numero} di ${MAX_ANALISI} (pagina «${p.angolo}»)`
-      : `Prova dell'analisi prezzi dal sito: analisi ${p.numero} di ${MAX_ANALISI} (pagina «${p.angolo}»)`,
+      ? `Prova dell'analisi prezzi dal sito: approfondimento dell'analisi ${p.numero} di ${MAX_ANALISI}`
+      : `Prova dell'analisi prezzi dal sito: analisi ${p.numero} di ${MAX_ANALISI}`,
     `Voce: ${r.voce}`,
-    `${u} · ${r.regione} · ${etichettaDi(TIPI_LAVORO, r.tipoLavoro)} · ${etichettaDi(FORNITURE, r.fornitura)} · committente ${etichettaDi(COMMITTENTI, r.committente).toLowerCase()}`,
-    `Prezzo suggerito: ${euro(a.prezzo)}/${u}` + (a.mercato ? ` (mercato ${euro(a.mercato.basso)} – ${euro(a.mercato.alto)})` : ""),
+    `${r.quantita.toLocaleString("it-IT")} ${u} · ${r.regione} · ${etichettaDi(TIPI_LAVORO, r.tipoLavoro)} · committente ${etichettaDi(COMMITTENTI, r.committente)} · appalto ${etichettaDi(DIMENSIONI, r.dimensione)} · ${etichettaDi(FORNITURE, r.fornitura)}`,
   ];
+  const detti = avanzati.filter(([, v]) => v !== "none").map(([elenco, v, nome]) => `${nome} ${etichettaDi(elenco, v).toLowerCase()}`);
+  if (detti.length) righe.push(`Parametri avanzati: ${detti.join(" · ")}`);
+  if (r.note) righe.push(`Note di cantiere: ${r.note}`);
+  righe.push(
+    `Prezzo suggerito: ${euro(a.prezzo)}/${u} (spese generali ${r.speseGenerali}%, utile ${r.utile}%)` +
+      (a.mercato ? ` · mercato ${euro(a.mercato.basso)} – ${euro(a.mercato.alto)}` : ""),
+  );
   if (p.approfondimento) {
     righe.push(`Prima dell'approfondimento: ${euro(p.approfondimento.prezzoPrima)}/${u}`);
     righe.push(`Risposte: ${p.approfondimento.risposte.map((x) => x.answer).join(" · ")}`);
-  }
-  if (r.prezzoTuo !== null) {
-    const s = scartoPercento(r.prezzoTuo, a.prezzo);
-    righe.push(`Il suo prezzo: ${euro(r.prezzoTuo)}/${u}` + (s !== null ? ` (${s > 0 ? "+" : ""}${s.toLocaleString("it-IT")}% sul prezzo suggerito)` : ""));
   }
   return righe.join("\n");
 }

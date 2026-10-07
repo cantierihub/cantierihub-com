@@ -93,13 +93,22 @@ export async function chiamaAnalisi(corpo: Record<string, unknown>): Promise<Esi
   return { ok: false, motivo: "errore", dettaglio: "accesso non riuscito" };
 }
 
-/** Solo in sviluppo: l'esempio vero, con un id nuovo; nell'approfondimento il prezzo cambia un poco e le domande no. */
+/**
+ * L'esempio: l'analisi vera, con un id nuovo. Nell'approfondimento il prezzo cambia un poco e tornano due domande per
+ * il giro dopo, come fa la funzione vera (qui sono le stesse dell'esempio: è un esempio, e la pagina lo dice).
+ */
 function esempioFinto(corpo: Record<string, unknown>): unknown {
   const analisi = { ...ESEMPIO_ANALISI, analisi_id: crypto.randomUUID() };
   if (corpo.phase === "refine") {
     const prima = (corpo.original_analysis ?? {}) as { analisi_id?: string };
     return {
-      analysis: { ...analisi, analisi_id: prima.analisi_id ?? analisi.analisi_id, suggested_price: 95.4, refinement_questions: [] },
+      analysis: {
+        ...analisi,
+        analisi_id: prima.analisi_id ?? analisi.analisi_id,
+        direct_cost: 75.42,
+        suggested_price: 95.4,
+        refinement_questions: ESEMPIO_ANALISI.refinement_questions.slice(1),
+      },
       delta_percent: 4.1,
     };
   }

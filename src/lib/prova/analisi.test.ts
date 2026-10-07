@@ -10,56 +10,80 @@ import {
   conApprofondimento,
   corpoAnalisi,
   corpoApprofondimento,
+  domandeDa,
   firmaConteggio,
   leggiConteggio,
-  leggiPrezzo,
+  leggiQuantita,
   notaPerIlCrm,
+  prezzoRicalcolato,
   puoApprofondire,
   rimaste,
-  scartoPercento,
   validaRichiesta,
   validaRisposte,
-  type RichiestaProva,
 } from "./analisi.ts";
 import { ESEMPIO_ANALISI } from "./esempioSviluppo.ts";
 
-const BASE = { voce: "Massetto in sabbia e cemento, spessore 5 cm", unita: "m²", regione: "Campania" };
+const BASE = { voce: "Massetto in sabbia e cemento, spessore 5 cm", regione: "Campania" };
 
-test("una richiesta minima passa coi predefiniti del prodotto", () => {
+test("una richiesta minima prende i predefiniti del Preventivatore", () => {
   const r = validaRichiesta(BASE);
   assert.ok(r.ok);
+  const v = r.valore;
   assert.deepEqual(
-    { tipo: r.valore.tipoLavoro, fornitura: r.valore.fornitura, committente: r.valore.committente, tuo: r.valore.prezzoTuo },
-    { tipo: "ristrutturazione_leggera", fornitura: "fornitura_posa", committente: "privato", tuo: null },
+    [v.unita, v.quantita, v.tipoLavoro, v.committente, v.dimensione, v.fornitura, v.stagione, v.speseGenerali, v.utile],
+    ["m²", 1, "nuovo", "privato", "piccolo", "fornitura_posa", "none", 15, 10],
   );
 });
 
-test("si rifiuta quello che il Preventivatore non conosce", () => {
-  assert.equal(validaRichiesta({ ...BASE, voce: "muro" }).ok, false, "voce troppo corta");
-  assert.equal(validaRichiesta({ ...BASE, voce: "x".repeat(601) }).ok, false, "voce troppo lunga");
-  assert.equal(validaRichiesta({ ...BASE, unita: "mq" }).ok, false, "unità non dell'elenco");
+test("come il prodotto: servono descrizione e regione, il resto si controlla", () => {
+  assert.equal(validaRichiesta({ ...BASE, voce: "  " }).ok, false, "descrizione vuota");
+  assert.equal(validaRichiesta({ ...BASE, regione: "" }).ok, false, "regione vuota");
   assert.equal(validaRichiesta({ ...BASE, regione: "Trentino" }).ok, false, "regione scritta diversa");
+  assert.equal(validaRichiesta({ ...BASE, unita: "mq" }).ok, false, "unità non dell'elenco");
   assert.equal(validaRichiesta({ ...BASE, tipoLavoro: "demolizione" }).ok, false);
+  assert.equal(validaRichiesta({ ...BASE, piano: "piano_99" }).ok, false, "parametro avanzato inventato");
+  assert.equal(validaRichiesta({ ...BASE, speseGenerali: 31 }).ok, false, "oltre il cursore del prodotto");
+  assert.equal(validaRichiesta({ ...BASE, utile: -1 }).ok, false);
+  assert.equal(validaRichiesta({ ...BASE, quantita: "abc" }).ok, false);
   assert.equal(validaRichiesta(null).ok, false);
 });
 
-test("il prezzo suo si legge come lo scrive un imprenditore", () => {
-  assert.equal(leggiPrezzo("45"), 45);
-  assert.equal(leggiPrezzo("45,50"), 45.5);
-  assert.equal(leggiPrezzo("€ 1.250,00"), 1250);
-  assert.equal(leggiPrezzo("45.50"), 45.5, "il punto della tastiera del telefono");
-  assert.equal(leggiPrezzo("1.250"), 1250, "un punto con tre cifre è delle migliaia");
-  assert.equal(leggiPrezzo(""), null);
-  assert.equal(leggiPrezzo("0"), null);
-  assert.equal(leggiPrezzo("abc"), null);
+test("la quantità si legge come la scrive un imprenditore", () => {
+  assert.equal(leggiQuantita(""), 1, "vuota vale 1, come nel prodotto");
+  assert.equal(leggiQuantita("12,5"), 12.5);
+  assert.equal(leggiQuantita("1.250,5"), 1250.5);
+  assert.equal(leggiQuantita("12.5"), 12.5, "il punto della tastiera del telefono");
+  assert.equal(leggiQuantita("1.250"), 1250, "un punto con tre cifre è delle migliaia");
+  assert.equal(leggiQuantita("0"), 0);
+  assert.equal(leggiQuantita("-3"), null);
 });
 
-test("alla funzione vanno i nomi del prodotto, il prezzo suo no", () => {
-  const r = validaRichiesta({ ...BASE, prezzoTuo: "30" });
+test("alla funzione va lo stesso corpo che manda il Preventivatore", () => {
+  const r = validaRichiesta({
+    ...BASE, unita: "m²", quantita: "40", tipoLavoro: "ristrutturazione_pesante", committente: "impresa", dimensione: "medio",
+    fornitura: "solo_posa", stagione: "inverno", vincoliOrari: "none", urgenza: "urgente", accessibilita: "none",
+    piano: "piano_3_4", distanza: "20_40km", note: " Cantiere in centro storico ", speseGenerali: 18, utile: 12,
+  });
   assert.ok(r.ok);
-  const corpo = corpoAnalisi(r.valore);
-  assert.deepEqual(Object.keys(corpo).sort(), ["clientType", "description", "overhead_percent", "profit_percent", "projectSize", "region", "supplyType", "unit", "workType"]);
-  assert.ok(!JSON.stringify(corpo).includes("30"), "il prezzo suo non arriva all'AI");
+  assert.deepEqual(corpoAnalisi(r.valore), {
+    description: BASE.voce,
+    unit: "m²",
+    region: "Campania",
+    workType: "ristrutturazione_pesante",
+    quantity: 40,
+    clientType: "impresa",
+    projectSize: "medio",
+    supplyType: "solo_posa",
+    season: "inverno",
+    timeConstraints: undefined,
+    urgency: "urgente",
+    accessibility: undefined,
+    floorLevel: "piano_3_4",
+    travelDistance: "20_40km",
+    userNotes: "Cantiere in centro storico",
+    overhead_percent: 18,
+    profit_percent: 12,
+  });
 });
 
 test("l'analisi vera della funzione si legge tutta", () => {
@@ -69,6 +93,7 @@ test("l'analisi vera della funzione si legge tutta", () => {
   assert.equal(a.costoDiretto, 72.48);
   assert.deepEqual(a.mercato, { basso: 85, medio: 105, alto: 125 });
   assert.equal(a.id, "f80c96e6-d4ae-4b62-9a98-63b50db410ef");
+  assert.equal(a.confidenza, "alta");
   assert.equal(a.righe.materiali.length, 4);
   assert.equal(a.righe.manodopera[0].costoOrario, 30.5);
   assert.equal(a.domande.length, 3);
@@ -80,17 +105,25 @@ test("una risposta rotta non fa cadere la pagina", () => {
   assert.equal(analisiDaRisposta(null), null);
   assert.equal(analisiDaRisposta({ analysis: { suggested_price: "abc", direct_cost: 10 } }), null);
   assert.equal(analisiDaRisposta({ analysis: { suggested_price: 0, direct_cost: 10 } }), null);
-  const a = analisiDaRisposta({ analysis: { suggested_price: 50, direct_cost: 40, materials_breakdown: "niente", refinement_questions: [{ label: "Che spessore?", type: "choice", options: ["uno"] }] } });
+  const a = analisiDaRisposta({ analysis: { suggested_price: 50, direct_cost: 40, materials_breakdown: "niente", confidence: "boh", refinement_questions: [{ label: "Che spessore?", type: "choice" }] } });
   assert.ok(a);
   assert.deepEqual(a.righe.materiali, []);
-  assert.equal(a.mercato, null, "senza i tre prezzi di mercato la riga non si disegna");
+  assert.equal(a.mercato, null, "senza i tre prezzi di mercato il range non si disegna");
+  assert.equal(a.confidenza, "media", "una confidenza sconosciuta non rompe il badge");
   assert.equal(a.id, null, "senza id l'approfondimento non si offre");
-  assert.equal(a.domande[0].tipo, "testo", "una scelta con una sola opzione diventa una risposta scritta");
+  assert.equal(a.domande[0].tipo, "testo", "una scelta senza opzioni diventa una risposta scritta, come nel prodotto");
 });
 
-test("un mercato al contrario non si disegna", () => {
-  const a = analisiDaRisposta({ analysis: { suggested_price: 50, direct_cost: 40, market_low: 80, market_mid: 60, market_high: 70 } });
-  assert.equal(a?.mercato, null);
+test("le domande di riserva (forma del prodotto) diventano domande della pagina", () => {
+  // Le domande di riserva le dà `domandeDiRiserva` del prodotto (copiato in prodotto/, provato nel Preventivatore):
+  // qui si prova solo che la loro forma passa.
+  const d = domandeDa([{ id: "distanza_discarica", label: "Distanza dalla discarica?", type: "choice", options: ["<10 km", "10-30 km", ">30 km"] }]);
+  assert.deepEqual(d, [{ id: "distanza_discarica", testo: "Distanza dalla discarica?", tipo: "scelta", opzioni: ["<10 km", "10-30 km", ">30 km"] }]);
+});
+
+test("il prezzo coi cursori usa la formula del prodotto (composta, non sommata)", () => {
+  assert.equal(Math.round(prezzoRicalcolato(100, 15, 10) * 100) / 100, 126.5);
+  assert.equal(prezzoRicalcolato(72.48, 0, 0), 72.48);
 });
 
 test("il cookie firmato si rilegge, quello toccato vale zero", async () => {
@@ -130,18 +163,19 @@ test("l'approfondimento rimanda id e totali, e le risposte si puliscono", () => 
   assert.equal(corpo.original_analysis.suggested_price, 91.68);
   assert.equal(analisiDalBrowser({ id: "inventato", prezzo: 1, costoDiretto: 1 }), null);
   assert.deepEqual(validaRisposte([{ id: "q1", answer: "  Sì  " }, { id: "q2", answer: "" }]), [{ id: "q1", answer: "Sì" }]);
+  assert.deepEqual(validaRisposte([{ id: "distanza_discarica", answer: "<10 km" }]), [{ id: "distanza_discarica", answer: "<10 km" }], "gli id delle domande di riserva");
   assert.equal(validaRisposte([]), null);
   assert.equal(validaRisposte([{ id: "<script>", answer: "x" }]), null);
 });
 
-test("lo scarto e la nota per il setter", () => {
-  assert.equal(scartoPercento(80, 100), -20);
-  assert.equal(scartoPercento(null, 100), null);
-  const r = validaRichiesta({ ...BASE, prezzoTuo: "80" });
+test("la nota per il setter racconta il cantiere", () => {
+  const r = validaRichiesta({ ...BASE, quantita: "40", urgenza: "urgente", note: "Centro storico" });
   assert.ok(r.ok);
   const a = analisiDaRisposta({ analysis: { suggested_price: 100, direct_cost: 80, market_low: 90, market_mid: 100, market_high: 120 } })!;
-  const nota = notaPerIlCrm({ angolo: "margine", numero: 1, richiesta: r.valore as RichiestaProva, analisi: a });
-  assert.match(nota, /analisi 1 di 2 \(pagina «margine»\)/);
-  assert.match(nota, /Campania/);
-  assert.match(nota, /Il suo prezzo: 80,00\s€\/m² \(-20% sul prezzo suggerito\)/);
+  const nota = notaPerIlCrm({ numero: 1, richiesta: r.valore, analisi: a });
+  assert.match(nota, /analisi 1 di 2/);
+  assert.match(nota, /40 m² · Campania · Nuovo/);
+  assert.match(nota, /Parametri avanzati: urgenza urgente/);
+  assert.match(nota, /Note di cantiere: Centro storico/);
+  assert.match(nota, /Prezzo suggerito: 100,00\s€\/m² \(spese generali 15%, utile 10%\)/);
 });

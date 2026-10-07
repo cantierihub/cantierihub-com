@@ -1,11 +1,10 @@
 /**
  * La prova dell'Analisi Prezzi nel contatto Salesflow (07/10/2026).
  *
- * Il link che il flusso del CRM manda su WhatsApp porta il contatto: `cantierihub.com/prova/margine?c={{contact.id}}`.
+ * Il link che il flusso del CRM manda su WhatsApp porta il contatto: `cantierihub.com/prova/analisi-prezzi?c={{contact.id}}`.
  * Con quello, ogni analisi fatta sulla pagina lascia nel contatto:
- * - le etichette `prova-analisi` (ha provato), `prova-<angolo>` (quale pagina ha visto) e, alla seconda,
- *   `prova-analisi-2` (ha finito le prove);
- * - una nota con voce, regione, prezzo uscito e il prezzo suo, se l'ha scritto: il setter apre la chiamata da lì.
+ * - le etichette `prova-analisi` (ha provato) e, alla seconda, `prova-analisi-2` (ha finito le prove);
+ * - una nota con voce, parametri del cantiere e prezzo uscito: il setter apre la chiamata da lì.
  *
  * Le etichette contano anche le prove: chi ha `prova-analisi-2` non ne fa altre, nemmeno da un altro telefono.
  * Senza `c`, o se il contatto non si trova, la prova funziona lo stesso col solo cookie e nel CRM non arriva niente.
@@ -15,15 +14,12 @@
  * e cancellerebbe quelle del CRM (stessa regola di `lib/salesflow.ts`).
  */
 
-import type { Angolo } from "./analisi";
-
 const BASE = "https://services.leadconnectorhq.com";
 const VERSIONE_API = "2021-07-28";
 const TIMEOUT_MS = 6000;
 
 export const ETICHETTA_PROVATA = "prova-analisi";
 export const ETICHETTA_FINITE = "prova-analisi-2";
-export const etichettaAngolo = (angolo: Angolo) => `prova-${angolo}`;
 
 /** Gli id dei contatti di Salesflow sono lettere e cifre (20 di solito): altro non si manda nemmeno al CRM. */
 export function idContatto(v: unknown): string | null {
@@ -61,8 +57,8 @@ export async function proveDelContatto(id: string): Promise<number | null> {
   }
 }
 
-export async function segnaProva(id: string, p: { angolo: Angolo; numero: number; nota: string }): Promise<void> {
-  const etichette = [ETICHETTA_PROVATA, etichettaAngolo(p.angolo), ...(p.numero >= 2 ? [ETICHETTA_FINITE] : [])];
+export async function segnaProva(id: string, p: { numero: number; nota: string }): Promise<void> {
+  const etichette = [ETICHETTA_PROVATA, ...(p.numero >= 2 ? [ETICHETTA_FINITE] : [])];
   const esiti = await Promise.allSettled([
     chiama("POST", `contacts/${id}/tags`, { tags: etichette }),
     chiama("POST", `contacts/${id}/notes`, { body: p.nota }),
