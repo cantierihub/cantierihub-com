@@ -40,7 +40,13 @@ export default function PaginaProva() {
               </li>
             ))}
           </ol>
-          <div className="mt-8">
+          {/* Il riquadro della prova (Raffaele, 07/10): fondo orange-100, bordo orange-300 e un'ombra arancio sotto, così si
+              vede dove la prova comincia e dove finisce. Dentro, le schede restano quelle del Preventivatore. Sul
+              telefono esce di 12 px nel margine, per non stringere i campi. */}
+          <div
+            data-riquadro-prova
+            className="-mx-3 mt-8 rounded-[18px] border border-orange-300 bg-orange-100 p-3 shadow-riquadro md:mx-0 md:p-6 lg:p-8"
+          >
             <AnalisiPrezziDemo whatsapp={whatsapp} />
           </div>
         </div>

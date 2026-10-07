@@ -22,6 +22,10 @@ chi tocca il sito, persone o agenti: si parte da qui, non si inventa.
 ## Spazi e forme
 - Contenitore `container-main` (1200 px, 24 px di margine su telefono). Raggi: 12-18 px sui blocchi, pieno sulle
   pillole. Ombre leggere solo su elementi che si sollevano al passaggio del mouse.
+- **Eccezione, il riquadro della prova** (`/prova/analisi-prezzi`, Raffaele 07/10): la demo del Preventivatore sta in
+  un palco arancio (fondo `orange-100`, bordo `orange-300`, raggio 18 px, ombra `shadow-riquadro`) perché si veda dove
+  la prova comincia e finisce. Dentro, le schede restano quelle del prodotto (bianche, raggio 8 px). Il palco è uno
+  per pagina: non è un modello per gli altri blocchi.
 - ⛔ Niente bordo colorato su un lato solo (`border-left` come accento), niente testo a gradiente, niente schede uguali
   in griglia quando basta un elenco.
 
