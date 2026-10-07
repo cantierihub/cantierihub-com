@@ -27,6 +27,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const sullaCandidatura = pathname?.startsWith("/demo/") ?? false;
+  // Sulle pagine di prova dell'Analisi Prezzi (07/10/2026) il pulsante porta al simulatore della pagina.
+  const sullaProva = pathname?.startsWith("/prova/") ?? false;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
@@ -93,7 +95,9 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-2" style={{ marginLeft: 8 }}>
           {/* Sulle pagine di candidatura delle Notizie il pulsante porta al modulo della pagina: su /contatti si
               perderebbe l'articolo di provenienza (e l'etichetta «notizie» nel CRM). */}
-          {sullaCandidatura ? (
+          {sullaProva ? (
+            <a href="#prova" className="btn-primary btn-sm cta-shimmer">Prova l&apos;analisi</a>
+          ) : sullaCandidatura ? (
             <a href="#candidatura" className="btn-primary btn-sm cta-shimmer">Candidati</a>
           ) : (
             <Link href="/contatti" className="btn-primary btn-sm cta-shimmer">
@@ -142,7 +146,9 @@ export default function Navbar() {
                 </Link>
               ))}
               <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #f1f5f9", display: "flex", flexDirection: "column", gap: 8 }}>
-                {sullaCandidatura ? (
+                {sullaProva ? (
+                  <a href="#prova" onClick={() => setMobileOpen(false)} className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prova l&apos;analisi</a>
+                ) : sullaCandidatura ? (
                   <a href="#candidatura" onClick={() => setMobileOpen(false)} className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Candidati per la demo</a>
                 ) : (
                   <Link href="/contatti" className="btn-primary cta-shimmer" style={{ justifyContent: "center" }}>Prenota Demo</Link>

@@ -6,10 +6,11 @@ import { WA_DEMO } from "@/data/site";
 /**
  * La colonna «Inizia adesso» del piè di pagina. Sulle pagine di candidatura delle Notizie (/demo/<prodotto>) non c'è:
  * il modulo è già nella pagina, e il WhatsApp perderebbe l'articolo di provenienza (revisione del 03/10/2026).
+ * Nemmeno sulle pagine di prova (/prova/<angolo>, 07/10/2026): il lead ha già chiesto la demo e la pagina ha il suo WhatsApp.
  */
 export default function ColonnaCtaFooter() {
   const pathname = usePathname();
-  if (pathname?.startsWith("/demo/")) return <div aria-hidden="true" />;
+  if (pathname?.startsWith("/demo/") || pathname?.startsWith("/prova/")) return <div aria-hidden="true" />;
   return (
     <div>
       <h4 className="eyebrow" style={{ color: "#94a3b8", marginBottom: 16 }}>
