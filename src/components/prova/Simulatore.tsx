@@ -210,7 +210,7 @@ export default function Simulatore({
 
         {esempio && (
           <p className="mt-4 rounded-xl border-2 border-dashed border-orange-500 bg-orange-50 px-4 py-3 text-[15px] leading-relaxed text-navy">
-            <strong>Anteprima.</strong> Il risultato è sempre lo stesso esempio (un pozzetto in Lombardia), qualunque voce si
+            <strong>Anteprima.</strong>{" "}Il risultato è sempre lo stesso esempio (un pozzetto in Lombardia), qualunque voce si
             scriva: la prova vera parte quando l&apos;account demo è collegato.
           </p>
         )}
