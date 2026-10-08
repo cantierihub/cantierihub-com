@@ -115,6 +115,9 @@ export function decodifica(s: string): string {
 }
 
 const NUMERO = /^[+\-\u2212\u2013]?\s*(\u20ac\s*)?\d[\d.,\s]*(%|\u20ac|\s?punti)?$/;
+// Anche un numero con la sua unit\u00e0 (\u00ab38,82 m\u00b2\u00bb, \u00ab6,11 \u20ac/m\u00b2\u00bb, \u00ab8 ore\u00bb) \u00e8 un numero: cos\u00ec non si spezza fra le due. Il
+// 08/10/2026, a 390 px, \u00ab38,82\u00bb e \u00abm\u00b2\u00bb finivano su due righe nella tabella della guida sul computo metrico.
+const MISURA = /^\d[\d.,]*\s?(m[\u00b2\u00b323]?|mq|mc|ml|cm|mm|kg|q|t|l|h|ore|giorni|\u20ac\/\s?[a-z\u00b2\u00b3]{1,4})$/i;
 
 // Le colonne fatte solo di numeri si allineano a destra e con le cifre della stessa larghezza, cos\u00ec sul telefono si
 // confrontano a colpo d'occhio. La tabella sta in un contenitore che scorre se proprio non ci sta.
@@ -124,7 +127,7 @@ function tabelle(html: string): string {
     const colonne = Math.max(0, ...righe.map((r) => r.length));
     const numeriche = Array.from({ length: colonne }, (_, c) => {
       const celle = righe.flatMap((r) => (r[c] && r[c][1] === "td" ? [decodifica(r[c][3].replace(/<[^>]+>/g, "")).trim()] : []));
-      return c > 0 && celle.length > 0 && celle.every((t) => t === "" || NUMERO.test(t));
+      return c > 0 && celle.length > 0 && celle.every((t) => t === "" || NUMERO.test(t) || MISURA.test(t));
     });
     const nuovo = dentro.replace(/<tr>([\s\S]*?)<\/tr>/g, (_t, celle: string) => {
       let c = -1;
