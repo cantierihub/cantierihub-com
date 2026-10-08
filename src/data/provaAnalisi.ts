@@ -29,3 +29,18 @@ export const ANCHE = [
 ] as const;
 
 export const MESSAGGIO_WHATSAPP = "Ciao! Ho provato l'analisi prezzi sul sito e vorrei vedere il Preventivatore sul mio computo.";
+
+/**
+ * Il video completo in fondo alla pagina (Raffaele, 08/10: «così chi arriva in chiamata è già educato»): «Come Funziona
+ * il PREVENTIVATORE Pro (AI)», 4:35, non in elenco sul canale, del 28/05/2026. Copertina presa dal canale e ospitata
+ * dal sito (`public/video/prova/video-completo.jpg`): YouTube si carica solo se si preme play.
+ */
+export const VIDEO_COMPLETO = {
+  id: "cj8Xwny9a6o",
+  titolo: "Come funziona il Preventivatore",
+  durata: "4:35",
+  durataParlata: "4 minuti e 35 secondi",
+  copertina: "/video/prova/video-completo.jpg",
+  titoloSezione: "Guarda come funziona tutto il Preventivatore",
+  sottotitolo: "Il video completo, in 4 minuti e mezzo: carichi il computo, scegli da dove prendere i prezzi, li controlli con l'analisi prezzi e scarichi il preventivo in PDF.",
+} as const;
