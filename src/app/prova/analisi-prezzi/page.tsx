@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import AnalisiPrezziDemo from "@/components/prova/AnalisiPrezziDemo";
 import ClipProdotto from "@/components/prova/ClipProdotto";
-import { ANCHE, COME_SI_USA, DESCRIZIONE_META, MESSAGGIO_WHATSAPP, TITOLO_PROVA } from "@/data/provaAnalisi";
+import VideoYoutube from "@/components/prova/VideoYoutube";
+import { ANCHE, COME_SI_USA, DESCRIZIONE_META, MESSAGGIO_WHATSAPP, TITOLO_PROVA, VIDEO_COMPLETO } from "@/data/provaAnalisi";
 import { waLink } from "@/data/site";
 
 // La prova dell'Analisi Prezzi del Preventivatore (07/10/2026): la pagina che il CRM manda su WhatsApp subito dopo la
@@ -72,6 +73,25 @@ export default function PaginaProva() {
             ))}
           </ol>
           <p className="mt-10 text-[15px] text-navy-600">Video del Preventivatore vero, accelerati.</p>
+        </div>
+      </section>
+
+      {/* Il video completo (08/10): sul fondo navy-50 come la prova in cima, così la pagina alterna e la sezione si
+          stacca dalle clip; la riga finale col WhatsApp resta l'ultima cosa. */}
+      <section className="bg-navy-50 py-14 md:py-20">
+        <div className="container-main max-w-3xl">
+          <h2 className="text-balance font-display text-2xl font-bold tracking-[-0.01em] text-navy md:text-3xl">{VIDEO_COMPLETO.titoloSezione}</h2>
+          <p className="mt-3 text-pretty text-[17px] leading-relaxed text-navy-700 md:text-lg">{VIDEO_COMPLETO.sottotitolo}</p>
+          <div className="mt-8">
+            <VideoYoutube
+              id={VIDEO_COMPLETO.id}
+              titolo={VIDEO_COMPLETO.titolo}
+              durata={VIDEO_COMPLETO.durata}
+              durataParlata={VIDEO_COMPLETO.durataParlata}
+              copertina={VIDEO_COMPLETO.copertina}
+            />
+          </div>
+          <p className="mt-4 text-[15px] text-navy-600">Il video arriva da YouTube e si carica solo quando premi play.</p>
         </div>
       </section>
 
