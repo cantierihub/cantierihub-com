@@ -17,7 +17,7 @@ export default function CookiePage() {
             <span className="eyebrow text-orange-500">Legale</span>
             <h1 className="mt-3 font-display font-extrabold text-navy text-4xl mb-8">Cookie Policy</h1>
             <div className="prose prose-sm text-gray-600 space-y-6">
-              <p>Ultimo aggiornamento: luglio 2026</p>
+              <p>Ultimo aggiornamento: ottobre 2026</p>
               <p>
                 Questo sito è volutamente leggero: <strong>non usa cookie di profilazione e non traccia le persone su altri siti</strong>. Qui sotto trovi esattamente cosa viene salvato e perché.
               </p>
@@ -25,6 +25,7 @@ export default function CookiePage() {
               <div className="space-y-4">
                 {[
                   { tipo: "Memoria tecnica del browser", desc: "Serve al funzionamento del sito. Ricorda che hai già visto l'avviso cookie e, per la sola durata della scheda, da quale canale sei arrivato, così sappiamo a cosa attribuire un messaggio che ci invii. Non richiede consenso e non contiene dati personali.", esempio: "ch-cookies-accepted, ch-provenienza" },
+                  { tipo: "Il conteggio della prova dell'analisi prezzi", desc: "Solo nella pagina della prova: un cookie tecnico firmato ricorda quante analisi gratuite hai già fatto da questo browser, perché le prove sono 2. Serve al servizio che hai chiesto, non richiede consenso, non serve a profilarti e dura 90 giorni.", esempio: "ch_prova_analisi" },
                   { tipo: "Statistiche di traffico senza cookie", desc: "Conteggi aggregati delle visite (pagine viste, provenienza, tipo di dispositivo) tramite Vercel Web Analytics. Non installa cookie, non crea profili e non identifica le singole persone.", esempio: "Vercel Web Analytics" },
                   { tipo: "Tracciamento della provenienza (richiede il tuo consenso)", desc: "Se accetti, carichiamo lo script del nostro CRM Salesflow (LeadConnector): registra le pagine che visiti e, se ci scrivi tramite un modulo, collega la tua richiesta al canale da cui sei arrivato. Serve a capire quali contenuti sono utili. Senza il tuo consenso non viene nemmeno scaricato.", esempio: "link.msgsndr.com" },
                   { tipo: "Cookie pubblicitari e di retargeting", desc: "Al momento NON ne usiamo: nessun Meta Pixel, nessun TikTok Pixel, nessun Google Analytics. Se in futuro dovessimo introdurli, questa pagina verrà aggiornata e il consenso ti sarà chiesto prima dell'attivazione.", esempio: "nessuno attivo" },
