@@ -1,4 +1,4 @@
-import { BlobError, BlobPreconditionFailedError, get, put } from "@vercel/blob";
+import { BlobError, BlobPreconditionFailedError, BlobStoreNotFoundError, BlobStoreSuspendedError, get, put } from "@vercel/blob";
 import type { Archivio } from "./limiti";
 
 /**
@@ -11,6 +11,12 @@ import type { Archivio } from "./limiti";
 const OPZIONI = { access: "private", addRandomSuffix: false, contentType: "application/json", cacheControlMaxAge: 60 } as const;
 
 export const archivioBlobConfigurato = () => !!process.env.BLOB_READ_WRITE_TOKEN;
+
+/**
+ * Lo store sospeso (sul piano gratuito di Vercel, finita la quota del mese) o sparito: non è «riprova fra un minuto»,
+ * è la prova ferma. La pagina lo dice e manda su WhatsApp.
+ */
+export const archivioFermo = (e: unknown) => e instanceof BlobStoreSuspendedError || e instanceof BlobStoreNotFoundError;
 
 export const archivioBlob: Archivio = {
   async leggi(percorso) {

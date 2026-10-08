@@ -40,7 +40,7 @@ import {
   usate,
   type Archivio,
 } from "@/lib/prova/limiti";
-import { archivioBlob, archivioBlobConfigurato } from "@/lib/prova/archivioBlob";
+import { archivioBlob, archivioBlobConfigurato, archivioFermo } from "@/lib/prova/archivioBlob";
 
 // La prova dell'Analisi Prezzi su /prova/analisi-prezzi (07/10/2026). Regole della richiesta in lib/prova/analisi.ts,
 // il limite delle 2 analisi (IP, contatto, cookie, tetto del giorno) in lib/prova/limiti.ts.
@@ -83,6 +83,12 @@ const archivio = (): Archivio | null => (archivioBlobConfigurato() ? archivioBlo
 
 function rifiuto(motivo: Motivo, status: number, extra: Record<string, unknown> = {}, messaggio?: string) {
   return NextResponse.json({ ok: false, motivo, messaggio: messaggio ?? MESSAGGI[motivo as keyof typeof MESSAGGI], ...extra }, { status });
+}
+
+/** L'archivio non risponde: di solito è un attimo («riprova»); se lo store è sospeso o sparito, la prova è ferma. */
+function erroreArchivio(dove: string, e: unknown) {
+  console.error(`[prova] archivio (${dove}):`, e);
+  return archivioFermo(e) ? rifiuto("non-configurata", 503) : rifiuto("occupata", 503);
 }
 
 function erroreFunzione(e: Extract<EsitoFunzione, { ok: false }>) {
@@ -142,7 +148,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ ok: true, rimaste: rimaste(n), disponibile: true });
   } catch (e) {
     console.error("[prova] archivio (lettura):", e);
-    return NextResponse.json({ ok: true, rimaste: rimaste(c.a.length), disponibile: true });
+    return NextResponse.json({ ok: true, rimaste: rimaste(c.a.length), disponibile: !archivioFermo(e) });
   }
 }
 
@@ -176,8 +182,7 @@ export async function POST(req: NextRequest) {
     try {
       giro = await prenotaGiro(a, id);
     } catch (e) {
-      console.error("[prova] archivio (approfondimento):", e);
-      return rifiuto("occupata", 503);
+      return erroreArchivio("approfondimento", e);
     }
     if (giro.esito === "sconosciuta") return rifiuto("non-valida", 400, {}, "Questa analisi non viene dalla prova: rifalla dalla pagina.");
     if (giro.esito === "fatto") return rifiuto("limiteApprofondimento", 429);
@@ -215,8 +220,7 @@ export async function POST(req: NextRequest) {
   try {
     fatte = await giaFatte(a, schede, c, contatto, ora);
   } catch (e) {
-    console.error("[prova] archivio (conteggio):", e);
-    return rifiuto("occupata", 503);
+    return erroreArchivio("conteggio", e);
   }
   if (fatte.n >= MAX_ANALISI) return rifiuto("limite", 429, { rimaste: 0 }, fatte.soloConnessione ? MESSAGGI.limiteConnessione : undefined);
 
@@ -251,9 +255,8 @@ export async function POST(req: NextRequest) {
     }
     prese.push(giorno);
   } catch (e) {
-    console.error("[prova] archivio (prenotazione):", e);
     await rendi();
-    return rifiuto("occupata", 503);
+    return erroreArchivio("prenotazione", e);
   }
 
   const esito = await chiamaAnalisi(corpoAnalisi(r));
