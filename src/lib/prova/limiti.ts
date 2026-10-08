@@ -26,6 +26,8 @@ import type { RichiestaProva } from "./analisi";
 
 /** Quante volte si rilegge e si riprova una scrittura contesa da un'altra richiesta. */
 const TENTATIVI = 6;
+/** Dopo una scrittura contesa si aspetta un attimo, a caso: dieci richieste insieme non si rincorrono a vuoto. */
+const pausaDopo = (tentativo: number) => new Promise<void>((r) => setTimeout(r, 15 + Math.random() * 60 * (tentativo + 1)));
 
 export const GIORNO_MS = 24 * 60 * 60 * 1000;
 export const FINESTRA_IP_MS = 30 * GIORNO_MS;
@@ -167,6 +169,7 @@ export async function prenota(a: Archivio, percorso: string, id: string, max: nu
     const nuove = [...voci, { id, t: ora }];
     const scritto = letto ? await a.sostituisci(percorso, { v: nuove }, letto.etag) : await a.crea(percorso, { v: nuove });
     if (scritto) return { esito: "presa", dopo: nuove.length };
+    await pausaDopo(i);
   }
   return { esito: "contesa" };
 }
@@ -179,6 +182,7 @@ export async function restituisci(a: Archivio, percorso: string, id: string): Pr
     const voci = vociDa(letto.dati, 0);
     if (!voci.some((x) => x.id === id)) return;
     if (await a.sostituisci(percorso, { v: voci.filter((x) => x.id !== id) }, letto.etag)) return;
+    await pausaDopo(i);
   }
 }
 
@@ -235,6 +239,7 @@ export async function prenotaGiro(a: Archivio, id: string): Promise<Giro> {
     if (!letto || !s) return { esito: "sconosciuta" };
     if (s.giri >= GIRI_PROVA) return { esito: "fatto" };
     if (await a.sostituisci(percorsoAnalisi(id), { ...s, giri: s.giri + 1 }, letto.etag)) return { esito: "preso", scheda: s };
+    await pausaDopo(i);
   }
   return { esito: "contesa" };
 }
@@ -246,5 +251,6 @@ export async function restituisciGiro(a: Archivio, id: string): Promise<void> {
     const s = letto ? schedaDa(letto.dati) : null;
     if (!letto || !s || s.giri <= 0) return;
     if (await a.sostituisci(percorsoAnalisi(id), { ...s, giri: s.giri - 1 }, letto.etag)) return;
+    await pausaDopo(i);
   }
 }

@@ -10,6 +10,13 @@ import type { Archivio } from "./limiti";
 
 const OPZIONI = { access: "private", addRandomSuffix: false, contentType: "application/json", cacheControlMaxAge: 60 } as const;
 
+/**
+ * Due scritture condizionate sulla stessa scheda nello stesso istante: il servizio non dice «precondition failed», dice
+ * «The conditional request cannot succeed due to a conflicting operation» (visto il 08/10 con una raffica di 10 dalla
+ * stessa connessione). È la stessa cosa, «qualcuno ha scritto prima di te»: si rilegge e si riprova.
+ */
+const conflitto = (e: unknown) => e instanceof BlobError && /conflicting operation/i.test(e.message);
+
 export const archivioBlobConfigurato = () => !!process.env.BLOB_READ_WRITE_TOKEN;
 
 /**
@@ -38,7 +45,7 @@ export const archivioBlob: Archivio = {
       return true;
     } catch (e) {
       // Il servizio risponde «bad_request» con «This blob already exists…»: l'SDK lo passa come BlobError col messaggio.
-      if (e instanceof BlobError && /already exists/i.test(e.message)) return false;
+      if ((e instanceof BlobError && /already exists/i.test(e.message)) || conflitto(e)) return false;
       throw e;
     }
   },
@@ -48,7 +55,7 @@ export const archivioBlob: Archivio = {
       await put(percorso, JSON.stringify(dati), { ...OPZIONI, ifMatch: etag });
       return true;
     } catch (e) {
-      if (e instanceof BlobPreconditionFailedError) return false;
+      if (e instanceof BlobPreconditionFailedError || conflitto(e)) return false;
       throw e;
     }
   },
