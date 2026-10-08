@@ -42,5 +42,7 @@ export const VIDEO_COMPLETO = {
   durataParlata: "4 minuti e 35 secondi",
   copertina: "/video/prova/video-completo.jpg",
   titoloSezione: "Guarda come funziona tutto il Preventivatore",
-  sottotitolo: "Il video completo, in 4 minuti e mezzo: carichi il computo, scegli da dove prendere i prezzi, li controlli con l'analisi prezzi e scarichi il preventivo in PDF.",
+  // Raffaele, 08/10: il sottotitolo deve far venire voglia di guardarlo, non descriverlo; sotto, cosa fare.
+  sottotitolo: "In 4 minuti e mezzo vedi un computo diventare un preventivo pronto da mandare, con i prezzi già messi. Il lavoro che oggi ti porta via ore.",
+  invito: "Clicca su play e guardalo prima della chiamata.",
 } as const;

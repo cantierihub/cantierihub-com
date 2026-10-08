@@ -91,7 +91,7 @@ export default function PaginaProva() {
               copertina={VIDEO_COMPLETO.copertina}
             />
           </div>
-          <p className="mt-4 text-[15px] text-navy-600">Il video arriva da YouTube e si carica solo quando premi play.</p>
+          <p className="mt-4 text-[17px] font-semibold text-navy md:text-lg">{VIDEO_COMPLETO.invito}</p>
         </div>
       </section>
 
