@@ -114,6 +114,51 @@ export function decodifica(s: string): string {
   });
 }
 
+// Uno spazio che non va a capo (U+00A0) dove l'a capo inganna chi legge dal telefono: dopo «n.», «art.» e simili
+// davanti al numero, e fra il giorno e il mese. Il 07/10/2026 a 390 px una riga finiva con «dell'Allegato n.» e quella
+// sotto cominciava con «1. Senza,», che sembrava il numero di un passo; e «dal 23» chiudeva la riga con «ottobre 2026»
+// sotto (CAN-84). Il testo dell'articolo non cambia: lo fa il modello, per tutti gli articoli.
+// Va bene sul testo semplice e sull'HTML di marked: cambia solo il testo a vista, mai dentro un tag, un link o un
+// `code`. I metadati, il feed e lo schema JSON-LD restano col testo com'è: si usa solo dove la pagina lo mostra.
+const SIGLA = String.raw`(?<![\p{L}\d.])(?:(?:n|nn|art|artt|co|c|lett|par|cap|all|p|pag|pagg|tab|fig|l|d\.lgs|d\.l|d\.m|d\.p\.r|d\.p\.c\.m)\.|dpr|dpcm)`;
+const GIORNO = String.raw`(?<![\p{L}\d.,])\d{1,2}[°º]?`;
+const MESE = "gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre";
+// Fra le due parole può stare un grassetto o un corsivo (`n. **1**`), mai la fine di un paragrafo o un link.
+const CHIUDE = String.raw`(?:<\/(?:strong|em|b|i)>)*`;
+const APRE = String.raw`(?:<(?:strong|em|b|i)>)*`;
+const DA_TENERE_INSIEME = new RegExp(
+  String.raw`${SIGLA}${CHIUDE}(\s+)${APRE}(?=\d|\p{Ll}\))|${GIORNO}${CHIUDE}(\s+)${APRE}(?=(?:${MESE})(?!\p{L}))`,
+  "giu",
+);
+
+// Le parti dell'HTML che non si toccano: i tag (con gli attributi, quindi gli indirizzi) e quello che sta dentro un
+// link, un `code` o un `pre`.
+function parteVietata(html: string): Uint8Array {
+  const vietata = new Uint8Array(html.length);
+  let dentro = 0;
+  let fine = 0;
+  for (const t of html.matchAll(/<(\/?)([a-z][a-z0-9]*)\b[^>]*>/gi)) {
+    if (dentro > 0) vietata.fill(1, fine, t.index);
+    fine = t.index + t[0].length;
+    vietata.fill(1, t.index, fine);
+    if (/^(a|code|pre)$/i.test(t[2])) dentro = Math.max(0, dentro + (t[1] ? -1 : 1));
+  }
+  if (dentro > 0) vietata.fill(1, fine);
+  return vietata;
+}
+
+/** «art. 4», «n. 1», «23 ottobre» restano sulla stessa riga. */
+export function tieniInsieme(testo: string): string {
+  const vietata = parteVietata(testo);
+  return testo.replace(DA_TENERE_INSIEME, (pezzo: string, dopoSigla: string | undefined, dopoGiorno: string | undefined, dove: number) => {
+    const spazi = (dopoSigla ?? dopoGiorno)!;
+    // Prima degli spazi ci sono solo la sigla (o il giorno) e i tag che chiudono: il primo spazio è il loro.
+    const i = pezzo.search(/\s/);
+    if (vietata[dove + i]) return pezzo;
+    return pezzo.slice(0, i) + "\u00a0" + pezzo.slice(i + spazi.length);
+  });
+}
+
 const NUMERO = /^[+\-\u2212\u2013]?\s*(\u20ac\s*)?\d[\d.,\s]*(%|\u20ac|\s?punti)?$/;
 
 // Le colonne fatte solo di numeri si allineano a destra e con le cifre della stessa larghezza, cos\u00ec sul telefono si
@@ -198,7 +243,7 @@ function leggi(file: string): Notizia {
     gancio: fm.gancio ? String(fm.gancio).trim() : undefined,
     fonti: (fm.fonti ?? []) as Fonte[],
     faq: (fm.faq ?? []) as Domanda[],
-    sezioni: dividi(marked.parse(content, { async: false }) as string),
+    sezioni: dividi(tieniInsieme(marked.parse(content, { async: false }) as string)),
     minutiLettura: Math.max(1, Math.round(parole / 200)),
   };
 }

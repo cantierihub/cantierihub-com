@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { categoriaDa, dataLeggibile, type Notizia } from "@/lib/notizie";
+import { categoriaDa, dataLeggibile, tieniInsieme, type Notizia } from "@/lib/notizie";
 
 /** Una notizia nelle liste: categoria, data, titolo, la frase che dice di cosa parla. */
 export default function SchedaNotizia({ notizia, grande = false }: { notizia: Notizia; grande?: boolean }) {
@@ -38,11 +38,11 @@ export default function SchedaNotizia({ notizia, grande = false }: { notizia: No
           className={`font-display font-bold text-navy leading-snug ${grande ? "text-2xl md:text-[1.75rem]" : "text-lg"}`}
         >
           <Link href={`/notizie/${notizia.slug}`} className="after:absolute after:inset-0">
-            {notizia.titolo}
+            {tieniInsieme(notizia.titolo)}
           </Link>
         </h3>
         <p className={`text-navy-600 leading-relaxed ${grande ? "text-base md:text-lg" : "text-[15px]"}`}>
-          {notizia.descrizione}
+          {tieniInsieme(notizia.descrizione)}
         </p>
         <span className="mt-auto pt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-navy group-hover:text-orange-600">
           Leggi <ArrowRight size={15} />
