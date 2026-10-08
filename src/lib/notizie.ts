@@ -137,14 +137,22 @@ function tabelle(html: string): string {
   });
 }
 
+// I riquadri sono due, col titolo esatto e una volta sola (DESIGN.md, «La pagina articolo»). Prima bastava che il
+// titolo cominciasse con «Cosa cambia» o «Cosa fare»: «Cosa cambia per gli impiantisti?», a metà articolo, diventava un
+// secondo riquadro arancio e toglieva peso a quello vero (controllo visivo del 07/10/2026, CAN-69).
+const RIQUADRI: Record<string, Sezione["tipo"]> = {
+  "cosa cambia per la tua impresa": "cambia",
+  "cosa fare adesso": "fare",
+};
+
 function dividi(html: string): Sezione[] {
   const pezzi = tabelle(html).split(/<h2[^>]*>([\s\S]*?)<\/h2>/);
   const sezioni: Sezione[] = [];
   if (pezzi[0].trim()) sezioni.push({ id: "apertura", titolo: null, html: pezzi[0], tipo: "testo" });
   for (let i = 1; i < pezzi.length; i += 2) {
     const titolo = decodifica(pezzi[i].replace(/<[^>]+>/g, "")).trim();
-    const t = titolo.toLowerCase();
-    const tipo = t.startsWith("cosa cambia") ? "cambia" : t.startsWith("cosa fare") ? "fare" : "testo";
+    const riquadro = RIQUADRI[titolo.toLowerCase().replace(/\s+/g, " ").replace(/[\s?:.!]+$/, "")];
+    const tipo = riquadro && !sezioni.some((s) => s.tipo === riquadro) ? riquadro : "testo";
     sezioni.push({ id: idDa(titolo), titolo, html: pezzi[i + 1] ?? "", tipo });
   }
   return sezioni;
