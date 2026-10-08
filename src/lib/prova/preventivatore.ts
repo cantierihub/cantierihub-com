@@ -23,7 +23,8 @@ const ATTESA_MAX_MS = 100_000;
 
 export type EsitoFunzione =
   | { ok: true; json: unknown }
-  | { ok: false; motivo: "non-configurata" | "esaurita" | "occupata" | "errore"; dettaglio: string };
+  // «lenta»: la funzione non ha risposto in tempo, ma può aver finito e scalato i crediti dopo: la prova resta contata.
+  | { ok: false; motivo: "non-configurata" | "esaurita" | "occupata" | "lenta" | "errore"; dettaglio: string };
 
 type Sessione = { token: string; scade: number };
 let sessione: Sessione | null = null;
@@ -64,8 +65,10 @@ export async function chiamaAnalisi(corpo: Record<string, unknown>): Promise<Esi
   if (!c) return { ok: false, motivo: "non-configurata", dettaglio: "variabili PROVA_* mancanti" };
 
   for (let tentativo = 0; tentativo < 2; tentativo++) {
+    let partita = false;
     try {
       const token = await entra(c);
+      partita = true;
       const risposta = await fetch(`${c.url}/functions/v1/analyze-price`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, apikey: c.chiave, "Content-Type": "application/json" },
@@ -84,7 +87,8 @@ export async function chiamaAnalisi(corpo: Record<string, unknown>): Promise<Esi
       if (risposta.status === 429 || risposta.status === 503) return { ok: false, motivo: "occupata", dettaglio: errore };
       return { ok: false, motivo: "errore", dettaglio: `${risposta.status} ${errore}`.trim() };
     } catch (e) {
-      return { ok: false, motivo: "errore", dettaglio: String(e) };
+      const scaduta = e instanceof Error && (e.name === "TimeoutError" || e.name === "AbortError");
+      return { ok: false, motivo: partita && scaduta ? "lenta" : "errore", dettaglio: String(e) };
     }
   }
   return { ok: false, motivo: "errore", dettaglio: "accesso non riuscito" };

@@ -340,8 +340,9 @@ export default function AnalisiPrezziDemo({ whatsapp }: { whatsapp: string }) {
                 Scrivici su WhatsApp: l&apos;analisi te la facciamo vedere noi, su una voce tua.
               </Avviso>
             ) : finite ? (
-              <Avviso titolo="Le 2 analisi gratuite sono state usate" whatsapp={whatsapp}>
-                Le altre voci le vediamo insieme in chiamata, sul tuo computo.
+              <Avviso titolo="Le 2 analisi gratuite sono già state usate" whatsapp={whatsapp}>
+                Da questo telefono o da questa connessione sono già state fatte le 2 analisi della prova. Scrivici su
+                WhatsApp: le altre voci le vediamo insieme, sul tuo computo.
               </Avviso>
             ) : (
               <div className="space-y-2">
