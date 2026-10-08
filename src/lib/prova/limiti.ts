@@ -35,6 +35,8 @@ export const FINESTRA_CONTATTO_MS = 365 * GIORNO_MS;
 export const TETTO_GIORNO_PREDEFINITO = 80;
 /** Gli approfondimenti di ogni analisi nella prova (nel Preventivatore si continua finché la stima non torna). */
 export const GIRI_PROVA = 1;
+/** L'analisi salvata per il suo approfondimento resta 30 giorni (lo dice la privacy), poi la pulizia la toglie. */
+export const CONSERVAZIONE_ANALISI_MS = 30 * GIORNO_MS;
 
 // ── L'archivio ───────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -253,4 +255,23 @@ export async function restituisciGiro(a: Archivio, id: string): Promise<void> {
     if (await a.sostituisci(percorsoAnalisi(id), { ...s, giri: s.giri - 1 }, letto.etag)) return;
     await pausaDopo(i);
   }
+}
+
+// ── La pulizia di ogni notte (/api/prova/pulizia) ──────────────────────────────────────────────────────────────
+
+/**
+ * Quanto resta ogni scheda dopo la sua ultima scrittura: è quello che promette la privacy. Una scheda di connessione
+ * non toccata da 30 giorni ha solo voci scadute; quella del contatto un anno; il contatore del giorno serve due giorni.
+ */
+const SCADENZE: [prefisso: string, durata: number][] = [
+  ["prova/ip/", FINESTRA_IP_MS],
+  ["prova/contatto/", FINESTRA_CONTATTO_MS],
+  ["prova/analisi/", CONSERVAZIONE_ANALISI_MS],
+  ["prova/giorno/", 3 * GIORNO_MS],
+];
+
+/** Se la scheda `percorso`, scritta l'ultima volta a `scritto`, va cancellata. Fuori da `prova/…` non si tocca niente. */
+export function scaduta(percorso: string, scritto: number, ora: number): boolean {
+  const s = SCADENZE.find(([prefisso]) => percorso.startsWith(prefisso));
+  return !!s && ora - scritto > s[1];
 }

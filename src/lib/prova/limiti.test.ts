@@ -16,6 +16,7 @@ import {
   restituisci,
   restituisciGiro,
   salvaAnalisi,
+  scaduta,
   tettoGiorno,
   usate,
   type Archivio,
@@ -148,4 +149,19 @@ test("il giorno del tetto è quello di Roma, e il tetto storto vale 80", () => {
   assert.equal(giornoDi(Date.UTC(2026, 9, 7, 21, 30)), "2026-10-07");
   assert.equal(tettoGiorno("25"), 25);
   for (const storto of [undefined, "", "0", "-3", "2.5", "tanti"]) assert.equal(tettoGiorno(storto), 80);
+});
+
+test("la pulizia toglie quello che la privacy dice di non tenere, e niente altro", () => {
+  const giorni = (n: number) => ORA - n * GIORNO_MS;
+  assert.equal(scaduta("prova/ip/abc.json", giorni(31), ORA), true);
+  assert.equal(scaduta("prova/ip/abc.json", giorni(29), ORA), false);
+  assert.equal(scaduta("prova/contatto/abc.json", giorni(366), ORA), true);
+  assert.equal(scaduta("prova/contatto/abc.json", giorni(364), ORA), false);
+  assert.equal(scaduta(`prova/analisi/${ID}.json`, giorni(31), ORA), true);
+  assert.equal(scaduta(`prova/analisi/${ID}.json`, giorni(29), ORA), false);
+  assert.equal(scaduta("prova/giorno/2026-10-01.json", giorni(4), ORA), true);
+  assert.equal(scaduta("prova/giorno/2026-10-08.json", giorni(1), ORA), false);
+  // Fuori dalle schede della prova non si cancella niente, per quanto vecchio.
+  assert.equal(scaduta("altro/file.json", giorni(9999), ORA), false);
+  assert.equal(scaduta("prova/sconosciuto/x.json", giorni(9999), ORA), false);
 });

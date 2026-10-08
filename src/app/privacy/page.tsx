@@ -22,7 +22,9 @@ export default function PrivacyPage() {
                   conservazione con un periodo. Le scelte sono di Raffaele (06/10): 24 mesi, sede legale come nei
                   contratti, e niente casella per le email promozionali, ma la frase sopra il pulsante di ogni modulo
                   (`lib/emailPromozionali.ts`). La Conformità consigliava la casella: domanda 7 al legale.
-                  Unita lo stesso giorno con le sezioni sulla piattaforma (#40-#42): quelle restano com'erano. */}
+                  Unita lo stesso giorno con le sezioni sulla piattaforma (#40-#42): quelle restano com'erano.
+                  08/10/2026: aggiunta la prova dell'analisi prezzi (/prova/analisi-prezzi). I tempi qui scritti sono quelli
+                  che applica la pulizia di ogni notte (`scaduta` in lib/prova/limiti.ts): se cambiano lì, si cambiano qui. */}
               <h2 className="font-display font-bold text-navy text-xl mt-8">Chi tratta i tuoi dati</h2>
               <p>
                 Il titolare del trattamento è <strong>Adact Studio International LLC</strong>, società di diritto statunitense
@@ -39,6 +41,7 @@ export default function PrivacyPage() {
                 <li><strong>Richiesta di demo:</strong> nome, cognome, azienda, email, telefono, il tuo ruolo, lo strumento che vuoi vedere, il messaggio e, se arrivi da un articolo della sezione Notizie, quale articolo stavi leggendo.</li>
                 <li><strong>Guide gratuite:</strong> l&apos;indirizzo email e quale guida hai richiesto.</li>
                 <li><strong>Candidature:</strong> nome, email, telefono, ruolo, messaggio e il curriculum che alleghi.</li>
+                <li><strong>Prova dell&apos;analisi prezzi:</strong> la lavorazione che descrivi e i dati del cantiere che scegli; per il limite delle 2 prove, un codice ricavato dalla tua connessione e un cookie tecnico. I dettagli sono più sotto.</li>
                 <li><strong>Provenienza:</strong> da quale canale sei arrivato sul sito (per esempio un link con etichetta da un social). Serve a capire quali contenuti funzionano, viene allegata al messaggio che ci invii e non identifica nessuno.</li>
                 <li><strong>Statistiche di navigazione:</strong> conteggi aggregati delle pagine viste, raccolti senza cookie e senza creare profili individuali.</li>
               </ul>
@@ -49,6 +52,7 @@ export default function PrivacyPage() {
                 <li>Mandarti la guida che hai richiesto: stessa base.</li>
                 <li>Mandarti via email consigli, novità e offerte sui prodotti di Cantieri Hub. <strong>Te lo diciamo in ogni modulo, sopra il pulsante, prima che tu lo invii</strong>: inviandolo ci dai il tuo consenso (art. 6, par. 1, lett. a GDPR e art. 130 del Codice privacy). Puoi ritirarlo quando vuoi, con un clic.</li>
                 <li>Valutare la tua candidatura, se ti sei proposto per una posizione: lett. b.</li>
+                <li>Farti provare l&apos;analisi prezzi su una lavorazione tua: lo chiedi tu (lett. b). Far valere il limite di 2 prove gratuite, perché il servizio non venga usato in modo abusivo: il nostro legittimo interesse (lett. f).</li>
                 <li>Gestire il contratto con i clienti della piattaforma: lett. b, e gli obblighi di legge (lett. c).</li>
                 <li>Capire in forma aggregata come viene usato il sito: il nostro legittimo interesse (lett. f), senza cookie.</li>
                 <li>Capire da quale canale arrivano le richieste, con lo script del CRM: solo se accetti i cookie (vedi la <a href="/cookie" className="text-orange-500 hover:underline">Cookie Policy</a>).</li>
@@ -61,10 +65,18 @@ export default function PrivacyPage() {
               <h2 className="font-display font-bold text-navy text-xl mt-8">A chi comunichiamo i dati</h2>
               <p>Per far funzionare il sito ci appoggiamo ad alcuni fornitori, che trattano i dati per nostro conto e solo per le finalità qui indicate:</p>
               <ul className="list-disc pl-5 space-y-1">
-                <li><strong>Vercel</strong>: ospita il sito e ne raccoglie le statistiche aggregate.</li>
+                <li><strong>Vercel</strong>: ospita il sito, ne raccoglie le statistiche aggregate e conserva i dati del limite della prova dell&apos;analisi prezzi, su server a Francoforte.</li>
                 <li><strong>Resend</strong>: recapita alla nostra casella i messaggi e le candidature inviate dai form.</li>
                 <li><strong>Notion</strong>: conserva le richieste delle guide gratuite.</li>
                 <li><strong>Salesflow</strong>: il nostro CRM, che usa la piattaforma HighLevel (LeadConnector) negli Stati Uniti. Conserva i contatti e le richieste di demo, ci serve per richiamarti e manda le email. Se accetti i cookie di tracciamento, registra anche le pagine che visiti sul sito.</li>
+              </ul>
+
+              <h2 className="font-display font-bold text-navy text-xl mt-8">La prova dell&apos;analisi prezzi</h2>
+              <p>Nella pagina della prova puoi provare l&apos;analisi prezzi del Preventivatore su una lavorazione tua. Ecco cosa succede ai dati:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><strong>Quello che scrivi</strong> (descrizione della lavorazione, unità, quantità, regione, dati e note del cantiere) va alla funzione di analisi del Preventivatore, che lo elabora con i fornitori della piattaforma elencati qui sotto: Supabase a Francoforte e i modelli Gemini di Google, tramite Lovable. Non scriverci nomi di clienti, indirizzi o altri dati personali: la pagina te lo ricorda sotto il pulsante.</li>
+                <li><strong>Il limite delle 2 analisi.</strong> Non salviamo il tuo indirizzo IP: teniamo un codice calcolato dall&apos;indirizzo con una nostra chiave segreta, per 30 giorni. Sul tuo browser resta un cookie tecnico (<code>ch_prova_analisi</code>) per 90 giorni. Se apri la pagina dal link personale che ti abbiamo mandato, teniamo anche un codice del tuo contatto, per 12 mesi. L&apos;analisi resta salvata 30 giorni, per il suo approfondimento. Questi dati stanno su Vercel, su server a Francoforte, e si cancellano da soli alla scadenza.</li>
+                <li><strong>Nel CRM</strong>, solo se apri la pagina dal link personale: la lavorazione, i dati del cantiere, il prezzo uscito e le tue risposte finiscono nella tua scheda in Salesflow, così chi ti richiama sa da dove partire. Restano come gli altri dati del CRM.</li>
               </ul>
               {/* La parte sulla piattaforma (06/10/2026, domande di Stilcolor): deve combaciare con l'Allegato A del contratto, che per
                   l'elenco dei sub-responsabili rimanda a questa pagina: a ogni cambio di fornitore si aggiorna qui. */}
@@ -98,6 +110,7 @@ export default function PrivacyPage() {
               <h2 className="font-display font-bold text-navy text-xl mt-8">Conservazione</h2>
               <p>Le richieste di contatto, di demo e delle guide le teniamo per 24 mesi dall&apos;ultima volta che ci siamo sentiti, poi le cancelliamo, a meno che tu non diventi cliente: in quel caso valgono i tempi del contratto e quelli di legge. Se ritiri il consenso alle email, smettiamo subito di mandartele.</p>
               <p>Gli altri dati li teniamo per il tempo necessario alle finalità indicate, o per gli obblighi di legge. Il dato sulla provenienza si cancella da solo quando chiudi la scheda del browser.</p>
+              <p>Per la prova dell&apos;analisi prezzi: il codice della connessione 30 giorni, quello del contatto 12 mesi, l&apos;analisi salvata 30 giorni, il cookie tecnico 90 giorni. Alla scadenza li cancelliamo in automatico.</p>
               <p>I dati della piattaforma si cancellano alla fine del contratto, come previsto dal contratto di licenza: entro 60 giorni dalla cessazione, ed entro 90 giorni anche dalle copie di backup.</p>
 
               <h2 className="font-display font-bold text-navy text-xl mt-8">Diritti dell&apos;interessato</h2>

@@ -1,5 +1,5 @@
-import { BlobError, BlobPreconditionFailedError, BlobStoreNotFoundError, BlobStoreSuspendedError, get, put } from "@vercel/blob";
-import type { Archivio } from "./limiti";
+import { BlobError, BlobPreconditionFailedError, BlobStoreNotFoundError, BlobStoreSuspendedError, del, get, list, put } from "@vercel/blob";
+import { scaduta, type Archivio } from "./limiti";
 
 /**
  * L'archivio del limite delle prove su Vercel Blob (08/10/2026): uno store PRIVATO collegato al progetto `sito-web`,
@@ -60,3 +60,18 @@ export const archivioBlob: Archivio = {
     }
   },
 };
+
+/** La pulizia di ogni notte: toglie le schede scadute (vedi `scaduta` in limiti.ts), a gruppi di 100. */
+export async function pulisciArchivio(ora: number): Promise<{ guardate: number; cancellate: number }> {
+  const via: string[] = [];
+  let guardate = 0;
+  let cursore: string | undefined;
+  do {
+    const pagina = await list({ prefix: "prova/", cursor: cursore, limit: 1000 });
+    guardate += pagina.blobs.length;
+    for (const b of pagina.blobs) if (scaduta(b.pathname, b.uploadedAt.getTime(), ora)) via.push(b.url);
+    cursore = pagina.hasMore ? pagina.cursor : undefined;
+  } while (cursore);
+  for (let i = 0; i < via.length; i += 100) await del(via.slice(i, i + 100));
+  return { guardate, cancellate: via.length };
+}
