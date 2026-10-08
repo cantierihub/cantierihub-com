@@ -114,22 +114,46 @@ export function decodifica(s: string): string {
   });
 }
 
-// Uno spazio che non va a capo (U+00A0) dove l'a capo inganna chi legge dal telefono: dopo «n.», «art.» e simili
-// davanti al numero, e fra il giorno e il mese. Il 07/10/2026 a 390 px una riga finiva con «dell'Allegato n.» e quella
-// sotto cominciava con «1. Senza,», che sembrava il numero di un passo; e «dal 23» chiudeva la riga con «ottobre 2026»
-// sotto (CAN-84). Il testo dell'articolo non cambia: lo fa il modello, per tutti gli articoli.
+// Uno spazio che non va a capo (U+00A0) dove l'a capo inganna chi legge dal telefono. Il 07/10/2026 a 390 px una riga
+// finiva con «dell'Allegato n.» e quella sotto cominciava con «1. Senza,», che sembrava il numero di un passo; e «dal 23»
+// chiudeva la riga con «ottobre 2026» sotto (CAN-84). L'08/10, nella guida sul computo metrico, si spezzavano
+// «20,25 / m²», «porta di 0,80 / × 2,10 m», «la DGR n. / XII/6071» e «Allegato / I.7» (CAN-164).
+// Il testo dell'articolo non cambia: lo fa il modello, per tutti gli articoli.
 // Va bene sul testo semplice e sull'HTML di marked: cambia solo il testo a vista, mai dentro un tag, un link o un
 // `code`. I metadati, il feed e lo schema JSON-LD restano col testo com'è: si usa solo dove la pagina lo mostra.
-const SIGLA = String.raw`(?<![\p{L}\d.])(?:(?:n|nn|art|artt|co|c|lett|par|cap|all|p|pag|pagg|tab|fig|l|d\.lgs|d\.l|d\.m|d\.p\.r|d\.p\.c\.m)\.|dpr|dpcm)`;
-const GIORNO = String.raw`(?<![\p{L}\d.,])\d{1,2}[°º]?`;
-const MESE = "gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre";
-// Fra le due parole può stare un grassetto o un corsivo (`n. **1**`), mai la fine di un paragrafo o un link.
+
+// Fra le due parti può stare un grassetto o un corsivo (`n. **1**`), mai la fine di un paragrafo o un link.
 const CHIUDE = String.raw`(?:<\/(?:strong|em|b|i)>)*`;
 const APRE = String.raw`(?:<(?:strong|em|b|i)>)*`;
-const DA_TENERE_INSIEME = new RegExp(
-  String.raw`${SIGLA}${CHIUDE}(\s+)${APRE}(?=\d|\p{Ll}\))|${GIORNO}${CHIUDE}(\s+)${APRE}(?=(?:${MESE})(?!\p{L}))`,
-  "giu",
-);
+/** Gli spazi fra `prima` e `dopo`: la regola trova solo loro, il resto è il contesto. */
+const fra = (prima: string, dopo: string, flag: string) =>
+  new RegExp(String.raw`(?<=${prima}${CHIUDE})\s+(?=${APRE}${dopo})`, flag);
+
+const SIGLA = String.raw`(?<![\p{L}\d.])(?:(?:n|nn|art|artt|co|c|lett|par|cap|all|p|pag|pagg|tab|fig|l|d\.lgs|d\.l|d\.m|d\.p\.r|d\.p\.c\.m)\.|dpr|dpcm|comm[ai]|articol[oi]|punt[oi]|letter[ae])`;
+const GIORNO = String.raw`(?<![\p{L}\d.,])\d{1,2}[°º]?`;
+const MESE = "gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre";
+// Da qui in giù le maiuscole contano: «XII» è un numero romano, «di» no; «t» è una tonnellata, «T» no.
+const ROMANO = String.raw`[IVXLCDM]+(?![\p{L}\d])`;
+const DAVANTI_AL_ROMANO = String.raw`(?<![\p{L}\d.])(?:[nN]n?\.|[aA]ll\.|[aA]llegat[oi]|[tT]itol[oi]|[cC]ap[oi]|[pP]art[ei]|[sS]ezion[ei]|[lL]ibr[oi])`;
+const QUANTITA = String.raw`(?<![\p{L}\d.,])\d+(?:[.,]\d+)*`;
+const UNITA = String.raw`(?:m[²³23qcl]?|cm²?|mm|km²?|kg|q|t|kWh?|MWh?|kN|°C|%|€|euro|mila|milion[ei]|miliard[oi])(?![\p{L}\d'’])`;
+
+const REGOLE = [
+  // «n. 1», «art. 4», «D.Lgs. 36/2023», «comma 13», «lett. a)»
+  fra(SIGLA, String.raw`(?:\d|\p{Ll}\))`, "giu"),
+  // «23 ottobre», «1° gennaio»
+  fra(GIORNO, String.raw`(?:${MESE})(?!\p{L})`, "giu"),
+  // «n. XII/6071», «Allegato I.7», «Titolo IV»
+  fra(DAVANTI_AL_ROMANO, ROMANO, "gu"),
+  // «Allegato A», «Allegato 1»
+  fra(String.raw`(?<![\p{L}\d.])[aA]llegat[oi]`, String.raw`(?:[A-Z]\d*(?![\p{L}\d])|\d)`, "gu"),
+  // «20,25 m²», «6,11 €», «15 %», «2,5 miliardi»; e «€ 6,11»
+  fra(QUANTITA, UNITA, "gu"),
+  fra("€", String.raw`\d`, "gu"),
+  // Un segno non apre la riga: «0,80 ×», «2,70 =», «4,00 +» restano col numero prima, e «× 2,10» col numero dopo.
+  fra(String.raw`[\d)²³%€]`, String.raw`(?:[=+×−÷]\s*|x\s+)[\d(]`, "gu"),
+  fra(String.raw`[\d)]\s*[×x]`, String.raw`[\d(]`, "gu"),
+];
 
 // Le parti dell'HTML che non si toccano: i tag (con gli attributi, quindi gli indirizzi) e quello che sta dentro un
 // link, un `code` o un `pre`.
@@ -147,16 +171,13 @@ function parteVietata(html: string): Uint8Array {
   return vietata;
 }
 
-/** «art. 4», «n. 1», «23 ottobre» restano sulla stessa riga. */
+/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m» restano sulla stessa riga. */
 export function tieniInsieme(testo: string): string {
-  const vietata = parteVietata(testo);
-  return testo.replace(DA_TENERE_INSIEME, (pezzo: string, dopoSigla: string | undefined, dopoGiorno: string | undefined, dove: number) => {
-    const spazi = (dopoSigla ?? dopoGiorno)!;
-    // Prima degli spazi ci sono solo la sigla (o il giorno) e i tag che chiudono: il primo spazio è il loro.
-    const i = pezzo.search(/\s/);
-    if (vietata[dove + i]) return pezzo;
-    return pezzo.slice(0, i) + "\u00a0" + pezzo.slice(i + spazi.length);
-  });
+  return REGOLE.reduce((t, regola) => {
+    // La parte vietata si rifà a ogni regola: due spazi diventati uno spostano tutto quello che viene dopo.
+    const vietata = parteVietata(t);
+    return t.replace(regola, (spazi: string, dove: number) => (vietata[dove] ? spazi : "\u00a0"));
+  }, testo);
 }
 
 const NUMERO = /^[+\-\u2212\u2013]?\s*(\u20ac\s*)?\d[\d.,\s]*(%|\u20ac|\s?punti)?$/;
