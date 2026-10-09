@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ChevronDown, ChevronRight, ExternalLink, HardHat, Info, ListChecks, Plus } from "lucide-react";
 import IndiceArticolo from "@/components/notizie/IndiceArticolo";
 import BloccoProdotto from "@/components/notizie/BloccoProdotto";
+import BarraPubblicita from "@/components/notizie/BarraPubblicita";
+import CartaPubblicita from "@/components/notizie/CartaPubblicita";
 import TestataNotizie from "@/components/notizie/TestataNotizie";
 import SchedaNotizia from "@/components/notizie/SchedaNotizia";
 import {
@@ -367,8 +369,20 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                 </div>
               </aside>
             )}
+
+            {/* «Ti accompagna» (09/10): da 1280 px il richiamo al prodotto sta fermo nella colonna di sinistra, che era
+                vuota. Nel codice viene DOPO l'articolo, così chi usa un lettore di schermo legge prima la notizia. */}
+            {n.prodotto && (
+              <div className="hidden xl:block xl:col-start-1 xl:row-start-1">
+                <div className="sticky top-28 pt-10">
+                  <CartaPubblicita prodotto={n.prodotto} articolo={n.slug} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
+        {/* Sul telefono lo stesso richiamo è una barra in basso, che compare dentro l'articolo e sparisce al blocco. */}
+        {n.prodotto && <BarraPubblicita prodotto={n.prodotto} articolo={n.slug} />}
       </article>
 
       {correlate.length > 0 && (
