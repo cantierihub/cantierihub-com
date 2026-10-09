@@ -731,6 +731,61 @@
   .indice-mobile__freccia, .domande__segno, .indice-laterale a { transition: none; }
 }
 
+/* ── Notizie: il richiamo che accompagna chi legge («Ti accompagna», 09/10/2026) ──────────────────────────────
+   Sul telefono una barra in basso (BarraPubblicita), sul computer un riquadro fermo nella colonna di sinistra
+   (CartaPubblicita). Stessa etichetta «Pubblicità» del blocco. La barra entra dal basso e non copre il testo letto:
+   è alta una riga e mezza, e sparisce quando arriva il blocco in fondo. */
+.barra-pubblicita {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 6px calc(10px + env(safe-area-inset-bottom)) 16px;
+  background: #fff; border-top: 1px solid #e2e8f0; box-shadow: 0 -10px 28px rgba(15, 23, 42, 0.12);
+  transform: translateY(110%); visibility: hidden;
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), visibility 0s linear 0.28s;
+}
+.barra-pubblicita[data-visibile] {
+  transform: none; visibility: visible;
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), visibility 0s;
+}
+@media (prefers-reduced-motion: reduce) { .barra-pubblicita, .barra-pubblicita[data-visibile] { transition: none; } }
+@media (min-width: 1280px) { .barra-pubblicita { display: none; } }
+.barra-pubblicita__testo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.barra-pubblicita__riga {
+  display: flex; align-items: center; gap: 8px; min-width: 0;
+  font-size: 14px; line-height: 1.2; color: #475569; white-space: nowrap;
+}
+.barra-pubblicita__riga .blocco-prodotto__etichetta { padding: 2px 8px; font-size: 14px; }
+.barra-pubblicita__frase {
+  font-size: 15px; font-weight: 700; line-height: 1.25; color: #0f172a;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.barra-pubblicita__vai {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px;
+  border-radius: 10px; background: #f97316; color: #0f172a; font-size: 15px; font-weight: 700; text-decoration: none;
+}
+.barra-pubblicita__vai:focus-visible, .barra-pubblicita__chiudi:focus-visible { outline: 2px solid #0f172a; outline-offset: 2px; }
+.barra-pubblicita__chiudi {
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px;
+  border: 0; border-radius: 10px; background: none; color: #475569; cursor: pointer;
+}
+/* Con la barra su, il pulsante «Torna in cima» (stesso angolo) sale sopra la barra. */
+@media (max-width: 1279px) { html[data-barra-pubblicita] .torna-su { bottom: calc(88px + env(safe-area-inset-bottom)); } }
+
+.carta-pubblicita { padding: 16px 16px 18px; border: 1.5px solid #cbd5e1; border-radius: 14px; background: #fff; }
+.carta-pubblicita__riga { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0 0 12px; font-size: 14px; color: #475569; }
+.carta-pubblicita__schermata {
+  aspect-ratio: 16 / 10; margin: 0 0 12px; border: 1px solid #e2e8f0; border-radius: 8px;
+  background-color: #fff; background-repeat: no-repeat;
+}
+.carta-pubblicita__frase { margin: 0 0 6px; font-size: 16px; font-weight: 700; line-height: 1.3; color: #0f172a; }
+/* La freccia resta attaccata all'ultima parola anche quando il pulsante va a capo (in 212 px succede). */
+.carta-pubblicita__vai {
+  display: inline-block; padding: 11px 0; line-height: 1.4;
+  font-size: 15px; font-weight: 600; color: #c2410c; text-decoration: none;
+}
+.carta-pubblicita__vai svg { display: inline; margin-left: 4px; vertical-align: -3px; }
+.carta-pubblicita__vai:hover { text-decoration: underline; text-underline-offset: 3px; }
+
 /* ── Il pulsante del funnel delle Notizie (blocco, pagina della demo, invio della candidatura) ──────────────────
    Arancio del marchio con il testo navy: il bianco su #f97316 fa 2,8:1 e al sole non si legge (revisione del
    03/10); il navy fa 6,4:1. */

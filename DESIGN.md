@@ -49,6 +49,10 @@ domande; noindex) → `/grazie?da=<slug>` («Candidatura ricevuta»). Il pulsant
 marchio con il testo **navy** (il bianco sull'arancio fa 2,8:1 e al sole non si legge). Sulle `/demo/*` il pulsante del
 menu porta al modulo della pagina e il piè di pagina non ha la colonna «Inizia adesso».
 
+«Ti accompagna» (09/10): lo stesso richiamo del blocco è anche una barra in basso sul telefono (compare dopo il primo
+schermo, solo a chi ha già scelto sui cookie, si chiude con la X e sparisce al blocco) e un riquadro fermo nella colonna
+di sinistra da 1280 px. Frasi corte in `src/data/richiamoNotizie.ts`.
+
 Il Markdown dell'articolo diventa così:
 | Markdown | Sulla pagina |
 |---|---|
