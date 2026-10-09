@@ -308,12 +308,16 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                   <section aria-labelledby="fonti">
                     <h2 id="fonti">Fonti</h2>
                     <ol className="fonti">
+                      {/* Tutta la riga è il link, ente compreso (CAN-196): il solo atto era alto 20 px. Così chi
+                          usa un lettore di schermo sente anche l'ente («Normattiva, Codice civile Art. 1329»). */}
                       {n.fonti.map((f) => (
                         <li key={f.url}>
-                          <span className="fonti__ente">{tieniInsieme(f.ente)}</span>
                           <a href={f.url} target="_blank" rel="noopener">
-                            {tieniInsieme(f.titolo)}
-                            <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
+                            <span className="fonti__ente">{tieniInsieme(f.ente)}</span>{" "}
+                            <span className="fonti__atto">
+                              {tieniInsieme(f.titolo)}
+                              <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
+                            </span>
                           </a>
                         </li>
                       ))}
