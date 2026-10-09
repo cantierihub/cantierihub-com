@@ -593,7 +593,10 @@
 .articolo p:has(> em:only-child) em { font-style: normal; }
 
 /* Tabelle: stanno nello schermo del telefono (le intestazioni vanno a capo), le colonne di numeri si allineano a
-   destra; se proprio non ci stanno, scorre il riquadro e non la pagina. */
+   destra; se proprio non ci stanno, scorre il riquadro e non la pagina.
+   ⛔ Nessuna larghezza fissa sulla prima colonna: con 8.5em (128 px a 390) la tabella a 4 colonne della guida sul
+   computo usciva di 23 px e tagliava «Importo», e accanto a «N.» restava spazio vuoto (controllo visivo, 08/10/2026).
+   La larghezza la decide il contenuto: un'etichetta lunga prende lo spazio lasciato dalle colonne di numeri. */
 .articolo .tabella {
   margin: 1.4em 0 0.9em; border: 1px solid #e2e8f0; border-radius: 14px;
   overflow-x: auto; -webkit-overflow-scrolling: touch;
@@ -610,7 +613,7 @@
   border-bottom: 1px solid #e2e8f0; text-wrap: balance; vertical-align: bottom;
 }
 .articolo tbody tr + tr td { border-top: 1px solid #f1f5f9; }
-.articolo td:first-child { color: #0f172a; min-width: 8.5em; }
+.articolo td:first-child { color: #0f172a; }
 .articolo .num {
   text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum'; font-weight: 600; color: #0f172a;
