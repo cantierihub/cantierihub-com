@@ -7,6 +7,7 @@ tipo: guida
 categoria: guide-pratiche
 parola_chiave: organizzare un cantiere
 autore: Redazione Cantieri Hub
+nota_ai_in_alto: true
 data_pubblicazione: '2026-10-09'
 data_aggiornamento: '2026-10-09'
 in_breve: >-
