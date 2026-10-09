@@ -710,17 +710,22 @@
 .domande details[open] .domande__segno { transform: rotate(45deg); }
 .domande details p { margin: -4px 0 18px; font-size: 16px; line-height: 1.65; color: #334155; }
 
-/* Fonti: l'ente sopra, l'atto sotto, cliccabile. */
+/* Fonti: l'ente sopra, l'atto sotto. Si tocca tutta la riga, da un filo all'altro (CAN-196, Controllo visivo del
+   09/10/2026): prima si toccava solo l'atto, alto 20 px, ed è il link che chi vuole controllare la fonte prende col
+   pollice (PRODUCT.md: bersagli ≥ 44 px). Una fonte per riga, quindi il dito non prende quella accanto. Lo spazio
+   del link è il padding che la riga aveva già: il riquadro resta lungo uguale. */
 .articolo .fonti { counter-reset: none; }
-.articolo .fonti > li { padding-left: 0; margin: 0; padding-block: 12px; }
+.articolo .fonti > li { padding-left: 0; margin: 0; }
 .articolo .fonti > li + li { border-top: 1px solid #f1f5f9; }
 .articolo .fonti > li::before { content: none; }
+.articolo .fonti a { display: block; padding-block: 12px; color: inherit; text-decoration: none; }
 .fonti__ente { display: block; font-size: 14px; font-weight: 600; color: #475569; }
-.articolo .fonti a {
-  display: inline; font-size: 16px; line-height: 1.5; color: #0f172a;
-  text-decoration-color: #cbd5e1; text-decoration-thickness: 1px;
+.fonti__atto {
+  font-size: 16px; line-height: 1.5; color: #0f172a;
+  text-decoration: underline; text-decoration-color: #cbd5e1; text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
-.articolo .fonti a:hover { color: #c2410c; text-decoration-color: currentColor; }
+.articolo .fonti a:hover .fonti__atto { color: #c2410c; text-decoration-color: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
   .indice-mobile__freccia, .domande__segno, .indice-laterale a { transition: none; }
