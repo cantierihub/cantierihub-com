@@ -137,10 +137,14 @@ const ROMANO = String.raw`[IVXLCDM]+(?![\p{L}\d])`;
 const DAVANTI_AL_ROMANO = String.raw`(?<![\p{L}\d.])(?:[nN]n?\.|[aA]ll\.|[aA]llegat[oi]|[tT]itol[oi]|[cC]ap[oi]|[pP]art[ei]|[sS]ezion[ei]|[lL]ibr[oi])`;
 const QUANTITA = String.raw`(?<![\p{L}\d.,])\d+(?:[.,]\d+)*`;
 const UNITA = String.raw`(?:m[²³23qcl]?|cm²?|mm|km²?|kg|q|t|kWh?|MWh?|kN|°C|%|€|euro|mila|milion[ei]|miliard[oi])(?![\p{L}\d'’])`;
+// Le lettere aggiunte dopo, nelle norme: «lett. b-bis)», «lettera a-ter», «c-quinquies», «e-quaterdecies» (anche «-dicies»)
+const AGGIUNTA = String.raw`(?:bis|ter|quater|quinquies|sexies|septies|octies|novies|nonies|\p{Ll}*d[ei]cies)(?![\p{L}\d])`;
+const LETTERA_AGGIUNTA = String.raw`\p{Ll}-${APRE}${AGGIUNTA}`;
 
 const REGOLE = [
-  // «n. 1», «art. 4», «D.Lgs. 36/2023», «comma 13», «lett. a)»; e le pagine del prezzario scritte «p. -G-»
-  fra(SIGLA, String.raw`(?:\d|\p{Ll}\)|-[A-Z\d]{1,3}-)`, "giu"),
+  // «n. 1», «art. 4», «D.Lgs. 36/2023», «comma 13», «lett. a)», «lett. b-bis)»; e le pagine del prezzario scritte «p. -G-».
+  // Il 09/10/2026 a 390 px una riga finiva con «c. 1, lett.» e quella sotto era solo «b-bis)» (CAN-265).
+  fra(SIGLA, String.raw`(?:\d|\p{Ll}\)|${LETTERA_AGGIUNTA}|-[A-Z\d]{1,3}-)`, "giu"),
   // «23 ottobre», «1° gennaio»
   fra(GIORNO, String.raw`(?:${MESE})(?!\p{L})`, "giu"),
   // «n. XII/6071», «Allegato I.7», «Titolo IV»
@@ -163,6 +167,8 @@ const REGOLE = [
 const TRATTINI = [
   // «1-bis», «16-ter», «n. 127-quaterdicies», «Allegato II.2-bis», anche con un grassetto in mezzo
   new RegExp(String.raw`(?<=\d${CHIUDE})-(?=${APRE}\p{L})`, "gu"),
+  // «lett. b-bis)», «lettera a-ter»: Chrome andrebbe a capo anche dopo «b-» (CAN-265). «nord-est», «e-mail» no.
+  new RegExp(String.raw`(?<=(?<![\p{L}\d])\p{Ll}${CHIUDE})-(?=${APRE}${AGGIUNTA})`, "gu"),
   // «DGR 12-2656», «artt. 1-5», «pp. 94-95», «10-15 giorni», «2024-2025», anche col trattino lungo degli intervalli
   // («1–5»). Il meno di «-0,4%» no: davanti non ha una cifra.
   new RegExp(String.raw`(?<=\d${CHIUDE})[-–](?=${APRE}\d)`, "gu"),
@@ -193,7 +199,7 @@ function parteVietata(html: string): Uint8Array {
   return vietata;
 }
 
-/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis», «DGR 12-2656» restano sulla stessa riga. */
+/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis», «lett. b-bis)», «DGR 12-2656» restano sulla stessa riga. */
 export function tieniInsieme(testo: string): string {
   return UNIONI.reduce((t, [regola, unito]) => {
     // La parte vietata si rifà a ogni regola: due spazi diventati uno spostano tutto quello che viene dopo.
