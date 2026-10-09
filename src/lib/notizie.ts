@@ -49,6 +49,19 @@ export interface Fonte {
   url: string;
 }
 
+/** Le fonti di fila con lo stesso ente, messe insieme: nel riquadro Fonti l'ente si scrive una volta sola, sopra i loro
+ *  link (CAN-272). Una guida cita gli articoli uno per uno, e 13 «Normattiva, D.Lgs. 81/2008» uguali erano solo rumore.
+ *  L'ordine resta quello del frontmatter; una fonte da sola è un gruppo di uno. */
+export function fontiPerEnte(fonti: Fonte[]): Fonte[][] {
+  const gruppi: Fonte[][] = [];
+  for (const f of fonti) {
+    const ultimo = gruppi[gruppi.length - 1];
+    if (ultimo && ultimo[0].ente === f.ente) ultimo.push(f);
+    else gruppi.push([f]);
+  }
+  return gruppi;
+}
+
 export interface Domanda {
   domanda: string;
   risposta: string;

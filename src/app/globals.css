@@ -726,6 +726,17 @@
   text-underline-offset: 3px;
 }
 .articolo .fonti a:hover .fonti__atto { color: #c2410c; text-decoration-color: currentColor; }
+/* Le fonti di fila con lo stesso ente (CAN-272): l'ente una volta sola, sopra, e sotto i loro link, uno per riga. Una
+   guida cita gli articoli uno per uno: a 390 px erano 13 «Normattiva, D.Lgs. 9 aprile 2008, n. 81…» grigi, su due
+   righe l'uno. Il filo separa gli enti, non i link dello stesso ente; ogni link resta alto almeno 44 px. */
+.fonti__gruppo { padding-top: 12px; }
+.articolo .fonti__atti { margin: 0; }
+.articolo .fonti__atti > li { padding-left: 0; margin: 0; }
+.articolo .fonti__atti > li::before { content: none; }
+.articolo .fonti__atti a { min-height: 44px; padding-block: 10px; }
+/* Il primo link sta attaccato all'etichetta, come l'atto di una fonte sola sta attaccato al suo ente: l'altezza la
+   tiene il minimo di 44 px. */
+.articolo .fonti__atti > li:first-child a { padding-top: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   .indice-mobile__freccia, .domande__segno, .indice-laterale a { transition: none; }
