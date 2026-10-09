@@ -37,7 +37,7 @@ file** l'icona UE «AI GENERATED» a 1/5 della larghezza, niente didascalia) · 
 fisso a destra da 1280 px) · corpo · **Cosa cambia per la tua impresa** (riquadro arancio chiaro) · **Cosa fare
 adesso** (riquadro navy, passi numerati in cerchi arancio) · **blocco «Pubblicità»** (dopo l'ultima sezione; bordo
 tratteggiato, etichetta scritta, titolo in Inter; testi fissi in `src/data/funnelNotizie.ts`; si spegne con
-`prodotto: nessuno`) · Domande frequenti (a fisarmonica) · Fonti (ente sopra, atto sotto) · **«Come è nato questo
+`prodotto: nessuno`; «Il seguito dell'articolo», 09/10: quando il prodotto ha i suoi `passi`, tre passi con le schermate vere e la cornice piena, cerchi navy; dal 10/10 sotto ogni blocco un'ombra arancione che lo stacca dal riquadro navy) · Domande frequenti (a fisarmonica) · Fonti (ente sopra, atto sotto) · **«Come è nato questo
 articolo»** (l'unica nota sull'AI della pagina, con la frase sulla copertina) · link a tutte le notizie.
 
 ⛔ In alto niente nota sull'AI (si riaccende solo con `nota_ai_in_alto: true`) e nel testo nessun prodotto: il richiamo
