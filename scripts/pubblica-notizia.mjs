@@ -8,7 +8,7 @@
 //
 // Il pacchetto lo scrivono gli agenti del reparto «Sito» in Paperclip (vault: Business/cantieri-hub/sistemi/sito-seo/
 // redazione/<data>-<slug>/). Qui si legge 02-articolo.md e si scrive content/notizie/<slug>.md nel formato di
-// src/lib/notizie.ts; le immagini del pacchetto vanno in public/images/notizie/<slug>/.
+// src/lib/notizie.ts; la copertina e le immagini che il testo usa vanno in public/images/notizie/<slug>/.
 // Le domande frequenti e le fonti possono stare nell'intestazione (faq, fonti) oppure come sezioni del testo
 // («## Domande frequenti» con «### domanda», «## Fonti» con un elenco di link): qui diventano sempre intestazione.
 
@@ -59,6 +59,63 @@ let apertura = sezioni[0].startsWith("## ") ? "" : sezioni.shift();
 const faq = Array.isArray(fm.faq) ? fm.faq : [];
 let fonti = Array.isArray(fm.fonti) && typeof fm.fonti[0] === "object" ? fm.fonti : [];
 const restanti = [];
+const problemi = [];
+
+// Una riga dell'elenco «## Fonti» diventa una fonte per link, col testo del link. Si leggono tre forme:
+//   «- Ente, [titolo](url), descrizione ([PDF](url))»: un link con la sua descrizione. Il link fra parentesi subito
+//     dopo un altro è un'altra copia dello stesso atto e diventa «titolo (PDF)»: prima il PDF del comunicato ISTAT
+//     si perdeva (Controllo visivo, CAN-36, 03/10/2026).
+//   «- Ente, Codice civile, [art. 1655](url), [art. 1659](url) e [art. 1661](url)»: link alla pari, separati solo
+//     da virgole, «e», «;». Una fonte ciascuno; la descrizione in fondo, se c'è, va all'ultimo.
+//   «- Ente, [Atto](url): [art. 41](url), [art. 60](url), Allegato I.14…»: l'atto e le sue parti. Quello che segue
+//     i due punti descrive l'atto; ogni parte ha la sua fonte, con l'atto accanto all'ente.
+// Del testo fra due link alla pari non si sa di chi sia: lì lo strumento si ferma e lo dice. Prima un link in mezzo
+// alla descrizione spariva e lasciava il buco («e il suo , modello di dichiarazione», 07/10), e i link alla pari
+// diventavano «Art. 1655, e», «Art. 1655 (art. 1659)» (Controllo visivo, CAN-151; CAN-185, 09/10/2026).
+const maiuscola = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+const pulito = (t) => t.replace(/\*\*/g, "").replace(/\s+/g, " ").replace(/^[\s,—–:·-]+/, "").replace(/[\s,—–:·-]+$/, "").trim();
+function fontiDellaRiga(r) {
+  const riga = r.replace(/^\s*[-*]\s*/, "");
+  // pezzi = testo, link, testo, link, …, testo. Una copia «([PDF](url))» non è un pezzo: va col link prima.
+  const pezzi = [""];
+  let da = 0;
+  for (const m of riga.matchAll(/\[([^\]]+)\]\((https?:[^)]+)\)/g)) {
+    const testo = riga.slice(da, m.index);
+    da = m.index + m[0].length;
+    const chiusa = riga.slice(da).match(/^\s*\)/);
+    if (pezzi.length > 1 && chiusa && /\(\s*$/.test(testo)) {
+      pezzi[pezzi.length - 1] += testo.replace(/\(\s*$/, "");
+      pezzi.at(-2).copie.push({ testo: m[1], url: m[2] });
+      da += chiusa[0].length;
+    } else {
+      pezzi[pezzi.length - 1] += testo;
+      pezzi.push({ testo: m[1], url: m[2], copie: [] }, "");
+    }
+  }
+  pezzi[pezzi.length - 1] += riga.slice(da);
+  const atti = pezzi.filter((p) => typeof p === "object");
+  if (atti.length === 0) return [];
+  const dopo = (k) => pezzi[2 * k + 2]; // il testo fra il link k e il successivo
+  const prefisso = pulito(pezzi[0]);
+  const ente = prefisso || "Fonte ufficiale";
+  const conCopie = (ente, atto, descrizione) => [
+    { ente, titolo: maiuscola(descrizione ? `${atto.testo}, ${descrizione}` : atto.testo), url: atto.url },
+    ...atto.copie.map((c) => ({ ente, titolo: maiuscola(`${atto.testo} (${c.testo})`), url: c.url })),
+  ];
+  if (atti.length === 1) return conCopie(ente, atti[0], pulito(dopo(0)));
+  if (/^\s*:/.test(dopo(0))) {
+    const [atto, ...parti] = atti;
+    const resto = pezzi.slice(2).map((p) => (typeof p === "string" ? p : p.testo)).join("");
+    const enteParti = [prefisso, atto.testo].filter(Boolean).join(", ");
+    return [...conCopie(ente, atto, pulito(resto)), ...parti.flatMap((p) => conCopie(enteParti, p, ""))];
+  }
+  const k = atti.slice(0, -1).findIndex((_, i) => !/^\s*(?:[,;/·]\s*)*(?:(?:e|ed|o)\s+)?$/i.test(dopo(i)));
+  if (k >= 0) {
+    problemi.push(`fonti: fra «${atti[k].testo}» e «${atti[k + 1].testo}» c'è «${pulito(dopo(k))}», e non si sa di quale dei due link sia. Una fonte per riga («- Ente, [titolo](url), descrizione»), oppure link alla pari separati solo da virgole o «e»`);
+    return [];
+  }
+  return atti.flatMap((a, i) => conCopie(ente, a, i === atti.length - 1 ? pulito(dopo(i)) : ""));
+}
 
 for (const s of sezioni) {
   const titolo = s.split("\n")[0].replace(/^##\s+/, "").trim().toLowerCase();
@@ -69,25 +126,7 @@ for (const s of sezioni) {
     }
   } else if (/^fonti/.test(titolo)) {
     if (fonti.length === 0) {
-      for (const r of s.split("\n").filter((x) => /^\s*[-*]\s/.test(x))) {
-        // Forma tipica: «- ENTE, [titolo](url), descrizione ([PDF](url))». L'ente è quello che sta prima del primo
-        // link; il titolo è il testo del link più la descrizione in chiaro. Ogni altro link della riga diventa una
-        // fonte sua: prima diventava testo e il link al PDF del comunicato ISTAT si perdeva, lasciando un «(PDF)» che
-        // apriva la pagina web (Controllo visivo, CAN-36, 03/10/2026).
-        const link = [...r.matchAll(/\[([^\]]+)\]\((https?:[^)]+)\)/g)];
-        if (link.length === 0) continue;
-        const [primo, ...altri] = link;
-        const riga = r.replace(/^\s*[-*]\s*/, "");
-        const i = riga.indexOf(primo[0]);
-        const prima = riga.slice(0, i).replace(/\*\*/g, "").replace(/[\s,—–:·-]+$/, "").trim();
-        let dopo = riga.slice(i + primo[0].length);
-        for (const l of altri) dopo = dopo.split(l[0]).join("");
-        dopo = dopo.replace(/\(\s*\)/g, "").replace(/\*\*/g, "").replace(/^[\s,—–:·-]+/, "").replace(/[\s,—–:·-]+$/, "").trim();
-        const maiuscola = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-        const ente = prima || "Fonte ufficiale";
-        fonti.push({ ente, titolo: maiuscola(dopo ? `${primo[1]}, ${dopo}` : primo[1]), url: primo[2] });
-        for (const l of altri) fonti.push({ ente, titolo: maiuscola(`${primo[1]} (${l[1]})`), url: l[2] });
-      }
+      for (const r of s.split("\n").filter((x) => /^\s*[-*]\s/.test(x))) fonti.push(...fontiDellaRiga(r));
     }
   } else {
     restanti.push(s);
@@ -105,10 +144,16 @@ if (!inBreve) {
 inBreve = inBreve.replace(/^\*\*In breve:?\*\*\s*/i, "").replace(/\*\*/g, "").trim();
 corpo = [apertura.trim(), ...restanti].filter(Boolean).join("\n\n").trim() + "\n";
 
-// Immagini: tutto quello che c'è in immagini/ va in public/images/notizie/<slug>/.
+// Immagini. In public/images/notizie/<slug>/ va solo quello che la pagina usa: la copertina e le immagini che il testo
+// richiama. Prima andava tutta la cartella immagini/, e il 07/10 era finito online anche il PNG di lavoro da 2,2 MB,
+// senza etichetta AI. La copertina è <slug>-copertina.webp (il nome lo fissa Media sito): è quella con l'etichetta
+// «AI GENERATED», l'unico segno dell'AI a vista dal 03/10. Prima si prendeva il primo file con «copertina» nel nome,
+// in ordine alfabetico, e il 07/10 è uscito …-copertina-senza-icona.png. Un file «senza-icona» online non va mai.
 const cartellaImmagini = path.join(pacchetto, "immagini");
-const immagini = fs.existsSync(cartellaImmagini) ? fs.readdirSync(cartellaImmagini).filter((f) => /\.(webp|avif|jpe?g|png)$/i.test(f)) : [];
-const copertina = immagini.find((f) => f.includes("copertina"));
+const fileImmagini = fs.existsSync(cartellaImmagini) ? fs.readdirSync(cartellaImmagini).filter((f) => /\.(webp|avif|jpe?g|png)$/i.test(f)) : [];
+const immagini = fileImmagini.filter((f) => !/senza-icona/i.test(f));
+const copertina = immagini.find((f) => f === `${slug}-copertina.webp`);
+const usate = [...new Set([copertina, ...immagini.filter((f) => corpo.includes(f))].filter(Boolean))];
 let alt = fm.immagine_alt;
 if (copertina && !alt && fs.existsSync(path.join(pacchetto, "06-immagini.md"))) {
   const m = fs.readFileSync(path.join(pacchetto, "06-immagini.md"), "utf8").match(/alternativo[^:\n]*[:|]\s*[«"]?([^»"\n|]+)/i);
@@ -116,7 +161,20 @@ if (copertina && !alt && fs.existsSync(path.join(pacchetto, "06-immagini.md"))) 
 }
 
 // Controlli: meglio fermarsi qui che pubblicare una pagina sbagliata.
-const problemi = [];
+const altreCopertine = fileImmagini.filter((f) => /copertina/i.test(f));
+if (!copertina && altreCopertine.length) {
+  problemi.push(`in immagini/ c'è «${altreCopertine.join("», «")}» ma non «${slug}-copertina.webp»: online va solo quella, con l'etichetta AI (la prepara Media sito)`);
+}
+if (/senza-icona/i.test(corpo)) problemi.push("il testo richiama un'immagine «senza-icona»: online va solo quella con l'etichetta AI");
+for (const [, f] of corpo.matchAll(new RegExp(`/images/notizie/${slug}/([^)\\s"'>]+)`, "g"))) {
+  if (!usate.includes(f)) problemi.push(`il testo richiama /images/notizie/${slug}/${f}, che in immagini/ non c'è`);
+}
+// L'ultima rete: un'etichetta con un buco («il suo , modello») o con un pezzo di Markdown non va online.
+for (const f of fonti) {
+  for (const t of [f.ente, f.titolo].map(String)) {
+    if (/\s[,.;:)]|\(\s*\)|[[\]]|^[,.;:)]|[,;:(]$/.test(t)) problemi.push(`fonte «${f.titolo}»: c'è un buco o un pezzo di Markdown in «${t}»`);
+  }
+}
 if (!CATEGORIE.includes(fm.categoria)) problemi.push(`categoria «${fm.categoria}» non valida (valide: ${CATEGORIE.join(", ")})`);
 if (!fm.titolo) problemi.push("manca il titolo");
 if (String(fm.titolo).length > 45) problemi.push(`titolo di ${String(fm.titolo).length} caratteri: con « | Cantieri Hub» supera i 60`);
@@ -179,16 +237,24 @@ const testo = matter.stringify(corpo, intestazione);
 function scriviIn(radice) {
   fs.mkdirSync(path.join(radice, "content/notizie"), { recursive: true });
   fs.writeFileSync(path.join(radice, "content/notizie", `${slug}.md`), testo);
-  if (immagini.length) {
-    const dest = path.join(radice, "public/images/notizie", slug);
-    fs.mkdirSync(dest, { recursive: true });
-    for (const f of immagini) fs.copyFileSync(path.join(cartellaImmagini, f), path.join(dest, f));
+  // La cartella dell'articolo tiene solo i file che la pagina usa: quello che c'era da prima e non serve più (un'altra
+  // copertina, un PNG di lavoro) si toglie.
+  const dest = path.join(radice, "public/images/notizie", slug);
+  let tolti = 0;
+  for (const f of fs.existsSync(dest) ? fs.readdirSync(dest) : []) {
+    if (!usate.includes(f) && fs.statSync(path.join(dest, f)).isFile()) { fs.rmSync(path.join(dest, f)); tolti++; }
   }
+  if (usate.length) {
+    fs.mkdirSync(dest, { recursive: true });
+    for (const f of usate) fs.copyFileSync(path.join(cartellaImmagini, f), path.join(dest, f));
+  }
+  return tolti;
 }
 
 if (modo === "--prova") {
-  scriviIn(REPO);
-  console.log(`scritto content/notizie/${slug}.md (${faq.length} domande, ${fonti.length} fonti, ${immagini.length} immagini) — solo in questa copia, niente git`);
+  const tolti = scriviIn(REPO);
+  console.log(`scritto content/notizie/${slug}.md (${faq.length} domande, ${fonti.length} fonti) — solo in questa copia, niente git`);
+  console.log(`copertina: ${copertina ?? "nessuna"} · in public/images/notizie/${slug}/: ${usate.join(", ") || "niente"}${tolti ? ` (${tolti === 1 ? "tolto 1 file" : `tolti ${tolti} file`} di prima)` : ""}`);
   process.exit(0);
 }
 
@@ -202,8 +268,8 @@ let base = "main";
 try { sh("git", ["cat-file", "-e", "origin/main:src/lib/notizie.ts"]); } catch { base = "redazione/sezione-notizie"; }
 sh("git", ["worktree", "add", "-q", "-B", ramo, lavoro, `origin/${base}`]);
 try {
-  scriviIn(lavoro);
-  sh("git", ["add", "content/notizie", ...(immagini.length ? ["public/images/notizie"] : [])], lavoro);
+  const tolti = scriviIn(lavoro);
+  sh("git", ["add", "content/notizie", ...(usate.length || tolti ? ["public/images/notizie"] : [])], lavoro);
   sh("git", ["commit", "-q", "-m", `Notizia: ${fm.titolo}\n\nDalla redazione di agenti (pacchetto ${path.basename(pacchetto)}). Anteprima per l'ok di Raffaele.`], lavoro);
   sh("git", ["push", "-q", "-f", "-u", "origin", ramo], lavoro);
   let pr;
