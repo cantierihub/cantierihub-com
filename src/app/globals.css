@@ -750,9 +750,12 @@
 /* ── Notizie: il blocco «Pubblicità» in fondo all'articolo (funnel, 03/10/2026) ──────────────────────────────
    È pubblicità e deve sembrarlo (D.Lgs. 145/2007, art. 5): etichetta scritta in alto, un bordo tratteggiato che
    nessun riquadro della redazione ha, e il titolo in Inter invece che nel Poppins dei titoli della redazione. */
+/* L'ombra arancione sotto (Raffaele, 10/10: «facci semplicemente un'ombra arancione per farlo risaltare»): il blocco si
+   stacca dal riquadro navy di «Cosa fare adesso» che gli sta sopra. Arancio del marchio, solo sotto e sfumata. */
 .blocco-prodotto {
   margin: 2.4em 0; padding: 20px 20px 22px; border-radius: 18px;
   border: 2px dashed #94a3b8; background: #fff;
+  box-shadow: 0 24px 50px -14px rgba(249, 115, 22, 0.6), 0 8px 20px -8px rgba(249, 115, 22, 0.4);
 }
 @media (min-width: 768px) { .blocco-prodotto { padding: 26px 30px 28px; } }
 .articolo .blocco-prodotto__testa {
