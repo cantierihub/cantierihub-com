@@ -747,26 +747,56 @@
 .btn-funnel:focus-visible { outline: 2px solid #0f172a; outline-offset: 3px; }
 .btn-funnel:disabled { opacity: 0.7; transform: none; }
 
-/* ── Notizie: il blocco «Pubblicità» in fondo all'articolo (funnel, 03/10/2026) ──────────────────────────────
-   È pubblicità e deve sembrarlo (D.Lgs. 145/2007, art. 5): etichetta scritta in alto, un bordo tratteggiato che
-   nessun riquadro della redazione ha, e il titolo in Inter invece che nel Poppins dei titoli della redazione. */
+/* ── Notizie: il blocco «Pubblicità» in fondo all'articolo (funnel, 03/10/2026; «La vetrina», 09/10) ────────
+   È pubblicità e deve sembrarlo (D.Lgs. 145/2007, art. 5): etichetta scritta in alto e una forma che i riquadri della
+   redazione non hanno. Senza schermata resta il bordo tratteggiato. Con la schermata vera del prodotto («La vetrina»)
+   la cornice è piena e in mezzo c'è il palco a puntini con la clip: nessun riquadro della redazione ha un palco.
+   ⛔ Una cornice piena SENZA palco somiglierebbe a «In breve» (bordo sottile su bianco): per questo va solo col palco. */
 .blocco-prodotto {
   margin: 2.4em 0; padding: 20px 20px 22px; border-radius: 18px;
   border: 2px dashed #94a3b8; background: #fff;
 }
 @media (min-width: 768px) { .blocco-prodotto { padding: 26px 30px 28px; } }
+.blocco-prodotto.blocco-prodotto--vetrina { padding: 0; border: 1.5px solid #cbd5e1; overflow: hidden; }
 .articolo .blocco-prodotto__testa {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin: 0 0 14px;
   font-size: 14px; line-height: 1.45; color: #475569;
 }
+.articolo .blocco-prodotto--vetrina .blocco-prodotto__testa { margin: 0; padding: 18px 20px 16px; }
 .blocco-prodotto__etichetta {
   display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 9999px;
-  background: #0f172a; color: #fff; font-weight: 600; letter-spacing: 0.01em;
+  background: #0f172a; color: #fff; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;
+}
+/* Il palco: la finestra del programma sale dal bordo basso, come un prodotto sul banco. La scritta sta nel margine
+   alto del palco e non sopra la schermata (il 09/10, messa sulla finestra, copriva proprio la riga dell'Utile). */
+.blocco-prodotto__palco {
+  position: relative; padding: 52px 18px 0;
+  background-color: #e9eef5; background-image: radial-gradient(rgba(15, 23, 42, 0.13) 1px, transparent 1.3px);
+  background-size: 12px 12px;
+}
+.blocco-prodotto__vero {
+  position: absolute; left: 18px; top: 12px; display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 9999px; background: rgba(15, 23, 42, 0.88);
+  color: #fff; font-size: 14px; font-weight: 600; line-height: 1.3;
+}
+.blocco-prodotto__punto { width: 8px; height: 8px; border-radius: 50%; background: #f97316; }
+.blocco-prodotto__finestra {
+  position: relative; overflow: hidden; background: #fff;
+  border: 1px solid #cbd5e1; border-bottom: 0; border-radius: 10px 10px 0 0;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+}
+.articolo .blocco-prodotto__clip { position: absolute; max-width: none; height: auto; margin: 0; border-radius: 0; }
+.blocco-prodotto--vetrina .blocco-prodotto__corpo { padding: 20px 20px 22px; border-top: 1px solid #cbd5e1; }
+@media (min-width: 768px) {
+  .articolo .blocco-prodotto--vetrina .blocco-prodotto__testa { padding: 22px 30px 18px; }
+  .blocco-prodotto__palco { padding: 56px 30px 0; }
+  .blocco-prodotto__vero { left: 30px; top: 14px; }
+  .blocco-prodotto--vetrina .blocco-prodotto__corpo { padding: 24px 30px 28px; }
 }
 .articolo .blocco-prodotto h2 {
   margin: 0 0 0.45em; padding: 0; border: 0;
   font-family: var(--font-sans); font-weight: 700; letter-spacing: -0.01em;
-  font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.4rem); line-height: 1.3; text-wrap: balance;
+  font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem); line-height: 1.28; text-wrap: balance;
 }
 .articolo .blocco-prodotto__testo { margin: 0 0 18px; font-size: 16px; line-height: 1.6; color: #334155; }
 .articolo .blocco-prodotto__pulsante,

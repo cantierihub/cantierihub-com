@@ -46,6 +46,20 @@ export interface SchedaFunnel {
     /** Sotto il pulsante: com'è la demo e, dove serve, il limite («il prezzo finale lo decidi tu»). */
     nota: string;
   };
+  /**
+   * La schermata vera del prodotto nel blocco «Pubblicità» («La vetrina», Raffaele 09/10/2026: «migliorare il
+   * placement… quando proponiamo uno dei nostri prodotti»). Una clip muta di `public/video/prova/`, ritagliata sulla
+   * parte che conta. ⛔ Solo registrazioni del programma vero: sopra c'è scritto «Il programma vero», quindi uno schema
+   * (come `analisi-prezzi-scomposizione.png`) o una foto generata non ci vanno. Senza, il blocco resta di solo testo.
+   */
+  vetrina?: {
+    clip: string;
+    /** Cosa si vede, per chi usa un lettore di schermo. */
+    descrizione: string;
+    fotogramma: { larghezza: number; altezza: number };
+    /** Il pezzo di fotogramma da mostrare, in pixel del fotogramma intero. */
+    ritaglio: { x: number; y: number; larghezza: number; altezza: number };
+  };
   pagina_demo: {
     titolo: string;
     sottotitolo: string;
@@ -105,6 +119,13 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
         "L'AI cerca il prezzo di ogni voce sul prezzario della tua regione o nei tuoi listini. Con un click ogni voce si apre: vedi quanto ci guadagni.",
       pulsante: "Provalo su un tuo computo",
       nota: "Demo gratuita, dal vivo: porti un tuo computo e facciamo il preventivo insieme. Il prezzo finale lo decidi tu.",
+    },
+    // La clip del quadro economico della prova del Preventivatore (07/10), sul riquadro con costo, margine e utile.
+    vetrina: {
+      clip: "quadro-economico",
+      descrizione: "il quadro economico di un preventivo di prova, con costo, margine e utile",
+      fotogramma: { larghezza: 1280, altezza: 906 },
+      ritaglio: { x: 50, y: 75, larghezza: 740, altezza: 425 },
     },
     pagina_demo: {
       titolo: "Carichi il computo. Esce il preventivo.",

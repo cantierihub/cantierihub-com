@@ -36,7 +36,7 @@ percorso (Notizie › categoria) · titolo · descrizione · firma col marchio (
 file** l'icona UE «AI GENERATED» a 1/5 della larghezza, niente didascalia) · **In breve** · indice (chiuso su telefono,
 fisso a destra da 1280 px) · corpo · **Cosa cambia per la tua impresa** (riquadro arancio chiaro) · **Cosa fare
 adesso** (riquadro navy, passi numerati in cerchi arancio) · **blocco «Pubblicità»** (dopo l'ultima sezione; bordo
-tratteggiato, etichetta scritta, titolo in Inter; testi fissi in `src/data/funnelNotizie.ts`; si spegne con
+tratteggiato, o cornice piena col palco a puntini e la clip vera del prodotto quando c'è («La vetrina», 09/10), etichetta scritta, titolo in Inter; testi fissi in `src/data/funnelNotizie.ts`; si spegne con
 `prodotto: nessuno`) · Domande frequenti (a fisarmonica) · Fonti (ente sopra, atto sotto) · **«Come è nato questo
 articolo»** (l'unica nota sull'AI della pagina, con la frase sulla copertina) · link a tutte le notizie.
 
