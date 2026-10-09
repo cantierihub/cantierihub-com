@@ -112,7 +112,10 @@ export const UTILE = 10;
 export const SPESE_GENERALI_MAX = 30;
 export const UTILE_MAX = 25;
 
-export const VOCE_MAX = 1000;
+// 2.000 caratteri (Raffaele, 10/10): il 09/10 un'impresa ha incollato un capitolato intero e la casella, ferma a 1.000,
+// lo tagliava in silenzio a metà parola. Oltre il limite la pagina non taglia: dice di usarla una lavorazione alla volta.
+export const VOCE_MAX = 2000;
+export const VOCE_TROPPO_LUNGA = "Scrivi una lavorazione alla volta: questa descrizione è troppo lunga.";
 export const NOTE_MAX = 800;
 
 export type RichiestaProva = {
@@ -170,7 +173,7 @@ export function validaRichiesta(x: unknown): Esito<RichiestaProva> {
   const voce = typeof r.voce === "string" ? r.voce.trim() : "";
   // Come il prodotto: servono descrizione e regione.
   if (!voce) return { ok: false, errore: "Compila descrizione e regione." };
-  if (voce.length > VOCE_MAX) return { ok: false, errore: `La descrizione supera i ${VOCE_MAX} caratteri.` };
+  if (voce.length > VOCE_MAX) return { ok: false, errore: VOCE_TROPPO_LUNGA };
   const regione = scelta(r.regione, REGIONI, "");
   if (!regione) return { ok: false, errore: "Compila descrizione e regione." };
   const unita = scelta(r.unita, UNITA, "m²");
