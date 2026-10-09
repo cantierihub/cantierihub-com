@@ -40,9 +40,9 @@ export default function BloccoProdotto({
         {p.blocco.testo}
       </p>
       <Link href={`/demo/${p.slug}?da=${encodeURIComponent(articolo)}`} className="btn-funnel blocco-prodotto__pulsante">
-        Guarda cosa fa e candidati alla demo <ArrowRight size={16} className="arrow" aria-hidden="true" />
+        {p.blocco.pulsante} <ArrowRight size={16} className="arrow" aria-hidden="true" />
       </Link>
-      <p className="blocco-prodotto__nota">Demo gratuita, dal vivo, sui tuoi file. Nessun impegno.</p>
+      <p className="blocco-prodotto__nota">{p.blocco.nota}</p>
     </aside>
   );
 }

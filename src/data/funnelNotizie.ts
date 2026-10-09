@@ -32,9 +32,19 @@ export interface SchedaFunnel {
   valoreCrm: Prodotto | null;
   /** La pagina prodotto completa, per chi vuole leggere tutto. */
   pagina: string;
+  /**
+   * Il blocco «Pubblicità» in fondo all'articolo. Dal 09/10 nella voce delle statiche Meta (Raffaele: «il copy deve
+   * essere come lo facciamo nelle ad, quindi diretto»): due frasi corte che dicono cosa fa, il vantaggio detto dritto,
+   * il pulsante che dice cosa provi. ⛔ Niente tempi («in pochi minuti», «4 ore») né risultati senza prova: sul sito
+   * l'onere della prova è nostro (D.Lgs. 145/2007, art. 8; CONFORMITA §3.5).
+   */
   blocco: {
     titolo: string;
     testo: string;
+    /** Il pulsante: cosa provi nella demo, con le parole di chi la fa. */
+    pulsante: string;
+    /** Sotto il pulsante: com'è la demo e, dove serve, il limite («il prezzo finale lo decidi tu»). */
+    nota: string;
   };
   pagina_demo: {
     titolo: string;
@@ -56,12 +66,14 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
     valoreCrm: "Analisi Prezzi",
     pagina: "/analisi-prezzi",
     blocco: {
-      titolo: "Il prezzo di ogni voce, costruito pezzo per pezzo",
+      titolo: "Il prezzo di una voce non lo trovi? L'AI te lo costruisce.",
       testo:
-        "L'AI scompone ogni voce in materiali, manodopera e noli. Poi aggiunge spese generali e utile. Il ragionamento lo leggi e lo correggi tu.",
+        "Materiali, manodopera e noli, poi spese generali e il tuo utile. Con i tuoi costi, se vuoi. Ogni numero lo cambi tu.",
+      pulsante: "Provalo su una tua voce",
+      nota: "Demo gratuita, dal vivo: porti una voce fuori prezzario e la costruiamo insieme.",
     },
     pagina_demo: {
-      titolo: "Il prezzo di ogni voce, costruito pezzo per pezzo.",
+      titolo: "Il prezzo di una voce non lo trovi? L'AI te lo costruisce.",
       sottotitolo:
         "Nella demo porti una tua voce e la scomponiamo insieme. Cambi un costo e vedi il prezzo che si ricalcola. L'ultima parola resta tua.",
       cosaFa: [
@@ -88,12 +100,14 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
     valoreCrm: "Preventivatore",
     pagina: "/preventivatore",
     blocco: {
-      titolo: "Dal computo all'offerta, vedendo il margine prima di mandarla",
+      titolo: "Carichi il computo. Esce il preventivo.",
       testo:
-        "Carichi il computo del committente. Ogni voce si cerca sul prezzario regionale o nei tuoi listini. Prima di mandare l'offerta vedi costo, margine e utile.",
+        "L'AI cerca il prezzo di ogni voce sul prezzario della tua regione o nei tuoi listini. Con un click ogni voce si apre: vedi quanto ci guadagni.",
+      pulsante: "Provalo su un tuo computo",
+      nota: "Demo gratuita, dal vivo: porti un tuo computo e facciamo il preventivo insieme. Il prezzo finale lo decidi tu.",
     },
     pagina_demo: {
-      titolo: "Dal computo all'offerta, vedendo il margine prima di mandarla.",
+      titolo: "Carichi il computo. Esce il preventivo.",
       sottotitolo:
         "Nella demo porti un computo vero e lo trasformiamo in offerta insieme. Vedi le voci sul prezzario e il margine prima che l'offerta parta.",
       cosaFa: [
@@ -120,12 +134,14 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
     valoreCrm: "Computatore",
     pagina: "/computatore",
     blocco: {
-      titolo: "Il computo metrico dalle foto del sopralluogo o dalla piantina",
+      titolo: "Fai le foto del sopralluogo. Le voci te le propone l'AI.",
       testo:
-        "Descrivi il lavoro e carichi foto o piantine. L'AI propone le voci sul prezzario ufficiale. Le misure le controlli e le decidi tu.",
+        "Ogni voce col suo codice del prezzario ufficiale. Dalla piantina legge la scala e fa una prima stima delle quantità. Tu controlli e decidi.",
+      pulsante: "Provalo su un tuo lavoro",
+      nota: "Demo gratuita, dal vivo: porti le foto di un sopralluogo o una piantina e facciamo il computo insieme.",
     },
     pagina_demo: {
-      titolo: "Il computo metrico dalle foto del sopralluogo o dalla piantina.",
+      titolo: "Fai le foto del sopralluogo. Le voci te le propone l'AI.",
       sottotitolo:
         "Nella demo porti le foto di un sopralluogo o una piantina e facciamo il computo insieme. Vedi da dove arriva ogni quantità e la correggi tu.",
       cosaFa: [
@@ -154,12 +170,14 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
     valoreCrm: null,
     pagina: "/come-funziona",
     blocco: {
-      titolo: "Computi e preventivi senza ricopiare voci dal prezzario",
+      titolo: "Computi e preventivi con l'AI. Senza ricopiare il prezzario.",
       testo:
-        "Tre strumenti per imprese edili: il computo dal sopralluogo, l'analisi di ogni prezzo e il preventivo. Lavorano sul prezzario ufficiale e sui tuoi costi.",
+        "Il computo dalle foto o dalla piantina. Il preventivo dal computo, con l'analisi di ogni prezzo. L'ultima parola è tua.",
+      pulsante: "Provalo su un tuo lavoro",
+      nota: "Demo gratuita, dal vivo: porti un computo o un preventivo vero e lo lavoriamo insieme.",
     },
     pagina_demo: {
-      titolo: "Computi e preventivi senza ricopiare voci dal prezzario.",
+      titolo: "Computi e preventivi con l'AI. Senza ricopiare il prezzario.",
       sottotitolo:
         "Nella demo porti un computo o un preventivo vero e lo lavoriamo insieme. Vedi dove ti toglie lavoro e dove serve il tuo giudizio.",
       cosaFa: [
