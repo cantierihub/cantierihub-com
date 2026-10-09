@@ -14,10 +14,12 @@ import {
   CATEGORIE,
   categoriaDa,
   dataLeggibile,
+  fontiPerEnte,
   notiziaDa,
   notizieDellaCategoria,
   tieniInsieme,
   tutteLeNotizie,
+  type Fonte,
   type Notizia,
 } from "@/lib/notizie";
 import { SITE_URL } from "@/data/site";
@@ -311,18 +313,33 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                     <h2 id="fonti">Fonti</h2>
                     <ol className="fonti">
                       {/* Tutta la riga è il link, ente compreso (CAN-196): il solo atto era alto 20 px. Così chi
-                          usa un lettore di schermo sente anche l'ente («Normattiva, Codice civile Art. 1329»). */}
-                      {n.fonti.map((f) => (
-                        <li key={f.url}>
-                          <a href={f.url} target="_blank" rel="noopener">
-                            <span className="fonti__ente">{tieniInsieme(f.ente)}</span>{" "}
-                            <span className="fonti__atto">
-                              {tieniInsieme(f.titolo)}
-                              <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
-                            </span>
-                          </a>
-                        </li>
-                      ))}
+                          usa un lettore di schermo sente anche l'ente («Normattiva, Codice civile Art. 1329»).
+                          Le fonti di fila con lo stesso ente stanno sotto un'etichetta sola (CAN-272): l'etichetta il
+                          lettore di schermo la salta, e l'ente lo sente dentro ogni link, come prima. */}
+                      {fontiPerEnte(n.fonti).map((gruppo) =>
+                        gruppo.length === 1 ? (
+                          <li key={gruppo[0].url}>
+                            <a href={gruppo[0].url} target="_blank" rel="noopener">
+                              <span className="fonti__ente">{tieniInsieme(gruppo[0].ente)}</span>{" "}
+                              <AttoDellaFonte fonte={gruppo[0]} />
+                            </a>
+                          </li>
+                        ) : (
+                          <li key={gruppo[0].url} className="fonti__gruppo">
+                            <span className="fonti__ente" aria-hidden="true">{tieniInsieme(gruppo[0].ente)}</span>
+                            <ol className="fonti__atti">
+                              {gruppo.map((f) => (
+                                <li key={f.url}>
+                                  <a href={f.url} target="_blank" rel="noopener">
+                                    <span className="sr-only">{tieniInsieme(f.ente)} </span>
+                                    <AttoDellaFonte fonte={f} />
+                                  </a>
+                                </li>
+                              ))}
+                            </ol>
+                          </li>
+                        ),
+                      )}
                     </ol>
                   </section>
                 )}
@@ -398,6 +415,16 @@ function PaginaArticolo({ n }: { n: Notizia }) {
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </>
+  );
+}
+
+/** L'atto di una fonte, la parte sottolineata del link nel riquadro Fonti. */
+function AttoDellaFonte({ fonte }: { fonte: Fonte }) {
+  return (
+    <span className="fonti__atto">
+      {tieniInsieme(fonte.titolo)}
+      <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
+    </span>
   );
 }
 
