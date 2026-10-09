@@ -14,6 +14,7 @@ import {
   dataLeggibile,
   notiziaDa,
   notizieDellaCategoria,
+  tieniInsieme,
   tutteLeNotizie,
   type Notizia,
 } from "@/lib/notizie";
@@ -179,9 +180,9 @@ function PaginaArticolo({ n }: { n: Notizia }) {
             </nav>
 
             <h1 className="mt-2 font-display font-bold text-navy text-[2rem] leading-[1.15] tracking-[-0.02em] md:text-[2.75rem] md:leading-[1.1]">
-              {n.titolo}
+              {tieniInsieme(n.titolo)}
             </h1>
-            <p className="mt-4 text-[1.1875rem] leading-relaxed text-navy-700 md:text-xl">{n.descrizione}</p>
+            <p className="mt-4 text-[1.1875rem] leading-relaxed text-navy-700 md:text-xl">{tieniInsieme(n.descrizione)}</p>
 
             <div className="mt-6 flex items-center gap-3">
               <MarchioCH />
@@ -235,14 +236,14 @@ function PaginaArticolo({ n }: { n: Notizia }) {
               {n.inBreve && (
                 <section aria-labelledby="in-breve" className="in-breve mt-8 md:mt-10">
                   <h2 id="in-breve">In breve</h2>
-                  <p>{n.inBreve}</p>
+                  <p>{tieniInsieme(n.inBreve)}</p>
                 </section>
               )}
 
               {aggiornato && n.notaAggiornamento && (
                 <p className="mt-6 flex gap-2 rounded-xl bg-orange-50 px-4 py-3 text-[15px] text-orange-900">
                   <Info size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
-                  <span><strong>Aggiornamento del {dataLeggibile(n.dataAggiornamento)}:</strong> {n.notaAggiornamento}</span>
+                  <span><strong>Aggiornamento del {dataLeggibile(n.dataAggiornamento)}:</strong> {tieniInsieme(n.notaAggiornamento)}</span>
                 </p>
               )}
 
@@ -293,10 +294,10 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                       {n.faq.map((d) => (
                         <details key={d.domanda}>
                           <summary>
-                            <h3>{d.domanda}</h3>
+                            <h3>{tieniInsieme(d.domanda)}</h3>
                             <Plus size={20} aria-hidden="true" className="domande__segno" />
                           </summary>
-                          <p>{d.risposta}</p>
+                          <p>{tieniInsieme(d.risposta)}</p>
                         </details>
                       ))}
                     </div>
