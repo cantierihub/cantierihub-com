@@ -40,6 +40,7 @@ import {
   UTILE_MAX,
   VINCOLI_ORARI,
   VOCE_MAX,
+  VOCE_TROPPO_LUNGA,
   euro,
   leggiQuantita,
   prezzoRicalcolato,
@@ -162,6 +163,7 @@ export default function AnalisiPrezziDemo({ whatsapp }: { whatsapp: string }) {
 
   async function handleAnalyze() {
     if (!description.trim() || !region) return setErrore("Compila descrizione e regione");
+    if (description.trim().length > VOCE_MAX) return setErrore(VOCE_TROPPO_LUNGA);
     if (leggiQuantita(quantity) === null) return setErrore("La quantità non sembra un numero: scrivila come 12 o 12,5");
     setErrore(null);
     setLoading(true);
@@ -239,7 +241,8 @@ export default function AnalisiPrezziDemo({ whatsapp }: { whatsapp: string }) {
   }
 
   const finite = rimaste <= 0;
-  const pronto = !!description.trim() && !!region;
+  const troppoLunga = description.trim().length > VOCE_MAX;
+  const pronto = !!description.trim() && !!region && !troppoLunga;
 
   return (
     <div className="space-y-4">
@@ -253,14 +256,21 @@ export default function AnalisiPrezziDemo({ whatsapp }: { whatsapp: string }) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Testo
-              etichetta="Descrizione lavorazione"
-              valore={description}
-              onCambia={setDescription}
-              segnaposto="Es: Posa pavimento in gres porcellanato 60x60 su massetto"
-              max={VOCE_MAX}
-              altezza="min-h-[100px]"
-            />
+            <div>
+              {/* Niente maxLength: un testo incollato non si taglia più in silenzio, oltre VOCE_MAX lo si dice. */}
+              <Testo
+                etichetta="Descrizione lavorazione"
+                valore={description}
+                onCambia={setDescription}
+                segnaposto="Es: Posa pavimento in gres porcellanato 60x60 su massetto"
+                altezza="min-h-[100px]"
+              />
+              {troppoLunga && (
+                <p className="mt-1.5 text-sm font-medium text-red-700" role="alert">
+                  {VOCE_TROPPO_LUNGA}
+                </p>
+              )}
+            </div>
 
             <div className="grid grid-cols-2 gap-3">
               <Tendina etichetta="Unità di misura" valore={unit} onCambia={setUnit} opzioni={UNITA.map((u) => ({ valore: u, etichetta: u }))} />

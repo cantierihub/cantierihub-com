@@ -20,6 +20,8 @@ import {
   rimaste,
   validaRichiesta,
   validaRisposte,
+  VOCE_MAX,
+  VOCE_TROPPO_LUNGA,
 } from "./analisi.ts";
 import { ESEMPIO_ANALISI } from "./esempioSviluppo.ts";
 
@@ -178,4 +180,14 @@ test("la nota per il setter racconta il cantiere", () => {
   assert.match(nota, /Parametri avanzati: urgenza urgente/);
   assert.match(nota, /Note di cantiere: Centro storico/);
   assert.match(nota, /Prezzo suggerito: 100,00\s€\/m² \(spese generali 15%, utile 10%\)/);
+});
+
+test("una descrizione fino a 2.000 caratteri passa, oltre si chiede una lavorazione alla volta", () => {
+  assert.equal(VOCE_MAX, 2000);
+  assert.ok(validaRichiesta({ ...BASE, voce: "a".repeat(2000) }).ok);
+  const lunga = validaRichiesta({ ...BASE, voce: "a".repeat(2001) });
+  assert.ok(!lunga.ok);
+  if (!lunga.ok) assert.equal(lunga.errore, VOCE_TROPPO_LUNGA);
+  // Gli spazi in fondo non contano: si misura il testo pulito, come fa la pagina.
+  assert.ok(validaRichiesta({ ...BASE, voce: "a".repeat(2000) + "   " }).ok);
 });
