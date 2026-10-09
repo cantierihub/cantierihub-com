@@ -557,6 +557,16 @@
 .articolo p { margin: 0 0 1em; }
 .articolo > div > div > :last-child { margin-bottom: 0; }
 
+/* Una parola più larga della colonna va a capo dentro la colonna, invece di allargare la pagina. Un codice di prezzario
+   o un indirizzo scritto per intero è una parola sola: il 09/10/2026 «LOM261.OC.EEA.Pa06.C1234.Ca012.0005.-» (346 px a
+   17 px) faceva la pagina larga 381 px, e a 360 e 375 px scorreva di lato (Controllo visivo, CAN-195).
+   Si spezza solo la parola che non sta in una riga intera: il resto del testo va a capo come prima.
+   `anywhere` e non `break-word`: così vale anche nei titoli che stanno in una riga flessibile (domande frequenti, indice),
+   che altrimenti restano larghi quanto la parola più lunga. Nelle tabelle no: lì la parola lunga allarga la colonna e
+   scorre il riquadro, non la pagina (vedi «Tabelle» più giù). */
+.pagina-articolo { overflow-wrap: anywhere; }
+.pagina-articolo table { overflow-wrap: normal; }
+
 .articolo h2 {
   font-family: var(--font-display); font-weight: 700; color: #0f172a;
   font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.75rem); line-height: 1.25; letter-spacing: -0.01em;

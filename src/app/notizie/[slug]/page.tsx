@@ -168,7 +168,7 @@ function PaginaArticolo({ n }: { n: Notizia }) {
 
   return (
     <>
-      <article className="bg-white">
+      <article className="pagina-articolo bg-white">
         <header className="container-main pt-8 md:pt-14">
           <div className="mx-auto max-w-[680px]">
             <nav aria-label="Percorso" className="flex flex-wrap items-center gap-1 text-sm text-navy-500">
@@ -310,9 +310,9 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                     <ol className="fonti">
                       {n.fonti.map((f) => (
                         <li key={f.url}>
-                          <span className="fonti__ente">{f.ente}</span>
+                          <span className="fonti__ente">{tieniInsieme(f.ente)}</span>
                           <a href={f.url} target="_blank" rel="noopener">
-                            {f.titolo}
+                            {tieniInsieme(f.titolo)}
                             <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
                           </a>
                         </li>
