@@ -46,6 +46,22 @@ export interface SchedaFunnel {
     /** Sotto il pulsante: com'è la demo e, dove serve, il limite («il prezzo finale lo decidi tu»). */
     nota: string;
   };
+  /**
+   * «Il seguito dell'articolo» (Raffaele 09/10/2026): il blocco «Pubblicità» mostra il prodotto in tre passi, ognuno
+   * con una schermata VERA (copertine delle clip di `public/video/prova/`), ritagliata sulla parte che conta. I testi
+   * sono nella voce delle statiche Meta, con i fatti della pagina demo. Senza, il blocco resta quello di solo testo.
+   */
+  passi?: {
+    titolo: string;
+    testo: string;
+    schermata: {
+      immagine: string;
+      descrizione: string;
+      fotogramma: { larghezza: number; altezza: number };
+      /** Il pezzo da mostrare, in pixel del fotogramma intero; tutti a 16:9 perché i tre riquadri siano uguali. */
+      ritaglio: { x: number; y: number; larghezza: number; altezza: number };
+    };
+  }[];
   pagina_demo: {
     titolo: string;
     sottotitolo: string;
@@ -106,6 +122,40 @@ export const FUNNEL: Record<ProdottoFunnel, SchedaFunnel> = {
       pulsante: "Provalo su un tuo computo",
       nota: "Demo gratuita, dal vivo: porti un tuo computo e facciamo il preventivo insieme. Il prezzo finale lo decidi tu.",
     },
+    // Le tre copertine della prova del Preventivatore (07/10), nell'ordine del lavoro: le voci lette dal computo, i prezzi
+    // trovati sul prezzario, il quadro economico. Testi da `pagina_demo` qui sotto e da `portaConTe`.
+    passi: [
+      {
+        titolo: "Carichi il computo",
+        testo: "PDF, Excel o XML. L'AI legge ogni voce.",
+        schermata: {
+          immagine: "/video/prova/pdf-voci.jpg",
+          descrizione: "Le voci di un computo di prova lette dal Preventivatore, con codice, descrizione e quantità",
+          fotogramma: { larghezza: 1280, altezza: 906 },
+          ritaglio: { x: 60, y: 430, larghezza: 540, altezza: 304 },
+        },
+      },
+      {
+        titolo: "L'AI cerca i prezzi",
+        testo: "Sul prezzario della tua regione o nei tuoi listini.",
+        schermata: {
+          immagine: "/video/prova/prezzario.jpg",
+          descrizione: "I prezzi delle voci trovati sul prezzario della Campania, con il totale di ogni riga",
+          fotogramma: { larghezza: 1280, altezza: 906 },
+          ritaglio: { x: 560, y: 430, larghezza: 500, altezza: 281 },
+        },
+      },
+      {
+        titolo: "Vedi quanto ci guadagni",
+        testo: "Costo, margine e utile prima di mandarlo. Poi il PDF col tuo logo.",
+        schermata: {
+          immagine: "/video/prova/quadro-economico.jpg",
+          descrizione: "Il quadro economico di un preventivo di prova, con costo, margine e utile",
+          fotogramma: { larghezza: 1280, altezza: 906 },
+          ritaglio: { x: 55, y: 75, larghezza: 735, altezza: 413 },
+        },
+      },
+    ],
     pagina_demo: {
       titolo: "Carichi il computo. Esce il preventivo.",
       sottotitolo:
