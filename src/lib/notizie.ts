@@ -129,7 +129,7 @@ const APRE = String.raw`(?:<(?:strong|em|b|i)>)*`;
 const fra = (prima: string, dopo: string, flag: string) =>
   new RegExp(String.raw`(?<=${prima}${CHIUDE})\s+(?=${APRE}${dopo})`, flag);
 
-const SIGLA = String.raw`(?<![\p{L}\d.])(?:(?:n|nn|art|artt|co|c|lett|par|cap|all|p|pag|pagg|tab|fig|l|d\.lgs|d\.l|d\.m|d\.p\.r|d\.p\.c\.m)\.|dpr|dpcm|comm[ai]|articol[oi]|punt[oi]|letter[ae])`;
+const SIGLA = String.raw`(?<![\p{L}\d.])(?:(?:n|nn|art|artt|co|c|lett|par|cap|all|p|pp|pag|pagg|tab|fig|l|d\.lgs|d\.l|d\.m|d\.p\.r|d\.p\.c\.m)\.|dpr|dpcm|comm[ai]|articol[oi]|punt[oi]|letter[ae])`;
 const GIORNO = String.raw`(?<![\p{L}\d.,])\d{1,2}[°º]?`;
 const MESE = "gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre";
 // Da qui in giù le maiuscole contano: «XII» è un numero romano, «di» no; «t» è una tonnellata, «T» no.
@@ -155,22 +155,26 @@ const REGOLE = [
   fra(String.raw`[\d)]\s*[×x]`, String.raw`[\d(]`, "gu"),
 ];
 
-// Il browser va a capo anche dopo un trattino seguito da una lettera. Il 09/10/2026 si leggeva «comma 1-» con «bis)»
-// sotto (1440 px) e, nelle Fonti, «a p. -» con «G-,» sotto (390 px, CAN-195). Il trattino resta quello di prima, gli
-// si mette accanto un «word joiner» (U+2060): non si vede, non occupa spazio e dice al browser di non andare a capo lì.
-// Non il trattino che non va a capo (U+2011): Inter e Poppins non l'hanno, e il browser lo prenderebbe da un altro
-// carattere.
+// Il browser va a capo dopo un trattino, anche fra due cifre. Il 09/10/2026 si leggeva «comma 1-» con «bis)» sotto
+// (1440 px) e, nelle Fonti, «a p. -» con «G-,» sotto (390 px, CAN-195); nella tabella delle regioni «DGR 12-» con
+// «2656 del» sotto (360 px, CAN-226). Il trattino resta quello di prima, gli si mette dopo un «word joiner» (U+2060):
+// non si vede, non occupa spazio e dice al browser di non andare a capo lì. Non il trattino che non va a capo (U+2011):
+// Inter e Poppins non l'hanno, e il browser lo prenderebbe da un altro carattere.
 const TRATTINI = [
   // «1-bis», «16-ter», «n. 127-quaterdicies», «Allegato II.2-bis», anche con un grassetto in mezzo
   new RegExp(String.raw`(?<=\d${CHIUDE})-(?=${APRE}\p{L})`, "gu"),
+  // «DGR 12-2656», «artt. 1-5», «pp. 94-95», «10-15 giorni», «2024-2025», anche col trattino lungo degli intervalli
+  // («1–5»). Il meno di «-0,4%» no: davanti non ha una cifra.
+  new RegExp(String.raw`(?<=\d${CHIUDE})[-–](?=${APRE}\d)`, "gu"),
   // il primo trattino di «-G-»: il secondo ha dopo la virgola o lo spazio, e lì il browser non va a capo
   /(?<![\p{L}\d])-(?=[A-Z\d]{1,3}-)/gu,
 ];
 
 /** Ogni regola con quello che mette al posto di ciò che trova. */
-const UNIONI: [RegExp, string][] = [
-  ...REGOLE.map((r): [RegExp, string] => [r, "\u00a0"]),
-  ...TRATTINI.map((r): [RegExp, string] => [r, "-\u2060"]),
+type Unione = [RegExp, (trovato: string) => string];
+const UNIONI: Unione[] = [
+  ...REGOLE.map((r): Unione => [r, () => "\u00a0"]),
+  ...TRATTINI.map((r): Unione => [r, (trattino) => trattino + "\u2060"]),
 ];
 
 // Le parti dell'HTML che non si toccano: i tag (con gli attributi, quindi gli indirizzi) e quello che sta dentro un
@@ -189,12 +193,12 @@ function parteVietata(html: string): Uint8Array {
   return vietata;
 }
 
-/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis» restano sulla stessa riga. */
+/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis», «DGR 12-2656» restano sulla stessa riga. */
 export function tieniInsieme(testo: string): string {
   return UNIONI.reduce((t, [regola, unito]) => {
     // La parte vietata si rifà a ogni regola: due spazi diventati uno spostano tutto quello che viene dopo.
     const vietata = parteVietata(t);
-    return t.replace(regola, (trovato: string, dove: number) => (vietata[dove] ? trovato : unito));
+    return t.replace(regola, (trovato: string, dove: number) => (vietata[dove] ? trovato : unito(trovato)));
   }, testo);
 }
 
