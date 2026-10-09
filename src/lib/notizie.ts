@@ -139,8 +139,8 @@ const QUANTITA = String.raw`(?<![\p{L}\d.,])\d+(?:[.,]\d+)*`;
 const UNITA = String.raw`(?:m[²³23qcl]?|cm²?|mm|km²?|kg|q|t|kWh?|MWh?|kN|°C|%|€|euro|mila|milion[ei]|miliard[oi])(?![\p{L}\d'’])`;
 
 const REGOLE = [
-  // «n. 1», «art. 4», «D.Lgs. 36/2023», «comma 13», «lett. a)»
-  fra(SIGLA, String.raw`(?:\d|\p{Ll}\))`, "giu"),
+  // «n. 1», «art. 4», «D.Lgs. 36/2023», «comma 13», «lett. a)»; e le pagine del prezzario scritte «p. -G-»
+  fra(SIGLA, String.raw`(?:\d|\p{Ll}\)|-[A-Z\d]{1,3}-)`, "giu"),
   // «23 ottobre», «1° gennaio»
   fra(GIORNO, String.raw`(?:${MESE})(?!\p{L})`, "giu"),
   // «n. XII/6071», «Allegato I.7», «Titolo IV»
@@ -153,6 +153,24 @@ const REGOLE = [
   // Un segno non apre la riga: «0,80 ×», «2,70 =», «4,00 +» restano col numero prima, e «× 2,10» col numero dopo.
   fra(String.raw`[\d)²³%€]`, String.raw`(?:[=+×−÷]\s*|x\s+)[\d(]`, "gu"),
   fra(String.raw`[\d)]\s*[×x]`, String.raw`[\d(]`, "gu"),
+];
+
+// Il browser va a capo anche dopo un trattino seguito da una lettera. Il 09/10/2026 si leggeva «comma 1-» con «bis)»
+// sotto (1440 px) e, nelle Fonti, «a p. -» con «G-,» sotto (390 px, CAN-195). Il trattino resta quello di prima, gli
+// si mette accanto un «word joiner» (U+2060): non si vede, non occupa spazio e dice al browser di non andare a capo lì.
+// Non il trattino che non va a capo (U+2011): Inter e Poppins non l'hanno, e il browser lo prenderebbe da un altro
+// carattere.
+const TRATTINI = [
+  // «1-bis», «16-ter», «n. 127-quaterdicies», «Allegato II.2-bis», anche con un grassetto in mezzo
+  new RegExp(String.raw`(?<=\d${CHIUDE})-(?=${APRE}\p{L})`, "gu"),
+  // il primo trattino di «-G-»: il secondo ha dopo la virgola o lo spazio, e lì il browser non va a capo
+  /(?<![\p{L}\d])-(?=[A-Z\d]{1,3}-)/gu,
+];
+
+/** Ogni regola con quello che mette al posto di ciò che trova. */
+const UNIONI: [RegExp, string][] = [
+  ...REGOLE.map((r): [RegExp, string] => [r, "\u00a0"]),
+  ...TRATTINI.map((r): [RegExp, string] => [r, "-\u2060"]),
 ];
 
 // Le parti dell'HTML che non si toccano: i tag (con gli attributi, quindi gli indirizzi) e quello che sta dentro un
@@ -171,12 +189,12 @@ function parteVietata(html: string): Uint8Array {
   return vietata;
 }
 
-/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m» restano sulla stessa riga. */
+/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis» restano sulla stessa riga. */
 export function tieniInsieme(testo: string): string {
-  return REGOLE.reduce((t, regola) => {
+  return UNIONI.reduce((t, [regola, unito]) => {
     // La parte vietata si rifà a ogni regola: due spazi diventati uno spostano tutto quello che viene dopo.
     const vietata = parteVietata(t);
-    return t.replace(regola, (spazi: string, dove: number) => (vietata[dove] ? spazi : "\u00a0"));
+    return t.replace(regola, (trovato: string, dove: number) => (vietata[dove] ? trovato : unito));
   }, testo);
 }
 
