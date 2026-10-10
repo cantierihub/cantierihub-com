@@ -789,11 +789,13 @@
   background-color: #fff; background-repeat: no-repeat;
 }
 .carta-pubblicita__frase { margin: 0 0 6px; font-size: 16px; font-weight: 700; line-height: 1.3; color: #0f172a; }
-/* La freccia resta attaccata all'ultima parola anche quando il pulsante va a capo (in 212 px succede). */
+/* In 212 px il pulsante va a capo: la freccia resta attaccata all'ultima parola (`__coda`, CAN-313) e le due righe si
+   pareggiano come nel pulsante del blocco in fondo, così sotto non resta mai una parola sola. */
 .carta-pubblicita__vai {
-  display: inline-block; padding: 11px 0; line-height: 1.4;
+  display: inline-block; padding: 11px 0; line-height: 1.4; text-wrap: balance;
   font-size: 15px; font-weight: 600; color: #c2410c; text-decoration: none;
 }
+.carta-pubblicita__coda { white-space: nowrap; }
 .carta-pubblicita__vai svg { display: inline; margin-left: 4px; vertical-align: -3px; }
 .carta-pubblicita__vai:hover { text-decoration: underline; text-underline-offset: 3px; }
 
