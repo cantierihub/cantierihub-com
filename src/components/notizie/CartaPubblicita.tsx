@@ -14,6 +14,11 @@ import { RICHIAMO } from "@/data/richiamoNotizie";
 export default function CartaPubblicita({ prodotto, articolo }: { prodotto: ProdottoFunnel; articolo: string }) {
   const p = FUNNEL[prodotto];
   const s = RICHIAMO[prodotto].schermata;
+  // In 212 px il pulsante va a capo, e fra una parola e l'icona il browser può sempre andarci, anche con lo spazio
+  // unificatore (CSS Text 3, §5.1): la freccia finiva da sola sotto (CAN-313). L'ultima parola e la freccia stanno in
+  // un pezzo che non si spezza.
+  const parole = p.blocco.pulsante.split(" ");
+  const ultima = parole.pop();
   return (
     <aside aria-label={`Pubblicità: ${p.nome}`} className="carta-pubblicita">
       <p className="carta-pubblicita__riga">
@@ -31,7 +36,11 @@ export default function CartaPubblicita({ prodotto, articolo }: { prodotto: Prod
       {/* Un punto solo, come nelle statiche: il titolo del blocco, che è anche quello della pagina demo. */}
       <p className="carta-pubblicita__frase">{p.blocco.titolo}</p>
       <Link href={`/demo/${p.slug}?da=${encodeURIComponent(articolo)}`} className="carta-pubblicita__vai">
-        {p.blocco.pulsante} <ArrowRight size={16} aria-hidden="true" />
+        {parole.join(" ")}{" "}
+        <span className="carta-pubblicita__coda">
+          {ultima}
+          <ArrowRight size={16} aria-hidden="true" />
+        </span>
       </Link>
     </aside>
   );
