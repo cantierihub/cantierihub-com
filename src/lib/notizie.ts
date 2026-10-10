@@ -153,11 +153,17 @@ const UNITA = String.raw`(?:m[²³23qcl]?|cm²?|mm|km²?|kg|q|t|kWh?|MWh?|kN|°C
 // Le lettere aggiunte dopo, nelle norme: «lett. b-bis)», «lettera a-ter», «c-quinquies», «e-quaterdecies» (anche «-dicies»)
 const AGGIUNTA = String.raw`(?:bis|ter|quater|quinquies|sexies|septies|octies|novies|nonies|\p{Ll}*d[ei]cies)(?![\p{L}\d])`;
 const LETTERA_AGGIUNTA = String.raw`\p{Ll}-${APRE}${AGGIUNTA}`;
+// La lettera senza parentesi: «lett. b, e art. 3», «lettera u; art. 26», «lettere c ed e)». Dopo la lettera viene un
+// segno o un'altra lettera: «una lettera e a leggere» e «le lettere d'invito» sono parole, e restano come sono.
+const DAVANTI_ALLA_LETTERA = String.raw`(?<![\p{L}\d.])(?:lett\.|letter[ae])`;
+const LETTERA_SOLA = String.raw`\p{Ll}(?=${CHIUDE}(?:[,;:.]|<\/|$|\s+(?:e|ed|o)\s+${APRE}\p{Ll}(?![\p{L}\d'’])))`;
 
 const REGOLE = [
   // «n. 1», «art. 4», «D.Lgs. 36/2023», «comma 13», «lett. a)», «lett. b-bis)»; e le pagine del prezzario scritte «p. -G-».
   // Il 09/10/2026 a 390 px una riga finiva con «c. 1, lett.» e quella sotto era solo «b-bis)» (CAN-265).
   fra(SIGLA, String.raw`(?:\d|\p{Ll}\)|${LETTERA_AGGIUNTA}|-[A-Z\d]{1,3}-)`, "giu"),
+  // Il 10/10/2026 a 360 px una riga finiva con «par. 1, lett.» e quella sotto cominciava con «b, e art. 3» (CAN-300).
+  fra(DAVANTI_ALLA_LETTERA, LETTERA_SOLA, "giu"),
   // «23 ottobre», «1° gennaio»
   fra(GIORNO, String.raw`(?:${MESE})(?!\p{L})`, "giu"),
   // «n. XII/6071», «Allegato I.7», «Titolo IV»
@@ -212,7 +218,7 @@ function parteVietata(html: string): Uint8Array {
   return vietata;
 }
 
-/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis», «lett. b-bis)», «DGR 12-2656» restano sulla stessa riga. */
+/** «art. 4», «n. XII/6071», «23 ottobre», «20,25 m²», «0,80 × 2,10 m», «comma 1-bis», «lett. b-bis)», «lett. b,», «DGR 12-2656» restano sulla stessa riga. */
 export function tieniInsieme(testo: string): string {
   return UNIONI.reduce((t, [regola, unito]) => {
     // La parte vietata si rifà a ogni regola: due spazi diventati uno spostano tutto quello che viene dopo.
