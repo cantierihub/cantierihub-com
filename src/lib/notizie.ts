@@ -62,6 +62,13 @@ export function fontiPerEnte(fonti: Fonte[]): Fonte[][] {
   return gruppi;
 }
 
+/** Un atto corto («Art. 14», «Allegato XV») sta in fila con gli altri del suo gruppo, uno accanto all'altro (CAN-349):
+ *  i 24 «Art. N» della guida sulle gare d'appalto, uno per riga, facevano il gruppo alto 1,4 schermi di telefono. Un
+ *  titolo con la sua descrizione («Art. 16, testo in vigore all'08/10/2026») resta su una riga sua. */
+export function attoCorto(f: Fonte): boolean {
+  return f.titolo.trim().length <= 16;
+}
+
 export interface Domanda {
   domanda: string;
   risposta: string;

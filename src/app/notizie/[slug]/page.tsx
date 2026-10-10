@@ -11,6 +11,7 @@ import CartaPubblicita from "@/components/notizie/CartaPubblicita";
 import TestataNotizie from "@/components/notizie/TestataNotizie";
 import SchedaNotizia from "@/components/notizie/SchedaNotizia";
 import {
+  attoCorto,
   CATEGORIE,
   categoriaDa,
   dataLeggibile,
@@ -315,7 +316,8 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                       {/* Tutta la riga è il link, ente compreso (CAN-196): il solo atto era alto 20 px. Così chi
                           usa un lettore di schermo sente anche l'ente («Normattiva, Codice civile Art. 1329»).
                           Le fonti di fila con lo stesso ente stanno sotto un'etichetta sola (CAN-272): l'etichetta il
-                          lettore di schermo la salta, e l'ente lo sente dentro ogni link, come prima. */}
+                          lettore di schermo la salta, e l'ente lo sente dentro ogni link, come prima. Dentro il gruppo
+                          gli atti corti stanno in fila (CAN-349), ma la lista resta una e nello stesso ordine. */}
                       {fontiPerEnte(n.fonti).map((gruppo) =>
                         gruppo.length === 1 ? (
                           <li key={gruppo[0].url}>
@@ -329,7 +331,7 @@ function PaginaArticolo({ n }: { n: Notizia }) {
                             <span className="fonti__ente" aria-hidden="true">{tieniInsieme(gruppo[0].ente)}</span>
                             <ol className="fonti__atti">
                               {gruppo.map((f) => (
-                                <li key={f.url}>
+                                <li key={f.url} className={attoCorto(f) ? "fonti__corto" : undefined}>
                                   <a href={f.url} target="_blank" rel="noopener">
                                     <span className="sr-only">{tieniInsieme(f.ente)} </span>
                                     <AttoDellaFonte fonte={f} />
@@ -418,12 +420,18 @@ function PaginaArticolo({ n }: { n: Notizia }) {
   );
 }
 
-/** L'atto di una fonte, la parte sottolineata del link nel riquadro Fonti. */
+/** L'atto di una fonte, la parte sottolineata del link nel riquadro Fonti. L'icona va a capo con l'ultima parola, mai
+ *  da sola (CAN-349: a 390 px quella di «Delibera n. 262…» finiva sulla riga dopo). */
 function AttoDellaFonte({ fonte }: { fonte: Fonte }) {
+  const atto = tieniInsieme(fonte.titolo);
+  const fine = atto.lastIndexOf(" ") + 1;
   return (
     <span className="fonti__atto">
-      {tieniInsieme(fonte.titolo)}
-      <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
+      {atto.slice(0, fine)}
+      <span className="whitespace-nowrap">
+        {atto.slice(fine)}
+        <ExternalLink size={14} className="ml-1 inline align-[-2px]" aria-hidden="true" />
+      </span>
     </span>
   );
 }

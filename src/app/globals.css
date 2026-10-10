@@ -726,9 +726,9 @@
   text-underline-offset: 3px;
 }
 .articolo .fonti a:hover .fonti__atto { color: #c2410c; text-decoration-color: currentColor; }
-/* Le fonti di fila con lo stesso ente (CAN-272): l'ente una volta sola, sopra, e sotto i loro link, uno per riga. Una
-   guida cita gli articoli uno per uno: a 390 px erano 13 «Normattiva, D.Lgs. 9 aprile 2008, n. 81…» grigi, su due
-   righe l'uno. Il filo separa gli enti, non i link dello stesso ente; ogni link resta alto almeno 44 px. */
+/* Le fonti di fila con lo stesso ente (CAN-272): l'ente una volta sola, sopra, e sotto i loro link. Una guida cita gli
+   articoli uno per uno: a 390 px erano 13 «Normattiva, D.Lgs. 9 aprile 2008, n. 81…» grigi, su due righe l'uno. Il
+   filo separa gli enti, non i link dello stesso ente; ogni link resta alto almeno 44 px. */
 .fonti__gruppo { padding-top: 12px; }
 .articolo .fonti__atti { margin: 0; }
 .articolo .fonti__atti > li { padding-left: 0; margin: 0; }
@@ -737,6 +737,17 @@
 /* Il primo link sta attaccato all'etichetta, come l'atto di una fonte sola sta attaccato al suo ente: l'altezza la
    tiene il minimo di 44 px. */
 .articolo .fonti__atti > li:first-child a { padding-top: 2px; }
+/* Gli atti corti («Art. 14», «Allegato XV») stanno in fila, uno accanto all'altro, e vanno a capo a fine riga
+   (CAN-349): i 24 «Art. N» della guida sulle gare d'appalto, uno per riga, facevano il gruppo alto 1.168 px a 390,
+   1,4 schermi. Un atto lungo resta su una riga sua. Ogni link resta alto 44 px con l'atto a metà altezza, e fra due
+   link della stessa riga ci sono 16 px vuoti: il pollice non prende quello accanto. Restano link sottolineati come le
+   altre fonti, non pillole: sul sito la pillola è il pulsante di una sezione. */
+.articolo .fonti__atti { display: flex; flex-wrap: wrap; column-gap: 16px; }
+.articolo .fonti__atti > li { flex: 1 0 100%; }
+.articolo .fonti__atti > li.fonti__corto { flex: 0 0 auto; }
+.articolo .fonti__atti > li.fonti__corto a { display: flex; align-items: center; padding-block: 0; white-space: nowrap; }
+/* La prima fila sta vicina all'etichetta come ci sta l'atto di una fonte sola. */
+.articolo .fonti__atti:has(> li.fonti__corto:first-child) { margin-top: -6px; }
 
 @media (prefers-reduced-motion: reduce) {
   .indice-mobile__freccia, .domande__segno, .indice-laterale a { transition: none; }
